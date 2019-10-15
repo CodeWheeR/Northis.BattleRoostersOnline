@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameService", "Northis.Batt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTransferObjects", "DataTransferObjects\DataTransferObjects.csproj", "{56B3FA9D-2EC9-4703-9000-9E9F0DD88FAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameService.Tests", "GameService.Tests\GameService.Tests.csproj", "{8BB0D04E-2A7C-4F47-B2BC-A66F3CE57918}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{56B3FA9D-2EC9-4703-9000-9E9F0DD88FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56B3FA9D-2EC9-4703-9000-9E9F0DD88FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56B3FA9D-2EC9-4703-9000-9E9F0DD88FAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BB0D04E-2A7C-4F47-B2BC-A66F3CE57918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BB0D04E-2A7C-4F47-B2BC-A66F3CE57918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BB0D04E-2A7C-4F47-B2BC-A66F3CE57918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BB0D04E-2A7C-4F47-B2BC-A66F3CE57918}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

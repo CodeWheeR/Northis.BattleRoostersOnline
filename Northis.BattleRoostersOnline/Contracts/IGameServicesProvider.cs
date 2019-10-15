@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
-using Northis.BattleRoostersOnline.DataTransferObjects;
+using Northis.BattleRoostersOnline;
 
 namespace Northis.BattleRoostersOnline.Contracts
 {
@@ -15,8 +15,6 @@ namespace Northis.BattleRoostersOnline.Contracts
 		[OperationContract]
 		string GetData(int value);
 
-		[OperationContract]
-		CompositeType GetDataUsingDataContract(CompositeType composite);
 
 		// TODO: Добавьте здесь операции служб
 	}
