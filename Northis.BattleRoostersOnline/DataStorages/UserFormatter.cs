@@ -8,5 +8,6 @@ namespace Northis.BattleRoostersOnline.DataStorages
 {
 	class UserFormatter
 	{
+
 	}
 }
