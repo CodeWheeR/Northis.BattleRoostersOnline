@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataTransferObjects
+namespace Northis.BattleRoostersOnline.DataTransferObjects
 {
-    public class Class1
+    public class CompositeType
     {
     }
 }

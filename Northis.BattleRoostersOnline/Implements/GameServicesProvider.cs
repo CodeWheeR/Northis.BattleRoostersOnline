@@ -4,8 +4,10 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Northis.BattleRoostersOnline.Contracts;
+using Northis.BattleRoostersOnline.DataTransferObjects;
 
-namespace Northis.BattleRoostersOnline
+namespace Northis.BattleRoostersOnline.Implements
 {
 	// ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "GameServicesProvider" в коде и файле конфигурации.
 	public class GameServicesProvider : IGameServicesProvider
@@ -17,15 +19,7 @@ namespace Northis.BattleRoostersOnline
 
 		public CompositeType GetDataUsingDataContract(CompositeType composite)
 		{
-			if (composite == null)
-			{
-				throw new ArgumentNullException("composite");
-			}
-			if (composite.BoolValue)
-			{
-				composite.StringValue += "Suffix";
-			}
-			return composite;
+			
 		}
 	}
 }
