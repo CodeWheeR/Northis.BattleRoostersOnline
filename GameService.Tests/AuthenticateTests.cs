@@ -14,7 +14,6 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		[SetUp]
 		public void Setup()
 		{
-			var ioc = ServiceLocator.Current;
 			var container = new UnityContainer();
 			container.RegisterInstance(new ServicesStorage()
 			{
@@ -29,10 +28,14 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 			ServiceLocator.SetLocatorProvider(() => locator);
 		}
 
-		[TestCase("Вася Пупкин", "asdshka")]
-		public void Test1(string login, string password)
+		[TestCase("Вася Пупкин", "lesyabultulyator")]
+		public void EncryptionTest(string login, string password)
 		{
 			var s = new AuthenticateService().GenerateToken();
+			var encrypt = new AuthenticateService().Encrypt(password);
+			var decrypt = new AuthenticateService().Decrypt(encrypt);
+
+			Assert.AreEqual(s, "123");
 		}
 	}
 }

@@ -57,7 +57,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			string result = "";
 			for (int i = 0; i < sourceString.Length; i++)
 			{
-				result += sourceString[i] * (i/2+1);
+				result += (char)(sourceString[i] * (i/2+2));
 			}
 
 			return result;
@@ -68,10 +68,11 @@ namespace Northis.BattleRoostersOnline.Implements
 			string result = "";
 			for (int i = 0; i < sourceString.Length; i++)
 			{
-				result += sourceString[i] / (i / 2 + 1);
+				result += (char)(sourceString[i] / (i / 2 + 2));
 			}
 
 			return result;
 		}
+
 	}
 }
