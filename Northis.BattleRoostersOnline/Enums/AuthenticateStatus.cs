@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Northis.BattleRoostersOnline.Enums
 {
-	enum AuthenticateStatus
+	public enum AuthenticateStatus
 	{
 		OK,
 		WrongLoginOrPassword,

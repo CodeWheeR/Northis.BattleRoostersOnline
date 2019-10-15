@@ -18,7 +18,6 @@ namespace Northis.BattleRoostersOnline.Implements
 	{
 		public GameServicesProvider()
 		{
-			var ioc = ServiceLocator.Current;
 			var container = new UnityContainer();
 			container.RegisterInstance(new ServicesStorage());
 
