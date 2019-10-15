@@ -7,8 +7,8 @@ using System.Text;
 
 namespace Northis.BattleRoostersOnline
 {
-	// ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "Service1" в коде и файле конфигурации.
-	public class Service1 : IService1
+	// ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "GameServicesProvider" в коде и файле конфигурации.
+	public class GameServicesProvider : IGameServicesProvider
 	{
 		public string GetData(int value)
 		{
