@@ -1,9 +1,13 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using CommonServiceLocator;
+using DataTransferObjects;
 using Northis.BattleRoostersOnline.Contracts;
 using Northis.BattleRoostersOnline.DataStorages;
 using Northis.BattleRoostersOnline.Enums;
@@ -15,32 +19,58 @@ namespace Northis.BattleRoostersOnline.Implements
 	public class AuthenticateService : IAuthenticateService
 	{
 		private Random _rand = new Random();
-		private Dictionary<string, string> _logData;
+
+		public Dictionary<string, string> LogData
+		{
+			get
+			{	
+				if (ServiceLocator.IsLocationProviderSet)
+					return (Dictionary<string, string>) ServiceLocator.Current.GetInstance<ServicesStorage>()
+														   .UserData;
+				throw new NullReferenceException("Storage is null");
+			}
+		}
 
 		public AuthenticateService()
 		{
-			_logData = (Dictionary<string, string>) ServiceLocator.Current.GetInstance<ServicesStorage>()
-																  .UserData;
+			if (!ServiceLocator.IsLocationProviderSet)
+				ServiceLocator.SetLocatorProvider(() =>
+				{
+					var container = new UnityContainer();
+					container.RegisterInstance<ServicesStorage>(new ServicesStorage());
+					return new UnityServiceLocator(container);
+				});
 		}
 
 		public string LogIn(string login, string password)
 		{
-			if (!_logData.ContainsKey(login) || _logData[login] != Encrypt(password))
+			if (!LogData.ContainsKey(login) || LogData[login] != Encrypt(password))
 				return AuthenticateStatus.WrongLoginOrPassword.ToString();
-			return GenerateToken();
+			var token = GenerateToken();
+
+			((Dictionary<string, RoosterDto[]>) ServiceLocator.Current.GetInstance<ServicesStorage>()
+														.LoggedUsers).Add(token, null);
+			return token;
 		}
 
-		public string Register(string login, string password, string codePhrase)
+		public string Register(string login, string password)
 		{
-			if (_logData.ContainsKey(login))
+			if (LogData.ContainsKey(login))
 				return AuthenticateStatus.AlreadyRegistered.ToString();
-			_logData.Add(login, Encrypt(password));
+			LogData.Add(login, Encrypt(password));
 			return LogIn(login, Decrypt(password));
 		}
 
-		public bool LogOut() => throw new NotImplementedException();
+		public bool LogOut(string token)
+		{
+			var data = ((Dictionary<string, RoosterDto[]>) ServiceLocator.Current.GetInstance<ServicesStorage>()
+																   .LoggedUsers);
+			if (!data.ContainsKey(token))
+				return false;
 
-		public string ResetPassword(string username, string codePhrase) => throw new NotImplementedException();
+			data.Remove(token);
+			return true;
+		}
 
 		public string GenerateToken()
 		{
@@ -59,7 +89,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			string result = "";
 			for (int i = 0; i < sourceString.Length; i++)
 			{
-				result += sourceString[i] * (i/2+1);
+				result += (char)(sourceString[i] * (i/2+2));
 			}
 
 			return result;
@@ -70,10 +100,28 @@ namespace Northis.BattleRoostersOnline.Implements
 			string result = "";
 			for (int i = 0; i < sourceString.Length; i++)
 			{
-				result += sourceString[i] / (i / 2 + 1);
+				result += (char)(sourceString[i] / (i / 2 + 2));
 			}
 
 			return result;
+		}
+
+		public void SaveUserData()
+		{
+			BinaryFormatter formatter = new BinaryFormatter();
+			using (FileStream fs = new FileStream("users.dat", FileMode.OpenOrCreate))
+			{
+				formatter.Serialize(fs, LogData);
+			}
+		}
+
+		public IEnumerable<KeyValuePair<string, string>> LoadUserData()
+		{
+			BinaryFormatter formatter = new BinaryFormatter();
+			using (FileStream fs = new FileStream("users.dat", FileMode.OpenOrCreate))
+			{
+				return (Dictionary<string, string>)formatter.Deserialize(fs);
+			}
 		}
 	}
 }

@@ -15,10 +15,8 @@ namespace Northis.BattleRoostersOnline.Contracts
 		[OperationContract]
 		string LogIn(string login, string password);
 		[OperationContract]
-		string Register(string login, string password, string codePhrase);
+		string Register(string login, string password);
 		[OperationContract(IsTerminating = true)]
-		bool LogOut();
-		[OperationContract]
-		string ResetPassword(string username, string codePhrase);
+		bool LogOut(string token);
 	}
 }
