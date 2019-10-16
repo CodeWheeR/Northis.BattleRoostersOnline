@@ -48,8 +48,8 @@ namespace Northis.BattleRoostersOnline.Implements
 				return AuthenticateStatus.WrongLoginOrPassword.ToString();
 			var token = GenerateToken();
 
-			((Dictionary<string, RoosterDto[]>) ServiceLocator.Current.GetInstance<ServicesStorage>()
-														.LoggedUsers).Add(token, null);
+			((Dictionary<string, List<RoosterDto>>) ServiceLocator.Current.GetInstance<ServicesStorage>()
+														.RoosterData).Add(token, null);
 			return token;
 		}
 
@@ -63,8 +63,8 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		public bool LogOut(string token)
 		{
-			var data = ((Dictionary<string, RoosterDto[]>) ServiceLocator.Current.GetInstance<ServicesStorage>()
-																   .LoggedUsers);
+			var data = ((Dictionary<string, List<RoosterDto>>) ServiceLocator.Current.GetInstance<ServicesStorage>()
+																   .RoosterData);
 			if (!data.ContainsKey(token))
 				return false;
 

@@ -30,9 +30,9 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 					{"DengiVZaim",  authService.Encrypt("88005553535")}
 				},
 
-				LoggedUsers = new Dictionary<string, RoosterDto[]>()
+				RoosterData = new Dictionary<string, List<RoosterDto>>()
 				{
-					{"123oijhokjuh1256", new RoosterDto[1]}
+					{"123oijhokjuh1256", new List<RoosterDto>(1)}
 				}
 
 			});
@@ -69,10 +69,10 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		public void LogOutTest(string token)
 		{
 			var colSize = ServiceLocator.Current.GetInstance<ServicesStorage>()
-										.LoggedUsers.Count();
+										.RoosterData.Count();
 			authService.LogOut(token);
 			Assert.AreEqual(colSize, ServiceLocator.Current.GetInstance<ServicesStorage>()
-												   .LoggedUsers.Count()+1);
+												   .RoosterData.Count()+1);
 		}
 
 		[TestCase("Уася Лошков", "Нагибатор228тут")]

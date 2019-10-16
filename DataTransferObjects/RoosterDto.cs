@@ -5,6 +5,11 @@ namespace DataTransferObjects
 	[DataContract]
 	public class RoosterDto
     {
+		public RoosterDto()
+		{
+
+		}
+
 		[DataMember]
 		public double Weight
 		{
