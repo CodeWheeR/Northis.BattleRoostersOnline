@@ -64,8 +64,6 @@
     <Compile Include="Contracts\IGameServicesProvider.cs" />
     <Compile Include="DataStorages\ServicesStorage.cs" />
     <Compile Include="Enums\AuthenticateStatus.cs" />
-    <Compile Include="Formatters\RoosterFormatter.cs" />
-    <Compile Include="Formatters\UserFormatter.cs" />
     <Compile Include="Implements\AuthenticateService.cs" />
     <Compile Include="Implements\EditService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
