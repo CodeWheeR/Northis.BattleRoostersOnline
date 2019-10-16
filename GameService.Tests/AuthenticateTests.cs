@@ -30,9 +30,9 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 					{"DengiVZaim",  authService.Encrypt("88005553535")}
 				},
 
-				LoggedUsers = new Dictionary<string, RoosterDto[]>()
+				RoostersData = new Dictionary<string, List<RoosterDto>>()
 				{
-					{"123oijhokjuh1256", new RoosterDto[1]}
+					{"123oijhokjuh1256", new List<RoosterDto>()}
 				}
 
 			});
@@ -79,10 +79,10 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		public void RegisterTest(string login, string password)
 		{
 			authService.Register(login, password);
-			Assert.True(((Dictionary<string, string>)ServiceLocator.Current.GetInstance<ServicesStorage>()
+			Assert.True((ServiceLocator.Current.GetInstance<ServicesStorage>()
 																   .UserData).ContainsKey(login));
-			var encryptedPassword = ((Dictionary<string, string>) ServiceLocator.Current.GetInstance<ServicesStorage>()
-																	  .UserData)[login];
+			var encryptedPassword = ServiceLocator.Current.GetInstance<ServicesStorage>()
+												  .UserData[login];
 			Assert.AreEqual(encryptedPassword, authService.Encrypt(password));
 		}
 	}

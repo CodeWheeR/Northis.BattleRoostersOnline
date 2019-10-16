@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using DataTransferObjects;
@@ -13,22 +14,29 @@ namespace Northis.BattleRoostersOnline.DataStorages
 		public ServicesStorage()
 		{
 			UserData = new Dictionary<string, string>();
-			LoggedUsers = new Dictionary<string, RoosterDto[]>();
+			RoostersData = new Dictionary<string, List<RoosterDto>>();
+			LoggedUsers = new Dictionary<string, string>();
 		}
 
-		public IEnumerable<KeyValuePair<string, string>> UserData
+		public Dictionary<string, string> UserData
 		{
 			get;
 			set;
 		}
 
-		public IEnumerable<KeyValuePair<string, RoosterDto[]>> LoggedUsers
+		public Dictionary<string, List<RoosterDto>> RoostersData
 		{
 			get;
 			set;
 		}
 
-		public IEnumerable<KeyValuePair<string, string>> Sessions
+		/// <summary>
+		/// Gets or sets the logged users.
+		/// </summary>
+		/// <value>
+		/// The logged users.
+		/// </value>
+		public Dictionary<string, string> LoggedUsers
 		{
 			get;
 			set;

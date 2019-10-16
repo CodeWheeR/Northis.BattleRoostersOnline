@@ -9,6 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTransferObjects", "Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameService.Tests", "GameService.Tests\GameService.Tests.csproj", "{8BB0D04E-2A7C-4F47-B2BC-A66F3CE57918}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServer", "GameServer\GameServer.csproj", "{D1E44F17-8BEE-430D-AEB1-E0C1446C4692}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGameClient", "TestGameClient\TestGameClient.csproj", "{643DD339-78E2-4756-B549-60B114B6AA89}"
+	ProjectSection(ProjectDependencies) = postProject
+		{51A9CBE9-121F-40B3-9454-4684FE0B2D75} = {51A9CBE9-121F-40B3-9454-4684FE0B2D75}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +34,14 @@ Global
 		{8BB0D04E-2A7C-4F47-B2BC-A66F3CE57918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BB0D04E-2A7C-4F47-B2BC-A66F3CE57918}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BB0D04E-2A7C-4F47-B2BC-A66F3CE57918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1E44F17-8BEE-430D-AEB1-E0C1446C4692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1E44F17-8BEE-430D-AEB1-E0C1446C4692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1E44F17-8BEE-430D-AEB1-E0C1446C4692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1E44F17-8BEE-430D-AEB1-E0C1446C4692}.Release|Any CPU.Build.0 = Release|Any CPU
+		{643DD339-78E2-4756-B549-60B114B6AA89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{643DD339-78E2-4756-B549-60B114B6AA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{643DD339-78E2-4756-B549-60B114B6AA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{643DD339-78E2-4756-B549-60B114B6AA89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

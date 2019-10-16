@@ -10,13 +10,13 @@ using Microsoft.SqlServer.Server;
 namespace Northis.BattleRoostersOnline.Contracts
 {
 	[ServiceContract]
-	interface IAuthenticateService
+	public interface IAuthenticateService
 	{
 		[OperationContract]
 		string LogIn(string login, string password);
 		[OperationContract]
 		string Register(string login, string password);
-		[OperationContract(IsTerminating = true)]
+		[OperationContract]
 		bool LogOut(string token);
 	}
 }

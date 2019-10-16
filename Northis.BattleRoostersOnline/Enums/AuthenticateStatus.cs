@@ -10,6 +10,7 @@ namespace Northis.BattleRoostersOnline.Enums
 	{
 		OK,
 		WrongLoginOrPassword,
-		AlreadyRegistered
+		AlreadyRegistered,
+		AlreadyLoggedIn
 	}
 }
