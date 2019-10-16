@@ -56,7 +56,7 @@
     <Compile Include="RoosterDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoosterColorDto.cs" />
-    <Compile Include="XmlRooster.cs" />
+    <Compile Include="UserRoosters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -64,8 +64,6 @@
     <Compile Include="Contracts\IGameServicesProvider.cs" />
     <Compile Include="DataStorages\ServicesStorage.cs" />
     <Compile Include="Enums\AuthenticateStatus.cs" />
-    <Compile Include="Formatters\RoosterFormatter.cs" />
-    <Compile Include="Formatters\UserFormatter.cs" />
     <Compile Include="Implements\AuthenticateService.cs" />
     <Compile Include="Implements\EditService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,6 +82,7 @@
   <ItemGroup>
     <Content Include="Resources\RoostersStorage.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
