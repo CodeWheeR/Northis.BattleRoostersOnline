@@ -1,0 +1,12 @@
+﻿<Application
+	x:Class="Northis.RoosterBattle.App"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:converters="clr-namespace:Northis.RoosterBattle.Converters"
+	xmlns:local="clr-namespace:Northis.RoosterBattle">
+	<Application.Resources>
+		<converters:EnumValueToStringPath x:Key="EnumValueToStringPath" />
+		<converters:HeathValueToBool x:Key="HealthToBoolConverter" />
+		<converters:EnumValueToDescription x:Key="EnumValueToDescription" />
+	</Application.Resources>
+</Application>

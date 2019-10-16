@@ -1,0 +1,253 @@
+﻿<catel:Window
+	x:Class="Northis.RoosterBattle.Views.FightView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:catel="http://schemas.catelproject.com"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+	xmlns:local="clr-namespace:Northis.RoosterBattle.Views"
+	xmlns:res="clr-namespace:Northis.RoosterBattle.Properties"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:userControls="clr-namespace:Northis.RoosterBattle.UserControls"
+	xmlns:viewModels="clr-namespace:Northis.RoosterBattle.ViewModels"
+	Title="{x:Static res:Resources.FightWindow}"
+	Width="800"
+	Height="450"
+	MinWidth="800"
+	MinHeight="450"
+	MaxWidth="800"
+	MaxHeight="450"
+	d:DataContext="{d:DesignInstance viewModels:FightViewModel}"
+	mc:Ignorable="d">
+	<catel:Window.Resources />
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="59*" />
+			<ColumnDefinition Width="139*" />
+		</Grid.ColumnDefinitions>
+
+		<Border
+			Margin="10,50,10,35"
+			BorderBrush="#FF838383"
+			BorderThickness="1">
+			<ScrollViewer Panel.ZIndex="1" VerticalScrollBarVisibility="Auto">
+				<ListBox
+					BorderBrush="{x:Null}"
+					ItemsSource="{Binding Roosters}"
+					SelectedItem="{Binding SelectedRooster}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Margin="2">
+								<TextBlock FontSize="18" Text="{Binding Name}" />
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="{x:Static res:Resources.Health}" />
+									<TextBlock Text="{Binding Health}" />
+								</StackPanel>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="{x:Static res:Resources.Stamina}" />
+									<TextBlock Text="{Binding Stamina}" />
+								</StackPanel>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="{x:Static res:Resources.WinStreak}" />
+									<TextBlock Text="{Binding WinStreak}" />
+								</StackPanel>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</ScrollViewer>
+		</Border>
+		<Label
+			Width="199"
+			Height="35"
+			Margin="10,10,0,0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Content="{x:Static res:Resources.AvaliableFighters}"
+			FontSize="18"
+			FontWeight="Bold" />
+		<Label
+			Grid.Column="1"
+			Width="553"
+			Height="35"
+			Margin="10,10,-7,0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			HorizontalContentAlignment="Center"
+			VerticalContentAlignment="Center"
+			Content="{x:Static res:Resources.FightWindow}"
+			FontSize="18"
+			FontWeight="Bold" />
+		<Button
+			Grid.Column="1"
+			Width="148"
+			Height="20"
+			Margin="0,0,0,10"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Bottom"
+			Command="{Binding StartFightCommand}"
+			Content="{x:Static res:Resources.StartFight}" />
+		<Button
+			Grid.Column="0"
+			Width="105"
+			Height="20"
+			Margin="10,0,0,10"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Bottom"
+			Command="{Binding SelectFirstRoosterCommand}"
+			Content="{x:Static res:Resources.SelectAsFirst}" />
+		<Button
+			Grid.Column="0"
+			Width="105"
+			Height="20"
+			Margin="0,0,10,10"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Bottom"
+			Command="{Binding SelectSecondRoosterCommand}"
+			Content="{x:Static res:Resources.SelectAsSecond}" />
+		<Border
+			Grid.Column="1"
+			Margin="15,50,10,35"
+			BorderBrush="Black"
+			BorderThickness="1">
+			<Grid>
+				<Grid.Resources>
+					<Style TargetType="userControls:ValueBar">
+						<Setter Property="Margin" Value="10,0,10,0" />
+					</Style>
+				</Grid.Resources>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="200" />
+					<ColumnDefinition />
+					<ColumnDefinition Width="200" />
+				</Grid.ColumnDefinitions>
+
+				<StackPanel
+					Margin="10,0,0,0"
+					VerticalAlignment="Top"
+					Orientation="Vertical">
+					<StackPanel.Resources>
+						<Style TargetType="TextBlock">
+							<Setter Property="Margin" Value="0,10,0,0" />
+						</Style>
+					</StackPanel.Resources>
+					<Label
+						Height="30"
+						Content="{Binding FirstFighter.Name}"
+						FontSize="18"
+						FontWeight="Bold" />
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.WinStreak}"  Margin="0"/>
+						<TextBlock Text="{Binding FirstFighter.WinStreak}"  Margin="0"/>
+					</StackPanel>
+					<Border
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						BorderBrush="Gray"
+						BorderThickness="1">
+						<Grid>
+							<Image
+								Width="186"
+								Height="146"
+								Margin="0"
+								Source="{Binding FirstFighter.Color, Converter={StaticResource EnumValueToStringPath}}" />
+							<Image
+								Width="120"
+								Height="100"
+								Margin="0">
+								<Image.Style>
+									<Style>
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding ShowDeadFirst}" Value="true">
+												<Setter Property="Image.Source" Value="pack://application:,,,/Resources/Dead.png" />
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</Image.Style>
+							</Image>
+						</Grid>
+					</Border>
+
+
+					<TextBlock HorizontalAlignment="Center" Text="{x:Static res:Resources.Health}" />
+					<userControls:ValueBar
+						Height="20"
+						MaxValue="{Binding FirstFighter.MaxHealth}"
+						TextSize="12"
+						ValueColor="Red"
+						ValueLevel="{Binding FirstFighter.Health}" />
+					<TextBlock HorizontalAlignment="Center" Text="{x:Static res:Resources.Stamina}" />
+					<userControls:ValueBar
+						Height="20"
+						TextSize="12"
+						ValueColor="Yellow"
+						ValueLevel="{Binding FirstFighter.Stamina}" />
+
+
+				</StackPanel>
+
+				<StackPanel
+					Grid.Column="2"
+					Margin="0,0,10,0"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					Orientation="Vertical">
+					<StackPanel.Resources>
+						<Style TargetType="TextBlock">
+							<Setter Property="Margin" Value="0,10,0,0" />
+						</Style>
+					</StackPanel.Resources>
+					<Label
+						Height="35"
+						Content="{Binding SecondFighter.Name}"
+						FontSize="18"
+						FontWeight="Bold" />
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.WinStreak}"  Margin="0"/>
+						<TextBlock Text="{Binding SecondFighter.WinStreak}"  Margin="0"/>
+					</StackPanel>
+					<Border
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						BorderBrush="Gray"
+						BorderThickness="1">
+						<Grid>
+							<Image
+								Width="186"
+								Height="146"
+								Margin="0"
+								Source="{Binding SecondFighter.Color, Converter={StaticResource EnumValueToStringPath}}" />
+							<Image
+								Width="120"
+								Height="100"
+								Margin="0">
+								<Image.Style>
+									<Style>
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding ShowDeadSecond}" Value="true">
+												<Setter Property="Image.Source" Value="pack://application:,,,/Resources/Dead.png" />
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</Image.Style>
+							</Image>
+						</Grid>
+					</Border>
+					<TextBlock HorizontalAlignment="Center" Text="{x:Static res:Resources.Health}" />
+					<userControls:ValueBar
+						Height="20"
+						MaxValue="{Binding SecondFighter.MaxHealth}"
+						TextSize="12"
+						ValueColor="Red"
+						ValueLevel="{Binding SecondFighter.Health}" />
+					<TextBlock HorizontalAlignment="Center" Text="{x:Static res:Resources.Stamina}" />
+					<userControls:ValueBar
+						Height="20"
+						TextSize="12"
+						ValueColor="Yellow"
+						ValueLevel="{Binding SecondFighter.Stamina}" />
+				</StackPanel>
+			</Grid>
+		</Border>
+	</Grid>
+</catel:Window>
