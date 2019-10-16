@@ -22,7 +22,9 @@ namespace GameServer
 			try
 			{
 				// Step 3: Add a service endpoint.
-				selfHost.AddServiceEndpoint(typeof(IAuthenticateService), new WSHttpBinding(), "");
+				selfHost.AddServiceEndpoint(typeof(IAuthenticateService), new WSHttpBinding(), "AuthenticationService");
+
+				selfHost.AddServiceEndpoint(typeof(IEditService), new WSHttpBinding(), "EditService");
 
 				// Step 4: Enable metadata exchange.
 				ServiceMetadataBehavior smb = new ServiceMetadataBehavior();

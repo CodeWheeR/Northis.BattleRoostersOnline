@@ -19,7 +19,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				if (ServiceLocator.IsLocationProviderSet)
 				{
 					return ServiceLocator.Current.GetInstance<ServicesStorage>()
-										 .RoosterData;
+										 .RoostersData;
 				}
 				else
 				{

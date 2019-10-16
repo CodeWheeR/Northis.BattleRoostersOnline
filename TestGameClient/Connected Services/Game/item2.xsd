@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/DataTransferObjects" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DataTransferObjects" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="RoosterDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Brickness" type="xs:int" />
+      <xs:element minOccurs="0" name="ColorDto" type="tns:RoosterColorDto" />
+      <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeDto" />
+      <xs:element minOccurs="0" name="Damage" type="xs:double" />
+      <xs:element minOccurs="0" name="Health" type="xs:double" />
+      <xs:element minOccurs="0" name="Height" type="xs:int" />
+      <xs:element minOccurs="0" name="Hit" type="xs:double" />
+      <xs:element minOccurs="0" name="Luck" type="xs:int" />
+      <xs:element minOccurs="0" name="MahHealth" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Stamina" type="xs:int" />
+      <xs:element minOccurs="0" name="Thickness" type="xs:int" />
+      <xs:element minOccurs="0" name="Weight" type="xs:double" />
+      <xs:element minOccurs="0" name="WinStreak" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RoosterDto" nillable="true" type="tns:RoosterDto" />
+  <xs:simpleType name="RoosterColorDto">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Black" />
+      <xs:enumeration value="Brown" />
+      <xs:enumeration value="Blue" />
+      <xs:enumeration value="Red" />
+      <xs:enumeration value="White" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RoosterColorDto" nillable="true" type="tns:RoosterColorDto" />
+  <xs:simpleType name="CrestSizeDto">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Small" />
+      <xs:enumeration value="Medium" />
+      <xs:enumeration value="Big" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CrestSizeDto" nillable="true" type="tns:CrestSizeDto" />
+</xs:schema>

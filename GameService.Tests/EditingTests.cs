@@ -21,7 +21,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 			var container = new UnityContainer();
 			container.RegisterInstance(new ServicesStorage()
 			{
-				RoosterData = new Dictionary<string, List<RoosterDto>>()
+				RoostersData = new Dictionary<string, List<RoosterDto>>()
 				{
 					{
 						"aaa", new List<RoosterDto>
@@ -82,7 +82,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		{
 			_editService.Add("NewID",new RoosterDto());
 
-			Assert.AreEqual(3,ServiceLocator.Current.GetInstance<ServicesStorage>().RoosterData.Count);
+			Assert.AreEqual(3,ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Count);
 		}
 
 		[Test]
@@ -90,8 +90,8 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		{
 			_editService.Add("aaa", new RoosterDto());
 
-			Assert.AreEqual(2, ServiceLocator.Current.GetInstance<ServicesStorage>().RoosterData.Count);
-			Assert.AreEqual(3, ServiceLocator.Current.GetInstance<ServicesStorage>().RoosterData["aaa"].Count);
+			Assert.AreEqual(2, ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Count);
+			Assert.AreEqual(3, ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData["aaa"].Count);
 		}
 
 		[Test]
@@ -99,7 +99,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		{
 			_editService.Remove("aaa", 0);
 
-			Assert.AreEqual(1, ServiceLocator.Current.GetInstance<ServicesStorage>().RoosterData["aaa"].Count);
+			Assert.AreEqual(1, ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData["aaa"].Count);
 		}
 
 		[Test]
@@ -107,7 +107,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		{
 			_editService.Remove("asdkjasdajksdolasjdklasjdkasjd", 2222222);
 
-			Assert.AreEqual(2, ServiceLocator.Current.GetInstance<ServicesStorage>().RoosterData.Count);
+			Assert.AreEqual(2, ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Count);
 		}
 
 		[TestCase("aaa", 2222222)]
@@ -116,7 +116,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		{
 			_editService.Remove(key, roosterSeqNum);
 
-			Assert.AreEqual(2, ServiceLocator.Current.GetInstance<ServicesStorage>().RoosterData.Count);
+			Assert.AreEqual(2, ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Count);
 		}
 
 		[Test]

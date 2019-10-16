@@ -7,16 +7,16 @@ namespace Northis.BattleRoostersOnline.Contracts
 	/// Контракт, отвечающий за работу с петухами.
 	/// </summary>
 	[ServiceContract]
-	interface IEditService
+	public interface IEditService
 	{
 		/// <summary>
 		/// Редактирует выбранного петуха конкретного пользователя.
 		/// </summary>
-		/// <param name="userID">Идентификатор .</param>
-		/// <param name="roosterID">The rooster identifier.</param>
-		/// <param name="rooster">The rooster.</param>
+		/// <param name="userID">Идентификатор.</param>
+		/// <param name="roosterSeqNum">Порядковый номер петуха.</param>
+		/// <param name="rooster">Петух.</param>
 		[OperationContract]
-		void Edit(string userID, int roosterID, RoosterDto rooster);
+		void Edit(string userID, int roosterSeqNum, RoosterDto rooster);
 		[OperationContract]
 		void Add(string userID, RoosterDto rooster);
 		[OperationContract]

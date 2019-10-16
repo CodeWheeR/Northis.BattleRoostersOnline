@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\AuthService\Reference.cs">
+    <Compile Include="Connected Services\Game\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -55,11 +55,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\AuthService\AuthenticateService.wsdl" />
-    <None Include="Connected Services\AuthService\item.xsd">
+    <None Include="Connected Services\Game\GameServicesProvider.wsdl" />
+    <None Include="Connected Services\Game\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\AuthService\item1.xsd">
+    <None Include="Connected Services\Game\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Game\item2.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -67,19 +70,19 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\AuthService\" />
+    <WCFMetadataStorage Include="Connected Services\Game\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AuthService\item.disco" />
+    <None Include="Connected Services\Game\item.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AuthService\configuration91.svcinfo" />
+    <None Include="Connected Services\Game\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AuthService\configuration.svcinfo" />
+    <None Include="Connected Services\Game\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AuthService\Reference.svcmap">
+    <None Include="Connected Services\Game\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
