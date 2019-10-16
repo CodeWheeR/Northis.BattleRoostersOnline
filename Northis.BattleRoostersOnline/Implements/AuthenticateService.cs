@@ -19,14 +19,14 @@ namespace Northis.BattleRoostersOnline.Implements
 	public class AuthenticateService : IAuthenticateService
 	{
 		private Random _rand = new Random();
+		private BinaryFormatter formatter = new BinaryFormatter();
 
-		public Dictionary<string, string> LogData
+		private ServicesStorage _servicesStorage
 		{
 			get
-			{	
+			{
 				if (ServiceLocator.IsLocationProviderSet)
-					return (Dictionary<string, string>) ServiceLocator.Current.GetInstance<ServicesStorage>()
-														   .UserData;
+					return ServiceLocator.Current.GetInstance<ServicesStorage>();
 				throw new NullReferenceException("Storage is null");
 			}
 		}
@@ -34,37 +34,37 @@ namespace Northis.BattleRoostersOnline.Implements
 		public AuthenticateService()
 		{
 			if (!ServiceLocator.IsLocationProviderSet)
-				ServiceLocator.SetLocatorProvider(() =>
-				{
-					var container = new UnityContainer();
-					container.RegisterInstance<ServicesStorage>(new ServicesStorage());
-					return new UnityServiceLocator(container);
-				});
+			{
+				var container = new UnityContainer();
+				container.RegisterInstance<ServicesStorage>(new ServicesStorage());
+				var locator = new UnityServiceLocator(container);
+				ServiceLocator.SetLocatorProvider(() => locator);
+			}
 		}
 
 		public string LogIn(string login, string password)
 		{
-			if (!LogData.ContainsKey(login) || LogData[login] != Encrypt(password))
+			if (!(_servicesStorage.UserData).ContainsKey(login) || _servicesStorage.UserData[login] != Encrypt(password))
 				return AuthenticateStatus.WrongLoginOrPassword.ToString();
-			var token = GenerateToken();
+			if (_servicesStorage.LoggedUsers.ContainsValue(login))
+				return AuthenticateStatus.AlreadyLoggedIn.ToString();
 
-			((Dictionary<string, List<RoosterDto>>) ServiceLocator.Current.GetInstance<ServicesStorage>()
-														.RoosterData).Add(token, null);
+			var token = GenerateToken();
+			_servicesStorage.LoggedUsers.Add(token, login);
 			return token;
 		}
 
 		public string Register(string login, string password)
 		{
-			if (LogData.ContainsKey(login))
+			if (_servicesStorage.UserData.ContainsKey(login))
 				return AuthenticateStatus.AlreadyRegistered.ToString();
-			LogData.Add(login, Encrypt(password));
-			return LogIn(login, Decrypt(password));
+			_servicesStorage.UserData.Add(login, Encrypt(password));
+			return LogIn(login, password);
 		}
 
 		public bool LogOut(string token)
 		{
-			var data = ((Dictionary<string, List<RoosterDto>>) ServiceLocator.Current.GetInstance<ServicesStorage>()
-																   .RoosterData);
+			var data = _servicesStorage.LoggedUsers;
 			if (!data.ContainsKey(token))
 				return false;
 
@@ -72,7 +72,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			return true;
 		}
 
-		public string GenerateToken()
+		private string GenerateToken()
 		{
 			string _tokenGeneratorSymbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 			string answer = "";
@@ -108,17 +108,15 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		public void SaveUserData()
 		{
-			BinaryFormatter formatter = new BinaryFormatter();
 			using (FileStream fs = new FileStream("users.dat", FileMode.OpenOrCreate))
 			{
-				formatter.Serialize(fs, LogData);
+				formatter.Serialize(fs, _servicesStorage.UserData);
 			}
 		}
 
-		public IEnumerable<KeyValuePair<string, string>> LoadUserData()
+		public Dictionary<string, string> LoadUserData()
 		{
-			BinaryFormatter formatter = new BinaryFormatter();
-			using (FileStream fs = new FileStream("users.dat", FileMode.OpenOrCreate))
+			using (FileStream fs = new FileStream("users.dat", FileMode.Open))
 			{
 				return (Dictionary<string, string>)formatter.Deserialize(fs);
 			}

@@ -30,9 +30,9 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 					{"DengiVZaim",  authService.Encrypt("88005553535")}
 				},
 
-				RoosterData = new Dictionary<string, List<RoosterDto>>()
+				RoostersData = new Dictionary<string, List<RoosterDto>>()
 				{
-					{"123oijhokjuh1256", new List<RoosterDto>(1)}
+					{"123oijhokjuh1256", new List<RoosterDto>()}
 				}
 
 			});
@@ -69,20 +69,20 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		public void LogOutTest(string token)
 		{
 			var colSize = ServiceLocator.Current.GetInstance<ServicesStorage>()
-										.RoosterData.Count();
+										.LoggedUsers.Count();
 			authService.LogOut(token);
 			Assert.AreEqual(colSize, ServiceLocator.Current.GetInstance<ServicesStorage>()
-												   .RoosterData.Count()+1);
+												   .LoggedUsers.Count()+1);
 		}
 
 		[TestCase("Уася Лошков", "Нагибатор228тут")]
 		public void RegisterTest(string login, string password)
 		{
 			authService.Register(login, password);
-			Assert.True(((Dictionary<string, string>)ServiceLocator.Current.GetInstance<ServicesStorage>()
+			Assert.True((ServiceLocator.Current.GetInstance<ServicesStorage>()
 																   .UserData).ContainsKey(login));
-			var encryptedPassword = ((Dictionary<string, string>) ServiceLocator.Current.GetInstance<ServicesStorage>()
-																	  .UserData)[login];
+			var encryptedPassword = ServiceLocator.Current.GetInstance<ServicesStorage>()
+												  .UserData[login];
 			Assert.AreEqual(encryptedPassword, authService.Encrypt(password));
 		}
 	}
