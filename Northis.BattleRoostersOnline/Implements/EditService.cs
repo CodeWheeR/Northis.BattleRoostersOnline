@@ -10,35 +10,17 @@ using Northis.BattleRoostersOnline.DataStorages;
 
 namespace Northis.BattleRoostersOnline.Implements
 {
-	public class EditService : IEditService
+	public class EditService : BaseServiceWithStorage, IEditService
 	{
-		public Dictionary<string, List<RoosterDto>> Roosters
-		{
-			get
-			{
-				if (ServiceLocator.IsLocationProviderSet)
-				{
-					return ServiceLocator.Current.GetInstance<ServicesStorage>()
-										 .RoostersData;
-				}
-				else
-				{
-					throw new NullReferenceException("Storage is null");
-				}
-
-			}
-
-		}
-
 		public void Add(string userID, RoosterDto rooster)
 		{
-			if (Roosters.ContainsKey(userID))
+			if (Storage.RoostersData.ContainsKey(userID))
 			{
-				Roosters[userID].Add(rooster);
+				Storage.RoostersData[userID].Add(rooster);
 			}
 			else
 			{
-				Roosters.Add(userID, new List<RoosterDto>()
+				Storage.RoostersData.Add(userID, new List<RoosterDto>()
 				{
 					rooster
 				});
@@ -53,22 +35,27 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			using (FileStream fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
 			{
-				Roosters.Clear();
+				Storage.RoostersData.Clear();
 
 				userRoosters = (List<UserRoosters>) serializer.Deserialize(fileStream);
 
 				for (int i = 0; i < userRoosters.Count; i++)
 				{
-					Roosters.Add(userRoosters[i].ID, userRoosters[i].roosters.ToList());
+					Storage.RoostersData.Add(userRoosters[i].ID, userRoosters[i].roosters.ToList());
 				}
 			}
+		}
+
+		public IEnumerable<RoosterDto> GetUserRoosters(string token)
+		{
+			return Storage.RoostersData[Storage.LoggedUsers[token]];
 		}
 
 		public void Save()
 		{
 			List<UserRoosters> roosters = new List<UserRoosters>();
 
-			foreach (var val in Roosters)
+			foreach (var val in Storage.RoostersData)
 			{
 				roosters.Add(new UserRoosters(val));
 			}
@@ -88,17 +75,17 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		public void Edit(string userID, int roosterSeqNum, RoosterDto rooster)
 		{
-			if (Roosters.ContainsKey(userID) && Roosters[userID].Count > roosterSeqNum && roosterSeqNum >= 0)
+			if (Storage.RoostersData.ContainsKey(userID) && Storage.RoostersData[userID].Count > roosterSeqNum && roosterSeqNum >= 0)
 			{
-				Roosters[userID.ToString()][roosterSeqNum] = rooster;
+				Storage.RoostersData[userID.ToString()][roosterSeqNum] = rooster;
 			}
 		}
 
 		public void Remove(string userID, int roosterSeqNum)
 		{
-			if (Roosters.ContainsKey(userID) && Roosters[userID].Count > roosterSeqNum && roosterSeqNum >= 0)
+			if (Storage.RoostersData.ContainsKey(userID) && Storage.RoostersData[userID].Count > roosterSeqNum && roosterSeqNum >= 0)
 			{
-				Roosters[userID].RemoveAt(roosterSeqNum);
+				Storage.RoostersData[userID].RemoveAt(roosterSeqNum);
 			}
 		}
 	}

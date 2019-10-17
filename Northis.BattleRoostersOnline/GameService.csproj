@@ -72,9 +72,11 @@
   <ItemGroup>
     <Compile Include="Contracts\IAuthenticateService.cs" />
     <Compile Include="Contracts\IEditService.cs" />
+    <Compile Include="Contracts\IFinderService.cs" />
     <Compile Include="DataStorages\ServicesStorage.cs" />
     <Compile Include="Enums\AuthenticateStatus.cs" />
     <Compile Include="Implements\AuthenticateService.cs" />
+    <Compile Include="Implements\BaseServiceWithStorage.cs" />
     <Compile Include="Implements\EditService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implements\GameServicesProvider.cs" />
@@ -106,7 +108,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{3D9AD99F-2412-4246-B90B-4EAA41C64699}">
         <WcfProjectProperties>
-          <AutoStart>True</AutoStart>
+          <AutoStart>False</AutoStart>
         </WcfProjectProperties>
       </FlavorProperties>
     </VisualStudio>

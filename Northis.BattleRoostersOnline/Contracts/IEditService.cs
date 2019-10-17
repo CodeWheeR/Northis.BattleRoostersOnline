@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System.Collections.Generic;
+using System.ServiceModel;
 using DataTransferObjects;
 
 namespace Northis.BattleRoostersOnline.Contracts
@@ -25,5 +26,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 		void Save();
 		[OperationContract]
 		void Load();
+		[OperationContract]
+		IEnumerable<RoosterDto> GetUserRoosters(string token);
 	}
 }
