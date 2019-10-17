@@ -217,5 +217,5 @@
 			Command="{Binding FightCommand}"
 			Content="{x:Static res:Resources.FightButton}"
 			RenderTransformOrigin="0.643,0.567" />
-	</Grid>
+    </Grid>
 </catel:Window>

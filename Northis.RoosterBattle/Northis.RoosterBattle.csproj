@@ -120,9 +120,11 @@
     <Compile Include="Converters\HealthValueToBool.cs" />
     <Compile Include="Converters\EnumValueToStringPath.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="Models\AuthModel.cs" />
     <Compile Include="Models\RoosterSettings.cs" />
     <Compile Include="Services\RoosterKeepService.cs" />
     <Compile Include="Validators\RoosterModelValidator.cs" />
+    <Compile Include="ViewModels\AuthViewModel.cs" />
     <Compile Include="ViewModels\EditRoosterViewModel.cs" />
     <Compile Include="ViewModels\FightViewModel.cs" />
     <Compile Include="ViewModels\RoosterBrowserViewModel.cs" />
@@ -183,7 +185,9 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AuthView.xaml">
       <SubType>Designer</SubType>

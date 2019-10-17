@@ -111,12 +111,10 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<ObservableCollection<RoosterModel>>(RoostersProperty);
 			set => SetValue(RoostersProperty, value);
 		}
-
 		public ICommand InitializeViewModelCommand
 		{
 			get;
 		}
-
 		/// <summary>
 		/// Свойство, предоставляющее или устанавливающее текущего выбранного петуха.
 		/// </summary>

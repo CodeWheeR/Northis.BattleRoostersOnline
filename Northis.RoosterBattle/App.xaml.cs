@@ -37,7 +37,7 @@ namespace Northis.RoosterBattle
 				await messageService.ShowAsync("Ошибка чтения файла сохранения. Мои соболезнования...", "Ошибка!", MessageButton.OK, MessageImage.Error);
 			});
 
-			uiVisualizerService.ShowDialogAsync<RoosterBrowserViewModel>();
+			uiVisualizerService.ShowDialogAsync<AuthViewModel>();
 		}
 	}
 }

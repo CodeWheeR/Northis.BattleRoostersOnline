@@ -17,7 +17,7 @@ namespace GameServer
 			Uri baseAddress = new Uri("http://localhost:23555/Northis.BattleRoostersOnline/");
 
 			// Step 2: Create a ServiceHost instance.
-			ServiceHost selfHost = new ServiceHost(typeof(AuthenticateService), baseAddress);
+			ServiceHost selfHost = new ServiceHost(typeof(GameServicesProvider), baseAddress);
 
 			try
 			{

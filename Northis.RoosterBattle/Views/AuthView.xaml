@@ -6,8 +6,8 @@
     xmlns:local="clr-namespace:Northis.RoosterBattle.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Авторизация"
-    Width="300"
-    Height="200"
+    Width="200"
+    Height="120"
     ResizeMode="NoResize"
     mc:Ignorable="d">
     <Grid>
@@ -24,12 +24,18 @@
         <TextBlock
             Grid.Row="0"
             Grid.Column="0"
-            Text="Логин" />
+            Text="Логин" 
+            TextAlignment="Center"
+            VerticalAlignment="Center"
+        />
         <TextBox Grid.Row="1" Grid.Column="1" />
         <TextBlock
             Grid.Row="1"
             Grid.Column="0"
-            Text="Пароль" />
+            Text="Пароль"
+            TextAlignment="Center"
+            VerticalAlignment="Center"
+            />
         <Button
             Grid.Row="2"
             Grid.Column="1"

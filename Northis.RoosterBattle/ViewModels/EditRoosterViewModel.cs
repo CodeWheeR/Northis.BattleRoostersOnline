@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection;
 using Catel.Data;
 using Catel.MVVM;
-using System.Linq;
-using Catel.Collections;
-using Catel.Linq;
 using Northis.RoosterBattle.Models;
 
 namespace Northis.RoosterBattle.ViewModels
