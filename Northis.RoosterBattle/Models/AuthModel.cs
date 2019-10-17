@@ -6,7 +6,7 @@ using Northis.RoosterBattle.GameServer;
 
 namespace Northis.RoosterBattle.Models
 {
-    class AuthModel : ValidatableModelBase
+	class AuthModel : ValidatableModelBase
 	{
 		private AuthenticateServiceClient _authenticateServiceClient = new AuthenticateServiceClient();
 

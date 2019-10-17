@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
+using System.Resources;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Catel.Data;
-using Catel.IoC;
 using Catel.MVVM;
 using Catel.Services;
 using Northis.RoosterBattle.Models;
@@ -11,7 +11,7 @@ using Northis.RoosterBattle.GameServer;
 
 namespace Northis.RoosterBattle.ViewModels
 {
-    class AuthViewModel : ViewModelBase
+	class AuthViewModel : ViewModelBase
 	{
 		public static readonly PropertyData AuthModelProperty = RegisterProperty(nameof(AuthModel), typeof(AuthModel));
 
@@ -22,7 +22,6 @@ namespace Northis.RoosterBattle.ViewModels
 		private AuthenticateServiceClient _authenticateServiceClient = new AuthenticateServiceClient();
 
 		private IUIVisualizerService _uiVisualizerService;
-
 
 
 
@@ -55,7 +54,7 @@ namespace Northis.RoosterBattle.ViewModels
 		[ViewModelToModel(nameof(AuthModel))]
 		public string Password
 		{
-			get => GetValue<string>(LoginProperty);
+			get => GetValue<string>(PasswordProperty);
 			set => SetValue(PasswordProperty, value);
 		}
 
@@ -71,17 +70,32 @@ namespace Northis.RoosterBattle.ViewModels
 
 		private async Task RegisterAsync()
 		{
-			string result = await _authenticateServiceClient.RegisterAsync(Login, Password);
-			MessageBox.Show(result);
+			string token = await _authenticateServiceClient.RegisterAsync(Login, Password);
+
+			if (token != "AlreadyRegistered")
+			{
+				Application.Current.Resources.Add("UserToken", token);
+				await this.SaveAndCloseViewModelAsync();
+			}
+			else
+			{
+				MessageBox.Show(token);
+			}
 		}
 
 		private async Task AuthorizationAsync()
 		{
-			string result = await _authenticateServiceClient.LogInAsync(Login, Password);
-			MessageBox.Show(result);
+			string token = await _authenticateServiceClient.LogInAsync(Login, Password);
+
+			if (token != "AlreadyLoggedIn" && token != "WrongLoginOrPassword")
+			{
+				Application.Current.Resources.Add("UserToken", token);
+				await this.SaveAndCloseViewModelAsync();
+			}
+			else
+			{
+				MessageBox.Show(token);
+			}
 		}
-
-		
-
-    }
+	}
 }

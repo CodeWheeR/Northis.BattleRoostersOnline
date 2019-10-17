@@ -25,5 +25,6 @@ namespace Northis.RoosterBattle.Views
 		{
 			InitializeComponent();
 		}
+
 	}
 }

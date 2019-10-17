@@ -214,4 +214,7 @@
   <data name="White" xml:space="preserve">
     <value>Белый</value>
   </data>
+  <data name="token" xml:space="preserve">
+    <value />
+  </data>
 </root>

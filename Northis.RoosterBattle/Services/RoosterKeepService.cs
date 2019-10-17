@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Northis.RoosterBattle.Models;
-using System.Diagnostics;
 using Catel.Collections;
 using Catel.Data;
 using Catel.IoC;
-using Catel.Runtime.Serialization;
 using Catel.Runtime.Serialization.Json;
-using Northis.RoosterBattle.Properties;
 
 namespace Northis.RoosterBattle.Services
 {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Mime;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Catel;
 using Catel.Data;
@@ -19,7 +21,8 @@ namespace Northis.RoosterBattle.ViewModels
 	/// <seealso cref="Catel.MVVM.ViewModelBase" />
 	internal class RoosterBrowserViewModel : ViewModelBase
 	{
-		#region Fields		
+		#region Fields
+		private string _token = null;
 		/// <summary>
 		/// Сервис визуализации окон приложения.
 		/// </summary>
@@ -133,6 +136,7 @@ namespace Northis.RoosterBattle.ViewModels
 			set => SetValue(SelectedRoosterProperty, value);
 		}
 
+
 		#endregion
 
 		#region .ctor
@@ -151,7 +155,7 @@ namespace Northis.RoosterBattle.ViewModels
 			EditRoosterCommand = new TaskCommand(EditRoosterAsync, () => SelectedRooster != null);
 			DeleteRoosterCommand = new TaskCommand(DeleteRoosterAsync, () => SelectedRooster != null);
 			AddRoosterCommand = new TaskCommand(AddRoosterAsync);
-			FightCommand = new TaskCommand(StartRoostersFightAsync, () => ((ObservableCollection<RoosterModel>)Roosters).Count > 1);
+			FightCommand = new TaskCommand(StartRoostersFightAsync, () => ((ObservableCollection<RoosterModel>) Roosters).Count > 1);
 		}
 
 
@@ -176,11 +180,13 @@ namespace Northis.RoosterBattle.ViewModels
 			await _uiVisualizerService.ShowDialogAsync<AuthViewModel>();
 
 			Argument.IsNotNull(nameof(_roosterKeepService), _roosterKeepService);
+
 			Argument.IsNotNull(nameof(_exceptionService), _exceptionService);
 
 			IEnumerable<RoosterModel> roosters = await _exceptionService.ProcessAsync(_roosterKeepService.LoadRoostersAsync);
 			
 			Argument.IsNotNull(nameof(roosters), roosters);
+
 			Roosters = new ObservableCollection<RoosterModel>(roosters);
 
 			await base.InitializeAsync();

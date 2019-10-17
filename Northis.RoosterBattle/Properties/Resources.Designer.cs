@@ -324,6 +324,15 @@ namespace Northis.RoosterBattle.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string token {
+            get {
+                return ResourceManager.GetString("token", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Вес: .
         /// </summary>
         public static string Weight {
