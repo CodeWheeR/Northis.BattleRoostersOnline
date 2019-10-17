@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using Catel;
 using Catel.Data;
@@ -45,11 +42,19 @@ namespace Northis.RoosterBattle.ViewModels
 		/// </summary>
 		public static readonly PropertyData RoostersProperty = RegisterProperty(nameof(Roosters), typeof(IEnumerable<RoosterModel>));
 
+		public static readonly PropertyData TokenProperty = RegisterProperty(nameof(Token), typeof(string));
 		#endregion
 
 		#endregion
 
 		#region Properties		
+
+		public string Token
+		{
+			get => GetValue<string>(TokenProperty);
+			set => SetValue(TokenProperty, value);
+		}
+
 		/// <summary>
 		/// Свойство, предоставляющее команду начала сражения петухов.
 		/// </summary>
@@ -147,11 +152,8 @@ namespace Northis.RoosterBattle.ViewModels
 			DeleteRoosterCommand = new TaskCommand(DeleteRoosterAsync, () => SelectedRooster != null);
 			AddRoosterCommand = new TaskCommand(AddRoosterAsync);
 			FightCommand = new TaskCommand(StartRoostersFightAsync, () => ((ObservableCollection<RoosterModel>)Roosters).Count > 1);
-			if (MessageBox.Show("Do you speak Russian?", "Select language", MessageBoxButton.YesNo) == MessageBoxResult.No)
-			{
-				CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
-			}
 		}
+
 
 		/// <summary>
 		/// Выполняет синхронное сохранение петухов перед выходом.
@@ -171,6 +173,7 @@ namespace Northis.RoosterBattle.ViewModels
 		/// </summary>
 		protected override async Task InitializeAsync()
 		{
+			await _uiVisualizerService.ShowDialogAsync<AuthViewModel>();
 
 			Argument.IsNotNull(nameof(_roosterKeepService), _roosterKeepService);
 			Argument.IsNotNull(nameof(_exceptionService), _exceptionService);

@@ -1,5 +1,5 @@
 ﻿<catel:Window
-	x:Class="Northis.RoosterBattle.Views.RoosterBrowserWindow"
+    x:Class="Northis.RoosterBattle.Views.RoosterBrowserWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:catel="http://schemas.catelproject.com"
@@ -16,9 +16,9 @@
 	Height="450"
 	MaxWidth="800"
 	MaxHeight="450"
-	d:DataContext="{d:DesignInstance viewModels:RoosterBrowserViewModel}"
+    d:DataContext="{d:DesignInstance viewModels:RoosterBrowserViewModel}"
 	mc:Ignorable="d">
-	<i:Interaction.Triggers>
+    <i:Interaction.Triggers>
 		<i:EventTrigger EventName="Loaded">
 			<i:InvokeCommandAction Command="{Binding InitializeViewModelCommand}"/>
 		</i:EventTrigger>

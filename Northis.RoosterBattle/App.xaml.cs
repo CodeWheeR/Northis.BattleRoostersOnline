@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using Catel.ExceptionHandling;
 using Catel.IoC;
 using Catel.Logging;
@@ -37,7 +30,7 @@ namespace Northis.RoosterBattle
 				await messageService.ShowAsync("Ошибка чтения файла сохранения. Мои соболезнования...", "Ошибка!", MessageButton.OK, MessageImage.Error);
 			});
 
-			uiVisualizerService.ShowDialogAsync<AuthViewModel>();
+			uiVisualizerService.ShowDialogAsync<RoosterBrowserViewModel>();
 		}
 	}
 }

@@ -95,6 +95,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Expression.Blend.Sdk.WPF.1.0.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -116,6 +117,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Connected Services\GameServer\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Converters\EnumValueToDescription.cs" />
     <Compile Include="Converters\HealthValueToBool.cs" />
     <Compile Include="Converters\EnumValueToStringPath.cs" />
@@ -174,6 +180,19 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Connected Services\GameServer\GameServicesProvider.wsdl" />
+    <None Include="Connected Services\GameServer\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServer\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServer\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServer\Northis.RoosterBattle.GameServer.RoosterDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -252,6 +271,24 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\GameServer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServer\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServer\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServer\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServer\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="48e835fd-2334-48bd-adb4-a652ecbbda70" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:23555/Northis.BattleRoostersOnline/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="dce05cab-45e2-4928-959b-f065c4c50bb4" SourceId="1" SourceUrl="http://localhost:23555/Northis.BattleRoostersOnline/?xsd=xsd1" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="b8d8cdff-0277-4c48-9e11-feac1b38e6ad" SourceId="1" SourceUrl="http://localhost:23555/Northis.BattleRoostersOnline/?xsd=xsd0" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="535d706b-3a3b-4d67-958d-1da53e5e5084" SourceId="1" SourceUrl="http://localhost:23555/Northis.BattleRoostersOnline/?disco" />
+    <MetadataFile FileName="GameServicesProvider.wsdl" MetadataType="Wsdl" ID="f286c7aa-fb61-46f0-883d-4f1fd1c74fa3" SourceId="1" SourceUrl="http://localhost:23555/Northis.BattleRoostersOnline/?wsdl" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="3ff53dc1-fb2f-43b4-a4d0-0fdb5cc5ccec" SourceId="1" SourceUrl="http://localhost:23555/Northis.BattleRoostersOnline/?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
