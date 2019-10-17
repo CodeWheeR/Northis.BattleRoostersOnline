@@ -32,6 +32,7 @@ namespace Northis.BattleRoostersOnline.DataStorages
 
 		/// <summary>
 		/// Gets or sets the logged users.
+		/// Token - key, Login - Value
 		/// </summary>
 		/// <value>
 		/// The logged users.

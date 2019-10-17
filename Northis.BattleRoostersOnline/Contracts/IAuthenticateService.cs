@@ -9,14 +9,14 @@ using Microsoft.SqlServer.Server;
 
 namespace Northis.BattleRoostersOnline.Contracts
 {
-	[ServiceContract]
+	[ServiceContract(SessionMode = SessionMode.Required)]
 	public interface IAuthenticateService
 	{
 		[OperationContract]
 		string LogIn(string login, string password);
 		[OperationContract]
 		string Register(string login, string password);
-		[OperationContract]
+		[OperationContract(IsTerminating = true)]
 		bool LogOut(string token);
 	}
 }

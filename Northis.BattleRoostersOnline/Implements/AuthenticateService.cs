@@ -16,55 +16,35 @@ using Unity;
 
 namespace Northis.BattleRoostersOnline.Implements
 {
-	public class AuthenticateService : IAuthenticateService
+	public class AuthenticateService : BaseServiceWithStorage, IAuthenticateService
 	{
 		private Random _rand = new Random();
 		private BinaryFormatter formatter = new BinaryFormatter();
 
-		private ServicesStorage _servicesStorage
-		{
-			get
-			{
-				if (ServiceLocator.IsLocationProviderSet)
-					return ServiceLocator.Current.GetInstance<ServicesStorage>();
-				throw new NullReferenceException("Storage is null");
-			}
-		}
-
-		public AuthenticateService()
-		{
-			if (!ServiceLocator.IsLocationProviderSet)
-			{
-				var container = new UnityContainer();
-				container.RegisterInstance<ServicesStorage>(new ServicesStorage());
-				var locator = new UnityServiceLocator(container);
-				ServiceLocator.SetLocatorProvider(() => locator);
-			}
-		}
 
 		public string LogIn(string login, string password)
 		{
-			if (!(_servicesStorage.UserData).ContainsKey(login) || _servicesStorage.UserData[login] != Encrypt(password))
+			if (!(Storage.UserData).ContainsKey(login) || Storage.UserData[login] != Encrypt(password))
 				return AuthenticateStatus.WrongLoginOrPassword.ToString();
-			if (_servicesStorage.LoggedUsers.ContainsValue(login))
+			if (Storage.LoggedUsers.ContainsValue(login))
 				return AuthenticateStatus.AlreadyLoggedIn.ToString();
 
 			var token = GenerateToken();
-			_servicesStorage.LoggedUsers.Add(token, login);
+			Storage.LoggedUsers.Add(token, login);
 			return token;
 		}
 
 		public string Register(string login, string password)
 		{
-			if (_servicesStorage.UserData.ContainsKey(login))
+			if (Storage.UserData.ContainsKey(login))
 				return AuthenticateStatus.AlreadyRegistered.ToString();
-			_servicesStorage.UserData.Add(login, Encrypt(password));
+			Storage.UserData.Add(login, Encrypt(password));
 			return LogIn(login, password);
 		}
 
 		public bool LogOut(string token)
 		{
-			var data = _servicesStorage.LoggedUsers;
+			var data = Storage.LoggedUsers;
 			if (!data.ContainsKey(token))
 				return false;
 
@@ -110,7 +90,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		{
 			using (FileStream fs = new FileStream("users.dat", FileMode.OpenOrCreate))
 			{
-				formatter.Serialize(fs, _servicesStorage.UserData);
+				formatter.Serialize(fs, Storage.UserData);
 			}
 		}
 

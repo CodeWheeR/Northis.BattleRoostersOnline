@@ -25,11 +25,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		{
 			_editService = new EditService();
 			_authenticateService = new AuthenticateService();
-			var container = new UnityContainer();
-			container.RegisterInstance(new ServicesStorage());
-
-			var locator = new UnityServiceLocator(container);
-			ServiceLocator.SetLocatorProvider(() => locator);
+			
 		}
 
 		public void Add(string userID, RoosterDto rooster) => _editService.Add(userID, rooster);
@@ -37,6 +33,8 @@ namespace Northis.BattleRoostersOnline.Implements
 		public void Edit(string userID, int roosterSeqNum, RoosterDto rooster) => _editService.Edit(userID, roosterSeqNum, rooster);
 
 		public void Load() => _editService.Load();
+
+		public IEnumerable<RoosterDto> GetUserRoosters(string token) => _editService.GetUserRoosters(token);
 
 		public void Remove(string userID, int roosterID) => _editService.Remove(userID, roosterID);
 
