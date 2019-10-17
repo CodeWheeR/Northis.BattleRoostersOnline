@@ -6,7 +6,7 @@ using DataTransferObjects;
 using NUnit.Framework;
 using Unity;
 using Unity.ServiceLocation;
-using Northis.BattleRoostersOnline.DataStorages;
+using Northis.BattleRoostersOnline.Models;
 using Northis.BattleRoostersOnline.Implements;
 using Northis.BattleRoostersOnline.Enums;
 

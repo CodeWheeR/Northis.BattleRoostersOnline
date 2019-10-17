@@ -11,7 +11,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 	interface IBattleService
 	{
 		[OperationContract(IsInitiating = true)]
-		void StartBattle(string token, string matchToken, IBattleServiceCallback callback);
+		void StartBattle(string token, string matchToken);
 		[OperationContract]
 		void Beak(string token, string matchToken);
 		[OperationContract]

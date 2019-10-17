@@ -2,7 +2,7 @@
 using CommonServiceLocator;
 using DataTransferObjects;
 using NUnit.Framework;
-using Northis.BattleRoostersOnline.DataStorages;
+using Northis.BattleRoostersOnline.Models;
 using Unity;
 using Unity.ServiceLocation;
 using Northis.BattleRoostersOnline.Implements;

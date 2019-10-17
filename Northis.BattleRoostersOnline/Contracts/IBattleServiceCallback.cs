@@ -8,12 +8,15 @@ using DataTransferObjects;
 
 namespace Northis.BattleRoostersOnline.Contracts
 {
-	interface IBattleServiceCallback
+	public interface IBattleServiceCallback
 	{
 		[OperationContract]
-		void GetRoosterStatus(RoosterDto rooster);
+		void GetRoosterStatus(RoosterDto yourRooster, RoosterDto enemyRooster);
 
 		[OperationContract]
 		void GetBattleMessage(string message);
+
+		[OperationContract]
+		void GetStartSign();
 	}
 }

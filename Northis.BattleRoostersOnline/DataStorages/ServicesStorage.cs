@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataTransferObjects;
 
-namespace Northis.BattleRoostersOnline.DataStorages
+namespace Northis.BattleRoostersOnline.Models
 {
 	[Serializable]
 	public class ServicesStorage
@@ -16,7 +16,7 @@ namespace Northis.BattleRoostersOnline.DataStorages
 			UserData = new Dictionary<string, string>();
 			RoostersData = new Dictionary<string, List<RoosterDto>>();
 			LoggedUsers = new Dictionary<string, string>();
-			Sessions = new List<Session>();
+			Sessions = new Dictionary<string, Session>();
 		}
 
 		public Dictionary<string, string> UserData

@@ -10,7 +10,7 @@
       <xs:element minOccurs="0" name="Height" type="xs:int" />
       <xs:element minOccurs="0" name="Hit" type="xs:double" />
       <xs:element minOccurs="0" name="Luck" type="xs:int" />
-      <xs:element minOccurs="0" name="MahHealth" type="xs:int" />
+      <xs:element minOccurs="0" name="MaxHealth" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Stamina" type="xs:int" />
       <xs:element minOccurs="0" name="Thickness" type="xs:int" />

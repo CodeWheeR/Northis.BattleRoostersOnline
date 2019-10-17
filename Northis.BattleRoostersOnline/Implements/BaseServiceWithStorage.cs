@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommonServiceLocator;
-using Northis.BattleRoostersOnline.DataStorages;
+using Northis.BattleRoostersOnline.Models;
 using Unity;
 using Unity.ServiceLocation;
 

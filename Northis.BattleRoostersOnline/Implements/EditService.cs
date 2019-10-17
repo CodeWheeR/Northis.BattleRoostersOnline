@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using CommonServiceLocator;
 using DataTransferObjects;
 using Northis.BattleRoostersOnline.Contracts;
-using Northis.BattleRoostersOnline.DataStorages;
+using Northis.BattleRoostersOnline.Models;
 
 namespace Northis.BattleRoostersOnline.Implements
 {
