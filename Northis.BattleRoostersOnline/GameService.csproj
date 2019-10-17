@@ -71,13 +71,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IAuthenticateService.cs" />
+    <Compile Include="Contracts\IBattleService.cs" />
+    <Compile Include="Contracts\IBattleServiceCallback.cs" />
     <Compile Include="Contracts\IEditService.cs" />
-    <Compile Include="Contracts\IFinderService.cs" />
+    <Compile Include="Contracts\IFindService.cs" />
+    <Compile Include="Contracts\IFindServiceCallback.cs" />
+    <Compile Include="Contracts\INotifyCallbackContract.cs" />
     <Compile Include="DataStorages\ServicesStorage.cs" />
+    <Compile Include="DataStorages\Session.cs" />
     <Compile Include="Enums\AuthenticateStatus.cs" />
+    <Compile Include="Events\MatchFindedEventArgs.cs" />
     <Compile Include="Implements\AuthenticateService.cs" />
     <Compile Include="Implements\BaseServiceWithStorage.cs" />
+    <Compile Include="Implements\BattleService.cs" />
     <Compile Include="Implements\EditService.cs" />
+    <Compile Include="Implements\FindService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implements\GameServicesProvider.cs" />
   </ItemGroup>
@@ -108,7 +116,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{3D9AD99F-2412-4246-B90B-4EAA41C64699}">
         <WcfProjectProperties>
-          <AutoStart>False</AutoStart>
+          <AutoStart>True</AutoStart>
         </WcfProjectProperties>
       </FlavorProperties>
     </VisualStudio>

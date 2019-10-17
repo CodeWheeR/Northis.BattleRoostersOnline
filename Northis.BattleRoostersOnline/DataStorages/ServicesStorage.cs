@@ -16,6 +16,7 @@ namespace Northis.BattleRoostersOnline.DataStorages
 			UserData = new Dictionary<string, string>();
 			RoostersData = new Dictionary<string, List<RoosterDto>>();
 			LoggedUsers = new Dictionary<string, string>();
+			Sessions = new List<Session>();
 		}
 
 		public Dictionary<string, string> UserData
@@ -38,6 +39,12 @@ namespace Northis.BattleRoostersOnline.DataStorages
 		/// The logged users.
 		/// </value>
 		public Dictionary<string, string> LoggedUsers
+		{
+			get;
+			set;
+		}
+
+		public Dictionary<string, Session> Sessions
 		{
 			get;
 			set;

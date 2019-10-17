@@ -37,4 +37,10 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="CrestSizeDto" nillable="true" type="tns:CrestSizeDto" />
+  <xs:complexType name="ArrayOfRoosterDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RoosterDto" nillable="true" type="tns:RoosterDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRoosterDto" nillable="true" type="tns:ArrayOfRoosterDto" />
 </xs:schema>

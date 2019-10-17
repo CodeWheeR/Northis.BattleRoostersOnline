@@ -7,17 +7,17 @@ namespace DataTransferObjects
 	/// Структура, предназначенная для сериализации петухов пользователя в XML-документ.
 	/// </summary>
 	[DataContract]
-	public struct UserRoosters
+	public class UserRoosters
 	{
 		#region Properties
 		/// <summary>
 		/// Возвращает или задает идентификатор клиента.
 		/// </summary>
-		/// <value>
+		/// <Roosters>
 		/// Идентификатор клиента.
-		/// </value>
+		/// </Roosters>
 		[DataMember]
-		public string ID
+		public string Login
 		{
 			get;
 			set;
@@ -25,11 +25,11 @@ namespace DataTransferObjects
 		/// <summary>
 		/// Возвращает или задает петухов клиента.
 		/// </summary>
-		/// <value>
+		/// <Roosters>
 		/// Петухи.
-		/// </value>
+		/// </Roosters>
 		[DataMember]
-		public RoosterDto[] roosters
+		public IEnumerable<RoosterDto> Roosters
 		{
 			get;
 			set;
@@ -41,10 +41,10 @@ namespace DataTransferObjects
 		/// Инициализирует новый объект <see cref="UserRoosters"/> структуры.
 		/// </summary>
 		/// <param name="roosterDictionary">The rooster dictionary.</param>
-		public UserRoosters(KeyValuePair<string, List<RoosterDto>> roosterDictionary)
+		public UserRoosters(string login, List<RoosterDto> roosters)
 		{
-			ID = roosterDictionary.Key;
-			roosters = roosterDictionary.Value.ToArray();
+			Login = login;
+			Roosters = roosters;
 		}
 		#endregion
 	}
