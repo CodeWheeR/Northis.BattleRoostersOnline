@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Northis.RoosterBattle.GameServer;
 using Northis.RoosterBattle.Models;
 using Northis.RoosterBattle.ViewModels;
@@ -24,17 +25,17 @@ namespace Northis.RoosterBattle.Callbacks
 
 		public void GetBattleMessage(string message)
 		{
-			throw new NotImplementedException();
+			MessageBox.Show(message);
 		}
 
 		public void GetStartSign()
 		{
-			throw new NotImplementedException();
+			_fightVm.BattleStarted = true;
 		}
 
 		public void FindedMatch(string token)
 		{
-			throw new NotImplementedException();
+			_fightVm.MatchToken = token;
 		}
 	}
 }

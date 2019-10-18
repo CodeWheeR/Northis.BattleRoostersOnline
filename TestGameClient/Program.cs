@@ -16,10 +16,10 @@ namespace TestGameClient
 		public async static void MainTask()
 		{
 			var client = new AuthenticateServiceClient();
-			token = client.Register("Вася Пупкин", "2345");
+			token = client.Register("Вася Пупкин", "23455654");
 			if (token == "AlreadyRegistered")
 			{
-				token = client.Register("Вася Пупкин1", "2345");
+				token = client.Register("Вася Пупкин1", "23451231231");
 			}
 
 			Console.WriteLine(token);
@@ -32,13 +32,11 @@ namespace TestGameClient
 				Brickness = 30,
 				Name = "Бульбулятор"
 			};
-
-			var finder = new FindServiceClient(new InstanceContext(new BattleCallbacker()));
+			
+			var finder = new BattleServiceClient(new InstanceContext(new BattleCallbacker()));
 			finder.FindMatch(token, rooster);
 			finder.CancelFinding(token);
-			finder.FindMatch(token, rooster);
-
-
+			Console.WriteLine("Match Was Canceled");
 
 			Console.ReadKey();
 		}
@@ -64,9 +62,7 @@ namespace TestGameClient
 
 			public void FindedMatch(string matchToken)
 			{
-				Console.WriteLine("MatchWasFinded: " + matchToken);
-				var start = new BattleServiceClient(new InstanceContext(this));
-				start.StartBattle(token, matchToken);
+				Console.WriteLine("Match finded: " + matchToken);
 			}
 		}
 	}

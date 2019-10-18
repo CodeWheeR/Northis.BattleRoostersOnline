@@ -26,6 +26,8 @@ namespace GameServer
 
 				selfHost.AddServiceEndpoint(typeof(IEditService), new WSHttpBinding(), "EditService");
 
+				selfHost.AddServiceEndpoint(typeof(IBattleService), new WSDualHttpBinding(), "BattleService");
+
 				// Step 4: Enable metadata exchange.
 				ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
 				smb.HttpGetEnabled = true;

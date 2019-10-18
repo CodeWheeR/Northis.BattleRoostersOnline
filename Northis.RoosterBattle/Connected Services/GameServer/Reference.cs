@@ -499,86 +499,20 @@ namespace Northis.RoosterBattle.GameServer {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServer.IFindService", CallbackContract=typeof(Northis.RoosterBattle.GameServer.IFindServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
-    public interface IFindService {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/FindMatch", ReplyAction="http://tempuri.org/IFindService/FindMatchResponse")]
-        void FindMatch(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/FindMatch", ReplyAction="http://tempuri.org/IFindService/FindMatchResponse")]
-        System.Threading.Tasks.Task FindMatchAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/CancelFinding", ReplyAction="http://tempuri.org/IFindService/CancelFindingResponse")]
-        bool CancelFinding(string token);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/CancelFinding", ReplyAction="http://tempuri.org/IFindService/CancelFindingResponse")]
-        System.Threading.Tasks.Task<bool> CancelFindingAsync(string token);
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IFindServiceCallback {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/GetRoosterStatus", ReplyAction="http://tempuri.org/IFindService/GetRoosterStatusResponse")]
-        void GetRoosterStatus(Northis.RoosterBattle.GameServer.RoosterDto yourRooster, Northis.RoosterBattle.GameServer.RoosterDto enemyRooster);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/GetBattleMessage", ReplyAction="http://tempuri.org/IFindService/GetBattleMessageResponse")]
-        void GetBattleMessage(string message);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/GetStartSign", ReplyAction="http://tempuri.org/IFindService/GetStartSignResponse")]
-        void GetStartSign();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/FindedMatch", ReplyAction="http://tempuri.org/IFindService/FindedMatchResponse")]
-        void FindedMatch(string token);
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IFindServiceChannel : Northis.RoosterBattle.GameServer.IFindService, System.ServiceModel.IClientChannel {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class FindServiceClient : System.ServiceModel.DuplexClientBase<Northis.RoosterBattle.GameServer.IFindService>, Northis.RoosterBattle.GameServer.IFindService {
-        
-        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
-                base(callbackInstance) {
-        }
-        
-        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
-                base(callbackInstance, endpointConfigurationName) {
-        }
-        
-        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
-                base(callbackInstance, endpointConfigurationName, remoteAddress) {
-        }
-        
-        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(callbackInstance, endpointConfigurationName, remoteAddress) {
-        }
-        
-        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(callbackInstance, binding, remoteAddress) {
-        }
-        
-        public void FindMatch(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            base.Channel.FindMatch(token, rooster);
-        }
-        
-        public System.Threading.Tasks.Task FindMatchAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            return base.Channel.FindMatchAsync(token, rooster);
-        }
-        
-        public bool CancelFinding(string token) {
-            return base.Channel.CancelFinding(token);
-        }
-        
-        public System.Threading.Tasks.Task<bool> CancelFindingAsync(string token) {
-            return base.Channel.CancelFindingAsync(token);
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServer.IBattleService", CallbackContract=typeof(Northis.RoosterBattle.GameServer.IBattleServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IBattleService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/FindMatch", ReplyAction="http://tempuri.org/IBattleService/FindMatchResponse")]
+        void FindMatch(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/FindMatch", ReplyAction="http://tempuri.org/IBattleService/FindMatchResponse")]
+        System.Threading.Tasks.Task FindMatchAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        
+        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/CancelFinding", ReplyAction="http://tempuri.org/IBattleService/CancelFindingResponse")]
+        bool CancelFinding(string token);
+        
+        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/CancelFinding", ReplyAction="http://tempuri.org/IBattleService/CancelFindingResponse")]
+        System.Threading.Tasks.Task<bool> CancelFindingAsync(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/StartBattle", ReplyAction="http://tempuri.org/IBattleService/StartBattleResponse")]
         void StartBattle(string token, string matchToken);
@@ -653,6 +587,22 @@ namespace Northis.RoosterBattle.GameServer {
         
         public BattleServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void FindMatch(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            base.Channel.FindMatch(token, rooster);
+        }
+        
+        public System.Threading.Tasks.Task FindMatchAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            return base.Channel.FindMatchAsync(token, rooster);
+        }
+        
+        public bool CancelFinding(string token) {
+            return base.Channel.CancelFinding(token);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CancelFindingAsync(string token) {
+            return base.Channel.CancelFindingAsync(token);
         }
         
         public void StartBattle(string token, string matchToken) {

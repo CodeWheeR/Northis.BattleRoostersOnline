@@ -77,6 +77,7 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				FirstFighter = new RoosterModel(fighter);
 				FirstUserToken = token;
+				FirstCallback = callback;
 				Subscribe(callback);
 			}
 			else if (!IsStarted)
@@ -84,6 +85,7 @@ namespace Northis.BattleRoostersOnline.Models
 				IsStarted = true;
 				SecondFighter = new RoosterModel(fighter);
 				SecondUserToken = token;
+				SecondCallback = callback;
 				Subscribe(callback);
 				SendReadySignAsync();
 			}
@@ -97,6 +99,7 @@ namespace Northis.BattleRoostersOnline.Models
 		private void SendReadySignAsync()
 		{
 			Task.Run(() => SessionStarted?.Invoke(this, new MatchFindedEventArgs(Token)));
+			SendRoosterStatus();
 		}
 
 		public bool RemoveFighter(string token)

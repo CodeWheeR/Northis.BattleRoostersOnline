@@ -4,23 +4,30 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using DataTransferObjects;
 
 namespace Northis.BattleRoostersOnline.Contracts
 {
 	[ServiceContract(CallbackContract = typeof(IBattleServiceCallback), SessionMode = SessionMode.Required)]
-	interface IBattleService
+	public interface IBattleService
 	{
 		[OperationContract(IsInitiating = true)]
-		void StartBattle(string token, string matchToken);
+		Task FindMatch(string token, RoosterDto rooster);
+
+		[OperationContract(IsTerminating = true)]
+		bool CancelFinding(string token);
+
+		[OperationContract(IsInitiating = true)]
+		Task StartBattle(string token, string matchToken);
 		[OperationContract]
-		void Beak(string token, string matchToken);
+		Task Beak(string token, string matchToken);
 		[OperationContract]
-		void Bite(string token, string matchToken);
+		Task Bite(string token, string matchToken);
 		[OperationContract]
-		void Pull(string token, string matchToken);
+		Task Pull(string token, string matchToken);
 
 		[OperationContract]
-		void GiveUp(string token, string matchToken);
+		Task GiveUp(string token, string matchToken);
 
 	}
 }

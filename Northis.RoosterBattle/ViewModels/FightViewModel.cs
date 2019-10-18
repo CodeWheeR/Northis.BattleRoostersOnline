@@ -29,11 +29,9 @@ namespace Northis.RoosterBattle.ViewModels
 
 		private CancellationTokenSource _tokenSource = new CancellationTokenSource();
 		private ObservableCollection<RoosterModel> _sourceRoosters;
-		private FindServiceClient _findServiceClient;
 		private BattleServiceClient _battleServiceClient;
 
 		private string _userToken;
-		private string _matchToken;
 		private bool _battleStarted;
 
 		#region Static
@@ -58,10 +56,10 @@ namespace Northis.RoosterBattle.ViewModels
 		/// Зарегистрированное свойство состояния жизни второго бойца.
 		/// </summary>
 		public static readonly PropertyData ShowDeadSecondProperty = RegisterProperty(nameof(ShowDeadSecond), typeof(bool));
-		/// <summary>
-		/// Зарегистрированное свойство состояния жизни второго бойца.
-		/// </summary>
+
 		public static readonly PropertyData IsFindingProperty = RegisterProperty(nameof(IsFinding), typeof(bool));
+
+		public static readonly PropertyData BattleStartedProperty = RegisterProperty(nameof(BattleStarted), typeof(bool));
 
 		#endregion
 
@@ -76,8 +74,6 @@ namespace Northis.RoosterBattle.ViewModels
 		public FightViewModel(RoosterModel rooster)
 		{
 			FirstFighter = rooster;
-			_findServiceClient = new FindServiceClient(new InstanceContext(new BattleServiceCallback(this)));
-			_battleServiceClient = new BattleServiceClient(new InstanceContext(new BattleServiceCallback(this)));
 
 			FindMatchCommand = new TaskCommand(FindMatch, () => !ShowDeadFirst && !IsFinding);
 			CancelFindingCommand = new TaskCommand(CancelFinding, () => IsFinding);
@@ -112,10 +108,22 @@ namespace Northis.RoosterBattle.ViewModels
 			get;
 		}
 
+		public bool BattleStarted
+		{
+			get => GetValue<bool>(BattleStartedProperty);
+			set => SetValue(BattleStartedProperty, value);
+		}
+
 		public bool IsFinding
 		{
 			get => GetValue<bool>(IsFindingProperty);
 			set => SetValue(IsFindingProperty, value);
+		}
+
+		public string MatchToken
+		{
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -185,10 +193,11 @@ namespace Northis.RoosterBattle.ViewModels
 		/// </summary>
 		private async Task FindMatch()
 		{
+			_battleServiceClient = new BattleServiceClient(new InstanceContext(new BattleServiceCallback(this)));
 			ShowDeadFirst = false;
 			ShowDeadSecond = false;
 			IsFinding = true;
-			await _findServiceClient.FindMatchAsync(_userToken, FirstFighter.ToRoosterDto());
+			await _battleServiceClient.FindMatchAsync(_userToken, FirstFighter.ToRoosterDto());
 		}
 
 		/// <summary>
@@ -197,8 +206,8 @@ namespace Northis.RoosterBattle.ViewModels
 		private async Task CancelFinding()
 		{
 			IsFinding = false;
-			var res = await _findServiceClient.CancelFindingAsync(_userToken);
-			Debug.WriteLine(res);
+			await _battleServiceClient.CancelFindingAsync(_userToken);
+			_battleServiceClient = null;
 		}
 
 		private void SetBattleResults(RoosterModel winner, RoosterModel looser)

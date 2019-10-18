@@ -17,10 +17,9 @@ namespace Northis.BattleRoostersOnline.Implements
 {
 	// ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "GameServicesProvider" в коде и файле конфигурации.
 	[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
-	public class GameServicesProvider : IAuthenticateService, IEditService, IFindService, IBattleService
+	public class GameServicesProvider : IAuthenticateService, IEditService, IBattleService
 	{
 		private EditService _editService;
-		private FindService _findService;
 		private AuthenticateService _authenticateService;
 		private BattleService _battleService;
 
@@ -28,17 +27,16 @@ namespace Northis.BattleRoostersOnline.Implements
 		{
 			_editService = new EditService();
 			_authenticateService = new AuthenticateService();
-			_findService = new FindService();
 			_battleService = new BattleService();
 		}
 
-		public void Add(string token, RoosterDto rooster) => Task.Run(() => _editService.Add(token, rooster));
+		public async Task Add(string token, RoosterDto rooster) => await _editService.Add(token, rooster);
 
-		public void Edit(string token, int roosterId, RoosterDto rooster) => Task.Run(() => _editService.Edit(token, roosterId, rooster));
+		public async Task Edit(string token, int roosterId, RoosterDto rooster) => await _editService.Edit(token, roosterId, rooster);
 
 		public async Task<IEnumerable<RoosterDto>> GetUserRoosters(string token) => await _editService.GetUserRoosters(token);
 
-		public void Remove(string token, int roosterId) => _editService.Remove(token, roosterId);
+		public async Task Remove(string token, int roosterId) => _editService.Remove(token, roosterId);
 
 		public async Task<string> LogIn(string login, string password) =>  await _authenticateService.LogIn(login, password);
 
@@ -48,28 +46,28 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		public AuthenticateStatus GetLoginStatus() => _authenticateService.GetLoginStatus();
 
-		public void FindMatch(string token, RoosterDto rooster) => Task.Run(() => _findService.FindMatch(token, rooster));
+		public async Task FindMatch(string token, RoosterDto rooster) => _battleService.FindMatch(token, rooster);
 
-		public bool CancelFinding(string token) => _findService.CancelFinding(token);
+		public bool CancelFinding(string token) => _battleService.CancelFinding(token);
 
-		public void StartBattle(string token, string matchToken) => Task.Run(() => _battleService.StartBattle(token, matchToken));
+		public async Task StartBattle(string token, string matchToken) =>  _battleService.StartBattle(token, matchToken);
 
-		public void Beak(string token, string matchToken)
+		public async Task Beak(string token, string matchToken)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void Bite(string token, string matchToken)
+		public async Task Bite(string token, string matchToken)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void Pull(string token, string matchToken)
+		public async Task Pull(string token, string matchToken)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void GiveUp(string token, string matchToken)
+		public async Task GiveUp(string token, string matchToken)
 		{
 			throw new NotImplementedException();
 		}

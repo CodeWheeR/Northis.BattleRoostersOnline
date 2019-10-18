@@ -28,6 +28,9 @@ namespace TestGameClient.Game {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         AlreadyLoggedIn = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        WrongDataFormat = 4,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -496,77 +499,20 @@ namespace TestGameClient.Game {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Game.IFindService", CallbackContract=typeof(TestGameClient.Game.IFindServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
-    public interface IFindService {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/FindMatch", ReplyAction="http://tempuri.org/IFindService/FindMatchResponse")]
-        void FindMatch(string token, TestGameClient.Game.RoosterDto rooster);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/FindMatch", ReplyAction="http://tempuri.org/IFindService/FindMatchResponse")]
-        System.Threading.Tasks.Task FindMatchAsync(string token, TestGameClient.Game.RoosterDto rooster);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/CancelFinding", ReplyAction="http://tempuri.org/IFindService/CancelFindingResponse")]
-        bool CancelFinding(string token);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/CancelFinding", ReplyAction="http://tempuri.org/IFindService/CancelFindingResponse")]
-        System.Threading.Tasks.Task<bool> CancelFindingAsync(string token);
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IFindServiceCallback {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/FindedMatch", ReplyAction="http://tempuri.org/IFindService/FindedMatchResponse")]
-        void FindedMatch(string token);
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IFindServiceChannel : TestGameClient.Game.IFindService, System.ServiceModel.IClientChannel {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class FindServiceClient : System.ServiceModel.DuplexClientBase<TestGameClient.Game.IFindService>, TestGameClient.Game.IFindService {
-        
-        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
-                base(callbackInstance) {
-        }
-        
-        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
-                base(callbackInstance, endpointConfigurationName) {
-        }
-        
-        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
-                base(callbackInstance, endpointConfigurationName, remoteAddress) {
-        }
-        
-        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(callbackInstance, endpointConfigurationName, remoteAddress) {
-        }
-        
-        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(callbackInstance, binding, remoteAddress) {
-        }
-        
-        public void FindMatch(string token, TestGameClient.Game.RoosterDto rooster) {
-            base.Channel.FindMatch(token, rooster);
-        }
-        
-        public System.Threading.Tasks.Task FindMatchAsync(string token, TestGameClient.Game.RoosterDto rooster) {
-            return base.Channel.FindMatchAsync(token, rooster);
-        }
-        
-        public bool CancelFinding(string token) {
-            return base.Channel.CancelFinding(token);
-        }
-        
-        public System.Threading.Tasks.Task<bool> CancelFindingAsync(string token) {
-            return base.Channel.CancelFindingAsync(token);
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Game.IBattleService", CallbackContract=typeof(TestGameClient.Game.IBattleServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IBattleService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/FindMatch", ReplyAction="http://tempuri.org/IBattleService/FindMatchResponse")]
+        void FindMatch(string token, TestGameClient.Game.RoosterDto rooster);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/FindMatch", ReplyAction="http://tempuri.org/IBattleService/FindMatchResponse")]
+        System.Threading.Tasks.Task FindMatchAsync(string token, TestGameClient.Game.RoosterDto rooster);
+        
+        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/CancelFinding", ReplyAction="http://tempuri.org/IBattleService/CancelFindingResponse")]
+        bool CancelFinding(string token);
+        
+        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/CancelFinding", ReplyAction="http://tempuri.org/IBattleService/CancelFindingResponse")]
+        System.Threading.Tasks.Task<bool> CancelFindingAsync(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/StartBattle", ReplyAction="http://tempuri.org/IBattleService/StartBattleResponse")]
         void StartBattle(string token, string matchToken);
@@ -610,6 +556,9 @@ namespace TestGameClient.Game {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GetStartSign", ReplyAction="http://tempuri.org/IBattleService/GetStartSignResponse")]
         void GetStartSign();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/FindedMatch", ReplyAction="http://tempuri.org/IBattleService/FindedMatchResponse")]
+        void FindedMatch(string token);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -638,6 +587,22 @@ namespace TestGameClient.Game {
         
         public BattleServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void FindMatch(string token, TestGameClient.Game.RoosterDto rooster) {
+            base.Channel.FindMatch(token, rooster);
+        }
+        
+        public System.Threading.Tasks.Task FindMatchAsync(string token, TestGameClient.Game.RoosterDto rooster) {
+            return base.Channel.FindMatchAsync(token, rooster);
+        }
+        
+        public bool CancelFinding(string token) {
+            return base.Channel.CancelFinding(token);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CancelFindingAsync(string token) {
+            return base.Channel.CancelFindingAsync(token);
         }
         
         public void StartBattle(string token, string matchToken) {

@@ -138,18 +138,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="FindedMatch">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="FindedMatchResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="StartBattle">
     <xs:complexType>
       <xs:sequence>
@@ -246,6 +234,18 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="GetStartSignResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FindedMatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FindedMatchResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

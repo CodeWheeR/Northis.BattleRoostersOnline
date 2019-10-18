@@ -12,7 +12,7 @@ namespace Northis.BattleRoostersOnline.Implements
 	[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
 	public class EditService : BaseServiceWithStorage, IEditService
 	{
-		public async void Add(string token, RoosterDto rooster)
+		public async Task Add(string token, RoosterDto rooster)
 		{
 			var login = await GetLoginAsync(token);
 
@@ -107,7 +107,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			});
 		}
 
-		public async void Edit(string token, int roosterSeqNum, RoosterDto rooster)
+		public async Task Edit(string token, int roosterSeqNum, RoosterDto rooster)
 		{
 			var login = await GetLoginAsync(token);
 			if (Storage.RoostersData.ContainsKey(login) &&
@@ -123,7 +123,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			}
 		}
 
-		public async void Remove(string token, int roosterSeqNum)
+		public async Task Remove(string token, int roosterSeqNum)
 		{
 			var login = await GetLoginAsync(token);
 			if (Storage.RoostersData.ContainsKey(login) &&

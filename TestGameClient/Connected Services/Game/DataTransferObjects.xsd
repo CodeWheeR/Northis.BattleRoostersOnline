@@ -6,6 +6,7 @@
       <xs:enumeration value="WrongLoginOrPassword" />
       <xs:enumeration value="AlreadyRegistered" />
       <xs:enumeration value="AlreadyLoggedIn" />
+      <xs:enumeration value="WrongDataFormat" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="AuthenticateStatus" nillable="true" type="tns:AuthenticateStatus" />

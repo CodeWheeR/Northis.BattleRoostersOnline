@@ -258,9 +258,9 @@ namespace Northis.RoosterBattle.ViewModels
 		/// <summary>
 		/// Начинает сражение петухов в асинхронном режиме.
 		/// </summary>
-		private async Task StartRoostersFightAsync()
+		private Task StartRoostersFightAsync()
 		{
-			await _uiVisualizerService.ShowDialogAsync<FightViewModel>(SelectedRooster);
+			return _uiVisualizerService.ShowAsync<FightViewModel>(SelectedRooster);
 		}
 		#endregion
 
