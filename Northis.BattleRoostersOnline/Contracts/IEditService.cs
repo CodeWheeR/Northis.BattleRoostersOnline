@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using DataTransferObjects;
 
 namespace Northis.BattleRoostersOnline.Contracts
@@ -13,20 +14,16 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <summary>
 		/// Редактирует выбранного петуха конкретного пользователя.
 		/// </summary>
-		/// <param name="userID">Идентификатор.</param>
+		/// <param name="login">Идентификатор.</param>
 		/// <param name="roosterSeqNum">Порядковый номер петуха.</param>
 		/// <param name="rooster">Петух.</param>
 		[OperationContract]
-		void Edit(string userID, int roosterSeqNum, RoosterDto rooster);
+		void Edit(string login, int roosterSeqNum, RoosterDto rooster);
 		[OperationContract]
-		void Add(string userID, RoosterDto rooster);
+		void Add(string login, RoosterDto rooster);
 		[OperationContract]
-		void Remove(string userID, int roosterID);
+		void Remove(string token, int roosterID);
 		[OperationContract]
-		void Save();
-		[OperationContract]
-		void Load();
-		[OperationContract]
-		IEnumerable<RoosterDto> GetUserRoosters(string token);
+		Task<IEnumerable<RoosterDto>> GetUserRoosters(string token);
 	}
 }

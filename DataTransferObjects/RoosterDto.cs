@@ -89,7 +89,7 @@ namespace DataTransferObjects
 			set;
 		}
 		[DataMember]
-		public int MahHealth
+		public int MaxHealth
 		{
 			get;
 			set;

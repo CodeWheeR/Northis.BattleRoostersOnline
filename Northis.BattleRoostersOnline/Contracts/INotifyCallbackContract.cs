@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace Northis.BattleRoostersOnline.Contracts
 {
-	[ServiceContract]
-	interface IFinderService
+	interface INotifyCallbackContract
 	{
 		[OperationContract]
-		void FindMatch(string token);
-
-		[OperationContract]
-		void CancelFinding(string token);
+		void MatchFinded();
 	}
 }

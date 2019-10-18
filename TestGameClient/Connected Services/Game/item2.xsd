@@ -10,7 +10,7 @@
       <xs:element minOccurs="0" name="Height" type="xs:int" />
       <xs:element minOccurs="0" name="Hit" type="xs:double" />
       <xs:element minOccurs="0" name="Luck" type="xs:int" />
-      <xs:element minOccurs="0" name="MahHealth" type="xs:int" />
+      <xs:element minOccurs="0" name="MaxHealth" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Stamina" type="xs:int" />
       <xs:element minOccurs="0" name="Thickness" type="xs:int" />
@@ -37,4 +37,10 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="CrestSizeDto" nillable="true" type="tns:CrestSizeDto" />
+  <xs:complexType name="ArrayOfRoosterDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RoosterDto" nillable="true" type="tns:RoosterDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRoosterDto" nillable="true" type="tns:ArrayOfRoosterDto" />
 </xs:schema>

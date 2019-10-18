@@ -47,7 +47,7 @@ namespace TestGameClient.Game {
         private int LuckField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int MahHealthField;
+        private int MaxHealthField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
@@ -179,14 +179,14 @@ namespace TestGameClient.Game {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int MahHealth {
+        public int MaxHealth {
             get {
-                return this.MahHealthField;
+                return this.MaxHealthField;
             }
             set {
-                if ((this.MahHealthField.Equals(value) != true)) {
-                    this.MahHealthField = value;
-                    this.RaisePropertyChanged("MahHealth");
+                if ((this.MaxHealthField.Equals(value) != true)) {
+                    this.MaxHealthField = value;
+                    this.RaisePropertyChanged("MaxHealth");
                 }
             }
         }
@@ -301,7 +301,7 @@ namespace TestGameClient.Game {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Game.IAuthenticateService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Game.IAuthenticateService", SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IAuthenticateService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticateService/LogIn", ReplyAction="http://tempuri.org/IAuthenticateService/LogInResponse")]
@@ -316,10 +316,10 @@ namespace TestGameClient.Game {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticateService/Register", ReplyAction="http://tempuri.org/IAuthenticateService/RegisterResponse")]
         System.Threading.Tasks.Task<string> RegisterAsync(string login, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticateService/LogOut", ReplyAction="http://tempuri.org/IAuthenticateService/LogOutResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IAuthenticateService/LogOut", ReplyAction="http://tempuri.org/IAuthenticateService/LogOutResponse")]
         bool LogOut(string token);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticateService/LogOut", ReplyAction="http://tempuri.org/IAuthenticateService/LogOutResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IAuthenticateService/LogOut", ReplyAction="http://tempuri.org/IAuthenticateService/LogOutResponse")]
         System.Threading.Tasks.Task<bool> LogOutAsync(string token);
     }
     
@@ -380,34 +380,28 @@ namespace TestGameClient.Game {
     public interface IEditService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        void Edit(string userID, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster);
+        void Edit(string login, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        System.Threading.Tasks.Task EditAsync(string userID, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster);
+        System.Threading.Tasks.Task EditAsync(string login, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
-        void Add(string userID, TestGameClient.Game.RoosterDto rooster);
+        void Add(string login, TestGameClient.Game.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
-        System.Threading.Tasks.Task AddAsync(string userID, TestGameClient.Game.RoosterDto rooster);
+        System.Threading.Tasks.Task AddAsync(string login, TestGameClient.Game.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
-        void Remove(string userID, int roosterID);
+        void Remove(string token, int roosterID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
-        System.Threading.Tasks.Task RemoveAsync(string userID, int roosterID);
+        System.Threading.Tasks.Task RemoveAsync(string token, int roosterID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Save", ReplyAction="http://tempuri.org/IEditService/SaveResponse")]
-        void Save();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/GetUserRoosters", ReplyAction="http://tempuri.org/IEditService/GetUserRoostersResponse")]
+        TestGameClient.Game.RoosterDto[] GetUserRoosters(string token);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Save", ReplyAction="http://tempuri.org/IEditService/SaveResponse")]
-        System.Threading.Tasks.Task SaveAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Load", ReplyAction="http://tempuri.org/IEditService/LoadResponse")]
-        void Load();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Load", ReplyAction="http://tempuri.org/IEditService/LoadResponse")]
-        System.Threading.Tasks.Task LoadAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/GetUserRoosters", ReplyAction="http://tempuri.org/IEditService/GetUserRoostersResponse")]
+        System.Threading.Tasks.Task<TestGameClient.Game.RoosterDto[]> GetUserRoostersAsync(string token);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -437,44 +431,222 @@ namespace TestGameClient.Game {
                 base(binding, remoteAddress) {
         }
         
-        public void Edit(string userID, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster) {
-            base.Channel.Edit(userID, roosterSeqNum, rooster);
+        public void Edit(string login, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster) {
+            base.Channel.Edit(login, roosterSeqNum, rooster);
         }
         
-        public System.Threading.Tasks.Task EditAsync(string userID, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster) {
-            return base.Channel.EditAsync(userID, roosterSeqNum, rooster);
+        public System.Threading.Tasks.Task EditAsync(string login, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster) {
+            return base.Channel.EditAsync(login, roosterSeqNum, rooster);
         }
         
-        public void Add(string userID, TestGameClient.Game.RoosterDto rooster) {
-            base.Channel.Add(userID, rooster);
+        public void Add(string login, TestGameClient.Game.RoosterDto rooster) {
+            base.Channel.Add(login, rooster);
         }
         
-        public System.Threading.Tasks.Task AddAsync(string userID, TestGameClient.Game.RoosterDto rooster) {
-            return base.Channel.AddAsync(userID, rooster);
+        public System.Threading.Tasks.Task AddAsync(string login, TestGameClient.Game.RoosterDto rooster) {
+            return base.Channel.AddAsync(login, rooster);
         }
         
-        public void Remove(string userID, int roosterID) {
-            base.Channel.Remove(userID, roosterID);
+        public void Remove(string token, int roosterID) {
+            base.Channel.Remove(token, roosterID);
         }
         
-        public System.Threading.Tasks.Task RemoveAsync(string userID, int roosterID) {
-            return base.Channel.RemoveAsync(userID, roosterID);
+        public System.Threading.Tasks.Task RemoveAsync(string token, int roosterID) {
+            return base.Channel.RemoveAsync(token, roosterID);
         }
         
-        public void Save() {
-            base.Channel.Save();
+        public TestGameClient.Game.RoosterDto[] GetUserRoosters(string token) {
+            return base.Channel.GetUserRoosters(token);
         }
         
-        public System.Threading.Tasks.Task SaveAsync() {
-            return base.Channel.SaveAsync();
+        public System.Threading.Tasks.Task<TestGameClient.Game.RoosterDto[]> GetUserRoostersAsync(string token) {
+            return base.Channel.GetUserRoostersAsync(token);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Game.IFindService", CallbackContract=typeof(TestGameClient.Game.IFindServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
+    public interface IFindService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/FindMatch", ReplyAction="http://tempuri.org/IFindService/FindMatchResponse")]
+        void FindMatch(string token, TestGameClient.Game.RoosterDto rooster);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/FindMatch", ReplyAction="http://tempuri.org/IFindService/FindMatchResponse")]
+        System.Threading.Tasks.Task FindMatchAsync(string token, TestGameClient.Game.RoosterDto rooster);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/CancelFinding", ReplyAction="http://tempuri.org/IFindService/CancelFindingResponse")]
+        bool CancelFinding(string token);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/CancelFinding", ReplyAction="http://tempuri.org/IFindService/CancelFindingResponse")]
+        System.Threading.Tasks.Task<bool> CancelFindingAsync(string token);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IFindServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFindService/FindedMatch", ReplyAction="http://tempuri.org/IFindService/FindedMatchResponse")]
+        void FindedMatch(string token);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IFindServiceChannel : TestGameClient.Game.IFindService, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class FindServiceClient : System.ServiceModel.DuplexClientBase<TestGameClient.Game.IFindService>, TestGameClient.Game.IFindService {
+        
+        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public void Load() {
-            base.Channel.Load();
+        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public System.Threading.Tasks.Task LoadAsync() {
-            return base.Channel.LoadAsync();
+        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public FindServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void FindMatch(string token, TestGameClient.Game.RoosterDto rooster) {
+            base.Channel.FindMatch(token, rooster);
+        }
+        
+        public System.Threading.Tasks.Task FindMatchAsync(string token, TestGameClient.Game.RoosterDto rooster) {
+            return base.Channel.FindMatchAsync(token, rooster);
+        }
+        
+        public bool CancelFinding(string token) {
+            return base.Channel.CancelFinding(token);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CancelFindingAsync(string token) {
+            return base.Channel.CancelFindingAsync(token);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Game.IBattleService", CallbackContract=typeof(TestGameClient.Game.IBattleServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
+    public interface IBattleService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/StartBattle", ReplyAction="http://tempuri.org/IBattleService/StartBattleResponse")]
+        void StartBattle(string token, string matchToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/StartBattle", ReplyAction="http://tempuri.org/IBattleService/StartBattleResponse")]
+        System.Threading.Tasks.Task StartBattleAsync(string token, string matchToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Beak", ReplyAction="http://tempuri.org/IBattleService/BeakResponse")]
+        void Beak(string token, string matchToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Beak", ReplyAction="http://tempuri.org/IBattleService/BeakResponse")]
+        System.Threading.Tasks.Task BeakAsync(string token, string matchToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Bite", ReplyAction="http://tempuri.org/IBattleService/BiteResponse")]
+        void Bite(string token, string matchToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Bite", ReplyAction="http://tempuri.org/IBattleService/BiteResponse")]
+        System.Threading.Tasks.Task BiteAsync(string token, string matchToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Pull", ReplyAction="http://tempuri.org/IBattleService/PullResponse")]
+        void Pull(string token, string matchToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Pull", ReplyAction="http://tempuri.org/IBattleService/PullResponse")]
+        System.Threading.Tasks.Task PullAsync(string token, string matchToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GiveUp", ReplyAction="http://tempuri.org/IBattleService/GiveUpResponse")]
+        void GiveUp(string token, string matchToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GiveUp", ReplyAction="http://tempuri.org/IBattleService/GiveUpResponse")]
+        System.Threading.Tasks.Task GiveUpAsync(string token, string matchToken);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IBattleServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GetRoosterStatus", ReplyAction="http://tempuri.org/IBattleService/GetRoosterStatusResponse")]
+        void GetRoosterStatus(TestGameClient.Game.RoosterDto yourRooster, TestGameClient.Game.RoosterDto enemyRooster);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GetBattleMessage", ReplyAction="http://tempuri.org/IBattleService/GetBattleMessageResponse")]
+        void GetBattleMessage(string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GetStartSign", ReplyAction="http://tempuri.org/IBattleService/GetStartSignResponse")]
+        void GetStartSign();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IBattleServiceChannel : TestGameClient.Game.IBattleService, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class BattleServiceClient : System.ServiceModel.DuplexClientBase<TestGameClient.Game.IBattleService>, TestGameClient.Game.IBattleService {
+        
+        public BattleServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
+        }
+        
+        public BattleServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public BattleServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public BattleServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public BattleServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void StartBattle(string token, string matchToken) {
+            base.Channel.StartBattle(token, matchToken);
+        }
+        
+        public System.Threading.Tasks.Task StartBattleAsync(string token, string matchToken) {
+            return base.Channel.StartBattleAsync(token, matchToken);
+        }
+        
+        public void Beak(string token, string matchToken) {
+            base.Channel.Beak(token, matchToken);
+        }
+        
+        public System.Threading.Tasks.Task BeakAsync(string token, string matchToken) {
+            return base.Channel.BeakAsync(token, matchToken);
+        }
+        
+        public void Bite(string token, string matchToken) {
+            base.Channel.Bite(token, matchToken);
+        }
+        
+        public System.Threading.Tasks.Task BiteAsync(string token, string matchToken) {
+            return base.Channel.BiteAsync(token, matchToken);
+        }
+        
+        public void Pull(string token, string matchToken) {
+            base.Channel.Pull(token, matchToken);
+        }
+        
+        public System.Threading.Tasks.Task PullAsync(string token, string matchToken) {
+            return base.Channel.PullAsync(token, matchToken);
+        }
+        
+        public void GiveUp(string token, string matchToken) {
+            base.Channel.GiveUp(token, matchToken);
+        }
+        
+        public System.Threading.Tasks.Task GiveUpAsync(string token, string matchToken) {
+            return base.Channel.GiveUpAsync(token, matchToken);
         }
     }
 }

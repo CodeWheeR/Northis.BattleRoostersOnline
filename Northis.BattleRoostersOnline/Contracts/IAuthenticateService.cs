@@ -12,10 +12,10 @@ namespace Northis.BattleRoostersOnline.Contracts
 	[ServiceContract(SessionMode = SessionMode.Required)]
 	public interface IAuthenticateService
 	{
-		[OperationContract]
-		string LogIn(string login, string password);
-		[OperationContract]
-		string Register(string login, string password);
+		[OperationContract(IsInitiating = true)]
+		Task<string> LogIn(string login, string password);
+		[OperationContract(IsInitiating = true)]
+		Task<string> Register(string login, string password);
 		[OperationContract(IsTerminating = true)]
 		bool LogOut(string token);
 	}
