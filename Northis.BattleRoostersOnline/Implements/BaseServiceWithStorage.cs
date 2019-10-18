@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using CommonServiceLocator;
 using Northis.BattleRoostersOnline.Models;
@@ -23,9 +19,9 @@ namespace Northis.BattleRoostersOnline.Implements
 				{
 					return ServiceLocator.Current.GetInstance<ServicesStorage>();
 				}
+
 				throw new NullReferenceException("Storage is null");
 			}
-
 		}
 
 		protected BaseServiceWithStorage()
@@ -40,7 +36,16 @@ namespace Northis.BattleRoostersOnline.Implements
 			}
 		}
 
-		protected async Task<string> GetLoginAsync(string token) => await Task.Run<string>(() => Storage.LoggedUsers[token]);
+		protected async Task<string> GetLoginAsync(string token) =>
+			await Task.Run(() =>
+			{
+				if (Storage.LoggedUsers.ContainsKey(token))
+				{
+					return Storage.LoggedUsers[token];
+				}
+
+				return "";
+			});
 
 		protected string GenerateToken()
 		{
@@ -57,8 +62,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		protected Task<string> GenerateTokenAsync()
 		{
-			return Task.Run<string>(() => GenerateToken());
+			return Task.Run(() => GenerateToken());
 		}
-
 	}
 }

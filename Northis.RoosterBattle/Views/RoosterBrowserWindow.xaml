@@ -17,6 +17,7 @@
 	MaxWidth="800"
 	MaxHeight="450"
     d:DataContext="{d:DesignInstance viewModels:RoosterBrowserViewModel}"
+	CanCloseUsingEscape="False"
 	mc:Ignorable="d">
     <i:Interaction.Triggers>
 		<i:EventTrigger EventName="Loaded">

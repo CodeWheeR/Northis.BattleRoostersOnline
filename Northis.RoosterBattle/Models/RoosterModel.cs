@@ -359,7 +359,7 @@ namespace Northis.RoosterBattle.Models
 				//Усиление от 0 до 50%
 				dmg *= (double) CalcEnumIndex(Crest) / 4 + 1;
 
-				return Math.Round(dmg, 2);
+				return Math.Round(dmg, 2) + WinStreak;
 			}
 			set => SetValue(DamageProperty, value);
 		}

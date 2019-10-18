@@ -29,10 +29,11 @@ namespace Northis.RoosterBattle.ViewModels
 
 		public AuthViewModel(IUIVisualizerService uiVisualizerService)
 		{
-			if (MessageBox.Show("Do you speak Russian?", "Select language", MessageBoxButton.YesNo) == MessageBoxResult.No)
-			{
-				CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
-			}
+			//if (MessageBox.Show("Do you speak Russian?", "Select language", MessageBoxButton.YesNo) == MessageBoxResult.No)
+			//{
+			//	CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
+			//}
+
 			_uiVisualizerService = uiVisualizerService;
 			AuthCommand = new TaskCommand((() => AuthenticateAsync(_authenticateServiceClient.LogInAsync)));
 			RegCommand = new TaskCommand((() => AuthenticateAsync(_authenticateServiceClient.RegisterAsync)));

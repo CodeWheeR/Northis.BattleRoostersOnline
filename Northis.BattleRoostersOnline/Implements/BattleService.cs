@@ -24,18 +24,21 @@ namespace Northis.BattleRoostersOnline.Implements
 				return;
 			}
 
-			if (Storage.Sessions.Count > 0 && !Storage.Sessions.Last().Value.IsStarted)
+			await Task.Run(async () =>
 			{
-				_session = Storage.Sessions.Last().Value;
-				_session.RegisterFighter(token, rooster, callback);
-			}
-			else
-			{
-				_matchToken = await GenerateTokenAsync();
-				_session = new Session(_matchToken);
-				_session.RegisterFighter(token, rooster, callback);
-				Storage.Sessions.Add(_matchToken, _session);
-			}
+				if (Storage.Sessions.Count > 0 && !Storage.Sessions.Last().Value.IsStarted)
+				{
+					_session = Storage.Sessions.Last().Value;
+					_session.RegisterFighter(token, rooster, callback);
+				}
+				else
+				{
+					_matchToken = await GenerateTokenAsync();
+					_session = new Session(_matchToken);
+					_session.RegisterFighter(token, rooster, callback);
+					Storage.Sessions.Add(_matchToken, _session);
+				}
+			});
 		}
 
 		public bool CancelFinding(string token)
@@ -52,19 +55,17 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		public async Task StartBattle(string token, string matchToken)
 		{
-			var callback = OperationContext.Current.GetCallbackChannel<IBattleServiceCallback>();
-
-			var session = Storage.Sessions[matchToken];
-			if (token == session.FirstUserToken)
-				session.FirstCallback = callback;
-			else
-				session.SecondCallback = callback;
-
-			if (session.FirstCallback != null && session.SecondCallback != null)
+			await Task.Run(async () =>
 			{
-				session.SendStartSignAsync();
-				session.StartBattle();
-			}
+				var session = Storage.Sessions[matchToken];
+				session.SetReady(token);
+
+				if (session.CheckForReadiness())
+				{
+					session.SendStartSignAsync();
+					await session.StartBattle();
+				}
+			});
 		}
 
 		public Task Beak(string token, string matchToken)

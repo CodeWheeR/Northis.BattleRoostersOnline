@@ -32,7 +32,6 @@ namespace Northis.RoosterBattle.ViewModels
 		private BattleServiceClient _battleServiceClient;
 
 		private string _userToken;
-		private bool _battleStarted;
 
 		#region Static
 
@@ -61,6 +60,8 @@ namespace Northis.RoosterBattle.ViewModels
 
 		public static readonly PropertyData BattleStartedProperty = RegisterProperty(nameof(BattleStarted), typeof(bool));
 
+		public static readonly PropertyData MatchTokenProperty = RegisterProperty(nameof(MatchToken), typeof(string));
+
 		#endregion
 
 		#endregion
@@ -75,8 +76,9 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			FirstFighter = rooster;
 
-			FindMatchCommand = new TaskCommand(FindMatch, () => !ShowDeadFirst && !IsFinding);
-			CancelFindingCommand = new TaskCommand(CancelFinding, () => IsFinding);
+			FindMatchCommand = new TaskCommand(FindMatch, () => !ShowDeadFirst && !IsFinding && String.IsNullOrWhiteSpace(MatchToken));
+			CancelFindingCommand = new TaskCommand(CancelFinding, () => IsFinding && String.IsNullOrWhiteSpace(MatchToken));
+			StartFightCommand = new TaskCommand(StartFight, () => !String.IsNullOrWhiteSpace(MatchToken) && !BattleStarted);
 			_userToken = (string)Application.Current.Resources["UserToken"];
 		}
 
@@ -122,8 +124,8 @@ namespace Northis.RoosterBattle.ViewModels
 
 		public string MatchToken
 		{
-			get;
-			set;
+			get => GetValue<string>(MatchTokenProperty);
+			set => SetValue(MatchTokenProperty, value);
 		}
 
 		/// <summary>
@@ -185,7 +187,8 @@ namespace Northis.RoosterBattle.ViewModels
 		/// </summary>
 		private async Task StartFight()
 		{
-
+			BattleStarted = true;
+			await _battleServiceClient.StartBattleAsync(_userToken, MatchToken);
 		}
 
 		/// <summary>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using CommonServiceLocator;
 using DataTransferObjects;
 using Northis.BattleRoostersOnline.Contracts;
 using Northis.BattleRoostersOnline.Events;
@@ -11,23 +12,17 @@ using Northis.BattleRoostersOnline.Implements;
 
 namespace Northis.BattleRoostersOnline.Models
 {
-	public class Session
+	public class Session : BaseServiceWithStorage
 	{
 		private event EventHandler<MatchFindedEventArgs> SessionStarted;
 
 		private CancellationTokenSource _tokenSource = new CancellationTokenSource();
 
-		public IBattleServiceCallback FirstCallback
-		{
-			get;
-			set;
-		}
+		private bool _firstIsReady;
+		private bool _secondIsReady;
 
-		public IBattleServiceCallback SecondCallback
-		{
-			get;
-			set;
-		}
+		private IBattleServiceCallback _firstCallback;
+		private IBattleServiceCallback _secondCallback;
 
 		internal RoosterModel SecondFighter
 		{
@@ -53,14 +48,12 @@ namespace Northis.BattleRoostersOnline.Models
 			set;
 		}
 
-		public bool IsStarted
+		internal bool IsStarted
 		{
 			get; set;
 		}
 
-
-
-		public string Token
+		internal string Token
 		{
 			get;
 			set;
@@ -77,7 +70,7 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				FirstFighter = new RoosterModel(fighter);
 				FirstUserToken = token;
-				FirstCallback = callback;
+				_firstCallback = callback;
 				Subscribe(callback);
 			}
 			else if (!IsStarted)
@@ -85,7 +78,7 @@ namespace Northis.BattleRoostersOnline.Models
 				IsStarted = true;
 				SecondFighter = new RoosterModel(fighter);
 				SecondUserToken = token;
-				SecondCallback = callback;
+				_secondCallback = callback;
 				Subscribe(callback);
 				SendReadySignAsync();
 			}
@@ -94,6 +87,21 @@ namespace Northis.BattleRoostersOnline.Models
 		private void Subscribe(IBattleServiceCallback callback)
 		{
 			SessionStarted += (x, y) => callback.FindedMatch(y.MatchToken);
+		}
+
+		public void SetReady(string token)
+		{
+			if (token == FirstUserToken)
+				_firstIsReady = true;
+			else
+				_secondIsReady = true;
+		}
+
+		public bool CheckForReadiness()
+		{
+			if (_firstIsReady && _secondIsReady)
+				return true;
+			return false;
 		}
 
 		private void SendReadySignAsync()
@@ -113,8 +121,8 @@ namespace Northis.BattleRoostersOnline.Models
 		{
 			Task.Run(() =>
 			{
-				FirstCallback.GetStartSign();
-				SecondCallback.GetStartSign();
+				_firstCallback.GetStartSign();
+				_secondCallback.GetStartSign();
 			});
 		}
 
@@ -124,45 +132,65 @@ namespace Northis.BattleRoostersOnline.Models
 			_tokenSource = new CancellationTokenSource();
 		}
 
-		public void StartBattle()
+		public async Task StartBattle()
 		{
 			var token = _tokenSource.Token;
 
-			Task.Run(() =>
+			await Task.Run(async () =>
 			{
-				while (FirstFighter.Health > 0 && SecondFighter.Health > 0)
+				while (FirstFighter.Health > 0 && SecondFighter.Health > 0 && !token.IsCancellationRequested)
 				{
 					FirstFighter.TakeHit(SecondFighter);
 					SecondFighter.TakeHit(FirstFighter);
-					SendRoosterStatus();
-					Task.WaitAll(Task.Delay(500, token));
+					if (FirstFighter.Health != 0 && SecondFighter.Health != 0)
+					{
+						SendRoosterStatus();
+						await Task.Delay(500, token);
+					}
 				}
 
 				if (FirstFighter.Health == 0 && SecondFighter.Health == 0)
 				{
-					FirstFighter.WinStreak = 0;
-					SecondFighter.WinStreak = 0;
+					await SetWinstreak(FirstUserToken, FirstFighter.Name, 0);
+					await SetWinstreak(SecondUserToken, SecondFighter.Name, 0);
 				}
 				else if (FirstFighter.Health == 0)
 				{
-					FirstFighter.WinStreak = 0;
-					SecondFighter.WinStreak++;
+					await SetWinstreak(FirstUserToken, FirstFighter.Name, 0);
+					await SetWinstreak(SecondUserToken, SecondFighter.Name, SecondFighter.WinStreak + 1);
 				}
 				else
 				{
-					FirstFighter.WinStreak++;
-					SecondFighter.WinStreak = 0;
+					await SetWinstreak(FirstUserToken, FirstFighter.Name, FirstFighter.WinStreak + 1);
+					await SetWinstreak(SecondUserToken, SecondFighter.Name, 0);
 				}
+				
+				SendRoosterStatus();
+				SendMessageToClients("Матч Окончен");
 
-				Task.Run(() => FirstCallback.GetBattleMessage("Матч Окончен"));
-				Task.Run(() => SecondCallback.GetBattleMessage("Матч Окончен"));
-			});
+				Storage.Sessions.Remove(Token);
+			},
+					 token);
+		}
+
+		private async Task SetWinstreak(string token, string roosterName, int value)
+		{
+			var login = await GetLoginAsync(token);
+			var rooster = Storage.RoostersData[login]
+								 .First(x => x.Name == roosterName);
+			rooster.WinStreak = value;
+		}
+
+		private void SendMessageToClients(string message)
+		{
+			Task.Run(() => _firstCallback.GetBattleMessage(message));
+			Task.Run(() => _secondCallback.GetBattleMessage(message));
 		}
 
 		private void SendRoosterStatus()
 		{
-			Task.Run(() => FirstCallback.GetRoosterStatus(FirstFighter.ToRoosterDto(), SecondFighter.ToRoosterDto()));
-			Task.Run(() => SecondCallback.GetRoosterStatus(SecondFighter.ToRoosterDto(), FirstFighter.ToRoosterDto()));
+			Task.Run(() => _firstCallback.GetRoosterStatus(FirstFighter.ToRoosterDto(), SecondFighter.ToRoosterDto()));
+			Task.Run(() => _secondCallback.GetRoosterStatus(SecondFighter.ToRoosterDto(), FirstFighter.ToRoosterDto()));
 		}
 	}
 }
