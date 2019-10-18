@@ -13,6 +13,23 @@ namespace TestGameClient.Game {
     using System;
     
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticateStatus", Namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects")]
+    public enum AuthenticateStatus : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        OK = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        WrongLoginOrPassword = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AlreadyRegistered = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AlreadyLoggedIn = 3,
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RoosterDto", Namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects")]
@@ -321,6 +338,12 @@ namespace TestGameClient.Game {
         
         [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IAuthenticateService/LogOut", ReplyAction="http://tempuri.org/IAuthenticateService/LogOutResponse")]
         System.Threading.Tasks.Task<bool> LogOutAsync(string token);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticateService/GetLoginStatus", ReplyAction="http://tempuri.org/IAuthenticateService/GetLoginStatusResponse")]
+        TestGameClient.Game.AuthenticateStatus GetLoginStatus();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticateService/GetLoginStatus", ReplyAction="http://tempuri.org/IAuthenticateService/GetLoginStatusResponse")]
+        System.Threading.Tasks.Task<TestGameClient.Game.AuthenticateStatus> GetLoginStatusAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -373,6 +396,14 @@ namespace TestGameClient.Game {
         public System.Threading.Tasks.Task<bool> LogOutAsync(string token) {
             return base.Channel.LogOutAsync(token);
         }
+        
+        public TestGameClient.Game.AuthenticateStatus GetLoginStatus() {
+            return base.Channel.GetLoginStatus();
+        }
+        
+        public System.Threading.Tasks.Task<TestGameClient.Game.AuthenticateStatus> GetLoginStatusAsync() {
+            return base.Channel.GetLoginStatusAsync();
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -380,16 +411,16 @@ namespace TestGameClient.Game {
     public interface IEditService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        void Edit(string login, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster);
+        void Edit(string token, int roosterID, TestGameClient.Game.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        System.Threading.Tasks.Task EditAsync(string login, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster);
+        System.Threading.Tasks.Task EditAsync(string token, int roosterID, TestGameClient.Game.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
-        void Add(string login, TestGameClient.Game.RoosterDto rooster);
+        void Add(string token, TestGameClient.Game.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
-        System.Threading.Tasks.Task AddAsync(string login, TestGameClient.Game.RoosterDto rooster);
+        System.Threading.Tasks.Task AddAsync(string token, TestGameClient.Game.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
         void Remove(string token, int roosterID);
@@ -431,20 +462,20 @@ namespace TestGameClient.Game {
                 base(binding, remoteAddress) {
         }
         
-        public void Edit(string login, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster) {
-            base.Channel.Edit(login, roosterSeqNum, rooster);
+        public void Edit(string token, int roosterID, TestGameClient.Game.RoosterDto rooster) {
+            base.Channel.Edit(token, roosterID, rooster);
         }
         
-        public System.Threading.Tasks.Task EditAsync(string login, int roosterSeqNum, TestGameClient.Game.RoosterDto rooster) {
-            return base.Channel.EditAsync(login, roosterSeqNum, rooster);
+        public System.Threading.Tasks.Task EditAsync(string token, int roosterID, TestGameClient.Game.RoosterDto rooster) {
+            return base.Channel.EditAsync(token, roosterID, rooster);
         }
         
-        public void Add(string login, TestGameClient.Game.RoosterDto rooster) {
-            base.Channel.Add(login, rooster);
+        public void Add(string token, TestGameClient.Game.RoosterDto rooster) {
+            base.Channel.Add(token, rooster);
         }
         
-        public System.Threading.Tasks.Task AddAsync(string login, TestGameClient.Game.RoosterDto rooster) {
-            return base.Channel.AddAsync(login, rooster);
+        public System.Threading.Tasks.Task AddAsync(string token, TestGameClient.Game.RoosterDto rooster) {
+            return base.Channel.AddAsync(token, rooster);
         }
         
         public void Remove(string token, int roosterID) {

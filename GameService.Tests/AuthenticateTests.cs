@@ -8,7 +8,6 @@ using Unity;
 using Unity.ServiceLocation;
 using Northis.BattleRoostersOnline.Models;
 using Northis.BattleRoostersOnline.Implements;
-using Northis.BattleRoostersOnline.Enums;
 
 namespace Northis.BattleRoostersOnline.GameService.Tests
 {

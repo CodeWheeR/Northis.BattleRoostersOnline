@@ -217,4 +217,10 @@
   <data name="token" xml:space="preserve">
     <value />
   </data>
+  <data name="CancelFinding" xml:space="preserve">
+    <value>Отменить поиск</value>
+  </data>
+  <data name="FindMatch" xml:space="preserve">
+    <value>Найти противника</value>
+  </data>
 </root>

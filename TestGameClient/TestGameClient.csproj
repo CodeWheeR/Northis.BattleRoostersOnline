@@ -55,15 +55,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\Game\GameServicesProvider.wsdl" />
-    <None Include="Connected Services\Game\item.xsd">
+    <None Include="Connected Services\Game\DataTransferObjects.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Game\item1.xsd">
+    <None Include="Connected Services\Game\service.wsdl" />
+    <None Include="Connected Services\Game\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Game\item2.xsd">
+    <None Include="Connected Services\Game\service1.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Game\TestGameClient.Game.AuthenticateStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\Game\TestGameClient.Game.RoosterDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -74,9 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\Game\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\Game\item.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\Game\configuration91.svcinfo" />

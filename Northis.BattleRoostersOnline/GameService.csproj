@@ -82,7 +82,6 @@
     <Compile Include="Models\CrestSize.cs" />
     <Compile Include="Models\RoosterColor.cs" />
     <Compile Include="Models\Session.cs" />
-    <Compile Include="Enums\AuthenticateStatus.cs" />
     <Compile Include="Events\BattleEventArgs.cs" />
     <Compile Include="Events\MatchFindedEventArgs.cs" />
     <Compile Include="Implements\AuthenticateService.cs" />

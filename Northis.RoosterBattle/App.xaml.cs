@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Catel.ExceptionHandling;
 using Catel.IoC;
 using Catel.Logging;
@@ -31,6 +32,13 @@ namespace Northis.RoosterBattle
 			});
 
 			uiVisualizerService.ShowDialogAsync<RoosterBrowserViewModel>();
+		}
+
+		private async void StartApp(IUIVisualizerService uiVisualizerService)
+		{
+			await uiVisualizerService.ShowDialogAsync<AuthViewModel>().ConfigureAwait(true);
+			if (Current.Resources.Contains("UserToken"))
+				await uiVisualizerService.ShowDialogAsync<RoosterBrowserViewModel>().ConfigureAwait(true);
 		}
 	}
 }

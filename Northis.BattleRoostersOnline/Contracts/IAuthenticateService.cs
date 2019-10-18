@@ -5,6 +5,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using DataTransferObjects;
 using Microsoft.SqlServer.Server;
 
 namespace Northis.BattleRoostersOnline.Contracts
@@ -17,6 +18,8 @@ namespace Northis.BattleRoostersOnline.Contracts
 		[OperationContract(IsInitiating = true)]
 		Task<string> Register(string login, string password);
 		[OperationContract(IsTerminating = true)]
-		bool LogOut(string token);
+		Task<bool> LogOut(string token);
+		[OperationContract]
+		AuthenticateStatus GetLoginStatus();
 	}
 }

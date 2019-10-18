@@ -9,8 +9,13 @@ using System.Threading;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Net.Mime;
+using System.ServiceModel;
+using System.Windows;
 using System.Windows.Input;
 using Catel.Collections;
+using Northis.RoosterBattle.Callbacks;
+using Northis.RoosterBattle.GameServer;
 
 namespace Northis.RoosterBattle.ViewModels
 {
@@ -24,13 +29,15 @@ namespace Northis.RoosterBattle.ViewModels
 
 		private CancellationTokenSource _tokenSource = new CancellationTokenSource();
 		private ObservableCollection<RoosterModel> _sourceRoosters;
+		private FindServiceClient _findServiceClient;
+		private BattleServiceClient _battleServiceClient;
+
+		private string _userToken;
+		private string _matchToken;
+		private bool _battleStarted;
 
 		#region Static
 
-		/// <summary>
-		/// Зарегистрированное свойство коллекции петухов.
-		/// </summary>
-		public static readonly PropertyData RoostersProperty = RegisterProperty(nameof(Roosters), typeof(ObservableCollection<RoosterModel>), () => new ObservableCollection<RoosterModel>());
 		/// <summary>
 		/// Зарегистрированное свойство выбранного петуха.
 		/// </summary>
@@ -51,6 +58,10 @@ namespace Northis.RoosterBattle.ViewModels
 		/// Зарегистрированное свойство состояния жизни второго бойца.
 		/// </summary>
 		public static readonly PropertyData ShowDeadSecondProperty = RegisterProperty(nameof(ShowDeadSecond), typeof(bool));
+		/// <summary>
+		/// Зарегистрированное свойство состояния жизни второго бойца.
+		/// </summary>
+		public static readonly PropertyData IsFindingProperty = RegisterProperty(nameof(IsFinding), typeof(bool));
 
 		#endregion
 
@@ -62,37 +73,21 @@ namespace Northis.RoosterBattle.ViewModels
 		/// Инициализирует новый объект <see cref="FightViewModel"/> класса.
 		/// </summary>
 		/// <param name="roosters">Коллекция петухов.</param>
-		public FightViewModel(IEnumerable<RoosterModel> roosters)
+		public FightViewModel(RoosterModel rooster)
 		{
-			_sourceRoosters = new FastObservableCollection<RoosterModel>(roosters);
-			((ObservableCollection<RoosterModel>)Roosters).Clear();
-			foreach (var rooster in roosters)
-			{
-				((ObservableCollection<RoosterModel>)Roosters).Add(rooster.Clone() as RoosterModel);
-			}
+			FirstFighter = rooster;
+			_findServiceClient = new FindServiceClient(new InstanceContext(new BattleServiceCallback(this)));
+			_battleServiceClient = new BattleServiceClient(new InstanceContext(new BattleServiceCallback(this)));
 
-			SelectFirstRoosterCommand = new TaskCommand(SelectFirstFighterAsync);
-			SelectSecondRoosterCommand = new TaskCommand(SelectSecondFighterAsync);
-			StartFightCommand = new TaskCommand(StartFight, () => (FirstFighter != null && FirstFighter.Health > 0) && (SecondFighter != null && SecondFighter.Health > 0));
+			FindMatchCommand = new TaskCommand(FindMatch, () => !ShowDeadFirst && !IsFinding);
+			CancelFindingCommand = new TaskCommand(CancelFinding, () => IsFinding);
+			_userToken = (string)Application.Current.Resources["UserToken"];
 		}
 
 		#endregion
 
 		#region Properties		
-		/// <summary>
-		/// Возвращает команду для выбора первого бойца.
-		/// </summary>
-		public ICommand SelectFirstRoosterCommand
-		{
-			get;
-		}
-		/// <summary>
-		/// Возвращает команду для выбора второго бойца.
-		/// </summary>
-		public ICommand SelectSecondRoosterCommand
-		{
-			get;
-		}
+
 		/// <summary>
 		/// Возвращает команду для начала боя.
 		/// </summary>
@@ -100,6 +95,29 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			get;
 		}
+
+		/// <summary>
+		/// Возвращает команду для начала боя.
+		/// </summary>
+		public ICommand FindMatchCommand
+		{
+			get;
+		}
+
+		/// <summary>
+		/// Возвращает команду для начала боя.
+		/// </summary>
+		public ICommand CancelFindingCommand
+		{
+			get;
+		}
+
+		public bool IsFinding
+		{
+			get => GetValue<bool>(IsFindingProperty);
+			set => SetValue(IsFindingProperty, value);
+		}
+
 		/// <summary>
 		/// Возвращает или устанавливает значение, обозначающее жив ли первый боец.
 		/// </summary>
@@ -122,19 +140,6 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<bool>(ShowDeadSecondProperty);
 			set => SetValue(ShowDeadSecondProperty, value);
 		}
-
-		/// <summary>
-		/// Предоставляет или задает коллекцию петухов.
-		/// </summary>
-		/// <value>
-		/// Коллекция петухов.
-		/// </value>
-		public IEnumerable<RoosterModel> Roosters
-		{
-			get => GetValue<ObservableCollection<RoosterModel>>(RoostersProperty);
-			set => SetValue(RoostersProperty, value);
-		}
-
 
 		/// <summary>
 		/// Предоставляет или задает выбранного петуха.
@@ -168,65 +173,32 @@ namespace Northis.RoosterBattle.ViewModels
 
 		#region Private Methods		
 		/// <summary>
-		/// Выполняет установку выбранного петуха в качестве первого бойца.
+		/// Запускает битву петухов.
 		/// </summary>
-		private Task SelectFirstFighterAsync()
+		private async Task StartFight()
 		{
-			ShowDeadFirst = false;
-			if (FirstFighter != null && FirstFighter.Health > 0)
-				((ObservableCollection<RoosterModel>)Roosters).Add(FirstFighter);
-			FirstFighter = SelectedRooster;
-			((ObservableCollection<RoosterModel>)Roosters).Remove(SelectedRooster);
-			return Task.CompletedTask;
+
 		}
-		/// <summary>
-		/// Выполняет установку выбранного петуха в качестве второго бойца.
-		/// </summary>
-		private Task SelectSecondFighterAsync()
-		{
-			ShowDeadSecond = false;
-			if (SecondFighter != null && SecondFighter.Health > 0)
-				((ObservableCollection<RoosterModel>)Roosters).Add(SecondFighter);
-			SecondFighter = SelectedRooster;
-			((ObservableCollection<RoosterModel>)Roosters).Remove(SelectedRooster);
-			return Task.CompletedTask;
-		}
+
 		/// <summary>
 		/// Запускает битву петухов.
 		/// </summary>
-		private Task StartFight()
+		private async Task FindMatch()
 		{
 			ShowDeadFirst = false;
-			var token = _tokenSource.Token;
-			return Task.Run(() =>
-			{
-				while (FirstFighter.Health > 0 && SecondFighter.Health > 0)
-				{
-					FirstFighter.TakeHit(SecondFighter);
-					SecondFighter.TakeHit(FirstFighter);
-					Task.WaitAll(Task.Delay(50, token));
-				}
+			ShowDeadSecond = false;
+			IsFinding = true;
+			await _findServiceClient.FindMatchAsync(_userToken, FirstFighter.ToRoosterDto());
+		}
 
-				if (FirstFighter.Health == 0 && SecondFighter.Health == 0)
-				{
-					ShowDeadFirst = true;
-					ShowDeadSecond = true;
-					SetWinstreak(FirstFighter, 0);
-					SetWinstreak(SecondFighter, 0);
-
-				}
-				else if (FirstFighter.Health == 0)
-				{
-					ShowDeadFirst = true;
-					SetBattleResults(SecondFighter, FirstFighter);
-				}
-				else
-				{
-					ShowDeadSecond = true;
-					SetBattleResults(FirstFighter, SecondFighter);
-				}
-
-			}, token);
+		/// <summary>
+		/// Запускает битву петухов.
+		/// </summary>
+		private async Task CancelFinding()
+		{
+			IsFinding = false;
+			var res = await _findServiceClient.CancelFindingAsync(_userToken);
+			Debug.WriteLine(res);
 		}
 
 		private void SetBattleResults(RoosterModel winner, RoosterModel looser)

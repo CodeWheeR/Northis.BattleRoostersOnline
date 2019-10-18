@@ -24,7 +24,6 @@ namespace Northis.BattleRoostersOnline.Implements
 			if (session.FirstCallback != null && session.SecondCallback != null)
 			{
 				session.SendStartSignAsync();
-				Task.WaitAll(Task.Delay(1000));
 				session.StartBattle();
 			}
 		}

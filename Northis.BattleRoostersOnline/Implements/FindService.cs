@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -10,7 +11,7 @@ using Northis.BattleRoostersOnline.Models;
 
 namespace Northis.BattleRoostersOnline.Implements
 {
-	[ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
+	[ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession, IncludeExceptionDetailInFaults = true)]
 	public class FindService : BaseServiceWithStorage, IFindService
 	{
 		private Session _session;
@@ -18,7 +19,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		public async void FindMatch(string token, RoosterDto rooster)
 		{ 
-			var callback = OperationContext.Current.GetCallbackChannel<IFindServiceCallback>();
+			var callback = OperationContext.Current.GetCallbackChannel<IBattleServiceCallback>();
 			if (!Storage.LoggedUsers.ContainsKey(token))
 			{
 				Task.Run(() => callback.FindedMatch("User was not found"));
@@ -44,6 +45,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			if (_session != null && _session.RemoveFighter(token))
 			{
 				Storage.Sessions.Remove(_matchToken);
+				_session = null;
 				return true;
 			}
 			return false;

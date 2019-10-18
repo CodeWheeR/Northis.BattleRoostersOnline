@@ -8,7 +8,7 @@ using DataTransferObjects;
 
 namespace Northis.BattleRoostersOnline.Contracts
 {
-	[ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IFindServiceCallback))]
+	[ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IBattleServiceCallback))]
 	interface IFindService
 	{
 		[OperationContract]

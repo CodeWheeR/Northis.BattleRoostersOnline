@@ -1,80 +1,106 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using CommonServiceLocator;
 using DataTransferObjects;
 using Northis.BattleRoostersOnline.Contracts;
-using Northis.BattleRoostersOnline.Models;
 
 namespace Northis.BattleRoostersOnline.Implements
 {
+	[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
 	public class EditService : BaseServiceWithStorage, IEditService
 	{
 		public async void Add(string token, RoosterDto rooster)
 		{
 			var login = await GetLoginAsync(token);
-			if (Storage.RoostersData.ContainsKey(login))
-			{
-				Storage.RoostersData[login].Add(rooster);
-			}
-			else
-			{
-				Storage.RoostersData.Add(login, new List<RoosterDto>()
-				{
-					rooster
-				});
-			}
-		}
 
-		public async Task Load()
-		{
 			await Task.Run(() =>
 			{
-				List<UserRoosters> userRoosters;
-
-				XmlSerializer serializer = new XmlSerializer(typeof(List<UserRoosters>));
-
-				using (FileStream fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
+				if (Storage.RoostersData.ContainsKey(login))
 				{
-					Storage.RoostersData.Clear();
-
-					userRoosters = (List<UserRoosters>)serializer.Deserialize(fileStream);
-
-					for (int i = 0; i < userRoosters.Count; i++)
+					lock (Storage.RoostersData)
 					{
-						Storage.RoostersData.Add(userRoosters[i].Login, userRoosters[i].Roosters.ToList());
+						Storage.RoostersData[login]
+							   .Add(rooster);
 					}
 				}
-			});
+				else
+				{
+					lock (Storage.RoostersData)
+					{
+						Storage.RoostersData.Add(login,
+												 new List<RoosterDto>
+												 {
+													 rooster
+												 });
+					}
+				}
+			}).ConfigureAwait(false);
+		}
+
+		public void Load()
+		{
+			List<UserRoosters> userRoosters;
+			var serializer = new XmlSerializer(typeof(List<UserRoosters>));
+
+			using (var fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
+			{
+				Storage.RoostersData.Clear();
+
+				userRoosters = (List<UserRoosters>) serializer.Deserialize(fileStream);
+
+				lock (Storage.RoostersData)
+				{
+					for (var i = 0; i < userRoosters.Count; i++)
+					{
+						Storage.RoostersData.Add(userRoosters[i]
+													 .Login,
+												 userRoosters[i]
+													 .Roosters.ToList());
+					}
+				}
+			}
 		}
 
 		public async Task<IEnumerable<RoosterDto>> GetUserRoosters(string token)
 		{
-			return Storage.RoostersData[await GetLoginAsync(token)];
+			var login = await GetLoginAsync(token);
+
+			return await Task.Run<IEnumerable<RoosterDto>>(() =>
+			{
+				if (Storage.RoostersData.ContainsKey(login))
+				{
+					return Storage.RoostersData[login];
+				}
+
+				return new List<RoosterDto>();
+			}).ConfigureAwait(false);
 		}
 
 		public void Save()
 		{
 			Task.Run(() =>
 			{
-				List<UserRoosters> roosters = new List<UserRoosters>();
+				var roosters = new List<UserRoosters>();
 
-				foreach (var val in Storage.RoostersData)
+				lock (Storage.RoostersData)
 				{
-					roosters.Add(new UserRoosters(val.Key, val.Value));
+					foreach (var val in Storage.RoostersData)
+					{
+						roosters.Add(new UserRoosters(val.Key, val.Value));
+					}
 				}
 
-				XmlSerializer serializer = new XmlSerializer(roosters.GetType());
+				var serializer = new XmlSerializer(roosters.GetType());
 
 				if (Directory.Exists("Resources") == false)
 				{
 					Directory.CreateDirectory("Resources");
 				}
 
-				using (FileStream fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.OpenOrCreate))
+				using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.OpenOrCreate))
 				{
 					serializer.Serialize(fileStream, roosters);
 				}
@@ -84,20 +110,34 @@ namespace Northis.BattleRoostersOnline.Implements
 		public async void Edit(string token, int roosterSeqNum, RoosterDto rooster)
 		{
 			var login = await GetLoginAsync(token);
-			if (Storage.RoostersData.ContainsKey(login) && Storage.RoostersData[login].Count > roosterSeqNum && roosterSeqNum >= 0)
+			if (Storage.RoostersData.ContainsKey(login) &&
+				Storage.RoostersData[login]
+					   .Count >
+				roosterSeqNum &&
+				roosterSeqNum >= 0)
 			{
-				Storage.RoostersData[login.ToString()][roosterSeqNum] = rooster;
+				lock (Storage.RoostersData)
+				{
+					Storage.RoostersData[login][roosterSeqNum] = rooster;
+				}
 			}
 		}
 
 		public async void Remove(string token, int roosterSeqNum)
 		{
 			var login = await GetLoginAsync(token);
-			if (Storage.RoostersData.ContainsKey(login) && Storage.RoostersData[login].Count > roosterSeqNum && roosterSeqNum >= 0)
+			if (Storage.RoostersData.ContainsKey(login) &&
+				Storage.RoostersData[login]
+					   .Count >
+				roosterSeqNum &&
+				roosterSeqNum >= 0)
 			{
-				Storage.RoostersData[login].RemoveAt(roosterSeqNum);
+				lock (Storage.RoostersData)
+				{
+					Storage.RoostersData[login]
+						   .RemoveAt(roosterSeqNum);
+				}
 			}
 		}
-
 	}
 }

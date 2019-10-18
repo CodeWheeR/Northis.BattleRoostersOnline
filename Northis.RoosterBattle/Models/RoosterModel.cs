@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Catel.Data;
+using Northis.RoosterBattle.GameServer;
 
 namespace Northis.RoosterBattle.Models
 {
@@ -160,6 +161,23 @@ namespace Northis.RoosterBattle.Models
 				}
 			};
 		}
+
+		public RoosterModel(RoosterDto rooster) : this()
+		{
+			Health = rooster.Health;
+			MaxHealth = rooster.MaxHealth;
+			Stamina = rooster.Stamina;
+			Brickness = rooster.Brickness;
+			Luck = rooster.Luck;
+			Thickness = rooster.Thickness;
+			Color = ColorParse(rooster.ColorDto);
+			Crest = SizeParse(rooster.Crest);
+			Height = rooster.Height;
+			Weight = rooster.Weight;
+			Name = rooster.Name;
+			WinStreak = rooster.WinStreak;
+		}
+
 		#endregion
 
 		#region Properties		
@@ -480,6 +498,52 @@ namespace Northis.RoosterBattle.Models
 			{
 				property.SetValue(this, Clamp((double) property.GetValue(this), minValue, maxValue));
 			}
+		}
+
+		public RoosterDto ToRoosterDto() =>
+			new RoosterDto
+			{
+				Height = Height,
+				ColorDto = ColorDtoParse(Color),
+				Health = Health,
+				Stamina = Stamina,
+				Brickness = Brickness,
+				Crest = SizeDtoParse(Crest),
+				Weight = Weight,
+				WinStreak = WinStreak,
+				Luck = Luck,
+				Name = Name,
+				Thickness = Thickness,
+				MaxHealth = MaxHealth,
+				Damage = Damage,
+				Hit = Hit
+			};
+
+		private RoosterColor ColorParse(RoosterColorDto color)
+		{
+			if (RoosterColor.TryParse(color.ToString(), out RoosterColor outColor))
+				return outColor;
+			throw new ArgumentException();
+		}
+
+		private RoosterColorDto ColorDtoParse(RoosterColor color)
+		{
+			if (RoosterColorDto.TryParse(color.ToString(), out RoosterColorDto outColor))
+				return outColor;
+			throw new ArgumentException();
+		}
+
+		private CrestSize SizeParse(CrestSizeDto size)
+		{
+			if (CrestSize.TryParse(size.ToString(), out CrestSize outSize))
+				return outSize;
+			throw new ArgumentException();
+		}
+		private CrestSizeDto SizeDtoParse(CrestSize size)
+		{
+			if (CrestSizeDto.TryParse(size.ToString(), out CrestSizeDto outSize))
+				return outSize;
+			throw new ArgumentException();
 		}
 		#endregion
 	}

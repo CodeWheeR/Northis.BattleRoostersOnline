@@ -18,9 +18,9 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <param name="roosterSeqNum">Порядковый номер петуха.</param>
 		/// <param name="rooster">Петух.</param>
 		[OperationContract]
-		void Edit(string login, int roosterSeqNum, RoosterDto rooster);
+		void Edit(string token, int roosterID, RoosterDto rooster);
 		[OperationContract]
-		void Add(string login, RoosterDto rooster);
+		void Add(string token, RoosterDto rooster);
 		[OperationContract]
 		void Remove(string token, int roosterID);
 		[OperationContract]

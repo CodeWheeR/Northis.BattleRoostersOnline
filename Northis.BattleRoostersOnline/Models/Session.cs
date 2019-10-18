@@ -71,7 +71,7 @@ namespace Northis.BattleRoostersOnline.Models
 			Token = token;
 		}
 
-		public void RegisterFighter(string token, RoosterDto fighter, IFindServiceCallback callback)
+		public void RegisterFighter(string token, RoosterDto fighter, IBattleServiceCallback callback)
 		{
 			if (FirstFighter == null)
 			{
@@ -89,7 +89,7 @@ namespace Northis.BattleRoostersOnline.Models
 			}
 		}
 
-		private void Subscribe(IFindServiceCallback callback)
+		private void Subscribe(IBattleServiceCallback callback)
 		{
 			SessionStarted += (x, y) => callback.FindedMatch(y.MatchToken);
 		}

@@ -11,9 +11,9 @@
 	xmlns:userControls="clr-namespace:Northis.RoosterBattle.UserControls"
 	xmlns:viewModels="clr-namespace:Northis.RoosterBattle.ViewModels"
 	Title="{x:Static res:Resources.FightWindow}"
-	Width="800"
+	Width="500"
 	Height="450"
-	MinWidth="800"
+	MinWidth="500"
 	MinHeight="450"
 	MaxWidth="800"
 	MaxHeight="450"
@@ -22,92 +22,27 @@
 	<catel:Window.Resources />
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="59*" />
-			<ColumnDefinition Width="139*" />
+			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
-
-		<Border
-			Margin="10,50,10,35"
-			BorderBrush="#FF838383"
-			BorderThickness="1">
-			<ScrollViewer Panel.ZIndex="1" VerticalScrollBarVisibility="Auto">
-				<ListBox
-					BorderBrush="{x:Null}"
-					ItemsSource="{Binding Roosters}"
-					SelectedItem="{Binding SelectedRooster}">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<StackPanel Margin="2">
-								<TextBlock FontSize="18" Text="{Binding Name}" />
-								<StackPanel Orientation="Horizontal">
-									<TextBlock Text="{x:Static res:Resources.Health}" />
-									<TextBlock Text="{Binding Health}" />
-								</StackPanel>
-								<StackPanel Orientation="Horizontal">
-									<TextBlock Text="{x:Static res:Resources.Stamina}" />
-									<TextBlock Text="{Binding Stamina}" />
-								</StackPanel>
-								<StackPanel Orientation="Horizontal">
-									<TextBlock Text="{x:Static res:Resources.WinStreak}" />
-									<TextBlock Text="{Binding WinStreak}" />
-								</StackPanel>
-							</StackPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
-			</ScrollViewer>
-		</Border>
 		<Label
-			Width="199"
 			Height="35"
-			Margin="10,10,0,0"
-			HorizontalAlignment="Left"
-			VerticalAlignment="Top"
-			Content="{x:Static res:Resources.AvaliableFighters}"
-			FontSize="18"
-			FontWeight="Bold" />
-		<Label
-			Grid.Column="1"
-			Width="553"
-			Height="35"
-			Margin="10,10,-7,0"
-			HorizontalAlignment="Left"
-			VerticalAlignment="Top"
+			Margin="10,10,10,0"
 			HorizontalContentAlignment="Center"
 			VerticalContentAlignment="Center"
 			Content="{x:Static res:Resources.FightWindow}"
 			FontSize="18"
-			FontWeight="Bold" />
-		<Button
-			Grid.Column="1"
-			Width="148"
-			Height="20"
-			Margin="0,0,0,10"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Bottom"
-			Command="{Binding StartFightCommand}"
-			Content="{x:Static res:Resources.StartFight}" />
-		<Button
-			Grid.Column="0"
-			Width="105"
-			Height="20"
-			Margin="10,0,0,10"
-			HorizontalAlignment="Left"
-			VerticalAlignment="Bottom"
-			Command="{Binding SelectFirstRoosterCommand}"
-			Content="{x:Static res:Resources.SelectAsFirst}" />
-		<Button
-			Grid.Column="0"
-			Width="105"
-			Height="20"
-			Margin="0,0,10,10"
-			HorizontalAlignment="Right"
-			VerticalAlignment="Bottom"
-			Command="{Binding SelectSecondRoosterCommand}"
-			Content="{x:Static res:Resources.SelectAsSecond}" />
+			FontWeight="Bold" VerticalAlignment="Top" />
+
+		<Button 
+		        Content="{x:Static res:Resources.FindMatch}" 
+		        HorizontalAlignment="Center" 
+		        Margin="0,0,150,10" 
+		        VerticalAlignment="Bottom" 
+		        Width="120"
+		        Command="{Binding FindMatchCommand}"/>
+
 		<Border
-			Grid.Column="1"
-			Margin="15,50,10,35"
+			Margin="10,50,10,35"
 			BorderBrush="Black"
 			BorderThickness="1">
 			<Grid>
@@ -247,7 +182,20 @@
 						ValueColor="Yellow"
 						ValueLevel="{Binding SecondFighter.Stamina}" />
 				</StackPanel>
+				<Button Grid.ColumnSpan="3" 
+				        Content="{x:Static res:Resources.StartFight}" 
+				        HorizontalAlignment="Center" 
+				        Margin="0,0,0,10" 
+				        VerticalAlignment="Bottom" 
+				        Width="90"/>
 			</Grid>
 		</Border>
+		<Button 
+	  Content="{x:Static res:Resources.CancelFinding}" 
+	  HorizontalAlignment="Center" 
+	  Margin="150,0,0,10" 
+	  VerticalAlignment="Bottom" 
+	  Width="120"
+	  Command="{Binding CancelFindingCommand}"/>
 	</Grid>
 </catel:Window>

@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using System.Resources;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,8 +34,8 @@ namespace Northis.RoosterBattle.ViewModels
 				CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
 			}
 			_uiVisualizerService = uiVisualizerService;
-			AuthCommand = new TaskCommand((() => AuthorizationAsync()), () => true);
-			RegCommand = new TaskCommand((() => RegisterAsync()), (() => true));
+			AuthCommand = new TaskCommand((() => AuthenticateAsync(_authenticateServiceClient.LogInAsync)));
+			RegCommand = new TaskCommand((() => AuthenticateAsync(_authenticateServiceClient.RegisterAsync)));
 		}
 
 
@@ -68,26 +70,19 @@ namespace Northis.RoosterBattle.ViewModels
 			get;
 		}
 
-		private async Task RegisterAsync()
+		private async Task AuthenticateAsync(Func<string, string, Task<string>> authMethod)
 		{
+			string[] excludes = Enum.GetNames(typeof(AuthenticateStatus));
+			if (String.IsNullOrWhiteSpace(Login) || String.IsNullOrWhiteSpace(Password))
+			{
+				MessageBox.Show("Поля логина и пароля не могут быть пустыми");
+				return;
+			}
 			string token = await _authenticateServiceClient.RegisterAsync(Login, Password);
 
-			if (token != "AlreadyRegistered")
-			{
-				Application.Current.Resources.Add("UserToken", token);
-				await this.SaveAndCloseViewModelAsync();
-			}
-			else
-			{
-				MessageBox.Show(token);
-			}
-		}
+			AuthenticateStatus result;
 
-		private async Task AuthorizationAsync()
-		{
-			string token = await _authenticateServiceClient.LogInAsync(Login, Password);
-
-			if (token != "AlreadyLoggedIn" && token != "WrongLoginOrPassword")
+			if (!Enum.TryParse(token, out result))
 			{
 				Application.Current.Resources.Add("UserToken", token);
 				await this.SaveAndCloseViewModelAsync();

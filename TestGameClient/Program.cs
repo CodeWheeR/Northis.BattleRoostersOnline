@@ -33,22 +33,14 @@ namespace TestGameClient
 				Name = "Бульбулятор"
 			};
 
-			var finder = new FindServiceClient(new InstanceContext(new Callbacker()));
+			var finder = new FindServiceClient(new InstanceContext(new BattleCallbacker()));
+			finder.FindMatch(token, rooster);
+			finder.CancelFinding(token);
 			finder.FindMatch(token, rooster);
 
 
 
 			Console.ReadKey();
-		}
-
-		public class Callbacker : IFindServiceCallback
-		{
-			public void FindedMatch(string matchToken)
-			{
-				Console.WriteLine("MatchWasFinded: " + matchToken);
-				var start = new BattleServiceClient(new InstanceContext(new BattleCallbacker()));
-				start.StartBattle(token, matchToken);
-			}
 		}
 
 		public class BattleCallbacker : IBattleServiceCallback
@@ -68,6 +60,13 @@ namespace TestGameClient
 			public void GetStartSign()
 			{
 				Console.WriteLine('\n' + "Бой начался" + '\n');
+			}
+
+			public void FindedMatch(string matchToken)
+			{
+				Console.WriteLine("MatchWasFinded: " + matchToken);
+				var start = new BattleServiceClient(new InstanceContext(this));
+				start.StartBattle(token, matchToken);
 			}
 		}
 	}

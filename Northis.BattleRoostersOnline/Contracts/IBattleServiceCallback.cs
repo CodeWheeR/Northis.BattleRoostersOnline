@@ -18,5 +18,8 @@ namespace Northis.BattleRoostersOnline.Contracts
 
 		[OperationContract]
 		void GetStartSign();
+
+		[OperationContract]
+		void FindedMatch(string token);
 	}
 }

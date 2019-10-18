@@ -117,6 +117,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Callbacks\BattleServiceCallback.cs" />
     <Compile Include="Connected Services\GameServer\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -180,18 +181,21 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Connected Services\GameServer\GameServicesProvider.wsdl" />
-    <None Include="Connected Services\GameServer\item.xsd">
+    <None Include="Connected Services\GameServer\DataTransferObjects.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GameServer\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\GameServer\item2.xsd">
-      <SubType>Designer</SubType>
+    <None Include="Connected Services\GameServer\Northis.RoosterBattle.GameServer.AuthenticateStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServer\Northis.RoosterBattle.GameServer.RoosterDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GameServer\service.wsdl" />
+    <None Include="Connected Services\GameServer\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServer\service1.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -274,9 +278,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\GameServer\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServer\item.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\GameServer\configuration91.svcinfo" />

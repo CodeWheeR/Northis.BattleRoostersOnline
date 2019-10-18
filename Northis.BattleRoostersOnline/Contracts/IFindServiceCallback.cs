@@ -9,7 +9,6 @@ namespace Northis.BattleRoostersOnline.Contracts
 {
 	public interface IFindServiceCallback
 	{
-		[OperationContract]
-		void FindedMatch(string token);
+
 	}
 }

@@ -115,6 +115,15 @@ namespace Northis.RoosterBattle.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Отменить поиск.
+        /// </summary>
+        public static string CancelFinding {
+            get {
+                return ResourceManager.GetString("CancelFinding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Удалить.
         /// </summary>
         public static string ClearButton {
@@ -184,6 +193,15 @@ namespace Northis.RoosterBattle.Properties {
         public static string FightWindow {
             get {
                 return ResourceManager.GetString("FightWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Найти противника.
+        /// </summary>
+        public static string FindMatch {
+            get {
+                return ResourceManager.GetString("FindMatch", resourceCulture);
             }
         }
         
