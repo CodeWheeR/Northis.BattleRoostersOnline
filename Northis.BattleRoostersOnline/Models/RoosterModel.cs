@@ -11,37 +11,47 @@ namespace Northis.BattleRoostersOnline.Models
 	/// <seealso cref="ValidatableModelBase" />
 	internal class RoosterModel : ICloneable
 	{
-		#region Fields
+		#region Fields		
+		#region Private
+		/// <summary>
+		/// Вес петуха.
+		/// </summary>
 		private double _weight;
+		/// <summary>
+		/// Рост петуха.
+		/// </summary>
 		private int _height;
+		/// <summary>
+		/// Здоровье петуха.
+		/// </summary>
 		private double _health;
+		/// <summary>
+		/// Выносливость петуха.
+		/// </summary>
 		private int _stamina;
+		/// <summary>
+		/// Цвет петуха.
+		/// </summary>
 		private RoosterColorDto _color;
+		/// <summary>
+		/// Уклонеине петуха.
+		/// </summary>
 		private int _brickness;
+		/// <summary>
+		/// Удачливость петуха.
+		/// </summary>
 		private int _luck;
+		/// <summary>
+		/// Плотность петуха.
+		/// </summary>
 		private int _thickness;
-
-		#region Limiters
-		private readonly int _minWeight = 2;
-		private int _maxWeight = 8;
-		private readonly int _maxHeight = 50;
-		private readonly int _minHeight = 20;
-		private int _maxHealth = 100;
-		private readonly int _maxStamina = 100;
-		private int _maxThickness = 30;
-		private int _maxLuck = 30;
-		private int _maxBrickness = 30;
-		#endregion
-
-		#region Consts
-		private const int DefaultMaxHealth = 100;
-		private const int DefaultMaxWeight = 8;
-		private const int DefaultMaxThickness = 30;
-		private const int DefaultMaxBrickness = 30;
-		private const int DefaultMaxLuck = 30;
-		#endregion
-
+		/// <summary>
+		/// Генератор удачливости петуха.
+		/// </summary>
 		private readonly Random _luckMeter = new Random();
+		/// <summary>
+		/// Генератор уклонения петуха.
+		/// </summary>
 		private readonly Random _bricknessMeter = new Random();
 		/// <summary>
 		/// Словарь с делегатами цветовых модификаций петухов.
@@ -51,6 +61,69 @@ namespace Northis.BattleRoostersOnline.Models
 		/// Словарь с делегатами очистки цветовых модификаций петухов.
 		/// </summary>
 		private readonly Dictionary<RoosterColorDto, Action> ClearModifications;
+
+		#region Limiters		
+		/// <summary>
+		/// Минимальный вес петуха.
+		/// </summary>
+		private readonly int _minWeight = 2;
+		/// <summary>
+		/// Максимальный вес петуха.
+		/// </summary>
+		private int _maxWeight = 8;
+		/// <summary>
+		/// Максимальная высота петуха.
+		/// </summary>
+		private readonly int _maxHeight = 50;
+		/// <summary>
+		/// Минимальная высота петуха.
+		/// </summary>
+		private readonly int _minHeight = 20;
+		/// <summary>
+		/// Максимальное здоровье петуха.
+		/// </summary>
+		private int _maxHealth = 100;
+		/// <summary>
+		/// Максимальная выносливость петуха.
+		/// </summary>
+		private readonly int _maxStamina = 100;
+		/// <summary>
+		/// Максимальная плотность петуха.
+		/// </summary>
+		private int _maxThickness = 30;
+		/// <summary>
+		/// Максимальная удачливость петуха.
+		/// </summary>
+		private int _maxLuck = 30;
+		/// <summary>
+		/// Максимальное уклонение петуха.
+		/// </summary>
+		private int _maxBrickness = 30;
+		#endregion
+
+		#region Consts		
+		/// <summary>
+		/// Максимальное здоровье петуха по умолчанию.
+		/// </summary>
+		private const int DefaultMaxHealth = 100;
+		/// <summary>
+		/// Максимальный вес петуха по умолчанию.
+		/// </summary>
+		private const int DefaultMaxWeight = 8;
+		/// <summary>
+		/// Максимальная плотность петуха по умолчанию.
+		/// </summary>
+		private const int DefaultMaxThickness = 30;
+		/// <summary>
+		/// Максимальное уклонение петуха по умолчанию.
+		/// </summary>
+		private const int DefaultMaxBrickness = 30;
+		/// <summary>
+		/// Максимальная удачливость петуха по умолчанию.
+		/// </summary>
+		private const int DefaultMaxLuck = 30;
+		#endregion
+		#endregion
 		#endregion
 
 		#region .ctor
@@ -110,7 +183,10 @@ namespace Northis.BattleRoostersOnline.Models
 				}
 			};
 		}
-
+		/// <summary>
+		/// Инициализирует новый объект <see cref="RoosterModel"/> класса.
+		/// </summary>
+		/// <param name="rooster">Петух.</param>
 		public RoosterModel(RoosterDto rooster) : this()
 		{
 			Health = rooster.Health;
@@ -324,7 +400,11 @@ namespace Northis.BattleRoostersOnline.Models
 		}
 		#endregion
 
-		#region Public Methods
+		#region Public Methods		
+		/// <summary>
+		/// Конвертирует петуха в DTO объект.
+		/// </summary>
+		/// <returns>RoosterDto.</returns>
 		public RoosterDto ToRoosterDto() =>
 			new RoosterDto
 			{
@@ -390,14 +470,14 @@ namespace Northis.BattleRoostersOnline.Models
 		/// <param name="value">Само значение.</param>
 		/// <param name="min">Возможный минимум.</param>
 		/// <param name="max">Возможный максимум.</param>
-		/// <returns></returns>
+		/// <returns>T.</returns>
 		private T Clamp<T>(T value, T min, T max) where T : IComparable => value.CompareTo(min) < 0 ? min : value.CompareTo(max) > 0 ? max : value;
 
 		/// <summary>
 		/// Вычисляет порядковый индекс значения перечисления.
 		/// </summary>
 		/// <param name="first">The first.</param>
-		/// <returns></returns>
+		/// <returns>Индекс.</returns>
 		private int CalcEnumIndex(Enum first)
 		{
 			var names = Enum.GetNames(first.GetType())

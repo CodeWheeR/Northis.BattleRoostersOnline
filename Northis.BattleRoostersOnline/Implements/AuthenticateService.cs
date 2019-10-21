@@ -8,10 +8,26 @@ using static System.String;
 
 namespace Northis.BattleRoostersOnline.Implements
 {
+	/// <summary>
+	/// Предоставляет сервис аунтефикации.
+	/// </summary>
+	/// <seealso cref="Northis.BattleRoostersOnline.Implements.BaseServiceWithStorage" />
+	/// <seealso cref="Northis.BattleRoostersOnline.Contracts.IAuthenticateService" />
 	public class AuthenticateService : BaseServiceWithStorage, IAuthenticateService
 	{
+		#region Fields
+		#region Private
+		/// <summary>
+		/// Бинарный сериализатор
+		/// </summary>
 		private readonly BinaryFormatter _formatter = new BinaryFormatter();
+		#endregion
+		#endregion
 
+		#region .ctor
+		/// <summary>
+		/// Инициализирует новый экземпляр <see cref="AuthenticateService"/> класса.
+		/// </summary>
 		public AuthenticateService()
 		{
 			if (Storage.UserData.Count == 0)
@@ -19,7 +35,18 @@ namespace Northis.BattleRoostersOnline.Implements
 				LoadUserData();
 			}
 		}
+		#endregion
 
+		#region Methods
+		#region Public
+		/// <summary>
+		/// Осуществляет вход пользователя в систему.
+		/// </summary>
+		/// <param name="login">Логин.</param>
+		/// <param name="password">Пароль.</param>
+		/// <returns>
+		/// Токен.
+		/// </returns>
 		public async Task<string> LogIn(string login, string password)
 		{
 			if (!Storage.UserData.ContainsKey(login) || Storage.UserData[login] != Encrypt(password))
@@ -36,7 +63,14 @@ namespace Northis.BattleRoostersOnline.Implements
 			Storage.LoggedUsers.Add(token, login);
 			return token;
 		}
-
+		/// <summary>
+		/// Регистрирует нового пользователя.
+		/// </summary>
+		/// <param name="login">Логин.</param>
+		/// <param name="password">Пароль.</param>
+		/// <returns>
+		/// Токен.
+		/// </returns>
 		public async Task<string> Register(string login, string password)
 		{
 			if (login.Length < 5 || IsNullOrWhiteSpace(login) || password.Length < 5 || IsNullOrWhiteSpace(password) || login.Contains(" "))
@@ -53,7 +87,13 @@ namespace Northis.BattleRoostersOnline.Implements
 			SaveUserDataAsync();
 			return await LogIn(login, password);
 		}
-
+		/// <summary>
+		/// Осуществляет выход пользователя из системы.
+		/// </summary>
+		/// <param name="token">токен.</param>
+		/// <returns>
+		/// true - в случае успешного выхода, иначе - false.
+		/// </returns>
 		public async Task<bool> LogOut(string token)
 		{
 			if (!Storage.LoggedUsers.ContainsKey(token))
@@ -64,9 +104,18 @@ namespace Northis.BattleRoostersOnline.Implements
 			await Task.Run(() => Storage.LoggedUsers.Remove(token));
 			return true;
 		}
-
+		/// <summary>
+		/// Возвращает статус авторизации пользователя.
+		/// </summary>
+		/// <returns>
+		/// AuthenticateStatus.
+		/// </returns>
 		public AuthenticateStatus GetLoginStatus() => AuthenticateStatus.OK;
-
+		/// <summary>
+		/// Зашифровывает исходную строку.
+		/// </summary>
+		/// <param name="sourceString">исходная строка.</param>
+		/// <returns>Зашифрованная строка.</returns>
 		public string Encrypt(string sourceString)
 		{
 			var result = "";
@@ -74,10 +123,13 @@ namespace Northis.BattleRoostersOnline.Implements
 			{
 				result += (char) (sourceString[i] * (i / 2 + 2));
 			}
-
 			return result;
 		}
-
+		/// <summary>
+		/// Расшифровывает поступившую зашифрованную строку.
+		/// </summary>
+		/// <param name="sourceString">Зашифрованная строка.</param>
+		/// <returns>Расшифрованная строка.</returns>
 		public string Decrypt(string sourceString)
 		{
 			var result = "";
@@ -88,7 +140,9 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			return result;
 		}
-
+		/// <summary>
+		/// Асинхронно сохраняет данные пользователя.
+		/// </summary>
 		public async Task SaveUserDataAsync()
 		{
 			await Task.Run(() =>
@@ -103,7 +157,9 @@ namespace Northis.BattleRoostersOnline.Implements
 				}
 			});
 		}
-
+		/// <summary>
+		/// Загружает данные пользователя.
+		/// </summary>
 		public void LoadUserData()
 		{
 			if (File.Exists("Resources\\users.dat"))
@@ -114,5 +170,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				}
 			}
 		}
+		#endregion
+		#endregion
 	}
 }

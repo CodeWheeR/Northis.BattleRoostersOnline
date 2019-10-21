@@ -7,10 +7,29 @@ using Unity.ServiceLocation;
 
 namespace Northis.BattleRoostersOnline.Implements
 {
+	/// <summary>
+	/// Абстрактный базовый класс реализаций контрактов сервиса. Инкапсулирует в себе свойство хранилища основных данных типа ServiceStorage. 
+	/// </summary>
 	public abstract class BaseServiceWithStorage
 	{
+		#region Fields
+		#region Private
+		/// <summary>
+		/// Генератор рандомных значений.
+		/// </summary>
 		private readonly Random _rand = new Random();
+		#endregion
+		#endregion
 
+		#region Properties
+		#region Protected
+		/// <summary>
+		/// Возвращает хранилище основных данных.
+		/// </summary>
+		/// <value>
+		/// Храни.
+		/// </value>
+		/// <exception cref="NullReferenceException">Хранилище не инициализированно экземпляром класса.</exception>
 		protected ServicesStorage Storage
 		{
 			get
@@ -23,7 +42,13 @@ namespace Northis.BattleRoostersOnline.Implements
 				throw new NullReferenceException("Storage is null");
 			}
 		}
+		#endregion
+		#endregion
 
+		#region .ctor
+		/// <summary>
+		/// Инициализирует новый экземпляр <see cref="BaseServiceWithStorage"/> класса.
+		/// </summary>
 		protected BaseServiceWithStorage()
 		{
 			if (!ServiceLocator.IsLocationProviderSet)
@@ -35,7 +60,15 @@ namespace Northis.BattleRoostersOnline.Implements
 				ServiceLocator.SetLocatorProvider(() => locator);
 			}
 		}
+		#endregion
 
+		#region Methods
+		#region Protected
+		/// <summary>
+		/// Асинхронно возвращает login пользователя.
+		/// </summary>
+		/// <param name="token">Токен.</param>
+		/// <returns>Логин.</returns>
 		protected async Task<string> GetLoginAsync(string token) =>
 			await Task.Run(() =>
 			{
@@ -46,7 +79,10 @@ namespace Northis.BattleRoostersOnline.Implements
 
 				return "";
 			});
-
+		/// <summary>
+		/// Генерирует токен.
+		/// </summary>
+		/// <returns>Токен.</returns>
 		protected string GenerateToken()
 		{
 			var tokenGeneratorSymbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -59,10 +95,15 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			return answer;
 		}
-
+		/// <summary>
+		/// Асинхронно генерирует токен.
+		/// </summary>
+		/// <returns>Токен.</returns>
 		protected Task<string> GenerateTokenAsync()
 		{
 			return Task.Run(() => GenerateToken());
 		}
+		#endregion
+		#endregion
 	}
 }

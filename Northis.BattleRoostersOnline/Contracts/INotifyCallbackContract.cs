@@ -3,7 +3,7 @@
 namespace Northis.BattleRoostersOnline.Contracts
 {
 	/// <summary>
-	/// Контракт сервиса, ответственного за оповещения
+	/// Контракт сервиса, ответственного за оповещения.
 	/// </summary>
 	interface INotifyCallbackContract
 	{
