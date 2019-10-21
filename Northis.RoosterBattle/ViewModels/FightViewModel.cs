@@ -55,15 +55,25 @@ namespace Northis.RoosterBattle.ViewModels
 		/// Зарегистрированное свойство состояния жизни второго бойца.
 		/// </summary>
 		public static readonly PropertyData ShowDeadSecondProperty = RegisterProperty(nameof(ShowDeadSecond), typeof(bool));
-
+		/// <summary>
+		/// Зарегистрированное свойство состояния поиска матча.
+		/// </summary>
 		public static readonly PropertyData IsFindingProperty = RegisterProperty(nameof(IsFinding), typeof(bool));
-
+		/// <summary>
+		/// Зарегистрированное свойство начала боя.
+		/// </summary>
 		public static readonly PropertyData BattleStartedProperty = RegisterProperty(nameof(BattleStarted), typeof(bool));
-
+		/// <summary>
+		/// Зарегистрированное свойство окончания боя.
+		/// </summary>
 		public static readonly PropertyData BattleEndedProperty = RegisterProperty(nameof(BattleEnded), typeof(bool));
-
+		/// <summary>
+		/// Зарегистрированное свойство значения токена матча.
+		/// </summary>
 		public static readonly PropertyData MatchTokenProperty = RegisterProperty(nameof(MatchToken), typeof(string));
-
+		/// <summary>
+		/// Зарегистрированное свойство содержимого боевого чата.
+		/// </summary>
 		public static readonly PropertyData BattleLogProperty = RegisterProperty(nameof(BattleLog), typeof(string));
 
 		#endregion
@@ -114,30 +124,53 @@ namespace Northis.RoosterBattle.ViewModels
 			get;
 		}
 
+		/// <summary>
+		/// Возвращает или задает содерджимое боевого чата
+		/// </summary>
 		public string BattleLog
 		{
 			get => GetValue<string>(BattleLogProperty);
 			set => SetValue(BattleLogProperty, value);
 		}
-
+		/// <summary>
+		/// Возвращает или задает состояния начала боя.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> Если бой начался, иначе <c>false</c>.
+		/// </value>
 		public bool BattleStarted
 		{
 			get => GetValue<bool>(BattleStartedProperty);
 			set => SetValue(BattleStartedProperty, value);
 		}
-
+		/// <summary>
+		/// Возвращает или задает состояния окончания боя.
+		/// </summary>
+		/// <value>
+		///   <c>true</c>  Если бой закончился, иначе <c>false</c>.
+		/// </value>
 		public bool BattleEnded
 		{
 			get => GetValue<bool>(BattleEndedProperty);
 			set => SetValue(BattleEndedProperty, value);
 		}
-
+		/// <summary>
+		/// Возвращает или задает состояние поиска матча.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> Если поиск начался, иначе <c>false</c>.
+		/// </value>
 		public bool IsFinding
 		{
 			get => GetValue<bool>(IsFindingProperty);
 			set => SetValue(IsFindingProperty, value);
 		}
-
+		/// <summary>
+		/// Возвращает или задает значения токена матча.
+		/// </summary>
+		/// <value>
+		/// The match token.
+		/// </value>
 		public string MatchToken
 		{
 			get => GetValue<string>(MatchTokenProperty);

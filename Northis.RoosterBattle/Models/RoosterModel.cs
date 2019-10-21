@@ -161,7 +161,9 @@ namespace Northis.RoosterBattle.Models
 				}
 			};
 		}
-
+		/// <summary>
+		/// Инициализует новый объект класса <see cref="RoosterModel" /> на основе существующего объекта <see cref="RoosterDto"/>.
+		/// </summary>
 		public RoosterModel(RoosterDto rooster) : this()
 		{
 			if (rooster != null)
@@ -397,6 +399,28 @@ namespace Northis.RoosterBattle.Models
 
 		#region Public Methods
 		/// <summary>
+		/// Выполняет преобразование объекта к типу RoosterDto.
+		/// </summary>
+		/// <returns></returns>
+		public RoosterDto ToRoosterDto() =>
+			new RoosterDto
+			{
+				Height = Height,
+				ColorDto = ColorDtoParse(Color),
+				Health = Health,
+				Stamina = Stamina,
+				Brickness = Brickness,
+				Crest = SizeDtoParse(Crest),
+				Weight = Weight,
+				WinStreak = WinStreak,
+				Luck = Luck,
+				Name = Name,
+				Thickness = Thickness,
+				MaxHealth = MaxHealth,
+				Damage = Damage,
+				Hit = Hit
+			};
+		/// <summary>
 		/// Принимает удар от другого петуха.
 		/// </summary>
 		/// <param name="sender">Ударивший петух.</param>
@@ -502,25 +526,6 @@ namespace Northis.RoosterBattle.Models
 				property.SetValue(this, Clamp((double) property.GetValue(this), minValue, maxValue));
 			}
 		}
-
-		public RoosterDto ToRoosterDto() =>
-			new RoosterDto
-			{
-				Height = Height,
-				ColorDto = ColorDtoParse(Color),
-				Health = Health,
-				Stamina = Stamina,
-				Brickness = Brickness,
-				Crest = SizeDtoParse(Crest),
-				Weight = Weight,
-				WinStreak = WinStreak,
-				Luck = Luck,
-				Name = Name,
-				Thickness = Thickness,
-				MaxHealth = MaxHealth,
-				Damage = Damage,
-				Hit = Hit
-			};
 
 		private RoosterColor ColorParse(RoosterColorDto color)
 		{

@@ -28,10 +28,6 @@ namespace Northis.RoosterBattle.ViewModels
 		/// </summary>
 		private readonly IUIVisualizerService _uiVisualizerService;
 		/// <summary>
-		/// Сервис сохранения и загрузки петухов.
-		/// </summary>
-		private readonly IRoosterKeepService _roosterKeepService;
-		/// <summary>
 		/// Сервис работы с ошибками.
 		/// </summary>
 		private readonly IExceptionService _exceptionService;
@@ -66,16 +62,6 @@ namespace Northis.RoosterBattle.ViewModels
 		/// Команда начала схватки петухов.
 		/// </value>
 		public ICommand FightCommand
-		{
-			get;
-		}
-		/// <summary>
-		/// Свойство, предоставляющее команду сохранения петухов.
-		/// </summary>
-		/// <value>
-		/// Команда сохранения петухов.
-		/// </value>
-		public ICommand SaveRoostersCommand
 		{
 			get;
 		}
@@ -146,29 +132,17 @@ namespace Northis.RoosterBattle.ViewModels
 		/// </summary>
 		/// <param name="roosterKeepService">Сервис сохранения и загрузки петухов.</param>
 		/// <param name="uiVisualizerService">Сервис визуализации окон приложения.</param>
-		public RoosterBrowserViewModel(IRoosterKeepService roosterKeepService, IUIVisualizerService uiVisualizerService, IExceptionService exceptionService)
+		public RoosterBrowserViewModel(IUIVisualizerService uiVisualizerService, IExceptionService exceptionService)
 		{
-			_roosterKeepService = roosterKeepService;
 			_uiVisualizerService = uiVisualizerService;
 			_exceptionService = exceptionService;
 			Roosters = new ObservableCollection<RoosterModel>();
-			SaveRoostersCommand = new TaskCommand(SaveExecute, () => Roosters != null);
 			EditRoosterCommand = new TaskCommand(EditRoosterAsync, () => SelectedRooster != null);
 			DeleteRoosterCommand = new TaskCommand(DeleteRoosterAsync, () => SelectedRooster != null);
 			AddRoosterCommand = new TaskCommand(AddRoosterAsync);
 			FightCommand = new TaskCommand(StartRoostersFightAsync, () => SelectedRooster != null);
 		}
 
-
-		/// <summary>
-		/// Выполняет синхронное сохранение петухов перед выходом.
-		/// </summary>
-		/// <returns></returns>
-		private Task SaveExecute()
-		{
-			_roosterKeepService.SaveRoosters(Roosters);
-			return Task.CompletedTask;
-		}
 		#endregion
 
 		#region Protected Methods
@@ -184,29 +158,27 @@ namespace Northis.RoosterBattle.ViewModels
 			if (token == null)
 				Application.Current.Shutdown();
 
-			Argument.IsNotNull(nameof(_roosterKeepService), _roosterKeepService);
 			Argument.IsNotNull(nameof(_exceptionService), _exceptionService);
 
 			UpdateRoostersAsync();
 
 			await base.InitializeAsync();
 		}
-		/// <summary>
-		/// Сохраняет петухов.
-		/// </summary>
-		protected void SaveRoosters()
-		{
-			_roosterKeepService.SaveRoostersAsync(Roosters);
-		}
+
 		#endregion
 
-		#region Private Methods
-
+		#region Private Methods		
+		/// <summary>
+		/// Асинхронно запрашивает список петухов с сервера.
+		/// </summary>
 		private async void UpdateRoostersAsync()
 		{
 			UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
 		}
-
+		/// <summary>
+		/// Обновляет список петухов в соответствии и заданной коллекцией.
+		/// </summary>
+		/// <param name="roosters">Полученный список петухов.</param>
 		private void UpdateRoosters(IEnumerable<RoosterDto> roosters)
 		{
 			string selectedRoosterName = "";
@@ -266,13 +238,6 @@ namespace Northis.RoosterBattle.ViewModels
 		}
 		#endregion
 
-		/// <summary>
-		/// Closes this instance. Always called after the <see cref="M:Catel.MVVM.ViewModelBase.CancelAsync" /> of <see cref="M:Catel.MVVM.ViewModelBase.SaveAsync" /> method.
-		/// </summary>
-		protected override Task CloseAsync()
-		{
-			SaveExecute();
-			return base.CloseAsync();
-		}
+
 	}
 }

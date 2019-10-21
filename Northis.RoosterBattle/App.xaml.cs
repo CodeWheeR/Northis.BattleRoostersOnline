@@ -21,7 +21,6 @@ namespace Northis.RoosterBattle
 			LogManager.AddDebugListener();
 
 			var serviceLocator = this.GetServiceLocator();
-			serviceLocator.RegisterType<IRoosterKeepService, RoosterKeepService>();
 			var uiVisualizerService = serviceLocator.ResolveType<IUIVisualizerService>();
 			uiVisualizerService.Register<RoosterBrowserViewModel, RoosterBrowserWindow>();
 			var exceptionService = serviceLocator.ResolveType<IExceptionService>();
