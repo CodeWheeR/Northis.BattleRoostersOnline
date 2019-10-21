@@ -12,6 +12,14 @@ namespace Northis.BattleRoostersOnline.Implements
 	{
 		private readonly BinaryFormatter _formatter = new BinaryFormatter();
 
+		public AuthenticateService()
+		{
+			if (Storage.UserData.Count == 0)
+			{
+				LoadUserData();
+			}
+		}
+
 		public async Task<string> LogIn(string login, string password)
 		{
 			if (!Storage.UserData.ContainsKey(login) || Storage.UserData[login] != Encrypt(password))
@@ -42,6 +50,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			}
 			
 			Storage.UserData.Add(login, Encrypt(password));
+			SaveUserDataAsync();
 			return await LogIn(login, password);
 		}
 
@@ -80,19 +89,29 @@ namespace Northis.BattleRoostersOnline.Implements
 			return result;
 		}
 
-		public void SaveUserData()
+		public async Task SaveUserDataAsync()
 		{
-			using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
+			await Task.Run(() =>
 			{
-				_formatter.Serialize(fs, Storage.UserData);
-			}
+				if (!Directory.Exists("Resources"))
+				{
+					Directory.CreateDirectory("Resources");
+				}
+				using (var fs = new FileStream("Resources\\users.dat", FileMode.OpenOrCreate))
+				{
+					_formatter.Serialize(fs, Storage.UserData);
+				}
+			});
 		}
 
-		public Dictionary<string, string> LoadUserData()
+		public void LoadUserData()
 		{
-			using (var fs = new FileStream("users.dat", FileMode.Open))
+			if (File.Exists("Resources\\users.dat"))
 			{
-				return (Dictionary<string, string>) _formatter.Deserialize(fs);
+				using (var fs = new FileStream("Resources\\users.dat", FileMode.Open))
+				{
+					Storage.UserData = (Dictionary<string, string>)_formatter.Deserialize(fs);
+				}
 			}
 		}
 	}

@@ -64,7 +64,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		[Test]
 		public void SaveTest()
 		{
-			Assert.DoesNotThrow(() => _editService.Save());
+			Assert.DoesNotThrow(() => _editService.SaveAsync());
 		}
 
 		[Test]
@@ -72,7 +72,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		{
 			Assert.DoesNotThrow(() =>
 			{
-				_editService.Save();
+				_editService.SaveAsync();
 				_editService.Load();
 			});
 		}
@@ -97,7 +97,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		[Test]
 		public void RemoveTest1()
 		{
-			_editService.Remove("aaa", 0);
+			_editService.RemoveAsync("aaa", 0);
 
 			Assert.AreEqual(1, ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData["aaa"].Count);
 		}
@@ -105,7 +105,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		[Test]
 		public void RemoveTest2()
 		{
-			_editService.Remove("asdkjasdajksdolasjdklasjdkasjd", 2222222);
+			_editService.RemoveAsync("asdkjasdajksdolasjdklasjdkasjd", 2222222);
 
 			Assert.AreEqual(2, ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Count);
 		}
@@ -114,7 +114,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		[TestCase("aaa", -1)]
 		public void RemoveTest3(string key, int roosterSeqNum)
 		{
-			_editService.Remove(key, roosterSeqNum);
+			_editService.RemoveAsync(key, roosterSeqNum);
 
 			Assert.AreEqual(2, ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Count);
 		}
@@ -122,7 +122,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		[Test]
 		public void EditTest1()
 		{
-			Assert.DoesNotThrow(() => _editService.Edit("aaa",0, new RoosterDto()));
+			Assert.DoesNotThrow(() => _editService.EditAsync("aaa",0, new RoosterDto()));
 		}
 
 		[TestCase("ccccccc", 0)]
@@ -130,7 +130,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		[TestCase("ааа", 25)]
 		public void EditTest1(string key, int roosterSeqNum)
 		{
-			Assert.DoesNotThrow(() => _editService.Edit("aaa", 0, new RoosterDto()));
+			Assert.DoesNotThrow(() => _editService.EditAsync("aaa", 0, new RoosterDto()));
 		}
 
 

@@ -164,18 +164,21 @@ namespace Northis.RoosterBattle.Models
 
 		public RoosterModel(RoosterDto rooster) : this()
 		{
-			Health = rooster.Health;
-			MaxHealth = rooster.MaxHealth;
-			Stamina = rooster.Stamina;
-			Brickness = rooster.Brickness;
-			Luck = rooster.Luck;
-			Thickness = rooster.Thickness;
-			Color = ColorParse(rooster.ColorDto);
-			Crest = SizeParse(rooster.Crest);
-			Height = rooster.Height;
-			Weight = rooster.Weight;
-			Name = rooster.Name;
-			WinStreak = rooster.WinStreak;
+			if (rooster != null)
+			{
+				Health = rooster.Health;
+				MaxHealth = rooster.MaxHealth;
+				Stamina = rooster.Stamina;
+				Brickness = rooster.Brickness;
+				Luck = rooster.Luck;
+				Thickness = rooster.Thickness;
+				Color = ColorParse(rooster.ColorDto);
+				Crest = SizeParse(rooster.Crest);
+				Height = rooster.Height;
+				Weight = rooster.Weight;
+				Name = rooster.Name;
+				WinStreak = rooster.WinStreak;
+			}
 		}
 
 		#endregion

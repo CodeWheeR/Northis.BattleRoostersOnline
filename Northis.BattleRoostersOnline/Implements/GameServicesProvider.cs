@@ -32,11 +32,11 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		public async Task Add(string token, RoosterDto rooster) => await _editService.Add(token, rooster);
 
-		public async Task Edit(string token, int roosterId, RoosterDto rooster) => await _editService.Edit(token, roosterId, rooster);
+		public async Task EditAsync(string token, int roosterId, RoosterDto rooster) => await _editService.EditAsync(token, roosterId, rooster);
 
 		public async Task<IEnumerable<RoosterDto>> GetUserRoosters(string token) => await _editService.GetUserRoosters(token);
 
-		public async Task Remove(string token, int roosterId) => _editService.Remove(token, roosterId);
+		public async Task RemoveAsync(string token, int roosterId) => _editService.RemoveAsync(token, roosterId);
 
 		public async Task<string> LogIn(string login, string password) =>  await _authenticateService.LogIn(login, password);
 

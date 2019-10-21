@@ -51,62 +51,92 @@ namespace Northis.BattleRoostersOnline.Models
 
 			public async Task GetRoosterStatusAsync(RoosterDto yourRooster, RoosterDto enemyRooster)
 			{
-				try
+				await Task.Run(() =>
 				{
-					await Task.Run(() => _callback.GetRoosterStatus(yourRooster, enemyRooster));
-				}
-				catch (CommunicationException e)
-				{
-					Debug.WriteLine(e);
-				}
+					try
+					{
+						if (CallbackState == CommunicationState.Opened)
+						{
+							_callback.GetRoosterStatus(yourRooster, enemyRooster);
+						}
+					}
+					catch (CommunicationException e)
+					{
+						Debug.WriteLine(e);
+					}
+				});
 			}
 
 			public async Task GetBattleMessageAsync(string message)
 			{
-				try
+				await Task.Run(() =>
 				{
-					await Task.Run(() => _callback.GetBattleMessage(message));
-				}
-				catch (CommunicationException e)
-				{
-					Debug.WriteLine(e);
-				}
+					try
+					{
+						if (CallbackState == CommunicationState.Opened)
+						{
+							_callback.GetBattleMessage(message);
+						}
+					}
+					catch (CommunicationException e)
+					{
+						Debug.WriteLine(e);
+					}
+				});
 			}
 
 			public async Task GetStartSignAsync()
 			{
-				try
+				await Task.Run(() =>
 				{
-					await Task.Run(() => _callback.GetStartSign());
-				}
-				catch (CommunicationException e)
-				{
-					Debug.WriteLine(e);
-				}
+					try
+					{
+						if (CallbackState == CommunicationState.Opened)
+						{
+							_callback.GetStartSign();
+						}
+					}
+					catch (CommunicationException e)
+					{
+						Debug.WriteLine(e);
+					}
+				});
 			}
 
 			public async Task FindedMatchAsync(string token)
 			{
-				try
+				await Task.Run(() =>
 				{
-					await Task.Run(() => _callback.FindedMatch(token));
-				}
-				catch (CommunicationException e)
-				{
-					Debug.WriteLine(e);
-				}
+					try
+					{
+						if (CallbackState == CommunicationState.Opened)
+						{
+							_callback.FindedMatch(token);
+						}
+					}
+					catch (CommunicationException e)
+					{
+						Debug.WriteLine(e);
+					}
+				});
 			}
 
 			public async Task GetEndSignAsync()
 			{
-				try
+				await Task.Run(() =>
 				{
-					await Task.Run(() => _callback.GetEndSign());
-				}
-				catch (CommunicationException e)
-				{
-					Debug.WriteLine(e);
-				}
+					try
+					{
+						if (CallbackState == CommunicationState.Opened)
+						{
+							_callback.GetEndSign();
+						}
+					}
+					catch (CommunicationException e)
+					{
+						Debug.WriteLine(e);
+					}
+				});
 			}
 		}
 
@@ -270,9 +300,11 @@ namespace Northis.BattleRoostersOnline.Models
 				}
 				try
 				{
-					SecondUser.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
+					autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
+
 					await SetWinstreak(deserter, 0);
 					await SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1);
+
 					SendEndSign();
 				}
 				catch (CommunicationException e)
@@ -281,6 +313,18 @@ namespace Northis.BattleRoostersOnline.Models
 				}
 
 				Storage.Sessions.Remove(Token);
+			}
+		}
+
+		private void SetDeserter(UserData deserter)
+		{
+			if (FirstUser.Token == deserter.Token)
+			{
+				FirstUser.Rooster = null;
+			}
+			else if (SecondUser.Token == deserter.Token)
+			{
+				SecondUser.Rooster = null;
 			}
 		}
 
@@ -387,8 +431,8 @@ namespace Northis.BattleRoostersOnline.Models
 
 		private void SendRoosterStatus()
 		{
-			FirstUser.GetRoosterStatusAsync(FirstUser.Rooster.ToRoosterDto(), SecondUser.Rooster.ToRoosterDto());
-			SecondUser.GetRoosterStatusAsync(SecondUser.Rooster.ToRoosterDto(), FirstUser.Rooster.ToRoosterDto());
+			FirstUser.GetRoosterStatusAsync((FirstUser.Rooster != null) ? FirstUser.Rooster.ToRoosterDto() : null, (SecondUser.Rooster != null) ? SecondUser.Rooster.ToRoosterDto() : null);
+			SecondUser.GetRoosterStatusAsync((SecondUser.Rooster != null) ? SecondUser.Rooster.ToRoosterDto() : null, (FirstUser.Rooster != null) ? FirstUser.Rooster.ToRoosterDto() : null);
 		}
 	}
 }

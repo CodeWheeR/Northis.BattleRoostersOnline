@@ -59,7 +59,7 @@ namespace Northis.BattleRoostersOnline.GameService.Tests
 		[Test]
 		public void SaveTest()
 		{
-			authService.SaveUserData();
+			authService.SaveUserDataAsync();
 			var res = authService.LoadUserData();
 			Assert.AreEqual(res, ServiceLocator.Current.GetInstance<ServicesStorage>().UserData);
 		}
