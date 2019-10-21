@@ -538,10 +538,10 @@ namespace Northis.RoosterBattle.GameServer {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Pull", ReplyAction="http://tempuri.org/IBattleService/PullResponse")]
         System.Threading.Tasks.Task PullAsync(string token, string matchToken);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GiveUp", ReplyAction="http://tempuri.org/IBattleService/GiveUpResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/GiveUp", ReplyAction="http://tempuri.org/IBattleService/GiveUpResponse")]
         void GiveUp(string token, string matchToken);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GiveUp", ReplyAction="http://tempuri.org/IBattleService/GiveUpResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/GiveUp", ReplyAction="http://tempuri.org/IBattleService/GiveUpResponse")]
         System.Threading.Tasks.Task GiveUpAsync(string token, string matchToken);
     }
     
@@ -559,6 +559,9 @@ namespace Northis.RoosterBattle.GameServer {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/FindedMatch", ReplyAction="http://tempuri.org/IBattleService/FindedMatchResponse")]
         void FindedMatch(string token);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GetEndSign", ReplyAction="http://tempuri.org/IBattleService/GetEndSignResponse")]
+        void GetEndSign();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

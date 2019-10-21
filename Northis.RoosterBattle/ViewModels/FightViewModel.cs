@@ -9,6 +9,7 @@ using System.Threading;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Mime;
 using System.ServiceModel;
 using System.Windows;
@@ -30,8 +31,7 @@ namespace Northis.RoosterBattle.ViewModels
 		private CancellationTokenSource _tokenSource = new CancellationTokenSource();
 		private ObservableCollection<RoosterModel> _sourceRoosters;
 		private BattleServiceClient _battleServiceClient;
-
-		private string _userToken;
+		private readonly string _userToken;
 
 		#region Static
 
@@ -60,7 +60,11 @@ namespace Northis.RoosterBattle.ViewModels
 
 		public static readonly PropertyData BattleStartedProperty = RegisterProperty(nameof(BattleStarted), typeof(bool));
 
+		public static readonly PropertyData BattleEndedProperty = RegisterProperty(nameof(BattleEnded), typeof(bool));
+
 		public static readonly PropertyData MatchTokenProperty = RegisterProperty(nameof(MatchToken), typeof(string));
+
+		public static readonly PropertyData BattleLogProperty = RegisterProperty(nameof(BattleLog), typeof(string));
 
 		#endregion
 
@@ -76,9 +80,9 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			FirstFighter = rooster;
 
-			FindMatchCommand = new TaskCommand(FindMatch, () => !ShowDeadFirst && !IsFinding && String.IsNullOrWhiteSpace(MatchToken));
-			CancelFindingCommand = new TaskCommand(CancelFinding, () => IsFinding && String.IsNullOrWhiteSpace(MatchToken));
-			StartFightCommand = new TaskCommand(StartFight, () => !String.IsNullOrWhiteSpace(MatchToken) && !BattleStarted);
+			FindMatchCommand = new TaskCommand(FindMatchAsync, () => !ShowDeadFirst && !IsFinding && String.IsNullOrWhiteSpace(MatchToken));
+			CancelFindingCommand = new TaskCommand(CancelFindingAsync, () => IsFinding && String.IsNullOrWhiteSpace(MatchToken));
+			StartFightCommand = new TaskCommand(StartFightAsync, () => !String.IsNullOrWhiteSpace(MatchToken) && !BattleStarted);
 			_userToken = (string)Application.Current.Resources["UserToken"];
 		}
 
@@ -110,10 +114,22 @@ namespace Northis.RoosterBattle.ViewModels
 			get;
 		}
 
+		public string BattleLog
+		{
+			get => GetValue<string>(BattleLogProperty);
+			set => SetValue(BattleLogProperty, value);
+		}
+
 		public bool BattleStarted
 		{
 			get => GetValue<bool>(BattleStartedProperty);
 			set => SetValue(BattleStartedProperty, value);
+		}
+
+		public bool BattleEnded
+		{
+			get => GetValue<bool>(BattleEndedProperty);
+			set => SetValue(BattleEndedProperty, value);
 		}
 
 		public bool IsFinding
@@ -181,11 +197,26 @@ namespace Northis.RoosterBattle.ViewModels
 
 		#endregion
 
+		/// <summary>
+		/// Called when the view model is about to be closed.
+		/// <para />
+		/// This method also raises the <see cref="E:Catel.MVVM.ViewModelBase.ClosingAsync" /> event.
+		/// </summary>
+		protected override async Task OnClosingAsync()
+		{
+			if (!BattleEnded)
+			{
+				await _battleServiceClient.GiveUpAsync(_userToken, MatchToken);
+			}
+
+			await base.OnClosingAsync();
+		}
+
 		#region Private Methods		
 		/// <summary>
 		/// Запускает битву петухов.
 		/// </summary>
-		private async Task StartFight()
+		private async Task StartFightAsync()
 		{
 			BattleStarted = true;
 			await _battleServiceClient.StartBattleAsync(_userToken, MatchToken);
@@ -194,7 +225,7 @@ namespace Northis.RoosterBattle.ViewModels
 		/// <summary>
 		/// Запускает битву петухов.
 		/// </summary>
-		private async Task FindMatch()
+		private async Task FindMatchAsync()
 		{
 			_battleServiceClient = new BattleServiceClient(new InstanceContext(new BattleServiceCallback(this)));
 			ShowDeadFirst = false;
@@ -206,24 +237,11 @@ namespace Northis.RoosterBattle.ViewModels
 		/// <summary>
 		/// Запускает битву петухов.
 		/// </summary>
-		private async Task CancelFinding()
+		private async Task CancelFindingAsync()
 		{
 			IsFinding = false;
 			await _battleServiceClient.CancelFindingAsync(_userToken);
 			_battleServiceClient = null;
-		}
-
-		private void SetBattleResults(RoosterModel winner, RoosterModel looser)
-		{
-			SetWinstreak(looser, 0);
-			SetWinstreak(winner, winner.WinStreak+1);
-		}
-
-		private void SetWinstreak(RoosterModel rooster, int winstreak)
-		{
-			rooster.WinStreak = winstreak;
-			_sourceRoosters.First(x => x.Name == rooster.Name)
-						   .WinStreak = winstreak;
 		}
 		#endregion
 	}

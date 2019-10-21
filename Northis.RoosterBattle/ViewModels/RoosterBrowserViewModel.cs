@@ -181,10 +181,11 @@ namespace Northis.RoosterBattle.ViewModels
 			await _uiVisualizerService.ShowDialogAsync<AuthViewModel>();
 			token = (string)Application.Current.Resources["UserToken"];
 
+			if (token == null)
+				Application.Current.Shutdown();
+
 			Argument.IsNotNull(nameof(_roosterKeepService), _roosterKeepService);
 			Argument.IsNotNull(nameof(_exceptionService), _exceptionService);
-
-			//IEnumerable<RoosterModel> roosters = await _exceptionService.ProcessAsync(_roosterKeepService.LoadRoostersAsync);
 
 			UpdateRoostersAsync();
 

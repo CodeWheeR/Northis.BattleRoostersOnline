@@ -12,8 +12,6 @@ namespace Northis.BattleRoostersOnline.Implements
 {
 	class BattleService : BaseServiceWithStorage, IBattleService
 	{
-		private Session _session;
-		private string _matchToken;
 
 		public async Task FindMatch(string token, RoosterDto rooster)
 		{
@@ -26,27 +24,29 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			await Task.Run(async () =>
 			{
+				Session session;
 				if (Storage.Sessions.Count > 0 && !Storage.Sessions.Last().Value.IsStarted)
 				{
-					_session = Storage.Sessions.Last().Value;
-					_session.RegisterFighter(token, rooster, callback);
+					session = Storage.Sessions.Last().Value;
+					session.RegisterFighter(token, rooster, callback);
 				}
 				else
 				{
-					_matchToken = await GenerateTokenAsync();
-					_session = new Session(_matchToken);
-					_session.RegisterFighter(token, rooster, callback);
-					Storage.Sessions.Add(_matchToken, _session);
+					var matchToken = await GenerateTokenAsync();
+					session = new Session(matchToken);
+					session.RegisterFighter(token, rooster, callback);
+					Storage.Sessions.Add(matchToken, session);
 				}
 			});
 		}
 
 		public bool CancelFinding(string token)
 		{
-			if (_session != null && _session.RemoveFighter(token))
+			var session = Storage.Sessions.Reverse()
+								 .First(x => x.Value.RemoveFighter(token)).Value;
+			if (session != null)
 			{
-				Storage.Sessions.Remove(_matchToken);
-				_session = null;
+				Storage.Sessions.Remove(session.Token);
 				return true;
 			}
 			return false;
@@ -62,7 +62,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 				if (session.CheckForReadiness())
 				{
-					session.SendStartSignAsync();
+					session.SendStartSign();
 					await session.StartBattle();
 				}
 			});
@@ -83,9 +83,13 @@ namespace Northis.BattleRoostersOnline.Implements
 			throw new NotImplementedException();
 		}
 
-		public Task GiveUp(string token, string matchToken)
+		public async Task GiveUp(string token, string matchToken)
 		{
-			throw new NotImplementedException();
+			await Task.Run(async () =>
+			{
+				var session = Storage.Sessions[matchToken];
+				session.StopSession(true);
+			});
 		}
 	}
 }

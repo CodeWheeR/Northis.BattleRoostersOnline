@@ -26,7 +26,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 		[OperationContract]
 		Task Pull(string token, string matchToken);
 
-		[OperationContract]
+		[OperationContract(IsTerminating = true)]
 		Task GiveUp(string token, string matchToken);
 
 	}

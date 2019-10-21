@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
+using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
-using CommonServiceLocator;
 using DataTransferObjects;
 using Northis.BattleRoostersOnline.Contracts;
 using Northis.BattleRoostersOnline.Events;
@@ -15,182 +14,381 @@ namespace Northis.BattleRoostersOnline.Models
 	public class Session : BaseServiceWithStorage
 	{
 		private event EventHandler<MatchFindedEventArgs> SessionStarted;
+		private event EventHandler BattleStarted;
+		private event EventHandler BattleEnded;
 
-		private CancellationTokenSource _tokenSource = new CancellationTokenSource();
+		private CancellationTokenSource _battleTokenSource = new CancellationTokenSource();
+		private readonly CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
 
-		private bool _firstIsReady;
-		private bool _secondIsReady;
-
-		private IBattleServiceCallback _firstCallback;
-		private IBattleServiceCallback _secondCallback;
-
-		internal RoosterModel SecondFighter
+		private class UserData
 		{
-			get;
-			set;
-		}
+			private IBattleServiceCallback _callback;
 
-		internal string SecondUserToken
-		{
-			get;
-			set;
-		}
+			public UserData(IBattleServiceCallback callback)
+			{
+				_callback = callback;
+			}
 
-		internal RoosterModel FirstFighter
-		{
-			get;
-			set;
-		}
+			public string Token
+			{
+				get;
+				set;
+			}
 
-		internal string FirstUserToken
-		{
-			get;
-			set;
+			public RoosterModel Rooster
+			{
+				get;
+				set;
+			}
+
+			public bool IsReady
+			{
+				get;
+				set;
+			}
+
+			public CommunicationState CallbackState => ((ICommunicationObject) _callback).State;
+
+			public async Task GetRoosterStatusAsync(RoosterDto yourRooster, RoosterDto enemyRooster)
+			{
+				try
+				{
+					await Task.Run(() => _callback.GetRoosterStatus(yourRooster, enemyRooster));
+				}
+				catch (CommunicationException e)
+				{
+					Debug.WriteLine(e);
+				}
+			}
+
+			public async Task GetBattleMessageAsync(string message)
+			{
+				try
+				{
+					await Task.Run(() => _callback.GetBattleMessage(message));
+				}
+				catch (CommunicationException e)
+				{
+					Debug.WriteLine(e);
+				}
+			}
+
+			public async Task GetStartSignAsync()
+			{
+				try
+				{
+					await Task.Run(() => _callback.GetStartSign());
+				}
+				catch (CommunicationException e)
+				{
+					Debug.WriteLine(e);
+				}
+			}
+
+			public async Task FindedMatchAsync(string token)
+			{
+				try
+				{
+					await Task.Run(() => _callback.FindedMatch(token));
+				}
+				catch (CommunicationException e)
+				{
+					Debug.WriteLine(e);
+				}
+			}
+
+			public async Task GetEndSignAsync()
+			{
+				try
+				{
+					await Task.Run(() => _callback.GetEndSign());
+				}
+				catch (CommunicationException e)
+				{
+					Debug.WriteLine(e);
+				}
+			}
 		}
 
 		internal bool IsStarted
 		{
-			get; set;
+			get;
+			set;
+		}
+
+		internal bool IsReady
+		{
+			get;
+			set;
+		}
+
+		private UserData FirstUser
+		{
+			get;
+			set;
+		}
+
+		private UserData SecondUser
+		{
+			get;
+			set;
 		}
 
 		internal string Token
 		{
 			get;
-			set;
 		}
 
-		public Session(string token)
-		{
-			Token = token;
-		}
+		public Session(string token) => Token = token;
 
 		public void RegisterFighter(string token, RoosterDto fighter, IBattleServiceCallback callback)
 		{
-			if (FirstFighter == null)
+			if (FirstUser == null)
 			{
-				FirstFighter = new RoosterModel(fighter);
-				FirstUserToken = token;
-				_firstCallback = callback;
-				Subscribe(callback);
+				FirstUser = new UserData(callback)
+				{
+					Rooster = new RoosterModel(fighter),
+					Token = token,
+					IsReady = false
+				};
+				Subscribe(FirstUser);
 			}
-			else if (!IsStarted)
+			else if (SecondUser == null)
 			{
-				IsStarted = true;
-				SecondFighter = new RoosterModel(fighter);
-				SecondUserToken = token;
-				_secondCallback = callback;
-				Subscribe(callback);
+				IsReady = true;
+				SecondUser = new UserData(callback)
+				{
+					Rooster = new RoosterModel(fighter),
+					Token = token,
+					IsReady = false
+				};
+				Subscribe(SecondUser);
 				SendReadySignAsync();
+				ConnectionMonitor();
 			}
 		}
 
-		private void Subscribe(IBattleServiceCallback callback)
+		private void Subscribe(UserData userData)
 		{
-			SessionStarted += (x, y) => callback.FindedMatch(y.MatchToken);
+			SessionStarted += (x, y) => userData.FindedMatchAsync(y.MatchToken);
+			BattleStarted += (x, y) => userData.GetStartSignAsync();
+			BattleEnded += (x, y) => userData.GetEndSignAsync();
 		}
 
 		public void SetReady(string token)
 		{
-			if (token == FirstUserToken)
-				_firstIsReady = true;
+			if (token == FirstUser.Token)
+			{
+				SetReady(FirstUser, SecondUser);
+			}
 			else
-				_secondIsReady = true;
+			{
+				SetReady(SecondUser, FirstUser);
+			}
+		}
+
+		private void SetReady(UserData ready, UserData maybeReady)
+		{
+			ready.IsReady = true;
+			if (!maybeReady.IsReady)
+			{
+				ready.GetBattleMessageAsync("Ожидайте согласия соперника");
+			}
 		}
 
 		public bool CheckForReadiness()
 		{
-			if (_firstIsReady && _secondIsReady)
+			if (FirstUser.IsReady && SecondUser.IsReady)
+			{
 				return true;
+			}
+
 			return false;
 		}
 
 		private void SendReadySignAsync()
 		{
-			Task.Run(() => SessionStarted?.Invoke(this, new MatchFindedEventArgs(Token)));
+			SessionStarted?.Invoke(this, new MatchFindedEventArgs(Token));
 			SendRoosterStatus();
 		}
 
 		public bool RemoveFighter(string token)
 		{
-			if (token == FirstUserToken)
+			if (token == FirstUser.Token)
+			{
 				return true;
+			}
+
 			return false;
 		}
 
-		public void SendStartSignAsync()
+		public void SendStartSign()
 		{
-			Task.Run(() =>
-			{
-				_firstCallback.GetStartSign();
-				_secondCallback.GetStartSign();
-			});
+			IsStarted = true;
+			BattleStarted?.Invoke(this, EventArgs.Empty);
 		}
 
-		public void StopBattle()
+		public void SendEndSign()
 		{
-			_tokenSource.Cancel();
-			_tokenSource = new CancellationTokenSource();
+			IsStarted = true;
+			BattleEnded?.Invoke(this, EventArgs.Empty);
+		}
+
+		public async Task ConnectionMonitor()
+		{
+			var token = _connectionMonitorTokenSource.Token;
+			await Task.Run(async () =>
+						   {
+							   while (!token.IsCancellationRequested)
+							   {
+								   await Task.Delay(1000);
+								   if (!IsStarted)
+								   {
+									   try
+									   {
+										   SendRoosterStatus();
+									   }
+									   catch (CommunicationException e)
+									   {
+										   Debug.WriteLine(e);
+									   }
+								   }
+								   CheckForDeserting(FirstUser, SecondUser);
+								   CheckForDeserting(SecondUser, FirstUser);
+							   }
+						   },
+						   token);
+		}
+
+		private async void CheckForDeserting(UserData deserter, UserData autoWinner)
+		{
+			if (deserter.CallbackState != CommunicationState.Opened)
+			{
+				if (!_battleTokenSource.IsCancellationRequested)
+				{
+					StopSession();
+				}
+				try
+				{
+					SecondUser.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
+					await SetWinstreak(deserter, 0);
+					await SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1);
+					SendEndSign();
+				}
+				catch (CommunicationException e)
+				{
+					Debug.WriteLine(e);
+				}
+
+				Storage.Sessions.Remove(Token);
+			}
+		}
+
+		public void StopSession(bool needCheck = false)
+		{
+			_battleTokenSource.Cancel();
+			_connectionMonitorTokenSource.Cancel();
+			if (needCheck)
+			{
+				CheckForDeserting(FirstUser, SecondUser);
+				CheckForDeserting(SecondUser, FirstUser);
+			}
 		}
 
 		public async Task StartBattle()
 		{
-			var token = _tokenSource.Token;
+			var token = _battleTokenSource.Token;
 
 			await Task.Run(async () =>
-			{
-				while (FirstFighter.Health > 0 && SecondFighter.Health > 0 && !token.IsCancellationRequested)
-				{
-					FirstFighter.TakeHit(SecondFighter);
-					SecondFighter.TakeHit(FirstFighter);
-					if (FirstFighter.Health != 0 && SecondFighter.Health != 0)
-					{
-						SendRoosterStatus();
-						await Task.Delay(500, token);
-					}
-				}
+						   {
+							   while (FirstUser.Rooster.Health > 0 && SecondUser.Rooster.Health > 0 && !token.IsCancellationRequested)
+							   {
+								   MakeHitWithFeedback(FirstUser.Rooster, SecondUser.Rooster);
+								   SendRoosterStatus();
 
-				if (FirstFighter.Health == 0 && SecondFighter.Health == 0)
-				{
-					await SetWinstreak(FirstUserToken, FirstFighter.Name, 0);
-					await SetWinstreak(SecondUserToken, SecondFighter.Name, 0);
-				}
-				else if (FirstFighter.Health == 0)
-				{
-					await SetWinstreak(FirstUserToken, FirstFighter.Name, 0);
-					await SetWinstreak(SecondUserToken, SecondFighter.Name, SecondFighter.WinStreak + 1);
-				}
-				else
-				{
-					await SetWinstreak(FirstUserToken, FirstFighter.Name, FirstFighter.WinStreak + 1);
-					await SetWinstreak(SecondUserToken, SecondFighter.Name, 0);
-				}
-				
-				SendRoosterStatus();
-				SendMessageToClients("Матч Окончен");
+								   if (SecondUser.Rooster.Health == 0)
+								   {
+									   break;
+								   }
 
-				Storage.Sessions.Remove(Token);
-			},
-					 token);
+								   await Task.Delay(300, token);
+
+								   MakeHitWithFeedback(SecondUser.Rooster, FirstUser.Rooster);
+								   SendRoosterStatus();
+
+								   if (FirstUser.Rooster.Health == 0)
+								   {
+									   break;
+								   }
+
+								   await Task.Delay(300, token);
+							   }
+
+							   SendEndSign();
+
+							   if (FirstUser.Rooster.Health == 0 && SecondUser.Rooster.Health == 0)
+							   {
+								   await SetWinstreak(FirstUser, 0);
+								   await SetWinstreak(SecondUser, 0);
+							   }
+							   else if (FirstUser.Rooster.Health == 0)
+							   {
+								   await SetWinstreak(FirstUser, 0);
+								   await SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1);
+							   }
+							   else
+							   {
+								   await SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1);
+								   await SetWinstreak(SecondUser, 0);
+							   }
+							   
+
+
+							   Storage.Sessions.Remove(Token);
+						   },
+						   token);
 		}
 
-		private async Task SetWinstreak(string token, string roosterName, int value)
+		private async Task SetWinstreak(UserData userData, int value)
 		{
-			var login = await GetLoginAsync(token);
+			var login = await GetLoginAsync(userData.Token);
 			var rooster = Storage.RoostersData[login]
-								 .First(x => x.Name == roosterName);
+								 .First(x => x.Name == userData.Rooster.Name);
 			rooster.WinStreak = value;
+			if (value != 0)
+			{
+				userData.GetBattleMessageAsync("Вы победили");
+			}
+			else
+			{
+				userData.GetBattleMessageAsync("Вы проиграли");
+			}
+
+		}
+
+		private void MakeHitWithFeedback(RoosterModel sender, RoosterModel receiver)
+		{
+			var damage = receiver.TakeHit(sender);
+			if (damage > 0)
+			{
+				SendMessageToClients($"Петух {sender.Name} нанес {damage} ед. урона петуху {receiver.Name}");
+			}
+			else
+			{
+				SendMessageToClients($"Петух {receiver.Name} уклонился от удара петуха {sender.Name}");
+			}
 		}
 
 		private void SendMessageToClients(string message)
 		{
-			Task.Run(() => _firstCallback.GetBattleMessage(message));
-			Task.Run(() => _secondCallback.GetBattleMessage(message));
+			FirstUser.GetBattleMessageAsync(message);
+			SecondUser.GetBattleMessageAsync(message);
 		}
 
 		private void SendRoosterStatus()
 		{
-			Task.Run(() => _firstCallback.GetRoosterStatus(FirstFighter.ToRoosterDto(), SecondFighter.ToRoosterDto()));
-			Task.Run(() => _secondCallback.GetRoosterStatus(SecondFighter.ToRoosterDto(), FirstFighter.ToRoosterDto()));
+			FirstUser.GetRoosterStatusAsync(FirstUser.Rooster.ToRoosterDto(), SecondUser.Rooster.ToRoosterDto());
+			SecondUser.GetRoosterStatusAsync(SecondUser.Rooster.ToRoosterDto(), FirstUser.Rooster.ToRoosterDto());
 		}
 	}
 }

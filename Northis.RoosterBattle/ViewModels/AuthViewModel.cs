@@ -4,6 +4,7 @@ using System.Linq;
 using System.Resources;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Catel.Data;
 using Catel.MVVM;
@@ -19,8 +20,6 @@ namespace Northis.RoosterBattle.ViewModels
 
 		public static readonly PropertyData LoginProperty = RegisterProperty(nameof(Login), typeof(string));
 
-		public static readonly PropertyData PasswordProperty = RegisterProperty(nameof(Password), typeof(string));
-
 		private AuthenticateServiceClient _authenticateServiceClient = new AuthenticateServiceClient();
 
 		private IUIVisualizerService _uiVisualizerService;
@@ -29,14 +28,9 @@ namespace Northis.RoosterBattle.ViewModels
 
 		public AuthViewModel(IUIVisualizerService uiVisualizerService)
 		{
-			//if (MessageBox.Show("Do you speak Russian?", "Select language", MessageBoxButton.YesNo) == MessageBoxResult.No)
-			//{
-			//	CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
-			//}
-
 			_uiVisualizerService = uiVisualizerService;
-			AuthCommand = new TaskCommand((() => AuthenticateAsync(_authenticateServiceClient.LogInAsync)));
-			RegCommand = new TaskCommand((() => AuthenticateAsync(_authenticateServiceClient.RegisterAsync)));
+			AuthCommand = new TaskCommand<PasswordBox>(((passwordBox) => AuthenticateAsync(_authenticateServiceClient.LogInAsync, passwordBox)));
+			RegCommand = new TaskCommand<PasswordBox>(((passwordBox) => AuthenticateAsync(_authenticateServiceClient.RegisterAsync, passwordBox)));
 		}
 
 
@@ -54,13 +48,6 @@ namespace Northis.RoosterBattle.ViewModels
 			set => SetValue(LoginProperty, value);
 		}
 
-		[ViewModelToModel(nameof(AuthModel))]
-		public string Password
-		{
-			get => GetValue<string>(PasswordProperty);
-			set => SetValue(PasswordProperty, value);
-		}
-
 		public ICommand AuthCommand
 		{
 			get;
@@ -71,15 +58,15 @@ namespace Northis.RoosterBattle.ViewModels
 			get;
 		}
 
-		private async Task AuthenticateAsync(Func<string, string, Task<string>> authMethod)
+		private async Task AuthenticateAsync(Func<string, string, Task<string>> authMethod, PasswordBox passwordBox)
 		{
-			string[] excludes = Enum.GetNames(typeof(AuthenticateStatus));
-			if (String.IsNullOrWhiteSpace(Login) || String.IsNullOrWhiteSpace(Password))
+			string password = passwordBox.Password;
+			if (String.IsNullOrWhiteSpace(Login) || String.IsNullOrWhiteSpace(password))
 			{
 				MessageBox.Show("Поля логина и пароля не могут быть пустыми");
 				return;
 			}
-			string token = await _authenticateServiceClient.RegisterAsync(Login, Password);
+			string token = await authMethod(Login, password);
 
 			AuthenticateStatus result;
 

@@ -12,11 +12,11 @@
 	xmlns:viewModels="clr-namespace:Northis.RoosterBattle.ViewModels"
 	Title="{x:Static res:Resources.FightWindow}"
 	Width="500"
-	Height="450"
+	Height="600"
 	MinWidth="500"
-	MinHeight="450"
+	MinHeight="600"
 	MaxWidth="800"
-	MaxHeight="450"
+	MaxHeight="600"
 	d:DataContext="{d:DesignInstance viewModels:FightViewModel}"
 	mc:Ignorable="d">
 	<catel:Window.Resources />
@@ -185,10 +185,11 @@
 				<Button Grid.ColumnSpan="3" 
 				        Content="{x:Static res:Resources.StartFight}" 
 				        HorizontalAlignment="Center" 
-				        Margin="0,0,0,10" 
+				        Margin="0,0,0,160" 
 				        VerticalAlignment="Bottom" 
 				        Width="90"
 				        Command="{Binding StartFightCommand}"/>
+				<TextBox HorizontalAlignment="Left" IsReadOnly="True" Height="137" Margin="10,335,0,0" TextWrapping="Wrap" Text="{Binding BattleLog}" VerticalAlignment="Top" Width="450" Grid.ColumnSpan="3" FontSize="14" TextChanged="TextBox_TextChanged"/>
 			</Grid>
 		</Border>
 		<Button 

@@ -348,15 +348,18 @@ namespace Northis.BattleRoostersOnline.Models
 		/// Принимает удар от другого петуха.
 		/// </summary>
 		/// <param name="sender">Ударивший петух.</param>
-		public void TakeHit(RoosterModel sender)
+		public double TakeHit(RoosterModel sender)
 		{
+			var damage = 0.0;
 			if (_bricknessMeter.Next(0, 100) >= Brickness || Stamina == 0)
 			{
-				Health -= sender.Hit * (1 - (double) Thickness / 100);
+				damage = sender.Hit * (1 - (double) Thickness / 100);
+				Health -= damage;
 				Health = Math.Round(Health, 2);
 			}
 
 			Stamina -= 5;
+			return Math.Round(damage, 2);
 		}
 
 		/// <summary>

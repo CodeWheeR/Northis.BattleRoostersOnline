@@ -29,7 +29,7 @@
             TextAlignment="Center"
             VerticalAlignment="Center"
         />
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Password}" />
+        <PasswordBox Grid.Row="1" Grid.Column="1" x:Name="PasswordBox"/>
         <TextBlock
             Grid.Row="1"
             Grid.Column="0"
@@ -42,12 +42,14 @@
             Grid.Column="1"
             Content="Авторизация"
             Command="{Binding AuthCommand}"
+            CommandParameter="{Binding ElementName=PasswordBox}" IsDefault="true"
             />
         <Button
             Grid.Row="2"
             Grid.Column="0"
             Content="Регистрация"
             Command="{Binding RegCommand}"
+			CommandParameter="{Binding ElementName=PasswordBox}"
             />
     </Grid>
 </catel:Window>

@@ -25,17 +25,25 @@ namespace Northis.RoosterBattle.Callbacks
 
 		public void GetBattleMessage(string message)
 		{
-			MessageBox.Show(message);
+			_fightVm.BattleLog += message + Environment.NewLine;
 		}
 
 		public void GetStartSign()
 		{
 			_fightVm.BattleStarted = true;
+			_fightVm.BattleLog += "Бой начался" + Environment.NewLine;
 		}
 
 		public void FindedMatch(string token)
 		{
 			_fightVm.MatchToken = token;
+			_fightVm.BattleLog += "Матч найден. Когда будете готовы, нажмите кнопку \"Начать бой\"" + Environment.NewLine;
+		}
+
+		public void GetEndSign()
+		{
+			_fightVm.BattleEnded = true;
+			_fightVm.BattleLog += "Бой окончен" + Environment.NewLine;
 		}
 	}
 }

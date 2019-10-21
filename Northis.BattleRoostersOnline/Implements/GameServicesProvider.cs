@@ -67,10 +67,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			throw new NotImplementedException();
 		}
 
-		public async Task GiveUp(string token, string matchToken)
-		{
-			throw new NotImplementedException();
-		}
+		public async Task GiveUp(string token, string matchToken) => await _battleService.GiveUp(token, matchToken);
 	}
 }
 
