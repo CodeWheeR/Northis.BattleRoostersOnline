@@ -19,7 +19,7 @@ namespace Northis.BattleRoostersOnline.Implements
 	{
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="EditService"/> класса.
+		/// Инициализирует новый экземпляр <see cref="EditService" /> класса.
 		/// </summary>
 		public EditService()
 		{
@@ -40,30 +40,32 @@ namespace Northis.BattleRoostersOnline.Implements
 			var login = await GetLoginAsync(token);
 
 			await Task.Run(() =>
-			{
-				if (Storage.RoostersData.ContainsKey(login))
-				{
-					lock (Storage.RoostersData)
-					{
-						Storage.RoostersData[login]
-							   .Add(rooster);
-					}
-				}
-				else
-				{
-					lock (Storage.RoostersData)
-					{
-						Storage.RoostersData.Add(login,
-												 new List<RoosterDto>
-												 {
-													 rooster
-												 });
-					}
-				}
-			}).ConfigureAwait(false);
+					  {
+						  if (Storage.RoostersData.ContainsKey(login))
+						  {
+							  lock (Storage.RoostersData)
+							  {
+								  Storage.RoostersData[login]
+										 .Add(rooster);
+							  }
+						  }
+						  else
+						  {
+							  lock (Storage.RoostersData)
+							  {
+								  Storage.RoostersData.Add(login,
+														   new List<RoosterDto>
+														   {
+															   rooster
+														   });
+							  }
+						  }
+					  })
+					  .ConfigureAwait(false);
 
 			SaveAsync();
 		}
+
 		/// <summary>
 		/// Загружает петухов.
 		/// </summary>
@@ -78,7 +80,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				{
 					Storage.RoostersData.Clear();
 
-					userRoosters = (List<UserRoosters>)serializer.ReadObject(fileStream);
+					userRoosters = (List<UserRoosters>) serializer.ReadObject(fileStream);
 
 					lock (Storage.RoostersData)
 					{
@@ -93,6 +95,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				}
 			}
 		}
+
 		/// <summary>
 		/// Асинхронно получает петухов пользователя.
 		/// </summary>
@@ -105,15 +108,17 @@ namespace Northis.BattleRoostersOnline.Implements
 			var login = await GetLoginAsync(token);
 
 			return await Task.Run<IEnumerable<RoosterDto>>(() =>
-			{
-				if (Storage.RoostersData.ContainsKey(login))
-				{
-					return Storage.RoostersData[login];
-				}
+							 {
+								 if (Storage.RoostersData.ContainsKey(login))
+								 {
+									 return Storage.RoostersData[login];
+								 }
 
-				return new List<RoosterDto>();
-			}).ConfigureAwait(false);
+								 return new List<RoosterDto>();
+							 })
+							 .ConfigureAwait(false);
 		}
+
 		/// <summary>
 		/// Асинхронно сохраняет петухов.
 		/// </summary>
@@ -144,6 +149,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				}
 			});
 		}
+
 		/// <summary>
 		/// Асинхронно редактирует петуха.
 		/// </summary>
@@ -167,6 +173,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			SaveAsync();
 		}
+
 		/// <summary>
 		/// Асинхронно удаляет петуха.
 		/// </summary>
@@ -187,6 +194,7 @@ namespace Northis.BattleRoostersOnline.Implements
 						   .RemoveAt(roosterSeqNum);
 				}
 			}
+
 			SaveAsync();
 		}
 		#endregion

@@ -1,6 +1,4 @@
-﻿
-
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Northis.RoosterBattle.Views
 {
@@ -14,9 +12,9 @@ namespace Northis.RoosterBattle.Views
 			InitializeComponent();
 		}
 
-		private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+		private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			((TextBox)sender).ScrollToEnd();
+			((TextBox) sender).ScrollToEnd();
 		}
 	}
 }

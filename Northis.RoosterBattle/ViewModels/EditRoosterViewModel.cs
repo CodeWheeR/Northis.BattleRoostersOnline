@@ -11,15 +11,14 @@ namespace Northis.RoosterBattle.ViewModels
 	/// </summary>
 	/// <seealso cref="Catel.MVVM.ViewModelBase" />
 	//[ValidateModel(typeof(Validators.RoosterModelValidator))]
-	class EditRoosterViewModel : ViewModelBase
+	internal class EditRoosterViewModel : ViewModelBase
 	{
 		#region Fields
-
 		#region Static
 		/// <summary>
 		/// Зарегистрированное свойство модель петуха, помеченное атрибутом [Model].
 		/// </summary>
-		public static readonly PropertyData RoosterModelProperty = RegisterProperty(nameof(RoosterModel), typeof(RoosterModel), null);
+		public static readonly PropertyData RoosterModelProperty = RegisterProperty(nameof(RoosterModel), typeof(RoosterModel));
 		/// <summary>
 		/// Зарегистрированное свойство "Вес" петуха.
 		/// </summary>
@@ -61,18 +60,17 @@ namespace Northis.RoosterBattle.ViewModels
 		/// </summary>
 		public static readonly PropertyData WinStreakProperty = RegisterProperty(nameof(WinStreak), typeof(int));
 		#endregion
-
 		#endregion
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый объект <see cref="EditRoosterViewModel"/> класса.
+		/// Инициализирует новый объект <see cref="EditRoosterViewModel" /> класса.
 		/// </summary>
 		/// <param name="selectedRooster">Выбранный петух.</param>
 		public EditRoosterViewModel(RoosterModel selectedRooster)
 		{
 			RoosterModel = selectedRooster;
-			ColorsArray = Enum.GetValues((typeof(RoosterColor)));
+			ColorsArray = Enum.GetValues(typeof(RoosterColor));
 			CrestsArray = Enum.GetValues(typeof(CrestSize));
 		}
 		#endregion
@@ -88,6 +86,7 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			get;
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает типы гребней петуха.
 		/// </summary>
@@ -111,6 +110,7 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<int>(WinStreakProperty);
 			set => SetValue(WinStreakProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает имя петуха.
 		/// </summary>
@@ -123,6 +123,7 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<string>(NameProperty);
 			set => SetValue(NameProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает удачливость петуха.
 		/// </summary>
@@ -135,6 +136,7 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<int>(LuckProperty);
 			set => SetValue(LuckProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает плотность петуха.
 		/// </summary>
@@ -147,6 +149,7 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<int>(ThicknessProperty);
 			set => SetValue(ThicknessProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает броню петуха.
 		/// </summary>
@@ -159,6 +162,7 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<CrestSize>(CrestProperty);
 			set => SetValue(CrestProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает юркость петуха.
 		/// </summary>
@@ -171,6 +175,7 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<int>(BricknessProperty);
 			set => SetValue(BricknessProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает окрас петуха.
 		/// </summary>
@@ -183,6 +188,7 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<RoosterColor>(ColorProperty);
 			set => SetValue(ColorProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает выносливость петуха.
 		/// </summary>
@@ -195,6 +201,7 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<int>(StaminaProperty);
 			set => SetValue(StaminaProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает высоту петуха.
 		/// </summary>
@@ -207,6 +214,7 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<int>(HeightProperty);
 			set => SetValue(HeightProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает модель петуха.
 		/// </summary>
@@ -219,6 +227,7 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<RoosterModel>(RoosterModelProperty);
 			set => SetValue(RoosterModelProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает вес петуха.
 		/// </summary>
@@ -261,7 +270,7 @@ namespace Northis.RoosterBattle.ViewModels
 			}
 
 			if (Luck < 0)
-			{ 
+			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.LuckProperty, "Luck value mustn't be negative"));
 			}
 
@@ -270,6 +279,5 @@ namespace Northis.RoosterBattle.ViewModels
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.ThicknessProperty, "Thickness value mustn't be negative"));
 			}
 		}
-
 	}
 }

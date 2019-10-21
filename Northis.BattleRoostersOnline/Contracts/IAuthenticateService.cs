@@ -18,6 +18,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <returns>Токен.</returns>
 		[OperationContract(IsInitiating = true)]
 		Task<string> LogIn(string login, string password);
+
 		/// <summary>
 		/// Контракт операции, регистрирующий нового пользователя.
 		/// </summary>
@@ -26,6 +27,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <returns>Токен.</returns>
 		[OperationContract(IsInitiating = true)]
 		Task<string> Register(string login, string password);
+
 		/// <summary>
 		/// Контракт операции, отвечающей за выход пользователя из системы.
 		/// </summary>
@@ -33,6 +35,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <returns>true - в случае успешного выхода, иначе - false.</returns>
 		[OperationContract(IsTerminating = true)]
 		Task<bool> LogOut(string token);
+
 		/// <summary>
 		/// Контракт операции, отвечающий за возврат статуса авторизации пользователя.
 		/// </summary>

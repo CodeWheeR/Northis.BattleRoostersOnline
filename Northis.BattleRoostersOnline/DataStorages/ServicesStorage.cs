@@ -10,10 +10,9 @@ namespace Northis.BattleRoostersOnline.Models
 	[Serializable]
 	public class ServicesStorage
 	{
-
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="ServicesStorage"/> класса.
+		/// Инициализирует новый экземпляр <see cref="ServicesStorage" /> класса.
 		/// </summary>
 		public ServicesStorage()
 		{
@@ -36,6 +35,7 @@ namespace Northis.BattleRoostersOnline.Models
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает данные петухов.
 		/// </summary>
@@ -47,6 +47,7 @@ namespace Northis.BattleRoostersOnline.Models
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает данные об авторизированных пользователях.
 		/// </summary>
@@ -58,6 +59,7 @@ namespace Northis.BattleRoostersOnline.Models
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает данные об игровых сессиях.
 		/// </summary>

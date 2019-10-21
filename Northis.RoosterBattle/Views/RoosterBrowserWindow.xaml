@@ -1,5 +1,5 @@
 ﻿<catel:Window
-    x:Class="Northis.RoosterBattle.Views.RoosterBrowserWindow"
+	x:Class="Northis.RoosterBattle.Views.RoosterBrowserWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:catel="http://schemas.catelproject.com"
@@ -16,12 +16,12 @@
 	Height="450"
 	MaxWidth="800"
 	MaxHeight="450"
-    d:DataContext="{d:DesignInstance viewModels:RoosterBrowserViewModel}"
+	d:DataContext="{d:DesignInstance viewModels:RoosterBrowserViewModel}"
 	CanCloseUsingEscape="False"
 	mc:Ignorable="d">
-    <i:Interaction.Triggers>
+	<i:Interaction.Triggers>
 		<i:EventTrigger EventName="Loaded">
-			<i:InvokeCommandAction Command="{Binding InitializeViewModelCommand}"/>
+			<i:InvokeCommandAction Command="{Binding InitializeViewModelCommand}" />
 		</i:EventTrigger>
 	</i:Interaction.Triggers>
 	<catel:Window.Resources>
@@ -102,12 +102,12 @@
 							<Setter Property="Margin" Value="0,0,0,10" />
 						</Style>
 						<Style TargetType="TextBlock">
-							<Setter Property="Margin" Value="0,0,3,0"></Setter>
+							<Setter Property="Margin" Value="0,0,3,0" />
 						</Style>
 					</StackPanel.Resources>
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="{x:Static res:Resources.RoosterName}" />
-						<TextBlock Text="{Binding SelectedRooster.Name}"/>
+						<TextBlock Text="{Binding SelectedRooster.Name}" />
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="{x:Static res:Resources.Color}" />
@@ -115,7 +115,7 @@
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="{x:Static res:Resources.Height}" />
-						<TextBlock Text="{Binding SelectedRooster.Height}"/>
+						<TextBlock Text="{Binding SelectedRooster.Height}" />
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="{x:Static res:Resources.Weight}" />
@@ -219,5 +219,5 @@
 			Command="{Binding FightCommand}"
 			Content="{x:Static res:Resources.FightButton}"
 			RenderTransformOrigin="0.643,0.567" />
-    </Grid>
+	</Grid>
 </catel:Window>

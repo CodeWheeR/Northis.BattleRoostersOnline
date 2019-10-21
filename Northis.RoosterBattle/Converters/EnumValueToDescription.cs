@@ -1,7 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Globalization;
-using System.Reflection;
 using Catel.MVVM.Converters;
 using Northis.RoosterBattle.Extensions;
 
@@ -21,7 +19,8 @@ namespace Northis.RoosterBattle.Converters
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>
 		/// <returns>Строковый путь к изображению.</returns>
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => ((Enum)value).GetDisplayFromResource();
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => ((Enum) value).GetDisplayFromResource();
+
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>

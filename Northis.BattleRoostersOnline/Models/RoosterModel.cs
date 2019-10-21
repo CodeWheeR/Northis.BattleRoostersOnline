@@ -183,11 +183,13 @@ namespace Northis.BattleRoostersOnline.Models
 				}
 			};
 		}
+
 		/// <summary>
-		/// Инициализирует новый объект <see cref="RoosterModel"/> класса.
+		/// Инициализирует новый объект <see cref="RoosterModel" /> класса.
 		/// </summary>
 		/// <param name="rooster">Петух.</param>
-		public RoosterModel(RoosterDto rooster) : this()
+		public RoosterModel(RoosterDto rooster)
+			: this()
 		{
 			Health = rooster.Health;
 			MaxHealth = rooster.MaxHealth;

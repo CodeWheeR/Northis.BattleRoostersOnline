@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -31,8 +28,10 @@ namespace Northis.RoosterBattle.ViewModels
 		/// Сервис работы с ошибками.
 		/// </summary>
 		private readonly IExceptionService _exceptionService;
-		private EditServiceClient _editServiceClient = new EditServiceClient();
+		private readonly EditServiceClient _editServiceClient = new EditServiceClient();
+		private readonly AuthenticateServiceClient _authenticateServiceClient = new AuthenticateServiceClient();
 		private string token;
+
 		#region Static		
 		/// <summary>
 		/// Зарегистрированное свойство "Текущий выбранный" петух.
@@ -44,11 +43,9 @@ namespace Northis.RoosterBattle.ViewModels
 		public static readonly PropertyData RoostersProperty = RegisterProperty(nameof(Roosters), typeof(IEnumerable<RoosterModel>));
 		public static readonly PropertyData SelectedIndexProperty = RegisterProperty(nameof(SelectedIndex), typeof(int));
 		#endregion
-
 		#endregion
 
 		#region Properties		
-
 		public int SelectedIndex
 		{
 			get => GetValue<int>(SelectedIndexProperty);
@@ -65,6 +62,7 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			get;
 		}
+
 		/// <summary>
 		/// Свойство, предоставляющее команду редактирования выбранного петуха.
 		/// </summary>
@@ -75,6 +73,7 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			get;
 		}
+
 		/// <summary>
 		/// Свойство, предоставляющее команду удаления петуха.
 		/// </summary>
@@ -85,6 +84,7 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			get;
 		}
+
 		/// <summary>
 		/// Свойство, предоставляющее команду добавления нового петуха.
 		/// </summary>
@@ -95,6 +95,7 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			get;
 		}
+
 		/// <summary>
 		/// Свойство, предоставляющее или устанавливающее коллекцию петухов.
 		/// </summary>
@@ -106,10 +107,12 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<ObservableCollection<RoosterModel>>(RoostersProperty);
 			set => SetValue(RoostersProperty, value);
 		}
+
 		public ICommand InitializeViewModelCommand
 		{
 			get;
 		}
+
 		/// <summary>
 		/// Свойство, предоставляющее или устанавливающее текущего выбранного петуха.
 		/// </summary>
@@ -122,13 +125,11 @@ namespace Northis.RoosterBattle.ViewModels
 			get => GetValue<RoosterModel>(SelectedRoosterProperty);
 			set => SetValue(SelectedRoosterProperty, value);
 		}
-
-
 		#endregion
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый объект <see cref="RoosterBrowserViewModel"/> класса.
+		/// Инициализирует новый объект <see cref="RoosterBrowserViewModel" /> класса.
 		/// </summary>
 		/// <param name="roosterKeepService">Сервис сохранения и загрузки петухов.</param>
 		/// <param name="uiVisualizerService">Сервис визуализации окон приложения.</param>
@@ -142,21 +143,21 @@ namespace Northis.RoosterBattle.ViewModels
 			AddRoosterCommand = new TaskCommand(AddRoosterAsync);
 			FightCommand = new TaskCommand(StartRoostersFightAsync, () => SelectedRooster != null);
 		}
-
 		#endregion
 
 		#region Protected Methods
-
 		/// <summary>
 		/// Инициализирует модель-представление.
 		/// </summary>
 		protected override async Task InitializeAsync()
 		{
 			await _uiVisualizerService.ShowDialogAsync<AuthViewModel>();
-			token = (string)Application.Current.Resources["UserToken"];
+			token = (string) Application.Current.Resources["UserToken"];
 
 			if (token == null)
+			{
 				Application.Current.Shutdown();
+			}
 
 			Argument.IsNotNull(nameof(_exceptionService), _exceptionService);
 
@@ -165,6 +166,16 @@ namespace Northis.RoosterBattle.ViewModels
 			await base.InitializeAsync();
 		}
 
+		/// <summary>
+		/// Called when the view model is about to be closed.
+		/// <para />
+		/// This method also raises the <see cref="E:Catel.MVVM.ViewModelBase.ClosingAsync" /> event.
+		/// </summary>
+		protected override async Task OnClosingAsync()
+		{
+			await _authenticateServiceClient.LogOutAsync(token);
+			await base.OnClosingAsync();
+		}
 		#endregion
 
 		#region Private Methods		
@@ -175,24 +186,30 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
 		}
+
 		/// <summary>
 		/// Обновляет список петухов в соответствии и заданной коллекцией.
 		/// </summary>
 		/// <param name="roosters">Полученный список петухов.</param>
 		private void UpdateRoosters(IEnumerable<RoosterDto> roosters)
 		{
-			string selectedRoosterName = "";
+			var selectedRoosterName = "";
 			if (SelectedRooster != null)
+			{
 				selectedRoosterName = SelectedRooster.Name;
+			}
 
-			((ObservableCollection<RoosterModel>)Roosters).Clear();
+			((ObservableCollection<RoosterModel>) Roosters).Clear();
 
 			foreach (var rooster in roosters)
 			{
 				var newRooster = new RoosterModel(rooster);
 				if (selectedRoosterName != "" && newRooster.Name == selectedRoosterName)
+				{
 					SelectedRooster = newRooster;
-				((ObservableCollection<RoosterModel>)Roosters).Add(newRooster);
+				}
+
+				((ObservableCollection<RoosterModel>) Roosters).Add(newRooster);
 			}
 		}
 
@@ -203,9 +220,10 @@ namespace Northis.RoosterBattle.ViewModels
 		private async Task EditRoosterAsync()
 		{
 			await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(SelectedRooster);
-			await _editServiceClient.EditAsync(token, SelectedIndex,SelectedRooster.ToRoosterDto());
+			await _editServiceClient.EditAsync(token, SelectedIndex, SelectedRooster.ToRoosterDto());
 			UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
 		}
+
 		/// <summary>
 		/// Удаляет выбранного петуха.
 		/// </summary>
@@ -215,6 +233,7 @@ namespace Northis.RoosterBattle.ViewModels
 			await _editServiceClient.RemoveAsync(token, SelectedIndex);
 			UpdateRoostersAsync();
 		}
+
 		/// <summary>
 		/// Добавляет нового петуха в асинхронном режиме.
 		/// </summary>
@@ -228,6 +247,7 @@ namespace Northis.RoosterBattle.ViewModels
 				UpdateRoostersAsync();
 			}
 		}
+
 		/// <summary>
 		/// Начинает сражение петухов в асинхронном режиме.
 		/// </summary>
@@ -237,7 +257,5 @@ namespace Northis.RoosterBattle.ViewModels
 			UpdateRoostersAsync();
 		}
 		#endregion
-
-
 	}
 }

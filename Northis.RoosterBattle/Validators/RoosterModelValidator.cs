@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Catel.Data;
 using Northis.RoosterBattle.Models;
 
 namespace Northis.RoosterBattle.Validators
 {
-	class RoosterModelValidator : ValidatorBase<RoosterModel>
+	internal class RoosterModelValidator : ValidatorBase<RoosterModel>
 	{
 		/// <summary>
 		/// Validates the fields of the specified instance. The results must be added to the list of validation
@@ -19,7 +15,8 @@ namespace Northis.RoosterBattle.Validators
 		/// <exception cref="T:System.ArgumentNullException">The <paramref name="instance" /> is <c>null</c>.</exception>
 		/// <exception cref="T:System.ArgumentNullException">The <paramref name="validationResults" /> is <c>null</c>.</exception>
 		/// <remarks>
-		/// There is no need to check for the arguments, they are already ensured to be correct in the <see cref="T:Catel.Data.ValidatorBase`1" />.
+		/// There is no need to check for the arguments, they are already ensured to be correct in the
+		/// <see cref="T:Catel.Data.ValidatorBase`1" />.
 		/// </remarks>
 		protected override void ValidateFields(RoosterModel instance, List<IFieldValidationResult> validationResults)
 		{

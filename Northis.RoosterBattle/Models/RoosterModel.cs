@@ -161,10 +161,12 @@ namespace Northis.RoosterBattle.Models
 				}
 			};
 		}
+
 		/// <summary>
-		/// Инициализует новый объект класса <see cref="RoosterModel" /> на основе существующего объекта <see cref="RoosterDto"/>.
+		/// Инициализует новый объект класса <see cref="RoosterModel" /> на основе существующего объекта <see cref="RoosterDto" />.
 		/// </summary>
-		public RoosterModel(RoosterDto rooster) : this()
+		public RoosterModel(RoosterDto rooster)
+			: this()
 		{
 			if (rooster != null)
 			{
@@ -182,7 +184,6 @@ namespace Northis.RoosterBattle.Models
 				WinStreak = rooster.WinStreak;
 			}
 		}
-
 		#endregion
 
 		#region Properties		
@@ -420,6 +421,7 @@ namespace Northis.RoosterBattle.Models
 				Damage = Damage,
 				Hit = Hit
 			};
+
 		/// <summary>
 		/// Принимает удар от другого петуха.
 		/// </summary>
@@ -529,28 +531,41 @@ namespace Northis.RoosterBattle.Models
 
 		private RoosterColor ColorParse(RoosterColorDto color)
 		{
-			if (RoosterColor.TryParse(color.ToString(), out RoosterColor outColor))
+			if (Enum.TryParse(color.ToString(), out RoosterColor outColor))
+			{
 				return outColor;
+			}
+
 			throw new ArgumentException();
 		}
 
 		private RoosterColorDto ColorDtoParse(RoosterColor color)
 		{
-			if (RoosterColorDto.TryParse(color.ToString(), out RoosterColorDto outColor))
+			if (Enum.TryParse(color.ToString(), out RoosterColorDto outColor))
+			{
 				return outColor;
+			}
+
 			throw new ArgumentException();
 		}
 
 		private CrestSize SizeParse(CrestSizeDto size)
 		{
-			if (CrestSize.TryParse(size.ToString(), out CrestSize outSize))
+			if (Enum.TryParse(size.ToString(), out CrestSize outSize))
+			{
 				return outSize;
+			}
+
 			throw new ArgumentException();
 		}
+
 		private CrestSizeDto SizeDtoParse(CrestSize size)
 		{
-			if (CrestSizeDto.TryParse(size.ToString(), out CrestSizeDto outSize))
+			if (Enum.TryParse(size.ToString(), out CrestSizeDto outSize))
+			{
 				return outSize;
+			}
+
 			throw new ArgumentException();
 		}
 		#endregion

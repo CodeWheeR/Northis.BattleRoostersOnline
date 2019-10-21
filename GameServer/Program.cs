@@ -1,26 +1,25 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using Northis.BattleRoostersOnline.Implements;
 using Northis.BattleRoostersOnline.Contracts;
+using Northis.BattleRoostersOnline.Implements;
 
 namespace GameServer
 {
 	/// <summary>
 	/// Класс-хост, обеспечивающий размещение службы.
 	/// </summary>
-	class Program
+	internal class Program
 	{
 		/// <summary>
 		/// Определяет точку входа в хост-приложение. Запускает хостинг сервиса.
 		/// </summary>
 		/// <param name="args">Аргументы.</param>
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
-			Uri baseAddress = new Uri("http://localhost:23555/Northis.BattleRoostersOnline/");
+			var baseAddress = new Uri("http://localhost:23555/Northis.BattleRoostersOnline/");
 
-
-			ServiceHost selfHost = new ServiceHost(typeof(GameServicesProvider), baseAddress);
+			var selfHost = new ServiceHost(typeof(GameServicesProvider), baseAddress);
 
 			try
 			{
@@ -30,7 +29,7 @@ namespace GameServer
 
 				selfHost.AddServiceEndpoint(typeof(IBattleService), new WSDualHttpBinding(), "BattleService");
 
-				ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
+				var smb = new ServiceMetadataBehavior();
 				smb.HttpGetEnabled = true;
 				selfHost.Description.Behaviors.Add(smb);
 
@@ -46,6 +45,7 @@ namespace GameServer
 				Console.WriteLine("An exception occurred: {0}", ce.Message);
 				selfHost.Abort();
 			}
+
 			Console.ReadLine();
 		}
 	}

@@ -1,10 +1,9 @@
-﻿
-namespace Northis.BattleRoostersOnline.Models
+﻿namespace Northis.BattleRoostersOnline.Models
 {
 	/// <summary>
 	/// Размер гребня. Повышает урон
 	/// </summary>
-	enum CrestSize
+	internal enum CrestSize
 	{
 		/// <summary>
 		/// Повышает урон на 0%

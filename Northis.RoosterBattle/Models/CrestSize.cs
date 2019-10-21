@@ -1,6 +1,4 @@
-﻿
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Northis.RoosterBattle.Properties;
 
 namespace Northis.RoosterBattle.Models
@@ -8,7 +6,7 @@ namespace Northis.RoosterBattle.Models
 	/// <summary>
 	/// Размер гребня. Повышает урон
 	/// </summary>
-	enum CrestSize
+	internal enum CrestSize
 	{
 		/// <summary>
 		/// Повышает урон на 0%

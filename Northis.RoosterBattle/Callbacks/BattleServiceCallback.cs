@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using Northis.RoosterBattle.GameServer;
 using Northis.RoosterBattle.Models;
 using Northis.RoosterBattle.ViewModels;
@@ -14,21 +9,19 @@ namespace Northis.RoosterBattle.Callbacks
 	/// Реализует интерфейс callback'ов боевого сервиса.
 	/// </summary>
 	/// <seealso cref="Northis.RoosterBattle.GameServer.IBattleServiceCallback" />
-	class BattleServiceCallback : IBattleServiceCallback
+	internal class BattleServiceCallback : IBattleServiceCallback
 	{
 		#region Fields
-		private FightViewModel _fightVm;
+		private readonly FightViewModel _fightVm;
 		#endregion
 
 		#region Public Methods		
 		/// <summary>
-		/// Инициализует новый объект класса <see cref="BattleServiceCallback"/>.
+		/// Инициализует новый объект класса <see cref="BattleServiceCallback" />.
 		/// </summary>
 		/// <param name="fightvm">The fightvm.</param>
-		public BattleServiceCallback(FightViewModel fightvm)
-		{
-			_fightVm = fightvm;
-		}
+		public BattleServiceCallback(FightViewModel fightvm) => _fightVm = fightvm;
+
 		/// <summary>
 		/// Получает состояние петухов в бою.
 		/// </summary>
@@ -38,10 +31,15 @@ namespace Northis.RoosterBattle.Callbacks
 		{
 			_fightVm.FirstFighter = new RoosterModel(yourRooster);
 			if (enemyRooster != null)
+			{
 				_fightVm.SecondFighter = new RoosterModel(enemyRooster);
+			}
 			else
+			{
 				_fightVm.SecondFighter = null;
+			}
 		}
+
 		/// <summary>
 		/// Получает игровое сообщение и выводит в игровую консоль.
 		/// </summary>
@@ -50,6 +48,7 @@ namespace Northis.RoosterBattle.Callbacks
 		{
 			_fightVm.BattleLog += message + Environment.NewLine;
 		}
+
 		/// <summary>
 		/// Получает сигнал к началу сражения.
 		/// </summary>
@@ -58,6 +57,7 @@ namespace Northis.RoosterBattle.Callbacks
 			_fightVm.BattleStarted = true;
 			_fightVm.BattleLog += "Бой начался" + Environment.NewLine;
 		}
+
 		/// <summary>
 		/// Получает токен найденного матча.
 		/// </summary>
@@ -67,6 +67,7 @@ namespace Northis.RoosterBattle.Callbacks
 			_fightVm.MatchToken = token;
 			_fightVm.BattleLog += "Матч найден. Когда будете готовы, нажмите кнопку \"Начать бой\"" + Environment.NewLine;
 		}
+
 		/// <summary>
 		/// Получает сигнал о завершении боя.
 		/// </summary>

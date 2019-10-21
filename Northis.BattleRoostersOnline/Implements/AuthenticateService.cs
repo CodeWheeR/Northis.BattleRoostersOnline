@@ -26,7 +26,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="AuthenticateService"/> класса.
+		/// Инициализирует новый экземпляр <see cref="AuthenticateService" /> класса.
 		/// </summary>
 		public AuthenticateService()
 		{
@@ -63,6 +63,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			Storage.LoggedUsers.Add(token, login);
 			return token;
 		}
+
 		/// <summary>
 		/// Регистрирует нового пользователя.
 		/// </summary>
@@ -82,11 +83,12 @@ namespace Northis.BattleRoostersOnline.Implements
 			{
 				return AuthenticateStatus.AlreadyRegistered.ToString();
 			}
-			
+
 			Storage.UserData.Add(login, Encrypt(password));
 			SaveUserDataAsync();
 			return await LogIn(login, password);
 		}
+
 		/// <summary>
 		/// Осуществляет выход пользователя из системы.
 		/// </summary>
@@ -104,6 +106,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			await Task.Run(() => Storage.LoggedUsers.Remove(token));
 			return true;
 		}
+
 		/// <summary>
 		/// Возвращает статус авторизации пользователя.
 		/// </summary>
@@ -111,6 +114,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// AuthenticateStatus.
 		/// </returns>
 		public AuthenticateStatus GetLoginStatus() => AuthenticateStatus.OK;
+
 		/// <summary>
 		/// Зашифровывает исходную строку.
 		/// </summary>
@@ -123,8 +127,10 @@ namespace Northis.BattleRoostersOnline.Implements
 			{
 				result += (char) (sourceString[i] * (i / 2 + 2));
 			}
+
 			return result;
 		}
+
 		/// <summary>
 		/// Расшифровывает поступившую зашифрованную строку.
 		/// </summary>
@@ -140,6 +146,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			return result;
 		}
+
 		/// <summary>
 		/// Асинхронно сохраняет данные пользователя.
 		/// </summary>
@@ -151,12 +158,14 @@ namespace Northis.BattleRoostersOnline.Implements
 				{
 					Directory.CreateDirectory("Resources");
 				}
+
 				using (var fs = new FileStream("Resources\\users.dat", FileMode.OpenOrCreate))
 				{
 					_formatter.Serialize(fs, Storage.UserData);
 				}
 			});
 		}
+
 		/// <summary>
 		/// Загружает данные пользователя.
 		/// </summary>
@@ -166,7 +175,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			{
 				using (var fs = new FileStream("Resources\\users.dat", FileMode.Open))
 				{
-					Storage.UserData = (Dictionary<string, string>)_formatter.Deserialize(fs);
+					Storage.UserData = (Dictionary<string, string>) _formatter.Deserialize(fs);
 				}
 			}
 		}

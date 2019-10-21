@@ -23,10 +23,12 @@ namespace Northis.BattleRoostersOnline.Models
 		/// Событие начала игровой сессии.
 		/// </summary>
 		private event EventHandler<MatchFindedEventArgs> SessionStarted;
+
 		/// <summary>
 		/// Событие начала битвы.
 		/// </summary>
 		private event EventHandler BattleStarted;
+
 		/// <summary>
 		/// Событие окончания битвы.
 		/// </summary>
@@ -39,13 +41,12 @@ namespace Northis.BattleRoostersOnline.Models
 		/// <summary>
 		/// Источник токена отмены для битвы.
 		/// </summary>
-		private CancellationTokenSource _battleTokenSource = new CancellationTokenSource();
+		private readonly CancellationTokenSource _battleTokenSource = new CancellationTokenSource();
 		/// <summary>
 		/// Источник токена отмены для проверки соединения.
 		/// </summary>
 		private readonly CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
 		#endregion
-
 		#endregion
 
 		#region Inner
@@ -59,19 +60,16 @@ namespace Northis.BattleRoostersOnline.Models
 			/// <summary>
 			/// Callback-сервис.
 			/// </summary>
-			private IBattleServiceCallback _callback;
+			private readonly IBattleServiceCallback _callback;
 			#endregion
 			#endregion
 
 			#region .ctor
 			/// <summary>
-			/// Инициализирует новый объект <see cref="UserData"/> класса.
+			/// Инициализирует новый объект <see cref="UserData" /> класса.
 			/// </summary>
 			/// <param name="callback">Callback-сервис.</param>
-			public UserData(IBattleServiceCallback callback)
-			{
-				_callback = callback;
-			}
+			public UserData(IBattleServiceCallback callback) => _callback = callback;
 			#endregion
 
 			#region Properties
@@ -86,6 +84,7 @@ namespace Northis.BattleRoostersOnline.Models
 				get;
 				set;
 			}
+
 			/// <summary>
 			/// Возвращает или задает петуха.
 			/// </summary>
@@ -97,11 +96,12 @@ namespace Northis.BattleRoostersOnline.Models
 				get;
 				set;
 			}
+
 			/// <summary>
 			/// Возвращает или задает состояние готовности сессии.
 			/// </summary>
 			/// <value>
-			///   <c>true</c> если сессия готова; иначе, <c>false</c>.
+			/// <c>true</c> если сессия готова; иначе, <c>false</c>.
 			/// </value>
 			public bool IsReady
 			{
@@ -119,6 +119,7 @@ namespace Northis.BattleRoostersOnline.Models
 			/// Состояние callback.
 			/// </value>
 			public CommunicationState CallbackState => ((ICommunicationObject) _callback).State;
+
 			/// <summary>
 			/// Асинхронно возвращает состояние петухов.
 			/// </summary>
@@ -141,6 +142,7 @@ namespace Northis.BattleRoostersOnline.Models
 					}
 				});
 			}
+
 			/// <summary>
 			/// Асинхронно получает сообщения из битвы.
 			/// </summary>
@@ -162,6 +164,7 @@ namespace Northis.BattleRoostersOnline.Models
 					}
 				});
 			}
+
 			/// <summary>
 			/// Асинхнронно оповещает о начале битвы.
 			/// </summary>
@@ -182,6 +185,7 @@ namespace Northis.BattleRoostersOnline.Models
 					}
 				});
 			}
+
 			/// <summary>
 			/// Асинхнронно оповещает о нахождении матча.
 			/// </summary>
@@ -203,6 +207,7 @@ namespace Northis.BattleRoostersOnline.Models
 					}
 				});
 			}
+
 			/// <summary>
 			/// Асинхнронно оповещает о завершении битвы.
 			/// </summary>
@@ -234,24 +239,26 @@ namespace Northis.BattleRoostersOnline.Models
 		/// Возвращает или задает текущее состояние сессии.
 		/// </summary>
 		/// <value>
-		///   <c>true</c> сессия запущена; иначе, <c>false</c>.
+		/// <c>true</c> сессия запущена; иначе, <c>false</c>.
 		/// </value>
 		internal bool IsStarted
 		{
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает состояние готовности сессии.
 		/// </summary>
 		/// <value>
-		///   <c>true</c> сессия готова; иначе, <c>false</c>.
+		/// <c>true</c> сессия готова; иначе, <c>false</c>.
 		/// </value>
 		internal bool IsReady
 		{
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает токен.
 		/// </summary>
@@ -276,6 +283,7 @@ namespace Northis.BattleRoostersOnline.Models
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает второго противника.
 		/// </summary>
@@ -292,7 +300,7 @@ namespace Northis.BattleRoostersOnline.Models
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="Session"/> класса.
+		/// Инициализирует новый экземпляр <see cref="Session" /> класса.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		public Session(string token) => Token = token;
@@ -332,6 +340,7 @@ namespace Northis.BattleRoostersOnline.Models
 				ConnectionMonitor();
 			}
 		}
+
 		/// <summary>
 		/// Удаляет бойца.
 		/// </summary>
@@ -343,8 +352,10 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				return true;
 			}
+
 			return false;
 		}
+
 		/// <summary>
 		/// Вызывает событие начала сессии.
 		/// </summary>
@@ -353,6 +364,7 @@ namespace Northis.BattleRoostersOnline.Models
 			IsStarted = true;
 			BattleStarted?.Invoke(this, EventArgs.Empty);
 		}
+
 		/// <summary>
 		/// Вызывает событие окончания сессии.
 		/// </summary>
@@ -361,6 +373,7 @@ namespace Northis.BattleRoostersOnline.Models
 			IsStarted = true;
 			BattleEnded?.Invoke(this, EventArgs.Empty);
 		}
+
 		/// <summary>
 		/// Останавливает сессию.
 		/// </summary>
@@ -375,6 +388,7 @@ namespace Northis.BattleRoostersOnline.Models
 				CheckForDeserting(SecondUser, FirstUser);
 			}
 		}
+
 		/// <summary>
 		/// Асинхронно начинает битву.
 		/// </summary>
@@ -425,12 +439,11 @@ namespace Northis.BattleRoostersOnline.Models
 								   await SetWinstreak(SecondUser, 0);
 							   }
 
-
-
 							   Storage.Sessions.Remove(Token);
 						   },
 						   token);
 		}
+
 		/// <summary>
 		/// Асинхронно проверяет состояние сессии.
 		/// </summary>
@@ -453,12 +466,14 @@ namespace Northis.BattleRoostersOnline.Models
 										   Debug.WriteLine(e);
 									   }
 								   }
+
 								   CheckForDeserting(FirstUser, SecondUser);
 								   CheckForDeserting(SecondUser, FirstUser);
 							   }
 						   },
 						   token);
 		}
+
 		/// <summary>
 		/// Устанавливает готовность.
 		/// </summary>
@@ -474,6 +489,7 @@ namespace Northis.BattleRoostersOnline.Models
 				SetReady(SecondUser, FirstUser);
 			}
 		}
+
 		/// <summary>
 		/// Проверяет готовность пользователя.
 		/// </summary>
@@ -484,6 +500,7 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				return true;
 			}
+
 			return false;
 		}
 		#endregion
@@ -499,7 +516,7 @@ namespace Northis.BattleRoostersOnline.Models
 			BattleStarted += (x, y) => userData.GetStartSignAsync();
 			BattleEnded += (x, y) => userData.GetEndSignAsync();
 		}
-		
+
 		/// <summary>
 		/// Устанавливает готовность.
 		/// </summary>
@@ -513,7 +530,7 @@ namespace Northis.BattleRoostersOnline.Models
 				ready.GetBattleMessageAsync("Ожидайте согласия соперника");
 			}
 		}
-		
+
 		/// <summary>
 		/// Асинхронно оповещает о готовности.
 		/// </summary>
@@ -522,7 +539,7 @@ namespace Northis.BattleRoostersOnline.Models
 			SessionStarted?.Invoke(this, new MatchFindedEventArgs(Token));
 			SendRoosterStatus();
 		}
-		
+
 		/// <summary>
 		/// Проверяет опонентов на преждевременный выход из игровой сессии.
 		/// </summary>
@@ -536,6 +553,7 @@ namespace Northis.BattleRoostersOnline.Models
 				{
 					StopSession();
 				}
+
 				try
 				{
 					autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
@@ -553,6 +571,7 @@ namespace Northis.BattleRoostersOnline.Models
 				Storage.Sessions.Remove(Token);
 			}
 		}
+
 		/// <summary>
 		/// Устанавливает дезертира.
 		/// </summary>
@@ -568,7 +587,7 @@ namespace Northis.BattleRoostersOnline.Models
 				SecondUser.Rooster = null;
 			}
 		}
-		
+
 		/// <summary>
 		/// Асинхронно устанавливает значение серии побед.
 		/// </summary>
@@ -588,8 +607,8 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				userData.GetBattleMessageAsync("Вы проиграли");
 			}
-
 		}
+
 		/// <summary>
 		/// Производит удар с обратной связью.
 		/// </summary>
@@ -607,6 +626,7 @@ namespace Northis.BattleRoostersOnline.Models
 				SendMessageToClients($"Петух {receiver.Name} уклонился от удара петуха {sender.Name}");
 			}
 		}
+
 		/// <summary>
 		/// Отправляет сообщение клиентам.
 		/// </summary>
@@ -616,13 +636,16 @@ namespace Northis.BattleRoostersOnline.Models
 			FirstUser.GetBattleMessageAsync(message);
 			SecondUser.GetBattleMessageAsync(message);
 		}
+
 		/// <summary>
 		/// Отправляет состояние петухов клиентам.
 		/// </summary>
 		private void SendRoosterStatus()
 		{
-			FirstUser.GetRoosterStatusAsync((FirstUser.Rooster != null) ? FirstUser.Rooster.ToRoosterDto() : null, (SecondUser.Rooster != null) ? SecondUser.Rooster.ToRoosterDto() : null);
-			SecondUser.GetRoosterStatusAsync((SecondUser.Rooster != null) ? SecondUser.Rooster.ToRoosterDto() : null, (FirstUser.Rooster != null) ? FirstUser.Rooster.ToRoosterDto() : null);
+			FirstUser.GetRoosterStatusAsync(FirstUser.Rooster != null ? FirstUser.Rooster.ToRoosterDto() : null,
+											SecondUser.Rooster != null ? SecondUser.Rooster.ToRoosterDto() : null);
+			SecondUser.GetRoosterStatusAsync(SecondUser.Rooster != null ? SecondUser.Rooster.ToRoosterDto() : null,
+											 FirstUser.Rooster != null ? FirstUser.Rooster.ToRoosterDto() : null);
 		}
 		#endregion
 		#endregion

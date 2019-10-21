@@ -8,7 +8,8 @@ using Unity.ServiceLocation;
 namespace Northis.BattleRoostersOnline.Implements
 {
 	/// <summary>
-	/// Абстрактный базовый класс реализаций контрактов сервиса. Инкапсулирует в себе свойство хранилища основных данных типа ServiceStorage. 
+	/// Абстрактный базовый класс реализаций контрактов сервиса. Инкапсулирует в себе свойство хранилища основных данных типа
+	/// ServiceStorage.
 	/// </summary>
 	public abstract class BaseServiceWithStorage
 	{
@@ -47,7 +48,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="BaseServiceWithStorage"/> класса.
+		/// Инициализирует новый экземпляр <see cref="BaseServiceWithStorage" /> класса.
 		/// </summary>
 		protected BaseServiceWithStorage()
 		{
@@ -79,6 +80,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 				return "";
 			});
+
 		/// <summary>
 		/// Генерирует токен.
 		/// </summary>
@@ -95,6 +97,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			return answer;
 		}
+
 		/// <summary>
 		/// Асинхронно генерирует токен.
 		/// </summary>

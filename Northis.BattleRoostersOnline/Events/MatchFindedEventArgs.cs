@@ -6,7 +6,7 @@ namespace Northis.BattleRoostersOnline.Events
 	/// Хранит информацию о событии.
 	/// </summary>
 	/// <seealso cref="System.EventArgs" />
-	class MatchFindedEventArgs : EventArgs
+	internal class MatchFindedEventArgs : EventArgs
 	{
 		#region Properties
 		/// <summary>
@@ -24,13 +24,10 @@ namespace Northis.BattleRoostersOnline.Events
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="MatchFindedEventArgs"/> класса.
+		/// Инициализирует новый экземпляр <see cref="MatchFindedEventArgs" /> класса.
 		/// </summary>
 		/// <param name="token">Токен.</param>
-		public MatchFindedEventArgs(string token)
-		{
-			MatchToken = token;
-		}
+		public MatchFindedEventArgs(string token) => MatchToken = token;
 		#endregion
 	}
 }
