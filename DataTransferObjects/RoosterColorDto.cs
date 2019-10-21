@@ -2,6 +2,9 @@
 
 namespace DataTransferObjects
 {
+	/// <summary>
+	/// Перечисление-контракт данных, передающее цвет петуха.
+	/// </summary>
 	[DataContract]
 	public enum RoosterColorDto
 	{

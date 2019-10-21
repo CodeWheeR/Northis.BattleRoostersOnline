@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace DataTransferObjects
 {
 	/// <summary>
-	/// Структура, предназначенная для сериализации петухов пользователя в XML-документ.
+	/// Класс-контракт данных, предназначенный для сериализации петухов пользователя в XML-документ.
 	/// </summary>
 	[DataContract]
 	public class UserRoosters

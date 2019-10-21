@@ -2,6 +2,9 @@
 
 namespace DataTransferObjects
 {
+	/// <summary>
+	/// Перечисление-контракт данных, передающее пользователю статус аунтефикации.
+	/// </summary>
 	[DataContract]
 	public enum AuthenticateStatus
 	{
