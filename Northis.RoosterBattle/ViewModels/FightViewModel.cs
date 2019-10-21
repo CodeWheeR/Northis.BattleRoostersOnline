@@ -82,7 +82,7 @@ namespace Northis.RoosterBattle.ViewModels
 
 			FindMatchCommand = new TaskCommand(FindMatchAsync, () => !ShowDeadFirst && !IsFinding && String.IsNullOrWhiteSpace(MatchToken));
 			CancelFindingCommand = new TaskCommand(CancelFindingAsync, () => IsFinding && String.IsNullOrWhiteSpace(MatchToken));
-			StartFightCommand = new TaskCommand(StartFightAsync, () => !String.IsNullOrWhiteSpace(MatchToken) && !BattleStarted);
+			StartFightCommand = new TaskCommand(StartFightAsync, () => !String.IsNullOrWhiteSpace(MatchToken) && !BattleStarted && !BattleEnded);
 			_userToken = (string)Application.Current.Resources["UserToken"];
 		}
 

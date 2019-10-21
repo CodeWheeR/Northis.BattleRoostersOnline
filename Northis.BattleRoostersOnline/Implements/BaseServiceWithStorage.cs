@@ -39,7 +39,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		protected async Task<string> GetLoginAsync(string token) =>
 			await Task.Run(() =>
 			{
-				if (Storage.LoggedUsers.ContainsKey(token))
+				if (token != null && Storage.LoggedUsers.ContainsKey(token))
 				{
 					return Storage.LoggedUsers[token];
 				}

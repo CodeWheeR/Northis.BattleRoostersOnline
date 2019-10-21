@@ -18,11 +18,11 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <param name="roosterSeqNum">Порядковый номер петуха.</param>
 		/// <param name="rooster">Петух.</param>
 		[OperationContract]
-		Task Edit(string token, int roosterID, RoosterDto rooster);
+		Task EditAsync(string token, int roosterID, RoosterDto rooster);
 		[OperationContract]
 		Task Add(string token, RoosterDto rooster);
 		[OperationContract]
-		Task Remove(string token, int roosterID);
+		Task RemoveAsync(string token, int roosterID);
 		[OperationContract]
 		Task<IEnumerable<RoosterDto>> GetUserRoosters(string token);
 	}

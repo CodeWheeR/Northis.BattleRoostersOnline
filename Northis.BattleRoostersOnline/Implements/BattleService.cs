@@ -88,6 +88,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			await Task.Run(async () =>
 			{
 				var session = Storage.Sessions[matchToken];
+				OperationContext.Current.Channel.Close();
 				session.StopSession(true);
 			});
 		}

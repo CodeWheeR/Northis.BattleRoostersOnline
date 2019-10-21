@@ -20,7 +20,10 @@ namespace Northis.RoosterBattle.Callbacks
 		public void GetRoosterStatus(RoosterDto yourRooster, RoosterDto enemyRooster)
 		{
 			_fightVm.FirstFighter = new RoosterModel(yourRooster);
-			_fightVm.SecondFighter = new RoosterModel(enemyRooster);
+			if (enemyRooster != null)
+				_fightVm.SecondFighter = new RoosterModel(enemyRooster);
+			else
+				_fightVm.SecondFighter = null;
 		}
 
 		public void GetBattleMessage(string message)

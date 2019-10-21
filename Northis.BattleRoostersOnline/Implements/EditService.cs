@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -12,6 +13,11 @@ namespace Northis.BattleRoostersOnline.Implements
 	[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
 	public class EditService : BaseServiceWithStorage, IEditService
 	{
+		public EditService()
+		{
+			Load();
+		}
+
 		public async Task Add(string token, RoosterDto rooster)
 		{
 			var login = await GetLoginAsync(token);
@@ -38,27 +44,32 @@ namespace Northis.BattleRoostersOnline.Implements
 					}
 				}
 			}).ConfigureAwait(false);
+
+			SaveAsync();
 		}
 
 		public void Load()
 		{
 			List<UserRoosters> userRoosters;
-			var serializer = new XmlSerializer(typeof(List<UserRoosters>));
+			var serializer = new DataContractSerializer(typeof(List<UserRoosters>));
 
-			using (var fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
+			if (File.Exists("Resources\\RoostersStorage.xml"))
 			{
-				Storage.RoostersData.Clear();
-
-				userRoosters = (List<UserRoosters>) serializer.Deserialize(fileStream);
-
-				lock (Storage.RoostersData)
+				using (var fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
 				{
-					for (var i = 0; i < userRoosters.Count; i++)
+					Storage.RoostersData.Clear();
+
+					userRoosters = (List<UserRoosters>)serializer.ReadObject(fileStream);
+
+					lock (Storage.RoostersData)
 					{
-						Storage.RoostersData.Add(userRoosters[i]
-													 .Login,
-												 userRoosters[i]
-													 .Roosters.ToList());
+						for (var i = 0; i < userRoosters.Count; i++)
+						{
+							Storage.RoostersData.Add(userRoosters[i]
+														 .Login,
+													 userRoosters[i]
+														 .Roosters.ToList());
+						}
 					}
 				}
 			}
@@ -79,9 +90,9 @@ namespace Northis.BattleRoostersOnline.Implements
 			}).ConfigureAwait(false);
 		}
 
-		public void Save()
+		public async Task SaveAsync()
 		{
-			Task.Run(() =>
+			await Task.Run(() =>
 			{
 				var roosters = new List<UserRoosters>();
 
@@ -93,7 +104,7 @@ namespace Northis.BattleRoostersOnline.Implements
 					}
 				}
 
-				var serializer = new XmlSerializer(roosters.GetType());
+				var serializer = new DataContractSerializer(roosters.GetType());
 
 				if (Directory.Exists("Resources") == false)
 				{
@@ -102,12 +113,12 @@ namespace Northis.BattleRoostersOnline.Implements
 
 				using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.OpenOrCreate))
 				{
-					serializer.Serialize(fileStream, roosters);
+					serializer.WriteObject(fileStream, roosters);
 				}
 			});
 		}
 
-		public async Task Edit(string token, int roosterSeqNum, RoosterDto rooster)
+		public async Task EditAsync(string token, int roosterSeqNum, RoosterDto rooster)
 		{
 			var login = await GetLoginAsync(token);
 			if (Storage.RoostersData.ContainsKey(login) &&
@@ -121,9 +132,11 @@ namespace Northis.BattleRoostersOnline.Implements
 					Storage.RoostersData[login][roosterSeqNum] = rooster;
 				}
 			}
+
+			SaveAsync();
 		}
 
-		public async Task Remove(string token, int roosterSeqNum)
+		public async Task RemoveAsync(string token, int roosterSeqNum)
 		{
 			var login = await GetLoginAsync(token);
 			if (Storage.RoostersData.ContainsKey(login) &&
@@ -138,6 +151,8 @@ namespace Northis.BattleRoostersOnline.Implements
 						   .RemoveAt(roosterSeqNum);
 				}
 			}
+
+			SaveAsync();
 		}
 	}
 }

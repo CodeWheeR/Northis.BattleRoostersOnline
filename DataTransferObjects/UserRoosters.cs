@@ -46,6 +46,11 @@ namespace DataTransferObjects
 			Login = login;
 			Roosters = roosters;
 		}
+
+		public UserRoosters()
+		{
+			
+		}
 		#endregion
 	}
 }
