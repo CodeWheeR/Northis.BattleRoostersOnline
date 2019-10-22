@@ -13,7 +13,7 @@ namespace Northis.BattleRoostersOnline.Implements
 	/// </summary>
 	/// <seealso cref="Northis.BattleRoostersOnline.Implements.BaseServiceWithStorage" />
 	/// <seealso cref="Northis.BattleRoostersOnline.Contracts.IBattleService" />
-	class BattleService : BaseServiceWithStorage, IBattleService
+	public class BattleService : BaseServiceWithStorage, IBattleService
 	{
 		#region Methods
 		#region Public
@@ -26,6 +26,11 @@ namespace Northis.BattleRoostersOnline.Implements
 		public async Task FindMatch(string token, RoosterDto rooster)
 		{
 			var callback = OperationContext.Current.GetCallbackChannel<IBattleServiceCallback>();
+			await FindMatch(token, rooster, callback);
+		}
+
+		public async Task FindMatch(string token, RoosterDto rooster, IBattleServiceCallback callback)
+		{
 			if (!Storage.LoggedUsers.ContainsKey(token))
 			{
 				Task.Run(() => callback.FindedMatch("User was not found"));
@@ -48,7 +53,9 @@ namespace Northis.BattleRoostersOnline.Implements
 					Storage.Sessions.Add(matchToken, session);
 				}
 			});
+
 		}
+
 		/// <summary>
 		/// Производит отмену поиска матча.
 		/// </summary>

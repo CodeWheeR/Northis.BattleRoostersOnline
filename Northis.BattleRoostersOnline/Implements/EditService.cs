@@ -17,6 +17,15 @@ namespace Northis.BattleRoostersOnline.Implements
 	[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
 	public class EditService : BaseServiceWithStorage, IEditService
 	{
+		#region Fields
+		#region Private
+		/// <summary>
+		/// Объект, блокирующий доступ к файлу с петухами нескольким процессам.
+		/// </summary>
+		private object _lockerIO = new object();
+		#endregion
+		#endregion
+
 		#region .ctor
 		/// <summary>
 		/// Инициализирует новый экземпляр <see cref="EditService"/> класса.
@@ -26,6 +35,8 @@ namespace Northis.BattleRoostersOnline.Implements
 			Load();
 		}
 		#endregion
+
+
 
 		#region Methods
 		#region Public
@@ -74,20 +85,23 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			if (File.Exists("Resources\\RoostersStorage.xml"))
 			{
-				using (var fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
+				lock (_lockerIO)
 				{
-					Storage.RoostersData.Clear();
-
-					userRoosters = (List<UserRoosters>)serializer.ReadObject(fileStream);
-
-					lock (Storage.RoostersData)
+					using (var fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
 					{
-						for (var i = 0; i < userRoosters.Count; i++)
+						Storage.RoostersData.Clear();
+
+						userRoosters = (List<UserRoosters>)serializer.ReadObject(fileStream);
+
+						lock (Storage.RoostersData)
 						{
-							Storage.RoostersData.Add(userRoosters[i]
-														 .Login,
-													 userRoosters[i]
-														 .Roosters.ToList());
+							for (var i = 0; i < userRoosters.Count; i++)
+							{
+								Storage.RoostersData.Add(userRoosters[i]
+															 .Login,
+														 userRoosters[i]
+															 .Roosters.ToList());
+							}
 						}
 					}
 				}
@@ -138,10 +152,15 @@ namespace Northis.BattleRoostersOnline.Implements
 					Directory.CreateDirectory("Resources");
 				}
 
-				using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.OpenOrCreate))
+				lock (_lockerIO)
 				{
-					serializer.WriteObject(fileStream, roosters);
+					using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.Create))
+					{
+						serializer.WriteObject(fileStream, roosters);
+					}
 				}
+
+				
 			});
 		}
 		/// <summary>
