@@ -87,6 +87,7 @@
     <Compile Include="OperationContextWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BattleServiceTests.cs" />
+    <Compile Include="ServvicesStorageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

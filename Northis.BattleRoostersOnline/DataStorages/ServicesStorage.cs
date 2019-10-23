@@ -15,11 +15,19 @@ namespace Northis.BattleRoostersOnline.Models
 	[Serializable]
 	public class ServicesStorage
 	{
+
+		#region Fields
+		#region Private
+		/// <summary>
+		/// Объект, блокирующий доступ к файлу с петухами нескольким процессам.
+		/// </summary>
+		private object _lockerIO = new object();
 		/// <summary>
 		/// Бинарный сериализатор
 		/// </summary>
 		private readonly BinaryFormatter _formatter = new BinaryFormatter();
-
+		#endregion
+		#endregion
 
 		#region .ctor
 		/// <summary>
@@ -109,10 +117,15 @@ namespace Northis.BattleRoostersOnline.Models
 					Directory.CreateDirectory("Resources");
 				}
 
-				using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.OpenOrCreate))
+				lock (_lockerIO)
 				{
-					serializer.WriteObject(fileStream, roosters);
+					using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.Create))
+					{
+						serializer.WriteObject(fileStream, roosters);
+					}
 				}
+
+
 			});
 		}
 
@@ -127,20 +140,23 @@ namespace Northis.BattleRoostersOnline.Models
 
 			if (File.Exists("Resources\\RoostersStorage.xml"))
 			{
-				using (var fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
+				lock (_lockerIO)
 				{
-					RoostersData.Clear();
-
-					userRoosters = (List<UserRoosters>)serializer.ReadObject(fileStream);
-
-					lock (RoostersData)
+					using (var fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
 					{
-						for (var i = 0; i < userRoosters.Count; i++)
+						RoostersData.Clear();
+
+						userRoosters = (List<UserRoosters>)serializer.ReadObject(fileStream);
+
+						lock (RoostersData)
 						{
-							RoostersData.Add(userRoosters[i]
-														 .Login,
-													 userRoosters[i]
-														 .Roosters.ToList());
+							for (var i = 0; i < userRoosters.Count; i++)
+							{
+								RoostersData.Add(userRoosters[i]
+															 .Login,
+														 userRoosters[i]
+															 .Roosters.ToList());
+							}
 						}
 					}
 				}

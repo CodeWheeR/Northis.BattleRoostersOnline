@@ -45,7 +45,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public void LogInTest1()
 		{
-			Assert.IsNotNull(_authenticateService.LogIn("Login", "Password"));
+			Assert.IsNotNull(_authenticateService.LogInAsync("Login", "Password"));
 		}
 		/// <summary>
 		/// Проверяет реакцию сервиса на неверный логин и пароль.
@@ -53,7 +53,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LogInTest2()
 		{
-			string result =  await _authenticateService.LogIn("Login", "Password");
+			string result =  await _authenticateService.LogInAsync("Login", "Password");
 
 			Assert.AreEqual(AuthenticateStatus.WrongLoginOrPassword.ToString(), result);
 		}
@@ -63,8 +63,8 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LogInTest3()
 		{
-			await _authenticateService.Register("NewUser", "password");
-			string result = await _authenticateService.LogIn("NewUser", "password");
+			await _authenticateService.RegisterAsync("NewUser", "password");
+			string result = await _authenticateService.LogInAsync("NewUser", "password");
 
 			Assert.AreEqual(AuthenticateStatus.AlreadyLoggedIn.ToString(), result);
 		}
@@ -74,7 +74,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LogInTest4()
 		{
-			string result = await _authenticateService.Register("NewUser", "password");
+			string result = await _authenticateService.RegisterAsync("NewUser", "password");
 
 			Assert.IsNotNull(result);
 		}
@@ -84,7 +84,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task RegisterTest1()
 		{
-			string result = await _authenticateService.Register("NewUser", "password");
+			string result = await _authenticateService.RegisterAsync("NewUser", "password");
 
 			Assert.IsNotNull(result);
 		}
@@ -95,8 +95,8 @@ namespace Nortis.BattleRoostersOnlineTests
 		public async Task RegisterTest2()
 		{
 			string result;
-			await _authenticateService.Register("NewUser", "password");
-			result = await _authenticateService.Register("NewUser", "password");
+			await _authenticateService.RegisterAsync("NewUser", "password");
+			result = await _authenticateService.RegisterAsync("NewUser", "password");
 
 			Assert.AreEqual(result, AuthenticateStatus.AlreadyRegistered.ToString());
 		}
@@ -112,7 +112,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[TestCase("so ssss so", "password")]
 		public async Task RegisterTest2(string login, string password)
 		{
-			string result = await _authenticateService.Register(login, password);
+			string result = await _authenticateService.RegisterAsync(login, password);
 
 			Assert.AreEqual(result, AuthenticateStatus.WrongDataFormat.ToString());
 		}
@@ -124,7 +124,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		{
 			ServiceLocator.Current.GetInstance<ServicesStorage>().LoggedUsers.Add("SomeKey", "SomeValue");
 
-			bool logOutStatus = await _authenticateService.LogOut("SomeKey");
+			bool logOutStatus = await _authenticateService.LogOutAsync("SomeKey");
 
 			Assert.AreEqual(logOutStatus, true);
 		}
@@ -134,7 +134,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LogOutTest2()
 		{
-			bool logOutStatus = await _authenticateService.LogOut("SomeKey");
+			bool logOutStatus = await _authenticateService.LogOutAsync("SomeKey");
 
 			Assert.AreEqual(logOutStatus, false);
 		}
@@ -144,7 +144,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task EncryptTest1()
 		{
-			Assert.IsNotNull(_authenticateService.Encrypt("Text"));
+			Assert.IsNotNull(await _authenticateService.EncryptAsync("Text"));
 		}
 		/// <summary>
 		/// Проверка корректность шифрования строки.
@@ -152,7 +152,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task EncryptTest2()
 		{
-			Assert.IsNotEmpty(_authenticateService.Encrypt("Text"));
+			Assert.IsNotEmpty(await _authenticateService.EncryptAsync("Text"));
 		}
 		/// <summary>
 		/// Проверяет корректность расшифровки.
@@ -164,26 +164,9 @@ namespace Nortis.BattleRoostersOnlineTests
 			string encryptText;
 
 
-			encryptText = _authenticateService.Encrypt(sourceText);
+			encryptText = await _authenticateService.EncryptAsync(sourceText);
 
 			Assert.AreEqual(sourceText, _authenticateService.Decrypt(encryptText));
 		}
-		/// <summary>
-		/// Проверяет корректность работы метода сохранения данных пользователя.
-		/// </summary>
-		[Test]
-		public async Task SaveUsersTest1()
-		{
-			Assert.DoesNotThrowAsync(() => _authenticateService.SaveUserDataAsync());
-		}
-		/// <summary>
-		/// Проверяет корректность работы метода загрузки данных пользователя.
-		/// </summary>
-		[Test]
-		public async Task LoadUsersTest1()
-		{
-			Assert.DoesNotThrow(() => _authenticateService.LoadUserData());
-		}
-
 	}
 }
