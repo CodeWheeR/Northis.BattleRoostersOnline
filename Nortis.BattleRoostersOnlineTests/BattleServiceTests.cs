@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ServiceModel;
 using System.Threading.Tasks;
 using CommonServiceLocator;
 using DataTransferObjects;
@@ -13,12 +12,19 @@ using Moq;
 
 namespace Nortis.BattleRoostersOnlineTests
 {
+	/// <summary>
+	/// Тестирует сервис проведения битвы.
+	/// </summary>
 	[TestFixture]
-	public class BaseServiceTests
+	public class BattleServiceTests
 	{
+		/// <summary>
+		/// Сервис проведения битвы.
+		/// </summary>
 		private BattleService _battleService = new BattleService();
-
-
+		/// <summary>
+		/// Настраивает тестовое окружение.
+		/// </summary>
 		[SetUp]
 		public void Setup()
 		{
@@ -34,20 +40,22 @@ namespace Nortis.BattleRoostersOnlineTests
 
 			container.RegisterType<IBattleServiceCallback>();
 
-
 			UnityServiceLocator locator = new UnityServiceLocator(container);
-
 			ServiceLocator.SetLocatorProvider(() => locator);
-
 		}
-
+		/// <summary>
+		/// Проверяет корректность работы метода поиска матча.
+		/// </summary>
 		[Test]
 		public async Task FindMatchTest()
 		{
 			var callback = new Mock<IBattleServiceCallback>();
+
 			Assert.DoesNotThrow((() => _battleService.FindMatch("SomeToken", new RoosterDto(), callback.Object)));
 		}
-
+		/// <summary>
+		/// Проверяет корректность работы метода отмены матча.
+		/// </summary>
 		[Test]
 		public async Task CancelFightTest()
 		{
@@ -59,21 +67,5 @@ namespace Nortis.BattleRoostersOnlineTests
 			ServiceLocator.Current.GetInstance<ServicesStorage>().Sessions.Add("SomeToken", session);
 			Assert.DoesNotThrow((() => _battleService.CancelFinding("SomeToken")));
 		}
-
-		[Test]
-		public async Task StartFightTest()
-		{
-			var callback = new Mock<IBattleServiceCallback>();
-
-			ServiceLocator.Current.GetInstance<ServicesStorage>().Sessions.Add("SomeToken", new Session("SomeToken"));
-			Session session = new Session("SomeToken");
-			session.RegisterFighter("SomeToken", new RoosterDto(), callback.Object);
-			session.RegisterFighter("AnotherToken", new RoosterDto(), callback.Object);
-
-
-			Assert.DoesNotThrowAsync((() => _battleService.StartBattle("SomeToken", "SomeToken")));
-		}
-
-
 	}
 }
