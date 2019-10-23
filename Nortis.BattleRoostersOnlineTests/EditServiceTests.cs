@@ -3,11 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommonServiceLocator;
 using DataTransferObjects;
-using Northis.BattleRoostersOnline.Implements;
 using Northis.BattleRoostersOnline.Models;
 using NUnit.Framework;
-using Unity;
-using Unity.ServiceLocation;
 
 namespace Nortis.BattleRoostersOnlineTests
 {
@@ -15,23 +12,17 @@ namespace Nortis.BattleRoostersOnlineTests
 	/// Проверяет работу сервиса редактирования.
 	/// </summary>
 	[TestFixture]
-	public class EditServiceTests
+	public class EditServiceTests : ServiceModuleTests
 	{
-		/// <summary>
-		/// Сервис редактирования.
-		/// </summary>
-		private EditService _editor = new EditService();
+		#region Methods
+		#region Public
 		/// <summary>
 		/// Настраивает тестовое окружение.
 		/// </summary>
 		[SetUp]
 		public void Setup()
 		{
-			UnityContainer container = new UnityContainer();
-			container.RegisterInstance(new ServicesStorage());
-
-			UnityServiceLocator locator = new UnityServiceLocator(container);
-			ServiceLocator.SetLocatorProvider(() => locator);
+			SetupServiceLocator();
 		}
 		/// <summary>
 		/// Проверяет корректность метода добавления нового петуха пользователя.
@@ -39,7 +30,8 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task AddTest1()
 		{
-			await _editor.AddAsync("SomeToken", new RoosterDto());
+			string token = await authenticateService.RegisterAsync("Login1", "Password", callbackAuth.Object);
+			await editor.AddAsync(token, new RoosterDto());
 
 			Assert.AreEqual(ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Count, 1);
 		}
@@ -49,7 +41,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public void AddTest2()
 		{
-			Assert.DoesNotThrowAsync(async () => await _editor.AddAsync("SomeToken", new RoosterDto()));
+			Assert.DoesNotThrowAsync(async () => await editor.AddAsync("SomeToken", new RoosterDto()));
 		}
 		/// <summary>
 		/// Проверяет количество петухов пользователя после добавления.
@@ -59,7 +51,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		{
 			RoosterDto rooster = new RoosterDto();
 
-			await _editor.AddAsync("SomeToken", rooster);
+			await editor.AddAsync("SomeToken", rooster);
 
 			Assert.IsTrue(ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.ElementAt(0).Value[0].Equals(rooster));
 		}
@@ -70,7 +62,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task GetUserRoostersTest1()
 		{
-			IEnumerable<RoosterDto> roosters = await _editor.GetUserRoostersAsync("NoFindToken");
+			IEnumerable<RoosterDto> roosters = await editor.GetUserRoostersAsync("NoFindToken");
 
 			Assert.AreEqual(new List<RoosterDto>(), roosters.ToList());
 		}
@@ -80,7 +72,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task GetUserRoostersTest2()
 		{ 
-			Assert.DoesNotThrowAsync(() => _editor.GetUserRoostersAsync("NotFindToken"));
+			Assert.DoesNotThrowAsync(() => editor.GetUserRoostersAsync("NotFindToken"));
 		}
 		/// <summary>
 		/// Проверяет работу метода редактирования с недопустимыми параметрами.
@@ -97,7 +89,7 @@ namespace Nortis.BattleRoostersOnlineTests
 				new RoosterDto()
 			});
 
-			Assert.DoesNotThrowAsync(() => _editor.EditAsync(token, val, new RoosterDto()));
+			Assert.DoesNotThrowAsync(() => editor.EditAsync(token, val, new RoosterDto()));
 		}
 		/// <summary>
 		/// Проверяет работу метода редактирования с недопустимыми параметрами.
@@ -114,7 +106,9 @@ namespace Nortis.BattleRoostersOnlineTests
 				new RoosterDto()
 			});
 
-			Assert.DoesNotThrowAsync(() => _editor.RemoveAsync(token, val));
+			Assert.DoesNotThrowAsync(() => editor.RemoveAsync(token, val));
 		}
+		#endregion
+		#endregion
 	}
 }

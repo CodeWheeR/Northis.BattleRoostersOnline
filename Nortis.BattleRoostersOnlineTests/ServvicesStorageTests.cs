@@ -19,13 +19,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		public void Setup()
 		{
 			UnityContainer container = new UnityContainer();
-			container.RegisterInstance(new ServicesStorage
-			{
-				RoostersData = new Dictionary<string, List<RoosterDto>>(),
-				UserData = new Dictionary<string, string>(),
-				LoggedUsers = new Dictionary<string, string>(),
-				Sessions = new Dictionary<string, Session>()
-			});
+			container.RegisterInstance(new ServicesStorage());
 
 			UnityServiceLocator locator = new UnityServiceLocator(container);
 			ServiceLocator.SetLocatorProvider(() => locator);

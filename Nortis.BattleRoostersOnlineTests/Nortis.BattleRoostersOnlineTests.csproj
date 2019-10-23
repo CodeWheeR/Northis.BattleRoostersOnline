@@ -84,7 +84,7 @@
   <ItemGroup>
     <Compile Include="AuthenticateServiceTests.cs" />
     <Compile Include="EditServiceTests.cs" />
-    <Compile Include="OperationContextWrapper.cs" />
+    <Compile Include="ServiceModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BattleServiceTests.cs" />
     <Compile Include="ServvicesStorageTests.cs" />
