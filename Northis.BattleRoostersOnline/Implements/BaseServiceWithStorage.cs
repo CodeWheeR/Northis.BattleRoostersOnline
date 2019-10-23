@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using CommonServiceLocator;
 using DataTransferObjects;
+using Northis.BattleRoostersOnline.DataStorages;
 using Northis.BattleRoostersOnline.Models;
 using Unity;
 using Unity.ServiceLocation;
@@ -39,13 +40,13 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// Храни.
 		/// </value>
 		/// <exception cref="NullReferenceException">Хранилище не инициализированно экземпляром класса.</exception>
-		protected ServicesStorage Storage
+		protected IServicesStorage Storage
 		{
 			get
 			{
 				if (ServiceLocator.IsLocationProviderSet)
 				{
-					return ServiceLocator.Current.GetInstance<ServicesStorage>();
+					return ServiceLocator.Current.GetInstance<IServicesStorage>();
 				}
 
 				throw new NullReferenceException("Storage is null");
@@ -63,6 +64,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			if (!ServiceLocator.IsLocationProviderSet)
 			{
 				var container = new UnityContainer();
+				container.RegisterType<IServicesStorage, ServicesStorage>();
 				container.RegisterInstance(new ServicesStorage());
 
 				var locator = new UnityServiceLocator(container);
@@ -116,39 +118,6 @@ namespace Northis.BattleRoostersOnline.Implements
 		}
 		#endregion
 
-
-		///// <summary>
-		///// Асинхронно сохраняет петухов.
-		///// </summary>
-		//public async Task SaveRoostersAsync()
-		//{
-		//	await Storage.SaveRoostersAsync();
-		//}
-
-
-		///// <summary>
-		///// Загружает петухов.
-		///// </summary>
-		//public void LoadRoosters()
-		//{
-		//	Storage.LoadRoosters();
-		//}
-
-		///// <summary>
-		///// Асинхронно сохраняет данные пользователя.
-		///// </summary>
-		//public async Task SaveUserDataAsync()
-		//{
-		//	await Storage.SaveUserDataAsync();
-		//}
-
-		///// <summary>
-		///// Загружает данные пользователя.
-		///// </summary>
-		//public void LoadUserData()
-		//{
-		//	Storage.LoadUserData();
-		//}
 		#endregion
 	}
 }

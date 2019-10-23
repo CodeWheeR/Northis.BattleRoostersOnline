@@ -12,18 +12,31 @@ using Northis.BattleRoostersOnline.Events;
 
 namespace Northis.BattleRoostersOnline.Implements
 {
+	/// <summary>
+	/// Singleton-класс, отвечающий за обновление и отправку клиентам глобальной статистики.
+	/// </summary>
+	/// <seealso cref="Northis.BattleRoostersOnline.Implements.BaseServiceWithStorage" />
 	class StatisticsPublisher : BaseServiceWithStorage
 	{
+		#region Fields
 		private static StatisticsPublisher _instance;
+
 		private event EventHandler<GlobalStatisticsEventArgs> StatisticsChanged;
+		/// <summary>
+		/// Словарь колбеков клиентов для отправки статистики, ключ - токен пользователя.
+		/// </summary>
 		private readonly Dictionary<string, EventHandler<GlobalStatisticsEventArgs>> _subscribers = new Dictionary<string, EventHandler<GlobalStatisticsEventArgs>>();
+		/// <summary>
+		/// Кэшированное значение статистики
+		/// </summary>
+		private List<StatisticsDto> _cachedStatistics = new List<StatisticsDto>();
+		#endregion
 
-		private List<StatisticsDto> _cachedStatistics
-		{
-			get;
-			set;
-		} = new List<StatisticsDto>();
 
+		#region Public Methods		
+		/// <summary>
+		/// Запускает процесс обновления статистики.
+		/// </summary>
 		public async Task UpdateStatistics()
 		{
 			await Task.Run(() =>
@@ -46,13 +59,17 @@ namespace Northis.BattleRoostersOnline.Implements
 				lock (_cachedStatistics)
 				{
 					_cachedStatistics = stats.OrderByDescending(x => x.WinStreak)
-												  .ToList();
+											 .ToList();
 				}
 
 				OnStatisticsChanged();
 			});
 		}
 
+		/// <summary>
+		/// Gets the global statistics.
+		/// </summary>
+		/// <returns></returns>
 		public List<StatisticsDto> GetGlobalStatistics() => _cachedStatistics;
 
 		public void Subscribe(string token, IAuthenticateServiceCallback callback)
@@ -140,6 +157,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				}
 			});
 		}
+		#endregion
 
 	}
 }

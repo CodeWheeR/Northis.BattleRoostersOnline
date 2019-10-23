@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.ServiceModel;
 using System.Threading;
@@ -49,20 +50,21 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> LogInAsync(string login, string password) => await LogInAsync(login, password, false);
+		public async Task<string> LogInAsync(string login, string password) => await LogInAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>(), false);
 
 		/// <summary>
 		/// Осуществляет вход пользователя в систему.
 		/// </summary>
 		/// <param name="login">Логин.</param>
 		/// <param name="password">Пароль.</param>
+		/// <param name="callback"></param>
+		/// <param name="isEncrypted"></param>
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> LogInAsync(string login, string password, bool isEncrypted = false)
+		public async Task<string> LogInAsync(string login, string password, IAuthenticateServiceCallback callback,  bool isEncrypted = false)
 		{
-			string token;
-			var callback = OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>();
+			string token = "";
 
 			if (!isEncrypted)
 				password = await EncryptAsync(password);
@@ -92,6 +94,9 @@ namespace Northis.BattleRoostersOnline.Implements
 			return token;
 		}
 
+		public async Task<string> RegisterAsync(string login, string password) =>
+			await RegisterAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>());
+
 		/// <summary>
 		/// Регистрирует нового пользователя.
 		/// </summary>
@@ -100,7 +105,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> RegisterAsync(string login, string password)
+		public async Task<string> RegisterAsync(string login, string password, IAuthenticateServiceCallback callback)
 		{
 			if (login.Length < 5 || IsNullOrWhiteSpace(login) || password.Length < 5 || IsNullOrWhiteSpace(password) || login.Contains(" "))
 			{
@@ -124,7 +129,7 @@ namespace Northis.BattleRoostersOnline.Implements
 #pragma warning disable 4014
 			Storage.SaveUserDataAsync();
 #pragma warning restore 4014
-			return await LogInAsync(login, encryptedPassword, true);
+			return await LogInAsync(login, encryptedPassword, callback, true);
 		}
 
 		/// <summary>
