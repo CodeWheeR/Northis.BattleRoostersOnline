@@ -45,8 +45,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		}
 		#endregion
 
-		#region Methods
-		#region Public
+		#region Public Methods
 		/// <summary>
 		/// Асинхронно добавляет петуха.
 		/// </summary>
@@ -168,7 +167,6 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
 		public async Task GiveUpAsync(string token, string matchToken) => await _battleService.GiveUpAsync(token, matchToken);
-		#endregion
 		#endregion
 	}
 }

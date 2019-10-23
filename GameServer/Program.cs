@@ -23,11 +23,19 @@ namespace GameServer
 
 			try
 			{
-				selfHost.AddServiceEndpoint(typeof(IAuthenticateService), new WSDualHttpBinding(), "AuthenticationService");
+				var authBinding = new WSDualHttpBinding()
+				{
+					SendTimeout = new TimeSpan(0, 0, 0, 3)
+				};
 
+				var battleBinding = new WSDualHttpBinding()
+				{
+					SendTimeout = new TimeSpan(0, 0, 0, 1)
+				};
+
+				selfHost.AddServiceEndpoint(typeof(IAuthenticateService), authBinding, "AuthenticationService");
 				selfHost.AddServiceEndpoint(typeof(IEditService), new WSHttpBinding(), "EditService");
-
-				selfHost.AddServiceEndpoint(typeof(IBattleService), new WSDualHttpBinding(), "BattleService");
+				selfHost.AddServiceEndpoint(typeof(IBattleService), battleBinding, "BattleService");
 
 				var smb = new ServiceMetadataBehavior();
 				smb.HttpGetEnabled = true;

@@ -16,8 +16,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 	public class BattleService : BaseServiceWithStorage, IBattleService
 	{
-		#region Methods
-		#region Public
+		#region Public Methods
 		/// <summary>
 		/// Производит поиск матча.
 		/// </summary>
@@ -123,7 +122,6 @@ namespace Northis.BattleRoostersOnline.Implements
 				session.StopSession(true);
 			});
 		}
-		#endregion
 		#endregion
 	}
 }

@@ -18,14 +18,6 @@ namespace Northis.BattleRoostersOnline.Implements
 	/// <seealso cref="Northis.BattleRoostersOnline.Contracts.IAuthenticateService" />
 	public class AuthenticateService : BaseServiceWithStorage, IAuthenticateService
 	{
-		#region Fields
-		#region Private
-
-		private Thread _connectionMonitor;
-
-		#endregion
-		#endregion
-
 		#region .ctor
 		/// <summary>
 		/// Инициализирует новый экземпляр <see cref="AuthenticateService" /> класса.
@@ -39,8 +31,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		}
 		#endregion
 
-		#region Methods
-		#region Public
+		#region Public Methods
 
 		/// <summary>
 		/// Осуществляет вход пользователя в систему.
@@ -213,6 +204,6 @@ namespace Northis.BattleRoostersOnline.Implements
 																					   .GetGlobalStatistics());
 		}
 		#endregion
-		#endregion
+
 	}
 }

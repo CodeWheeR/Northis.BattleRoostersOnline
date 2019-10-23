@@ -22,17 +22,14 @@ namespace Northis.BattleRoostersOnline.Implements
 	{
 		#region Fields
 
-		#region Private
 		/// <summary>
 		/// Генератор рандомных значений.
 		/// </summary>
 		private readonly Random _rand = new Random();
 
 		#endregion
-		#endregion
 
 		#region Properties
-		#region Protected
 		/// <summary>
 		/// Возвращает хранилище основных данных.
 		/// </summary>
@@ -53,7 +50,6 @@ namespace Northis.BattleRoostersOnline.Implements
 			}
 		}
 		#endregion
-		#endregion
 
 		#region .ctor
 		/// <summary>
@@ -73,8 +69,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		}
 		#endregion
 
-		#region Methods
-		#region Protected
+		#region Protected Methods
 		/// <summary>
 		/// Асинхронно возвращает login пользователя.
 		/// </summary>
@@ -116,8 +111,6 @@ namespace Northis.BattleRoostersOnline.Implements
 		{
 			return Task.Run(() => GenerateToken());
 		}
-		#endregion
-
 		#endregion
 	}
 }

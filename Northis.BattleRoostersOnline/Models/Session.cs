@@ -285,6 +285,7 @@ namespace Northis.BattleRoostersOnline.Models
 		/// <param name="callback">Callback сервис.</param>
 		public void RegisterFighter(string token, RoosterDto fighter, IBattleServiceCallback callback)
 		{
+			
 			if (FirstUser == null)
 			{
 				FirstUser = new UserData(callback)
@@ -307,6 +308,11 @@ namespace Northis.BattleRoostersOnline.Models
 				Subscribe(SecondUser);
 				SendReadySignAsync();
 				ConnectionMonitor();
+			}
+
+			if (callback is ICommunicationObject co)
+			{
+				co.Closing += (x,y) => CheckForDeserting(token);
 			}
 		}
 
@@ -409,6 +415,7 @@ namespace Northis.BattleRoostersOnline.Models
 							   }
 
 							   Storage.Sessions.Remove(Token);
+							   Storage.SaveRoostersAsync();
 							   SendEndSign();
 						   },
 						   token);
@@ -422,23 +429,10 @@ namespace Northis.BattleRoostersOnline.Models
 			var token = _connectionMonitorTokenSource.Token;
 			await Task.Run(async () =>
 						   {
-							   while (!token.IsCancellationRequested)
+							   while (!IsStarted && !token.IsCancellationRequested)
 							   {
-								   await Task.Delay(1000);
-								   if (!IsStarted)
-								   {
-									   try
-									   {
-										   SendRoosterStatus();
-									   }
-									   catch (CommunicationException e)
-									   {
-										   Debug.WriteLine(e);
-									   }
-								   }
-
-								   CheckForDeserting(FirstUser, SecondUser);
-								   CheckForDeserting(SecondUser, FirstUser);
+								   await Task.Delay(1000, token);
+								   SendRoosterStatus();
 							   }
 						   },
 						   token);
@@ -508,6 +502,18 @@ namespace Northis.BattleRoostersOnline.Models
 		{
 			SessionStarted?.Invoke(this, new MatchFindedEventArgs(Token));
 			SendRoosterStatus();
+		}
+
+		private async void CheckForDeserting(string token)
+		{
+			if (FirstUser != null && FirstUser.Token == token)
+			{
+				CheckForDeserting(FirstUser, SecondUser);
+			}
+			else if (SecondUser != null && SecondUser.Token == token)
+			{
+				CheckForDeserting(SecondUser, FirstUser);
+			}
 		}
 
 		/// <summary>

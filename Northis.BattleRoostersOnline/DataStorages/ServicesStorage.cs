@@ -4,9 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using System.Threading.Tasks;
 using DataTransferObjects;
 using Northis.BattleRoostersOnline.DataStorages;
+using Northis.BattleRoostersOnline.Implements;
 
 namespace Northis.BattleRoostersOnline.Models
 {
@@ -21,6 +23,8 @@ namespace Northis.BattleRoostersOnline.Models
 		/// </summary>
 		private readonly BinaryFormatter _formatter = new BinaryFormatter();
 
+		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
+
 
 		#region .ctor
 		/// <summary>
@@ -32,8 +36,11 @@ namespace Northis.BattleRoostersOnline.Models
 			RoostersData = new Dictionary<string, List<RoosterDto>>();
 			LoggedUsers = new Dictionary<string, string>();
 			Sessions = new Dictionary<string, Session>();
+			Task.Run(() => InitContent());
 		}
 		#endregion
+
+		
 
 		#region Properties
 		/// <summary>
@@ -83,6 +90,34 @@ namespace Northis.BattleRoostersOnline.Models
 		#endregion
 
 
+		#region Private Methods
+		private async Task MonitorConnections()
+		{
+			var token = _connectionMonitorTokenSource.Token;
+
+			await Task.Run(async () =>
+			{
+				while (!token.IsCancellationRequested)
+				{
+					StatisticsPublisher.GetInstance()
+									   .UpdateStatistics();
+					await Task.Delay(10000, token);
+				}
+			}, token);
+		}
+
+		private void InitContent()
+		{
+			LoadUserData();
+			LoadRoosters();
+
+			#pragma warning disable 4014
+			MonitorConnections();
+			#pragma warning restore 4014
+		}
+		#endregion
+
+		#region Public Methods
 		/// <summary>
 		/// Асинхронно сохраняет петухов.
 		/// </summary>
@@ -125,7 +160,7 @@ namespace Northis.BattleRoostersOnline.Models
 
 			if (File.Exists("Resources\\RoostersStorage.xml"))
 			{
-				using (var fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
+				using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.Open))
 				{
 					RoostersData.Clear();
 
@@ -136,9 +171,9 @@ namespace Northis.BattleRoostersOnline.Models
 						for (var i = 0; i < userRoosters.Count; i++)
 						{
 							RoostersData.Add(userRoosters[i]
-														 .Login,
-													 userRoosters[i]
-														 .Roosters.ToList());
+												 .Login,
+											 userRoosters[i]
+												 .Roosters.ToList());
 						}
 					}
 				}
@@ -178,5 +213,6 @@ namespace Northis.BattleRoostersOnline.Models
 				}
 			}
 		}
+		#endregion
 	}
 }

@@ -20,18 +20,15 @@ namespace Northis.BattleRoostersOnline.Implements
 	{
 		#region Fields
 		private static StatisticsPublisher _instance;
-
-		private event EventHandler<GlobalStatisticsEventArgs> StatisticsChanged;
 		/// <summary>
 		/// Словарь колбеков клиентов для отправки статистики, ключ - токен пользователя.
 		/// </summary>
-		private readonly Dictionary<string, EventHandler<GlobalStatisticsEventArgs>> _subscribers = new Dictionary<string, EventHandler<GlobalStatisticsEventArgs>>();
+		private readonly Dictionary<string, IAuthenticateServiceCallback> _subscribers = new Dictionary<string, IAuthenticateServiceCallback>();
 		/// <summary>
 		/// Кэшированное значение статистики
 		/// </summary>
 		private List<StatisticsDto> _cachedStatistics = new List<StatisticsDto>();
 		#endregion
-
 
 		#region Public Methods		
 		/// <summary>
@@ -67,27 +64,69 @@ namespace Northis.BattleRoostersOnline.Implements
 		}
 
 		/// <summary>
-		/// Gets the global statistics.
+		/// Возвращает текущую статистику.
 		/// </summary>
 		/// <returns></returns>
 		public List<StatisticsDto> GetGlobalStatistics() => _cachedStatistics;
 
+		/// <summary>
+		/// Выполняет подписку пользователя на обновление статистики.
+		/// </summary>
+		/// <param name="token">The token.</param>
+		/// <param name="callback">The callback.</param>
 		public void Subscribe(string token, IAuthenticateServiceCallback callback)
 		{
-			EventHandler<GlobalStatisticsEventArgs> callbackOperation = (x, y) => callback.GetNewGlobalStatistics(y.Statistics);
-			_subscribers.Add(token, callbackOperation);
-			StatisticsChanged += callbackOperation;
+			if (callback is ICommunicationObject co)
+				co.Closing += (x, y) => ClearSubscribtion(token);
+
+			_subscribers.Add(token, callback);
 			Task.Run(() => {
 				callback.GetNewGlobalStatistics(_cachedStatistics);
 			});
 		}
 
+		/// <summary>
+		/// Выполняет отписку пользователя от обновлений.
+		/// </summary>
+		/// <param name="token">The token.</param>
 		public void Unsubscribe(string token)
 		{
-			StatisticsChanged -= _subscribers[token];
 			_subscribers.Remove(token);
 		}
 
+		/// <summary>
+		/// Асинхронно возвращает объект класса <see cref="StatisticsPublisher"/>.
+		/// </summary>
+		public static async Task<StatisticsPublisher> GetInstanceAsync()
+		{
+			if (_instance == null)
+			{
+				_instance = new StatisticsPublisher();
+				await _instance.UpdateStatistics();
+			}
+
+			return _instance;
+		}
+
+		/// <summary>
+		/// Возращает объект класса <see cref="StatisticsPublisher"/>.
+		/// </summary>
+		public static StatisticsPublisher GetInstance()
+		{
+			if (_instance == null)
+			{
+				_instance = new StatisticsPublisher();
+			}
+
+			return _instance;
+		}
+
+		#endregion
+
+		#region Private Methods
+		/// <summary>
+		/// Выполняется при изменении статистики.
+		/// </summary>
 		private async void OnStatisticsChanged()
 		{
 			try
@@ -104,31 +143,11 @@ namespace Northis.BattleRoostersOnline.Implements
 			}
 		}
 
-		public static async Task<StatisticsPublisher> GetInstanceAsync()
-		{
-			if (_instance == null)
-			{
-				_instance = new StatisticsPublisher();
-				await _instance.UpdateStatistics();
-			}
-
-			return _instance;
-		}
-
-		public static StatisticsPublisher GetInstance()
-		{
-			if (_instance == null)
-			{
-				_instance = new StatisticsPublisher();
-#pragma warning disable 4014
-				_instance.UpdateStatistics();
-#pragma warning restore 4014
-			}
-
-			return _instance;
-		}
-
-		public async Task SendStatistics(string receiverToken)
+		/// <summary>
+		/// Выполняет отправку статистики пользователю с указанным токеном.
+		/// </summary>
+		/// <param name="receiverToken">Токен получателя.</param>
+		private async Task SendStatistics(string receiverToken)
 		{
 			await Task.Run(() =>
 			{
@@ -136,28 +155,41 @@ namespace Northis.BattleRoostersOnline.Implements
 				{
 					if (_subscribers.ContainsKey(receiverToken))
 					{
-						_subscribers[receiverToken]
-							.Invoke(this,
-									new GlobalStatisticsEventArgs()
-									{
-										Statistics = _cachedStatistics
-									});
+						_subscribers[receiverToken].GetNewGlobalStatistics(_cachedStatistics);
 					}
 				}
 				catch (Exception e)
 				{
-					Type type = e.GetType();
 					if (e is CommunicationException || e is ObjectDisposedException || e is TimeoutException)
 					{
-						_subscribers.Remove(receiverToken);
-						Storage.LoggedUsers.Remove(receiverToken);
+						if (_subscribers.ContainsKey(receiverToken) && _subscribers[receiverToken] is ICommunicationObject co)
+						{
+							co.Close();
+						}
 					}
-
-					throw;
+					else
+					{
+						throw;
+					}
 				}
 			});
 		}
-		#endregion
+		/// <summary>
+		/// Выполняет отписку пользователя от оповещений.
+		/// </summary>
+		/// <param name="token">Токен пользователя.</param>
+		private void ClearSubscribtion(string token)
+		{
+			if (_subscribers.ContainsKey(token))
+			{
+				_subscribers.Remove(token);
+			}
 
+			if (Storage.LoggedUsers.ContainsKey(token))
+			{
+				Storage.LoggedUsers.Remove(token);
+			}
+		}
+		#endregion
 	}
 }
