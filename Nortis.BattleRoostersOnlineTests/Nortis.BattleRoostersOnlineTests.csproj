@@ -87,7 +87,7 @@
     <Compile Include="ServiceModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BattleServiceTests.cs" />
-    <Compile Include="ServvicesStorageTests.cs" />
+    <Compile Include="ServicesStorageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

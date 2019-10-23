@@ -76,8 +76,8 @@
     <Compile Include="Contracts\IBattleServiceCallback.cs" />
     <Compile Include="Contracts\IEditService.cs" />
     <Compile Include="Contracts\IAuthenticateServiceCallback.cs" />
-    <Compile Include="DataStorages\IServicesStorage.cs" />
-    <Compile Include="DataStorages\ServicesStorage.cs" />
+    <Compile Include="DataStorages\IDataStorageService.cs" />
+    <Compile Include="DataStorages\DataStorageServiceData.cs" />
     <Compile Include="Events\GlobalStatisticsEventArgs.cs" />
     <Compile Include="Implements\StatisticsPublisher.cs" />
     <Compile Include="Models\CrestSize.cs" />

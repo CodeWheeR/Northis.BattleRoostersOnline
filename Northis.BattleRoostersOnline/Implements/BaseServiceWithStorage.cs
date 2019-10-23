@@ -37,16 +37,16 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// Храни.
 		/// </value>
 		/// <exception cref="NullReferenceException">Хранилище не инициализированно экземпляром класса.</exception>
-		protected IServicesStorage Storage
+		protected IDataStorageService StorageService
 		{
 			get
 			{
 				if (ServiceLocator.IsLocationProviderSet)
 				{
-					return ServiceLocator.Current.GetInstance<IServicesStorage>();
+					return ServiceLocator.Current.GetInstance<IDataStorageService>();
 				}
 
-				throw new NullReferenceException("Storage is null");
+				throw new NullReferenceException("StorageService is null");
 			}
 		}
 		#endregion
@@ -60,8 +60,8 @@ namespace Northis.BattleRoostersOnline.Implements
 			if (!ServiceLocator.IsLocationProviderSet)
 			{
 				var container = new UnityContainer();
-				container.RegisterType<IServicesStorage, ServicesStorage>();
-				container.RegisterInstance(new ServicesStorage());
+				container.RegisterType<IDataStorageService, DataStorageServiceData>();
+				container.RegisterInstance(new DataStorageServiceData());
 
 				var locator = new UnityServiceLocator(container);
 				ServiceLocator.SetLocatorProvider(() => locator);
@@ -78,9 +78,9 @@ namespace Northis.BattleRoostersOnline.Implements
 		protected async Task<string> GetLoginAsync(string token) =>
 			await Task.Run(() =>
 			{
-				if (token != null && Storage.LoggedUsers.ContainsKey(token))
+				if (token != null && StorageService.LoggedUsers.ContainsKey(token))
 				{
-					return Storage.LoggedUsers[token];
+					return StorageService.LoggedUsers[token];
 				}
 
 				return "";

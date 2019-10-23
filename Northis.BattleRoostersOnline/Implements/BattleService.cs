@@ -32,7 +32,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		public async Task FindMatchAsync(string token, RoosterDto rooster, IBattleServiceCallback callback)
 		{
-			if (!Storage.LoggedUsers.ContainsKey(token))
+			if (!StorageService.LoggedUsers.ContainsKey(token))
 			{
 				Task.Run(() => callback.FindedMatch("User was not found"));
 				return;
@@ -41,11 +41,11 @@ namespace Northis.BattleRoostersOnline.Implements
 			await Task.Run(async () =>
 			{
 				Session session;
-				if (Storage.Sessions.Count > 0 &&
-					!Storage.Sessions.Last()
+				if (StorageService.Sessions.Count > 0 &&
+					!StorageService.Sessions.Last()
 							.Value.IsStarted)
 				{
-					session = Storage.Sessions.Last()
+					session = StorageService.Sessions.Last()
 									 .Value;
 					session.RegisterFighter(token, rooster, callback);
 				}
@@ -54,7 +54,7 @@ namespace Northis.BattleRoostersOnline.Implements
 					var matchToken = await GenerateTokenAsync();
 					session = new Session(matchToken);
 					session.RegisterFighter(token, rooster, callback);
-					Storage.Sessions.Add(matchToken, session);
+					StorageService.Sessions.Add(matchToken, session);
 				}
 			});
 
@@ -69,13 +69,13 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </returns>
 		public bool CancelFinding(string token)
 		{
-			var session = Storage.Sessions.Reverse()
+			var session = StorageService.Sessions.Reverse()
 
 								 .First(x => x.Value.RemoveFighter(token))
 								 .Value;
 			if (session != null)
 			{
-				Storage.Sessions.Remove(session.Token);
+				StorageService.Sessions.Remove(session.Token);
 				return true;
 			}
 
@@ -93,7 +93,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		{
 			await Task.Run(async () =>
 			{
-				var session = Storage.Sessions[matchToken];
+				var session = StorageService.Sessions[matchToken];
 				session.SetReady(token);
 
 				if (session.CheckForReadiness())
@@ -116,7 +116,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		{
 			await Task.Run(async () =>
 			{
-				var session = Storage.Sessions[matchToken];
+				var session = StorageService.Sessions[matchToken];
 
 				OperationContext.Current?.Channel?.Close();
 				session.StopSession(true);

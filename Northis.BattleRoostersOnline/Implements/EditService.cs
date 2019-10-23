@@ -26,16 +26,6 @@ namespace Northis.BattleRoostersOnline.Implements
 		#endregion
 		#endregion
 
-		#region .ctor
-		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="EditService"/> класса.
-		/// </summary>
-		public EditService()
-		{
-			Load();
-		}
-		#endregion
-
 		#region Methods
 		#region Public
 		/// <summary>
@@ -50,19 +40,19 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			await Task.Run(() =>
 			{
-				if (Storage.RoostersData.ContainsKey(login))
+				if (StorageService.RoostersData.ContainsKey(login))
 				{
-					lock (Storage.RoostersData)
+					lock (StorageService.RoostersData)
 					{
-						Storage.RoostersData[login]
+						StorageService.RoostersData[login]
 							   .Add(rooster);
 					}
 				}
 				else
 				{
-					lock (Storage.RoostersData)
+					lock (StorageService.RoostersData)
 					{
-						Storage.RoostersData.Add(login,
+						StorageService.RoostersData.Add(login,
 												 new List<RoosterDto>
 												 {
 													 rooster
@@ -71,7 +61,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				}
 			}).ConfigureAwait(false);
 
-			Storage.SaveRoostersAsync();
+			StorageService.SaveRoostersAsync();
 		}
 		/// <summary>
 		/// Асинхронно получает петухов пользователя.
@@ -86,9 +76,9 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			return await Task.Run<IEnumerable<RoosterDto>>(() =>
 			{
-				if (Storage.RoostersData.ContainsKey(login))
+				if (StorageService.RoostersData.ContainsKey(login))
 				{
-					return Storage.RoostersData[login];
+					return StorageService.RoostersData[login];
 				}
 
 				return new List<RoosterDto>();
@@ -104,19 +94,19 @@ namespace Northis.BattleRoostersOnline.Implements
 		public async Task EditAsync(string token, int roosterSeqNum, RoosterDto rooster)
 		{
 			var login = await GetLoginAsync(token);
-			if (Storage.RoostersData.ContainsKey(login) &&
-				Storage.RoostersData[login]
+			if (StorageService.RoostersData.ContainsKey(login) &&
+				StorageService.RoostersData[login]
 					   .Count >
 				roosterSeqNum &&
 				roosterSeqNum >= 0)
 			{
-				lock (Storage.RoostersData)
+				lock (StorageService.RoostersData)
 				{
-					Storage.RoostersData[login][roosterSeqNum] = rooster;
+					StorageService.RoostersData[login][roosterSeqNum] = rooster;
 				}
 			}
 
-			Storage.SaveRoostersAsync();
+			StorageService.SaveRoostersAsync();
 		}
 		/// <summary>
 		/// Асинхронно удаляет петуха.
@@ -126,19 +116,19 @@ namespace Northis.BattleRoostersOnline.Implements
 		public async Task RemoveAsync(string token, int roosterSeqNum)
 		{
 			var login = await GetLoginAsync(token);
-			if (Storage.RoostersData.ContainsKey(login) &&
-				Storage.RoostersData[login]
+			if (StorageService.RoostersData.ContainsKey(login) &&
+				StorageService.RoostersData[login]
 					   .Count >
 				roosterSeqNum &&
 				roosterSeqNum >= 0)
 			{
-				lock (Storage.RoostersData)
+				lock (StorageService.RoostersData)
 				{
-					Storage.RoostersData[login]
+					StorageService.RoostersData[login]
 						   .RemoveAt(roosterSeqNum);
 				}
 			}
-			Storage.SaveRoostersAsync();
+			StorageService.SaveRoostersAsync();
 		}
 		#endregion
 		#endregion

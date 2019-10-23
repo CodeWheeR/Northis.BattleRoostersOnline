@@ -13,14 +13,6 @@ namespace Nortis.BattleRoostersOnlineTests
 		#region Methods
 		#region Public
 		/// <summary>
-		/// Настраивает тестовое окружение.
-		/// </summary>
-		[SetUp]
-		public void Setup()
-		{
-			SetupServiceLocator();
-		}
-		/// <summary>
 		/// Проверяет корректность работы метода поиска матча.
 		/// </summary>
 		[Test]

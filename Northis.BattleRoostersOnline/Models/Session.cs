@@ -414,8 +414,8 @@ namespace Northis.BattleRoostersOnline.Models
 												SetWinstreak(SecondUser, 0));
 							   }
 
-							   Storage.Sessions.Remove(Token);
-							   Storage.SaveRoostersAsync();
+							   StorageService.Sessions.Remove(Token);
+							   StorageService.SaveRoostersAsync();
 							   SendEndSign();
 						   },
 						   token);
@@ -544,7 +544,7 @@ namespace Northis.BattleRoostersOnline.Models
 					Debug.WriteLine(e.TargetSite + ": " + e);
 				}
 
-				Storage.Sessions.Remove(Token);
+				StorageService.Sessions.Remove(Token);
 			}
 		}
 
@@ -556,7 +556,7 @@ namespace Northis.BattleRoostersOnline.Models
 		private async Task SetWinstreak(UserData userData, int value)
 		{
 			var login = await GetLoginAsync(userData.Token);
-			var rooster = Storage.RoostersData[login]
+			var rooster = StorageService.RoostersData[login]
 								 .First(x => x.Name == userData.Rooster.Name);
 			rooster.WinStreak = value;
 			if (value != 0)

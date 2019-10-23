@@ -17,14 +17,6 @@ namespace Nortis.BattleRoostersOnlineTests
 		#region Methods
 		#region Public
 		/// <summary>
-		/// Настраивает тестовое окружение.
-		/// </summary>
-		[SetUp]
-		public void Setup()
-		{
-			SetupServiceLocator();
-		}
-		/// <summary>
 		/// Проверяет корректность метода добавления нового петуха пользователя.
 		/// </summary>
 		[Test]
@@ -33,7 +25,7 @@ namespace Nortis.BattleRoostersOnlineTests
 			string token = await authenticateService.RegisterAsync("Login1", "Password", callbackAuth.Object);
 			await editor.AddAsync(token, new RoosterDto());
 
-			Assert.AreEqual(ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Count, 1);
+			Assert.AreEqual(ServiceLocator.Current.GetInstance<DataStorageServiceData>().RoostersData.Count, 1);
 		}
 		/// <summary>
 		/// Проверяет метод на предмет выброса исключений.
@@ -53,7 +45,7 @@ namespace Nortis.BattleRoostersOnlineTests
 
 			await editor.AddAsync("SomeToken", rooster);
 
-			Assert.IsTrue(ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.ElementAt(0).Value[0].Equals(rooster));
+			Assert.IsTrue(ServiceLocator.Current.GetInstance<DataStorageServiceData>().RoostersData.ElementAt(0).Value[0].Equals(rooster));
 		}
 		
 		/// <summary>
@@ -84,7 +76,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[TestCase("NotFoundToken", 0)]
 		public async Task EditTest(string token, int val)
 		{
-			ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Add("FoundToken", new List<RoosterDto>
+			ServiceLocator.Current.GetInstance<DataStorageServiceData>().RoostersData.Add("FoundToken", new List<RoosterDto>
 			{
 				new RoosterDto()
 			});
@@ -101,7 +93,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[TestCase("NotFoundToken", 1000)]
 		public async Task RemoveTest(string token, int val)
 		{
-			ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Add("FoundToken", new List<RoosterDto>
+			ServiceLocator.Current.GetInstance<DataStorageServiceData>().RoostersData.Add("FoundToken", new List<RoosterDto>
 			{
 				new RoosterDto()
 			});

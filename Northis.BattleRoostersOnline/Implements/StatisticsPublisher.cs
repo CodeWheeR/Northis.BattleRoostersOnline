@@ -39,9 +39,9 @@ namespace Northis.BattleRoostersOnline.Implements
 			await Task.Run(() =>
 			{
 				var stats = new List<StatisticsDto>();
-				lock (Storage.RoostersData)
+				lock (StorageService.RoostersData)
 				{
-					foreach (var usersRoosters in Storage.RoostersData)
+					foreach (var usersRoosters in StorageService.RoostersData)
 					{
 						var rooster = usersRoosters.Value.First(r => r.WinStreak == usersRoosters.Value.Max(m => m.WinStreak));
 						stats.Add(new StatisticsDto()
@@ -185,9 +185,9 @@ namespace Northis.BattleRoostersOnline.Implements
 				_subscribers.Remove(token);
 			}
 
-			if (Storage.LoggedUsers.ContainsKey(token))
+			if (StorageService.LoggedUsers.ContainsKey(token))
 			{
-				Storage.LoggedUsers.Remove(token);
+				StorageService.LoggedUsers.Remove(token);
 			}
 		}
 		#endregion

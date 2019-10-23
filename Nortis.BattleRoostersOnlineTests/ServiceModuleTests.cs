@@ -1,4 +1,5 @@
-﻿using CommonServiceLocator;
+﻿using System;
+using CommonServiceLocator;
 using Moq;
 using Northis.BattleRoostersOnline.Contracts;
 using Northis.BattleRoostersOnline.DataStorages;
@@ -16,7 +17,6 @@ namespace Nortis.BattleRoostersOnlineTests
 	public class ServiceModuleTests
 	{
 		#region Fields
-		#region Protected
 		/// <summary>
 		/// Сервис редактирования.
 		/// </summary>
@@ -38,9 +38,22 @@ namespace Nortis.BattleRoostersOnlineTests
 		/// </summary>
 		protected Mock<IBattleServiceCallback> callbackBattle = new Mock<IBattleServiceCallback>();
 		#endregion
-		#endregion
 
 		#region Methods
+
+		protected IDataStorageService Storage
+		{
+			get
+			{
+				if (ServiceLocator.IsLocationProviderSet)
+				{
+					return ServiceLocator.Current.GetInstance<IDataStorageService>();
+				}
+
+				throw new NullReferenceException("StorageService is null");
+			}
+		}
+
 		#region Protected
 		/// <summary>
 		/// Устанавливает тестовое окружение.
@@ -52,15 +65,15 @@ namespace Nortis.BattleRoostersOnlineTests
 			{
 				UnityContainer container = new UnityContainer();
 
-				container.RegisterType<IServicesStorage, ServicesStorage>();
-				container.RegisterInstance(new ServicesStorage());
+				container.RegisterType<IDataStorageService, DataStorageServiceData>();
+				container.RegisterInstance(new DataStorageServiceData());
 
 				UnityServiceLocator locator = new UnityServiceLocator(container);
 				ServiceLocator.SetLocatorProvider(() => locator);
 			}
 			else
 			{
-				var storage = ServiceLocator.Current.GetInstance<IServicesStorage>();
+				var storage = ServiceLocator.Current.GetInstance<IDataStorageService>();
 				storage.LoggedUsers.Clear();
 				storage.RoostersData.Clear();
 				storage.Sessions.Clear();

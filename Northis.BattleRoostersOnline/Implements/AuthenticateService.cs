@@ -18,19 +18,6 @@ namespace Northis.BattleRoostersOnline.Implements
 	/// <seealso cref="Northis.BattleRoostersOnline.Contracts.IAuthenticateService" />
 	public class AuthenticateService : BaseServiceWithStorage, IAuthenticateService
 	{
-		#region .ctor
-		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="AuthenticateService" /> класса.
-		/// </summary>
-		public AuthenticateService()
-		{
-			if (Storage.UserData.Count == 0)
-			{
-				Storage.LoadUserData();
-			}
-		}
-		#endregion
-
 		#region Public Methods
 
 		/// <summary>
@@ -61,12 +48,12 @@ namespace Northis.BattleRoostersOnline.Implements
 				password = await EncryptAsync(password);
 
 
-			if (!Storage.UserData.ContainsKey(login) || Storage.UserData[login] != password)
+			if (!StorageService.UserData.ContainsKey(login) || StorageService.UserData[login] != password)
 			{
 				return AuthenticateStatus.WrongLoginOrPassword.ToString();
 			}
 
-			if (Storage.LoggedUsers.ContainsValue(login))
+			if (StorageService.LoggedUsers.ContainsValue(login))
 			{
 				return AuthenticateStatus.AlreadyLoggedIn.ToString();
 			}
@@ -74,14 +61,13 @@ namespace Northis.BattleRoostersOnline.Implements
 			token = await GenerateTokenAsync();
 			await Task.Run(() =>
 			{
-				lock (Storage.UserData)
+				lock (StorageService.UserData)
 				{
-					Storage.LoggedUsers.Add(token, login);
+					StorageService.LoggedUsers.Add(token, login);
 				}
 			});
 
-			(await StatisticsPublisher.GetInstanceAsync())
-							   .Subscribe(token, callback);
+			StatisticsPublisher.GetInstance().Subscribe(token, callback);
 			return token;
 		}
 
@@ -103,7 +89,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				return AuthenticateStatus.WrongDataFormat.ToString();
 			}
 
-			if (Storage.UserData.ContainsKey(login))
+			if (StorageService.UserData.ContainsKey(login))
 			{
 				return AuthenticateStatus.AlreadyRegistered.ToString();
 			}
@@ -112,13 +98,13 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			await Task.Run(() =>
 			{
-				lock (Storage.UserData)
+				lock (StorageService.UserData)
 				{
-					Storage.UserData.Add(login, encryptedPassword);
+					StorageService.UserData.Add(login, encryptedPassword);
 				}
 			});
 #pragma warning disable 4014
-			Storage.SaveUserDataAsync();
+			StorageService.SaveUserDataAsync();
 #pragma warning restore 4014
 			return await LogInAsync(login, encryptedPassword, callback, true);
 		}
@@ -132,16 +118,16 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </returns>
 		public async Task<bool> LogOutAsync(string token)
 		{
-			if (!Storage.LoggedUsers.ContainsKey(token))
+			if (!StorageService.LoggedUsers.ContainsKey(token))
 			{
 				return false;
 			}
 
 			await Task.Run(() =>
 			{
-				lock (Storage.UserData)
+				lock (StorageService.UserData)
 				{
-					Storage.LoggedUsers.Remove(token);
+					StorageService.LoggedUsers.Remove(token);
 				}
 			});
 
@@ -204,6 +190,5 @@ namespace Northis.BattleRoostersOnline.Implements
 																					   .GetGlobalStatistics());
 		}
 		#endregion
-
 	}
 }

@@ -8,7 +8,7 @@ using Northis.BattleRoostersOnline.Models;
 
 namespace Northis.BattleRoostersOnline.DataStorages
 {
-	public interface IServicesStorage
+	public interface IDataStorageService
 	{
 		/// <summary>
 		/// Возвращает или задает данные пользователя.

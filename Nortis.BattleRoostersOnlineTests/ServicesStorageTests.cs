@@ -11,26 +11,17 @@ using Unity.ServiceLocation;
 namespace Nortis.BattleRoostersOnlineTests
 {
 	[TestFixture]
-	public class ServvicesStorageTests
+	public class ServicesStorageTests : ServiceModuleTests
 	{
-		private ServicesStorage _servicesStorage = new ServicesStorage();
+		private DataStorageServiceData _dataStorageServiceData = new DataStorageServiceData();
 
-		[SetUp]
-		public void Setup()
-		{
-			UnityContainer container = new UnityContainer();
-			container.RegisterInstance(new ServicesStorage());
-
-			UnityServiceLocator locator = new UnityServiceLocator(container);
-			ServiceLocator.SetLocatorProvider(() => locator);
-		}
 		/// <summary>
 		/// Проверяет метод загрузки петухов на предмет исключительных ситуаций.
 		/// </summary>
 		[Test]
 		public void LoadTest1()
 		{
-			Assert.DoesNotThrow(() => _servicesStorage.LoadRoosters());
+			Assert.DoesNotThrow(() => _dataStorageServiceData.LoadRoosters());
 
 		}
 		/// <summary>
@@ -39,19 +30,19 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LoadTest2()
 		{
-			ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Add("SomeKey", new List<RoosterDto>
+			var backupRoosters = Storage.RoostersData.Count;
+			Storage.RoostersData.Add("SomeKey", new List<RoosterDto>
 			{
 				new RoosterDto(),
 				new RoosterDto(),
 				new RoosterDto()
 			});
-			Task.WaitAll(_servicesStorage.SaveRoostersAsync());
-			_servicesStorage.LoadRoosters();
 
-			
+			await _dataStorageServiceData.SaveRoostersAsync();
+			_dataStorageServiceData.LoadRoosters();
 
-			Assert.AreEqual(ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Count, 1);
-			Assert.AreEqual(ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.ElementAt(0).Value.Count, 3);
+			Assert.AreEqual(Storage.RoostersData.Count, backupRoosters + 1);
+			Assert.AreEqual(Storage.RoostersData["SomeKey"].Count, 3);
 		}
 		/// <summary>
 		/// Проверяет корректность метода сохранения петухов на предмет исключительных ситуаций.
@@ -59,7 +50,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task SaveTest1()
 		{
-			Assert.DoesNotThrowAsync(() => _servicesStorage.SaveRoostersAsync());
+			Assert.DoesNotThrowAsync(() => _dataStorageServiceData.SaveRoostersAsync());
 		}
 		/// <summary>
 		/// Проверяет корректность метода сохранения петухов.
@@ -69,15 +60,14 @@ namespace Nortis.BattleRoostersOnlineTests
 		{
 			string token = "First";
 			RoosterDto rooster = new RoosterDto();
-			ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.Add(token, new List<RoosterDto> { rooster });
+			Storage.RoostersData.Add(token, new List<RoosterDto> { rooster });
 
-			await _servicesStorage.SaveRoostersAsync();
-			_servicesStorage.LoadRoosters();
+			await _dataStorageServiceData.SaveRoostersAsync();
+			_dataStorageServiceData.LoadRoosters();
 
 
-			Assert.AreEqual(token, ServiceLocator.Current.GetInstance<ServicesStorage>().RoostersData.ElementAt(0).Key);
-			Assert.IsTrue(ServiceLocator.Current.GetInstance<ServicesStorage>()
-										.RoostersData.ElementAt(0)
+			Assert.AreEqual(token, Storage.RoostersData.ElementAt(0).Key);
+			Assert.IsTrue(Storage.RoostersData.ElementAt(0)
 										.Value.ElementAt(0)
 										.Equals(rooster));
 		}
@@ -87,7 +77,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task SaveUsersTest1()
 		{
-			Assert.DoesNotThrowAsync(() => _servicesStorage.SaveUserDataAsync());
+			Assert.DoesNotThrowAsync(() => _dataStorageServiceData.SaveUserDataAsync());
 		}
 		/// <summary>
 		/// Проверяет корректность работы метода загрузки данных пользователя.
@@ -95,7 +85,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LoadUsersTest1()
 		{
-			Assert.DoesNotThrow(() => _servicesStorage.LoadUserData());
+			Assert.DoesNotThrow(() => _dataStorageServiceData.LoadUserData());
 		}
 	}
 }

@@ -16,21 +16,27 @@ namespace Northis.BattleRoostersOnline.Models
 	/// Класс, инкапсулирующий в себе данные о пользователях, петухах, авторизированных пользователях, игровых сессиях.
 	/// </summary>
 	[Serializable]
-	public class ServicesStorage : IServicesStorage
+	public class DataStorageServiceData : IDataStorageService
 	{
+		#region Fields
 		/// <summary>
 		/// Бинарный сериализатор
 		/// </summary>
 		private readonly BinaryFormatter _formatter = new BinaryFormatter();
-
+		/// <summary>
+		/// Токен отмены операции мониторинга подключений.
+		/// </summary>
 		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
 
-
+		private object _RoostersFileLocker = new object();
+		private object _UsersFileLocker = new object();
+		#endregion
+		
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="ServicesStorage" /> класса.
+		/// Инициализирует новый экземпляр <see cref="DataStorageServiceData" /> класса.
 		/// </summary>
-		public ServicesStorage()
+		public DataStorageServiceData()
 		{
 			UserData = new Dictionary<string, string>();
 			RoostersData = new Dictionary<string, List<RoosterDto>>();
@@ -39,9 +45,7 @@ namespace Northis.BattleRoostersOnline.Models
 			Task.Run(() => InitContent());
 		}
 		#endregion
-
 		
-
 		#region Properties
 		/// <summary>
 		/// Возвращает или задает данные пользователя.
@@ -88,8 +92,7 @@ namespace Northis.BattleRoostersOnline.Models
 			get;
 		}
 		#endregion
-
-
+		
 		#region Private Methods
 		private async Task MonitorConnections()
 		{
@@ -142,9 +145,12 @@ namespace Northis.BattleRoostersOnline.Models
 					Directory.CreateDirectory("Resources");
 				}
 
-				using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.OpenOrCreate))
+				lock (_RoostersFileLocker)
 				{
-					serializer.WriteObject(fileStream, roosters);
+					using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.OpenOrCreate))
+					{
+						serializer.WriteObject(fileStream, roosters);
+					}
 				}
 			});
 		}
@@ -160,23 +166,27 @@ namespace Northis.BattleRoostersOnline.Models
 
 			if (File.Exists("Resources\\RoostersStorage.xml"))
 			{
-				using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.Open))
+				lock (_RoostersFileLocker)
+				{
+					using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.Open))
+					{
+						userRoosters = (List<UserRoosters>)serializer.ReadObject(fileStream);
+					}
+				}
+
+				lock (RoostersData)
 				{
 					RoostersData.Clear();
 
-					userRoosters = (List<UserRoosters>)serializer.ReadObject(fileStream);
-
-					lock (RoostersData)
+					for (var i = 0; i < userRoosters.Count; i++)
 					{
-						for (var i = 0; i < userRoosters.Count; i++)
-						{
-							RoostersData.Add(userRoosters[i]
-												 .Login,
-											 userRoosters[i]
-												 .Roosters.ToList());
-						}
+						RoostersData.Add(userRoosters[i]
+											 .Login,
+										 userRoosters[i]
+											 .Roosters.ToList());
 					}
 				}
+				
 			}
 
 		}
@@ -193,9 +203,12 @@ namespace Northis.BattleRoostersOnline.Models
 					Directory.CreateDirectory("Resources");
 				}
 
-				using (var fs = new FileStream("Resources\\users.dat", FileMode.OpenOrCreate))
+				lock (_UsersFileLocker)
 				{
-					_formatter.Serialize(fs, UserData);
+					using (var fs = new FileStream("Resources\\users.dat", FileMode.OpenOrCreate))
+					{
+						_formatter.Serialize(fs, UserData);
+					}
 				}
 			});
 		}
@@ -207,9 +220,12 @@ namespace Northis.BattleRoostersOnline.Models
 		{
 			if (File.Exists("Resources\\users.dat"))
 			{
-				using (var fs = new FileStream("Resources\\users.dat", FileMode.Open))
+				lock (_UsersFileLocker)
 				{
-					UserData = (Dictionary<string, string>)_formatter.Deserialize(fs);
+					using (var fs = new FileStream("Resources\\users.dat", FileMode.Open))
+					{
+						UserData = (Dictionary<string, string>)_formatter.Deserialize(fs);
+					}
 				}
 			}
 		}

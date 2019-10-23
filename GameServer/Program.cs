@@ -25,7 +25,7 @@ namespace GameServer
 			{
 				var authBinding = new WSDualHttpBinding()
 				{
-					SendTimeout = new TimeSpan(0, 0, 0, 3)
+					SendTimeout = new TimeSpan(0, 0, 0, 5)
 				};
 
 				var battleBinding = new WSDualHttpBinding()
