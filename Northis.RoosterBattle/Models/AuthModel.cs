@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
-using Catel.Data;
-using Catel.MVVM;
-using Northis.RoosterBattle.GameServer;
+﻿using Catel.Data;
 
 namespace Northis.RoosterBattle.Models
 {
@@ -10,9 +6,8 @@ namespace Northis.RoosterBattle.Models
 	/// Модель пользовательских данных для авторизации
 	/// </summary>
 	/// <seealso cref="Catel.Data.ValidatableModelBase" />
-	class AuthModel : ValidatableModelBase
+	internal class AuthModel : ValidatableModelBase
 	{
-
 		#region Static		
 		/// <summary>
 		/// Зарегистрированное свойство "Логин" пользователя.

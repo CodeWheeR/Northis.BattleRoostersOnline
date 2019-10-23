@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,31 +7,65 @@ using System.Windows.Input;
 using Catel.Data;
 using Catel.MVVM;
 using Catel.Services;
-using Northis.RoosterBattle.Models;
 using Northis.RoosterBattle.GameServer;
+using Northis.RoosterBattle.Models;
 
 namespace Northis.RoosterBattle.ViewModels
 {
-	class AuthViewModel : ViewModelBase
+	internal class AuthViewModel : ViewModelBase
 	{
+		#region Fields
+		#region Static		
+		/// <summary>
+		/// Зарегистрированное свойство "Модель аутентификации".
+		/// </summary>
 		public static readonly PropertyData AuthModelProperty = RegisterProperty(nameof(AuthModel), typeof(AuthModel));
-
+		/// <summary>
+		/// Зарегистрированное свойство "Логин"
+		/// </summary>
 		public static readonly PropertyData LoginProperty = RegisterProperty(nameof(Login), typeof(string));
+		#endregion
 
-		private AuthenticateServiceClient _authenticateServiceClient = new AuthenticateServiceClient();
+		private readonly AuthenticateServiceClient _authenticateServiceClient;
 
 		private IUIVisualizerService _uiVisualizerService;
 
-
-
-		public AuthViewModel(IUIVisualizerService uiVisualizerService)
+		private readonly Dictionary<AuthenticateStatus, string> _authMessages = new Dictionary<AuthenticateStatus, string>
 		{
+			{
+				AuthenticateStatus.AlreadyLoggedIn, "Данный пользователь уже находится в системе"
+			},
+			{
+				AuthenticateStatus.AlreadyRegistered, "Данный пользователь уже зарегистрирован"
+			},
+			{
+				AuthenticateStatus.WrongDataFormat, "Логин и пароль должны быть не короче 5 символов"
+			},
+			{
+				AuthenticateStatus.WrongLoginOrPassword, "Неправильный логин или пароль"
+			}
+		};
+		#endregion
+
+		#region .ctor		
+		/// <summary>
+		/// Инициализует новый объект класса <see cref="AuthViewModel" />.
+		/// </summary>
+		/// <param name="uiVisualizerService">The UI visualizer service.</param>
+		/// <param name="authService">Объект подключения к серверу по каналу авторизации.</param>
+		public AuthViewModel(IUIVisualizerService uiVisualizerService, AuthenticateServiceClient authService)
+		{
+			_authenticateServiceClient = authService;
 			_uiVisualizerService = uiVisualizerService;
-			AuthCommand = new TaskCommand<PasswordBox>(((passwordBox) => AuthenticateAsync(_authenticateServiceClient.LogInAsync, passwordBox)));
-			RegCommand = new TaskCommand<PasswordBox>(((passwordBox) => AuthenticateAsync(_authenticateServiceClient.RegisterAsync, passwordBox)));
+			AuthCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.LogInAsync, passwordBox));
+			RegCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.RegisterAsync, passwordBox));
 		}
+		#endregion
 
-
+		#region Properties		
+		/// <summary>
+		/// Возвращает или устанавливает модель авторизации.
+		/// </summary>
 		[Model]
 		public AuthModel AuthModel
 		{
@@ -38,6 +73,9 @@ namespace Northis.RoosterBattle.ViewModels
 			set => SetValue(AuthModelProperty, value);
 		}
 
+		/// <summary>
+		/// Возвращает или устанавливает логин пользователя.
+		/// </summary>
 		[ViewModelToModel(nameof(AuthModel))]
 		public string Login
 		{
@@ -45,25 +83,39 @@ namespace Northis.RoosterBattle.ViewModels
 			set => SetValue(LoginProperty, value);
 		}
 
+		/// <summary>
+		/// Возвращает команду для авторизации.
+		/// </summary>
 		public ICommand AuthCommand
 		{
 			get;
 		}
 
+		/// <summary>
+		/// Возвращает команду для регистрации.
+		/// </summary>
 		public ICommand RegCommand
 		{
 			get;
 		}
+		#endregion
 
+		#region Private Methods		
+		/// <summary>
+		/// Выполняет переданный способ аутентификации на сервере.
+		/// </summary>
+		/// <param name="authMethod">The authentication method.</param>
+		/// <param name="passwordBox">The password box.</param>
 		private async Task AuthenticateAsync(Func<string, string, Task<string>> authMethod, PasswordBox passwordBox)
 		{
-			string password = passwordBox.Password;
-			if (String.IsNullOrWhiteSpace(Login) || String.IsNullOrWhiteSpace(password))
+			var password = passwordBox.Password;
+			if (string.IsNullOrWhiteSpace(Login) || string.IsNullOrWhiteSpace(password))
 			{
 				MessageBox.Show("Поля логина и пароля не могут быть пустыми");
 				return;
 			}
-			string token = await authMethod(Login, password);
+
+			var token = await authMethod(Login, password);
 
 			AuthenticateStatus result;
 
@@ -74,8 +126,16 @@ namespace Northis.RoosterBattle.ViewModels
 			}
 			else
 			{
-				MessageBox.Show(token);
+				if (_authMessages.ContainsKey(result))
+				{
+					MessageBox.Show(_authMessages[result]);
+				}
+				else
+				{
+					MessageBox.Show(token);
+				}
 			}
 		}
+		#endregion
 	}
 }

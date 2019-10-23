@@ -8,15 +8,8 @@ namespace DataTransferObjects
 	/// </summary>
 	[DataContract]
 	public class RoosterDto
-    {
+	{
 		#region .ctor
-		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="RoosterDto"/> класса.
-		/// </summary>
-		public RoosterDto()
-		{
-
-		}
 		#endregion
 
 		#region Properties
@@ -32,6 +25,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает рост петуха.
 		/// </summary>
@@ -44,6 +38,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Врзвращает или задает здоровье петуха.
 		/// </summary>
@@ -56,6 +51,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает выносливость петуха.
 		/// </summary>
@@ -68,6 +64,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает цвет петуха.
 		/// </summary>
@@ -80,6 +77,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает уклонение петуха.
 		/// </summary>
@@ -92,6 +90,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает размер гребня петуха.
 		/// </summary>
@@ -104,6 +103,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает плотность петуха.
 		/// </summary>
@@ -116,6 +116,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает удачу петуха.
 		/// </summary>
@@ -128,6 +129,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает имя петуха.
 		/// </summary>
@@ -140,6 +142,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает серию побед петуха.
 		/// </summary>
@@ -152,6 +155,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает силу удара петуха.
 		/// </summary>
@@ -164,6 +168,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает урон петуха.
 		/// </summary>
@@ -176,6 +181,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает максимальное здоровье петуха.
 		/// </summary>

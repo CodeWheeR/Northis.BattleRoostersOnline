@@ -1,6 +1,4 @@
-﻿
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Northis.RoosterBattle.Properties;
 
 namespace Northis.RoosterBattle.Models
@@ -8,7 +6,7 @@ namespace Northis.RoosterBattle.Models
 	/// <summary>
 	/// Окрасы петуха, от которых зависят применяемые модификации.
 	/// </summary>
-	enum RoosterColor
+	internal enum RoosterColor
 	{
 		/// <summary>
 		/// Петух получает +20 к максимальной удаче.

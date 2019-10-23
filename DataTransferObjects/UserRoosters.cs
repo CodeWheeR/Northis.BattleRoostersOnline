@@ -22,6 +22,7 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает петухов клиента.
 		/// </summary>
@@ -38,7 +39,7 @@ namespace DataTransferObjects
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый объект <see cref="UserRoosters"/> структуры.
+		/// Инициализирует новый объект <see cref="UserRoosters" /> структуры.
 		/// </summary>
 		/// <param name="roosterDictionary">The rooster dictionary.</param>
 		public UserRoosters(string login, List<RoosterDto> roosters)
@@ -49,7 +50,6 @@ namespace DataTransferObjects
 
 		public UserRoosters()
 		{
-			
 		}
 		#endregion
 	}

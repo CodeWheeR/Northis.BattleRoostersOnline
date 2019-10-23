@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 using DataTransferObjects;
 using Northis.BattleRoostersOnline.Contracts;
@@ -17,28 +19,28 @@ namespace Northis.BattleRoostersOnline.Implements
 	{
 		#region Fields
 		#region Private
-		/// <summary>
-		/// Бинарный сериализатор
-		/// </summary>
-		private readonly BinaryFormatter _formatter = new BinaryFormatter();
+
+		private Thread _connectionMonitor;
+
 		#endregion
 		#endregion
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="AuthenticateService"/> класса.
+		/// Инициализирует новый экземпляр <see cref="AuthenticateService" /> класса.
 		/// </summary>
 		public AuthenticateService()
 		{
 			if (Storage.UserData.Count == 0)
 			{
-				LoadUserData();
+				Storage.LoadUserData();
 			}
 		}
 		#endregion
 
 		#region Methods
 		#region Public
+
 		/// <summary>
 		/// Осуществляет вход пользователя в систему.
 		/// </summary>
@@ -47,9 +49,26 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> LogIn(string login, string password)
+		public async Task<string> LogInAsync(string login, string password) => await LogInAsync(login, password, false);
+
+		/// <summary>
+		/// Осуществляет вход пользователя в систему.
+		/// </summary>
+		/// <param name="login">Логин.</param>
+		/// <param name="password">Пароль.</param>
+		/// <returns>
+		/// Токен.
+		/// </returns>
+		public async Task<string> LogInAsync(string login, string password, bool isEncrypted = false)
 		{
-			if (!Storage.UserData.ContainsKey(login) || Storage.UserData[login] != Encrypt(password))
+			string token;
+			var callback = OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>();
+
+			if (!isEncrypted)
+				password = await EncryptAsync(password);
+
+
+			if (!Storage.UserData.ContainsKey(login) || Storage.UserData[login] != password)
 			{
 				return AuthenticateStatus.WrongLoginOrPassword.ToString();
 			}
@@ -59,10 +78,20 @@ namespace Northis.BattleRoostersOnline.Implements
 				return AuthenticateStatus.AlreadyLoggedIn.ToString();
 			}
 
-			var token = await GenerateTokenAsync();
-			Storage.LoggedUsers.Add(token, login);
+			token = await GenerateTokenAsync();
+			await Task.Run(() =>
+			{
+				lock (Storage.UserData)
+				{
+					Storage.LoggedUsers.Add(token, login);
+				}
+			});
+
+			(await StatisticsPublisher.GetInstanceAsync())
+							   .Subscribe(token, callback);
 			return token;
 		}
+
 		/// <summary>
 		/// Регистрирует нового пользователя.
 		/// </summary>
@@ -71,7 +100,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> Register(string login, string password)
+		public async Task<string> RegisterAsync(string login, string password)
 		{
 			if (IsNullOrWhiteSpace(login) || login.Length < 5  || IsNullOrWhiteSpace(password) || password.Length < 5 || login.Contains(" "))
 			{
@@ -82,11 +111,22 @@ namespace Northis.BattleRoostersOnline.Implements
 			{
 				return AuthenticateStatus.AlreadyRegistered.ToString();
 			}
-			
-			Storage.UserData.Add(login, Encrypt(password));
-			SaveUserDataAsync();
-			return await LogIn(login, password);
+
+			var encryptedPassword = await EncryptAsync(password);
+
+			await Task.Run(() =>
+			{
+				lock (Storage.UserData)
+				{
+					Storage.UserData.Add(login, encryptedPassword);
+				}
+			});
+#pragma warning disable 4014
+			Storage.SaveUserDataAsync();
+#pragma warning restore 4014
+			return await LogInAsync(login, encryptedPassword, true);
 		}
+
 		/// <summary>
 		/// Осуществляет выход пользователя из системы.
 		/// </summary>
@@ -94,16 +134,27 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// true - в случае успешного выхода, иначе - false.
 		/// </returns>
-		public async Task<bool> LogOut(string token)
+		public async Task<bool> LogOutAsync(string token)
 		{
 			if (!Storage.LoggedUsers.ContainsKey(token))
 			{
 				return false;
 			}
 
-			await Task.Run(() => Storage.LoggedUsers.Remove(token));
+			await Task.Run(() =>
+			{
+				lock (Storage.UserData)
+				{
+					Storage.LoggedUsers.Remove(token);
+				}
+			});
+
+			await Task.Run(async () => (await StatisticsPublisher.GetInstanceAsync())
+													.Unsubscribe(token));
+
 			return true;
 		}
+
 		/// <summary>
 		/// Возвращает статус авторизации пользователя.
 		/// </summary>
@@ -111,20 +162,26 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// AuthenticateStatus.
 		/// </returns>
 		public AuthenticateStatus GetLoginStatus() => AuthenticateStatus.OK;
+
 		/// <summary>
 		/// Зашифровывает исходную строку.
 		/// </summary>
 		/// <param name="sourceString">исходная строка.</param>
 		/// <returns>Зашифрованная строка.</returns>
-		public string Encrypt(string sourceString)
+		public async Task<string> EncryptAsync(string sourceString)
 		{
-			var result = "";
-			for (var i = 0; i < sourceString.Length; i++)
+			return await Task.Run<string>(() =>
 			{
-				result += (char) (sourceString[i] * (i / 2 + 2));
-			}
-			return result;
+				var result = "";
+				for (var i = 0; i < sourceString.Length; i++)
+				{
+					result += (char)(sourceString[i] * (i / 2 + 2));
+				}
+
+				return result;
+			});
 		}
+
 		/// <summary>
 		/// Расшифровывает поступившую зашифрованную строку.
 		/// </summary>
@@ -140,35 +197,15 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			return result;
 		}
+		
 		/// <summary>
-		/// Асинхронно сохраняет данные пользователя.
+		/// Асинхронно собирает глобальную статистику по пользователям.
 		/// </summary>
-		public async Task SaveUserDataAsync()
+		/// <returns></returns>
+		public async Task<IEnumerable<StatisticsDto>> GetGlobalStatisticsAsync()
 		{
-			await Task.Run(() =>
-			{
-				if (!Directory.Exists("Resources"))
-				{
-					Directory.CreateDirectory("Resources");
-				}
-				using (var fs = new FileStream("Resources\\users.dat", FileMode.OpenOrCreate))
-				{
-					_formatter.Serialize(fs, Storage.UserData);
-				}
-			});
-		}
-		/// <summary>
-		/// Загружает данные пользователя.
-		/// </summary>
-		public void LoadUserData()
-		{
-			if (File.Exists("Resources\\users.dat"))
-			{
-				using (var fs = new FileStream("Resources\\users.dat", FileMode.Open))
-				{
-					Storage.UserData = (Dictionary<string, string>)_formatter.Deserialize(fs);
-				}
-			}
+			return await Task.Run<IEnumerable<StatisticsDto>>(async () => (await StatisticsPublisher.GetInstanceAsync())
+																					   .GetGlobalStatistics());
 		}
 		#endregion
 		#endregion

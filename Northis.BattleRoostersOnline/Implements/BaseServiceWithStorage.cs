@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using CommonServiceLocator;
+using DataTransferObjects;
 using Northis.BattleRoostersOnline.Models;
 using Unity;
 using Unity.ServiceLocation;
@@ -8,16 +14,19 @@ using Unity.ServiceLocation;
 namespace Northis.BattleRoostersOnline.Implements
 {
 	/// <summary>
-	/// Абстрактный базовый класс реализаций контрактов сервиса. Инкапсулирует в себе свойство хранилища основных данных типа ServiceStorage. 
+	/// Абстрактный базовый класс реализаций контрактов сервиса. Инкапсулирует в себе свойство хранилища основных данных типа
+	/// ServiceStorage.
 	/// </summary>
 	public abstract class BaseServiceWithStorage
 	{
 		#region Fields
+
 		#region Private
 		/// <summary>
 		/// Генератор рандомных значений.
 		/// </summary>
 		private readonly Random _rand = new Random();
+
 		#endregion
 		#endregion
 
@@ -47,7 +56,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="BaseServiceWithStorage"/> класса.
+		/// Инициализирует новый экземпляр <see cref="BaseServiceWithStorage" /> класса.
 		/// </summary>
 		protected BaseServiceWithStorage()
 		{
@@ -79,6 +88,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 				return "";
 			});
+
 		/// <summary>
 		/// Генерирует токен.
 		/// </summary>
@@ -95,6 +105,7 @@ namespace Northis.BattleRoostersOnline.Implements
 
 			return answer;
 		}
+
 		/// <summary>
 		/// Асинхронно генерирует токен.
 		/// </summary>
@@ -104,6 +115,40 @@ namespace Northis.BattleRoostersOnline.Implements
 			return Task.Run(() => GenerateToken());
 		}
 		#endregion
+
+
+		///// <summary>
+		///// Асинхронно сохраняет петухов.
+		///// </summary>
+		//public async Task SaveRoostersAsync()
+		//{
+		//	await Storage.SaveRoostersAsync();
+		//}
+
+
+		///// <summary>
+		///// Загружает петухов.
+		///// </summary>
+		//public void LoadRoosters()
+		//{
+		//	Storage.LoadRoosters();
+		//}
+
+		///// <summary>
+		///// Асинхронно сохраняет данные пользователя.
+		///// </summary>
+		//public async Task SaveUserDataAsync()
+		//{
+		//	await Storage.SaveUserDataAsync();
+		//}
+
+		///// <summary>
+		///// Загружает данные пользователя.
+		///// </summary>
+		//public void LoadUserData()
+		//{
+		//	Storage.LoadUserData();
+		//}
 		#endregion
 	}
 }

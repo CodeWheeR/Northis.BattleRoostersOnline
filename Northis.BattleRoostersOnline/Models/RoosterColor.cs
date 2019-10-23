@@ -1,10 +1,9 @@
-﻿
-namespace Northis.BattleRoostersOnline.Models
+﻿namespace Northis.BattleRoostersOnline.Models
 {
 	/// <summary>
 	/// Окрасы петуха, от которых зависят применяемые модификации.
 	/// </summary>
-	enum RoosterColor
+	internal enum RoosterColor
 	{
 		/// <summary>
 		/// Петух получает +20 к максимальной удаче.

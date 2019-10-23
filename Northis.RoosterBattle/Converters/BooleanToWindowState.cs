@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using Catel.MVVM.Converters;
 using Northis.RoosterBattle.Extensions;
 
@@ -9,7 +10,7 @@ namespace Northis.RoosterBattle.Converters
 	/// Конвертирует значение перечисления RoosterColor в путь к изображениям петухов.
 	/// </summary>
 	/// <seealso cref="Catel.MVVM.Converters.IValueConverter" />
-	public class EnumValueToDescription : IValueConverter
+	public class BooleanToWindowState : IValueConverter
 	{
 		/// <summary>
 		/// Конвертирует значение Enum, помеченного аттрибутом Display, в путь к картинке.
@@ -19,7 +20,7 @@ namespace Northis.RoosterBattle.Converters
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>
 		/// <returns>Строковый путь к изображению.</returns>
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => ((Enum) value).GetDisplayFromResource();
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => (value as bool? == true) ? WindowState.Normal : WindowState.Minimized;
 
 		/// <summary>
 		/// Метод не имеет реализации.

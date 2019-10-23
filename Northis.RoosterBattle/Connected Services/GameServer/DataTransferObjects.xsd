@@ -10,6 +10,20 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="AuthenticateStatus" nillable="true" type="tns:AuthenticateStatus" />
+  <xs:complexType name="ArrayOfStatisticsDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StatisticsDto" nillable="true" type="tns:StatisticsDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStatisticsDto" nillable="true" type="tns:ArrayOfStatisticsDto" />
+  <xs:complexType name="StatisticsDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RoosterName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WinStreak" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StatisticsDto" nillable="true" type="tns:StatisticsDto" />
   <xs:complexType name="RoosterDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="Brickness" type="xs:int" />

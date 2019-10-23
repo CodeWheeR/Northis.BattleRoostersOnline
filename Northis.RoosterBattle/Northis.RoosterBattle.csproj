@@ -117,18 +117,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Callbacks\AuthenticationServiceCallback.cs" />
     <Compile Include="Callbacks\BattleServiceCallback.cs" />
     <Compile Include="Connected Services\GameServer\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToWindowState.cs" />
     <Compile Include="Converters\EnumValueToDescription.cs" />
     <Compile Include="Converters\HealthValueToBool.cs" />
     <Compile Include="Converters\EnumValueToStringPath.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Models\AuthModel.cs" />
     <Compile Include="Models\RoosterSettings.cs" />
+    <Compile Include="Models\StatisticsModel.cs" />
     <Compile Include="Services\RoosterKeepService.cs" />
     <Compile Include="Validators\RoosterModelValidator.cs" />
     <Compile Include="ViewModels\AuthViewModel.cs" />

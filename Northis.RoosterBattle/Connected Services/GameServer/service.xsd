@@ -57,12 +57,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetNewGlobalStatistics">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="statistics" nillable="true" type="q2:ArrayOfStatisticsDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNewGlobalStatisticsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Edit">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="roosterID" type="xs:int" />
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="rooster" nillable="true" type="q2:RoosterDto" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="rooster" nillable="true" type="q3:RoosterDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -75,7 +87,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="rooster" nillable="true" type="q3:RoosterDto" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="rooster" nillable="true" type="q4:RoosterDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -107,7 +119,7 @@
   <xs:element name="GetUserRoostersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="GetUserRoostersResult" nillable="true" type="q4:ArrayOfRoosterDto" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="GetUserRoostersResult" nillable="true" type="q5:ArrayOfRoosterDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -115,7 +127,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="rooster" nillable="true" type="q5:RoosterDto" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="rooster" nillable="true" type="q6:RoosterDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -206,8 +218,8 @@
   <xs:element name="GetRoosterStatus">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="yourRooster" nillable="true" type="q6:RoosterDto" />
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="enemyRooster" nillable="true" type="q7:RoosterDto" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="yourRooster" nillable="true" type="q7:RoosterDto" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="enemyRooster" nillable="true" type="q8:RoosterDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
