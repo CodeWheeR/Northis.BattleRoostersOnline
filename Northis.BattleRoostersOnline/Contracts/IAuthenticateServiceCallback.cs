@@ -7,7 +7,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 	/// <summary>
 	/// Контракт сервиса, ответственного за оповещения.
 	/// </summary>
-	internal interface IAuthenticateServiceCallback
+	public interface IAuthenticateServiceCallback
 	{
 		/// <summary>
 		/// Контракт операции, ответственной за оповещение о начале матча.

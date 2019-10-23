@@ -28,13 +28,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		{
 			UnityContainer container = new UnityContainer();
 
-			container.RegisterInstance(new ServicesStorage
-			{
-				RoostersData = new Dictionary<string, List<RoosterDto>>(),
-				UserData = new Dictionary<string, string>(),
-				LoggedUsers = new Dictionary<string, string>(),
-				Sessions = new Dictionary<string, Session>()
-			});
+			container.RegisterInstance(new ServicesStorage());
 
 			UnityServiceLocator locator = new UnityServiceLocator(container);
 			ServiceLocator.SetLocatorProvider(() => locator);
@@ -144,7 +138,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task EncryptTest1()
 		{
-			Assert.IsNotNull(await _authenticateService.EncryptAsync("Text"));
+			Assert.IsNotNull(_authenticateService.EncryptAsync("Text"));
 		}
 		/// <summary>
 		/// Проверка корректность шифрования строки.
@@ -165,8 +159,8 @@ namespace Nortis.BattleRoostersOnlineTests
 
 
 			encryptText = await _authenticateService.EncryptAsync(sourceText);
-
 			Assert.AreEqual(sourceText, _authenticateService.Decrypt(encryptText));
 		}
+
 	}
 }

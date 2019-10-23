@@ -30,13 +30,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		{
 			UnityContainer container = new UnityContainer();
 
-			container.RegisterInstance(new ServicesStorage
-			{
-				RoostersData = new Dictionary<string, List<RoosterDto>>(),
-				UserData = new Dictionary<string, string>(),
-				LoggedUsers = new Dictionary<string, string>(),
-				Sessions = new Dictionary<string, Session>()
-			});
+			container.RegisterInstance(new ServicesStorage());
 
 			container.RegisterType<IBattleServiceCallback>();
 

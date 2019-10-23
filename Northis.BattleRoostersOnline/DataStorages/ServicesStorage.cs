@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using DataTransferObjects;
+using Northis.BattleRoostersOnline.DataStorages;
 
 namespace Northis.BattleRoostersOnline.Models
 {
@@ -13,7 +14,7 @@ namespace Northis.BattleRoostersOnline.Models
 	/// Класс, инкапсулирующий в себе данные о пользователях, петухах, авторизированных пользователях, игровых сессиях.
 	/// </summary>
 	[Serializable]
-	public class ServicesStorage
+	public class ServicesStorage : IServicesStorage
 	{
 
 		#region Fields
@@ -52,7 +53,7 @@ namespace Northis.BattleRoostersOnline.Models
 		public Dictionary<string, string> UserData
 		{
 			get;
-			set;
+			private set;
 		}
 
 		/// <summary>
@@ -64,7 +65,6 @@ namespace Northis.BattleRoostersOnline.Models
 		public Dictionary<string, List<RoosterDto>> RoostersData
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -76,7 +76,6 @@ namespace Northis.BattleRoostersOnline.Models
 		public Dictionary<string, string> LoggedUsers
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -88,7 +87,6 @@ namespace Northis.BattleRoostersOnline.Models
 		public Dictionary<string, Session> Sessions
 		{
 			get;
-			set;
 		}
 		#endregion
 
@@ -165,7 +163,7 @@ namespace Northis.BattleRoostersOnline.Models
 		}
 
 		/// <summary>
-		/// Асинхронно сохраняет данные пользователя.
+		/// Асинхронно сохраняет данные пользователей.
 		/// </summary>
 		public async Task SaveUserDataAsync()
 		{
@@ -184,7 +182,7 @@ namespace Northis.BattleRoostersOnline.Models
 		}
 
 		/// <summary>
-		/// Загружает данные пользователя.
+		/// Загружает данные пользователей.
 		/// </summary>
 		public void LoadUserData()
 		{
