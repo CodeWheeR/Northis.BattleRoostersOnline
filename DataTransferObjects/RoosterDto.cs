@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace DataTransferObjects
 {
@@ -193,6 +194,59 @@ namespace DataTransferObjects
 			get;
 			set;
 		}
+
+		public int CompareTo(object obj)
+		{
+			throw new NotImplementedException();
+		}
+		#endregion
+
+		#region Methods
+		#region Public
+		#region Overrided
+		/// <summary>
+		///  Определяет, равен ли заданный объект текущему объекту.
+		/// </summary>
+		/// <param name="obj">
+		///  Объект, который требуется сравнить с текущим объектом.
+		/// </param>
+		/// <returns>
+		///  Значение <see langword="true" />, если указанный объект равен текущему объекту; в противном случае — значение <see langword="false" />.
+		/// </returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is RoosterDto)
+			{
+				return Equals(obj as RoosterDto);
+			}
+			return base.Equals(obj);
+		}
+
+		/// <summary>
+		/// Определяет, равен ли заданный объект текущему объекту.
+		/// </summary>
+		/// <param name="obj">Объект для сравнения.</param>
+		/// <returns>true - если равен; иначе - false.</returns>
+		public bool Equals(RoosterDto obj)
+		{
+			return Brickness == obj.Brickness &&
+				   ColorDto == obj.ColorDto &&
+				   Crest == obj.Crest &&
+				   Damage == obj.Damage &&
+				   Health == obj.Health &&
+				   Height == obj.Height &&
+				   Hit == obj.Hit &&
+				   Luck == obj.Luck &&
+				   MaxHealth == obj.MaxHealth &&
+				   Name == obj.Name &&
+				   Stamina == obj.Stamina &&
+				   Thickness == obj.Thickness &&
+				   Weight == obj.Weight &&
+				   WinStreak == obj.WinStreak;
+		}
+		#endregion
+		#endregion
 		#endregion
 	}
+
 }
