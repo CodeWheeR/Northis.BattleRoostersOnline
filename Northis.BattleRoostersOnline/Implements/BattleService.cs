@@ -43,7 +43,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				Session session;
 				if (StorageService.Sessions.Count > 0 &&
 					!StorageService.Sessions.Last()
-							.Value.IsStarted)
+							.Value.IsReady)
 				{
 					session = StorageService.Sessions.Last()
 									 .Value;

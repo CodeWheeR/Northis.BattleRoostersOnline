@@ -21,163 +21,83 @@
 				<StackPanel.Resources>
 					<Style TargetType="StackPanel">
 						<Setter Property="Orientation" Value="Horizontal" />
-						<Setter Property="Margin" Value="0,0,10,0" />
+						<Setter Property="Margin" Value="0,0,10,10" />
 					</Style>
 					<Style TargetType="TextBlock">
 						<Setter Property="Padding" Value="10,0,0,0" />
 						<Setter Property="FontSize" Value="14" />
 						<Setter Property="Width" Value="140" />
 					</Style>
+					<Style TargetType="TextBox">
+						<Setter Property="Height" Value="23" />
+						<Setter Property="FontSize" Value="14" />
+						<Setter Property="Width" Value="120" />
+					</Style>
+					<Style TargetType="ComboBox">
+						<Setter Property="Height" Value="23" />
+						<Setter Property="FontSize" Value="14" />
+						<Setter Property="Width" Value="120" />
+					</Style>
 				</StackPanel.Resources>
 
-				<StackPanel
-					Width="476"
-					Margin="0,0,0,10"
-					Orientation="Horizontal">
+				<StackPanel>
 					<TextBlock
-						Width="140"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{x:Static res:Resources.RoosterName}"
-						TextWrapping="Wrap" />
-					<TextBox
-						Width="120"
-						Height="23"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{Binding Name}"
-						TextWrapping="Wrap" />
+						Text="{x:Static res:Resources.RoosterName}"/>
+					<TextBox 
+						Text="{Binding Name}"/>
 				</StackPanel>
 
-				<StackPanel
-					Width="476"
-					Margin="0,0,0,10"
-					Orientation="Horizontal">
+				<StackPanel>
 					<TextBlock
-						Width="140"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{x:Static res:Resources.Weight}"
-						TextWrapping="Wrap" />
+						Text="{x:Static res:Resources.Weight}"/>
 					<TextBox
-						Width="120"
-						Height="23"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{Binding Weight}"
-						TextWrapping="Wrap" />
-
+						Text="{Binding Weight}"/>
 				</StackPanel>
 
-				<StackPanel
-					Width="476"
-					Margin="0,0,0,10"
-					Orientation="Horizontal">
-
+				<StackPanel>
 					<TextBlock
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{x:Static res:Resources.Height}"
-						TextWrapping="Wrap" />
+						Text="{x:Static res:Resources.Height}"/>
 					<TextBox
-						Width="120"
-						Height="23"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{Binding Height}"
-						TextWrapping="Wrap" />
+						Text="{Binding Height}"/>
 				</StackPanel>
 
-				<StackPanel
-					Width="476"
-					Margin="0,0,0,10"
-					Orientation="Horizontal">
-
+				<StackPanel>
 					<TextBlock
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{x:Static res:Resources.Thickness}"
-						TextWrapping="Wrap" />
+						Text="{x:Static res:Resources.Thickness}"/>
 					<TextBox
-						Width="120"
-						Height="23"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{Binding Thickness}"
-						TextWrapping="Wrap" />
+						Text="{Binding Thickness}"/>
 				</StackPanel>
 
-				<StackPanel
-					Width="476"
-					Margin="0,0,0,10"
-					Orientation="Horizontal">
-
+				<StackPanel>
 					<TextBlock
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{x:Static res:Resources.Brickness}"
-						TextWrapping="Wrap" />
+						Text="{x:Static res:Resources.Brickness}"/>
 					<TextBox
-						Width="120"
-						Height="23"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{Binding Brickness}"
-						TextWrapping="Wrap" />
+						Text="{Binding Brickness}"/>
 				</StackPanel>
 
-				<StackPanel
-					Width="476"
-					Margin="0,0,0,10"
-					Orientation="Horizontal">
-
+				<StackPanel>
 					<TextBlock
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{x:Static res:Resources.Luck}"
-						TextWrapping="Wrap" />
+						Text="{x:Static res:Resources.Luck}"/>
 					<TextBox
-						Width="120"
-						Height="23"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{Binding Luck}"
-						TextWrapping="Wrap" />
+						Text="{Binding Luck}"/>
 				</StackPanel>
 
 
-				<StackPanel
-					Width="476"
-					Margin="0,0,0,10"
-					Orientation="Horizontal">
+				<StackPanel>
 					<TextBlock
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{x:Static res:Resources.Color}"
-						TextWrapping="Wrap" />
-					<ComboBox
-						Width="120"
-						Height="22"
-						HorizontalAlignment="Left"
+						Text="{x:Static res:Resources.Color}"/>
+					<ComboBox x:Name="ColorsBox"
 						ItemTemplate="{StaticResource EnumToDesctiptionItemTemplate}"
 						ItemsSource="{Binding ColorsArray}"
 						SelectedItem="{Binding Color}" />
 				</StackPanel>
-
-				<StackPanel
-					Width="476"
-					Margin="0,0,0,10"
-					Orientation="Horizontal">
-
+				<StackPanel>
+					<TextBlock Width="Auto" Text="{Binding ElementName=ColorsBox, Path=SelectedItem, Converter={StaticResource ColorToDescriptionConverter}}"></TextBlock>
+				</StackPanel>
+				<StackPanel>
 					<TextBlock
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Text="{x:Static res:Resources.CrestSize}"
-						TextWrapping="Wrap" />
+						Text="{x:Static res:Resources.CrestSize}"/>
 					<ComboBox
-						Width="120"
-						Height="22"
-						HorizontalAlignment="Left"
 						ItemTemplate="{StaticResource EnumToDesctiptionItemTemplate}"
 						ItemsSource="{Binding CrestsArray}"
 						SelectedItem="{Binding Crest}" />

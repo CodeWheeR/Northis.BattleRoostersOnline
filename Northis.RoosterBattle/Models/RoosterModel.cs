@@ -101,6 +101,22 @@ namespace Northis.RoosterBattle.Models
 		/// Зарегистрированное свойство "Максимальное здоровье" петуха.
 		/// </summary>
 		public static readonly PropertyData MaxHealthProperty = RegisterProperty(nameof(MaxHealth), typeof(int));
+		/// <summary>
+		/// Зарегистрированное свойство "Максимальная толщина" петуха.
+		/// </summary>
+		public static readonly PropertyData MaxThicknessProperty = RegisterProperty(nameof(MaxThickness), typeof(int));
+		/// <summary>
+		/// Зарегистрированное свойство "Максимальный вес" петуха.
+		/// </summary>
+		public static readonly PropertyData MaxWeightProperty = RegisterProperty(nameof(MaxWeight), typeof(int));
+		/// <summary>
+		/// Зарегистрированное свойство "Максимальная юркость" петуха.
+		/// </summary>
+		public static readonly PropertyData MaxBricknessProperty = RegisterProperty(nameof(MaxBrickness), typeof(int));
+		/// <summary>
+		/// Зарегистрированное свойство "Максимальная удача" петуха.
+		/// </summary>
+		public static readonly PropertyData MaxLuckProperty = RegisterProperty(nameof(MaxLuck), typeof(int));
 		#endregion
 		#endregion
 
@@ -125,16 +141,32 @@ namespace Northis.RoosterBattle.Models
 					}
 				},
 				{
-					RoosterColor.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, 50)
+					RoosterColor.Blue, () =>
+					{
+						ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, 50);
+						MaxBrickness = _maxBrickness;
+					}
 				},
 				{
-					RoosterColor.White, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10)
+					RoosterColor.Black, () =>
+					{
+						ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10);
+						MaxWeight = _maxWeight;
+					}
 				},
 				{
-					RoosterColor.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, 50)
+					RoosterColor.Brown, () =>
+					{
+						ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, 50);
+						MaxThickness = _maxThickness;
+					}
 				},
 				{
-					RoosterColor.Black, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50)
+					RoosterColor.White, () =>
+					{
+						ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50);
+						MaxLuck = _maxLuck;
+					}
 				}
 			};
 
@@ -148,18 +180,37 @@ namespace Northis.RoosterBattle.Models
 					}
 				},
 				{
-					RoosterColor.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness)
+					RoosterColor.Blue, () =>
+					{
+						ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness);
+						MaxBrickness = DefaultMaxBrickness;
+					}
 				},
 				{
-					RoosterColor.Black, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
+					RoosterColor.White, () =>
+					{
+						ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck);
+						MaxLuck = DefaultMaxLuck;
+					}
 				},
 				{
-					RoosterColor.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness)
+					RoosterColor.Brown, () =>
+					{
+						ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness);
+						MaxThickness = DefaultMaxThickness;
+					}
 				},
 				{
-					RoosterColor.White, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
+					RoosterColor.Black, () =>
+					{
+						ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight);
+						MaxWeight = DefaultMaxWeight;
+					}
 				}
 			};
+
+			Color = RoosterColor.Black;
+			Height = _minHeight;
 		}
 
 		/// <summary>
@@ -199,6 +250,8 @@ namespace Northis.RoosterBattle.Models
 			set => SetValue(NameProperty, value);
 		}
 
+		 
+
 		/// <summary>
 		/// Возвращает или устанавливает количество побед петуха.
 		/// </summary>
@@ -214,18 +267,22 @@ namespace Northis.RoosterBattle.Models
 		/// <summary>
 		/// Возвращает или устанавливает вес петуха.
 		/// </summary>
-		/// <value>
-		/// Вес петуха.
-		/// </value>
-
 		public double Weight
 		{
 			get => GetValue<double>(WeightProperty);
 			set
 			{
-				SetValue(WeightProperty, Clamp(value, _minWeight, _maxWeight));
+				SetValue(WeightProperty, value);
 				UpdateDamage();
 			}
+		}
+		/// <summary>
+		/// Возвращает или устанавливает максимальный вес петуха.
+		/// </summary>
+		public int MaxWeight
+		{
+			get => GetValue<int>(MaxWeightProperty);
+			set => SetValue(MaxWeightProperty, value);
 		}
 
 		/// <summary>
@@ -239,7 +296,7 @@ namespace Northis.RoosterBattle.Models
 			get => GetValue<int>(HeightProperty);
 			set
 			{
-				SetValue(HeightProperty, Clamp(value, _minHeight, _maxHeight));
+				SetValue(HeightProperty, value);
 				UpdateDamage();
 			}
 		}
@@ -307,7 +364,15 @@ namespace Northis.RoosterBattle.Models
 		{
 			get => GetValue<int>(BricknessProperty);
 
-			set => SetValue(BricknessProperty, Clamp(value, 0, _maxBrickness));
+			set => SetValue(BricknessProperty, value);
+		}
+		/// <summary>
+		/// Возвращает или устанавливает максимальную юркость петуха.
+		/// </summary>
+		public int MaxBrickness
+		{
+			get => GetValue<int>(MaxBricknessProperty);
+			set => SetValue(MaxBricknessProperty, value);
 		}
 
 		/// <summary>
@@ -335,7 +400,15 @@ namespace Northis.RoosterBattle.Models
 		public int Thickness
 		{
 			get => GetValue<int>(ThicknessProperty);
-			set => SetValue(ThicknessProperty, Clamp(value, 0, _maxThickness));
+			set => SetValue(ThicknessProperty, value); //Clamp(value, 0, _maxThickness));
+		}
+		/// <summary>
+		/// Возвращает или устанавливает максимальную толщину петуха.
+		/// </summary>
+		public int MaxThickness
+		{
+			get => GetValue<int>(MaxThicknessProperty);
+			set => SetValue(MaxThicknessProperty, value);
 		}
 
 		/// <summary>
@@ -347,8 +420,15 @@ namespace Northis.RoosterBattle.Models
 		public int Luck
 		{
 			get => GetValue<int>(LuckProperty);
-
-			set => SetValue(LuckProperty, Clamp(value, 0, _maxLuck));
+			set => SetValue(LuckProperty, value);
+		}
+		/// <summary>
+		/// Возвращает или устанавливает максимальную удачу петуха.
+		/// </summary>
+		public int MaxLuck
+		{
+			get => GetValue<int>(MaxLuckProperty);
+			set => SetValue(MaxLuckProperty, value);
 		}
 
 		/// <summary>
@@ -526,6 +606,10 @@ namespace Northis.RoosterBattle.Models
 			if (property.PropertyType == typeof(double))
 			{
 				property.SetValue(this, Clamp((double) property.GetValue(this), minValue, maxValue));
+			}
+			else if (property.PropertyType == typeof(int))
+			{
+				property.SetValue(this, Clamp((int)property.GetValue(this), minValue, maxValue));
 			}
 		}
 

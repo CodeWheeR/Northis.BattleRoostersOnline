@@ -249,32 +249,32 @@ namespace Northis.RoosterBattle.ViewModels
 		/// <param name="validationResults">The validation results, add additional results to this list.</param>
 		protected override void ValidateFields(List<IFieldValidationResult> validationResults)
 		{
-			if (string.IsNullOrWhiteSpace(Name))
+			if (string.IsNullOrWhiteSpace(Name) || Name.Length > 15)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.NameProperty, "Rooster name is required"));
 			}
 
-			if (Brickness < 0)
+			if (Brickness < 0 || Brickness > RoosterModel.MaxBrickness)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.BricknessProperty, "Brickness value mustn't be negative"));
 			}
 
-			if (Weight <= 0)
+			if (Weight < 2 || Weight > RoosterModel.MaxWeight)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.WeightProperty, "Weight value is required"));
 			}
 
-			if (Height <= 0)
+			if (Height < 20 || Height > 50)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.HeightProperty, "Height value is required"));
 			}
 
-			if (Luck < 0)
+			if (Luck < 0 || Luck > RoosterModel.MaxLuck)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.LuckProperty, "Luck value mustn't be negative"));
 			}
 
-			if (Thickness < 0)
+			if (Thickness < 0 || Thickness > RoosterModel.MaxThickness)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.ThicknessProperty, "Thickness value mustn't be negative"));
 			}

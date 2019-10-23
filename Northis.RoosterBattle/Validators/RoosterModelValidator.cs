@@ -20,7 +20,7 @@ namespace Northis.RoosterBattle.Validators
 		/// </remarks>
 		protected override void ValidateFields(RoosterModel instance, List<IFieldValidationResult> validationResults)
 		{
-			if (string.IsNullOrWhiteSpace(instance.Name))
+			if (string.IsNullOrWhiteSpace(instance.Name) || instance.Name.Length > 15)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.NameProperty, "Rooster name is required"));
 			}

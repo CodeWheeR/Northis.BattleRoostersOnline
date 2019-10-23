@@ -380,20 +380,15 @@ namespace Northis.BattleRoostersOnline.Models
 								   MakeHitWithFeedback(FirstUser.Rooster, SecondUser.Rooster);
 								   SendRoosterStatus();
 
+								   await Task.Delay(300, token);
+
 								   if (SecondUser.Rooster.Health == 0)
 								   {
 									   break;
 								   }
 
-								   await Task.Delay(300, token);
-
 								   MakeHitWithFeedback(SecondUser.Rooster, FirstUser.Rooster);
 								   SendRoosterStatus();
-
-								   if (FirstUser.Rooster.Health == 0)
-								   {
-									   break;
-								   }
 
 								   await Task.Delay(300, token);
 							   }
@@ -506,6 +501,11 @@ namespace Northis.BattleRoostersOnline.Models
 
 		private async void CheckForDeserting(string token)
 		{
+			if (!IsReady)
+			{
+				return;
+			}
+
 			if (FirstUser != null && FirstUser.Token == token)
 			{
 				CheckForDeserting(FirstUser, SecondUser);

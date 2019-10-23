@@ -43,6 +43,10 @@ namespace Northis.BattleRoostersOnline.Implements
 				{
 					foreach (var usersRoosters in StorageService.RoostersData)
 					{
+						if (usersRoosters.Value.Count == 0)
+						{
+							continue;
+						}
 						var rooster = usersRoosters.Value.First(r => r.WinStreak == usersRoosters.Value.Max(m => m.WinStreak));
 						stats.Add(new StatisticsDto()
 						{
@@ -164,7 +168,10 @@ namespace Northis.BattleRoostersOnline.Implements
 					{
 						if (_subscribers.ContainsKey(receiverToken) && _subscribers[receiverToken] is ICommunicationObject co)
 						{
-							co.Close();
+							if (co.State == CommunicationState.Opened)
+							{
+								co.Close();
+							}
 						}
 					}
 					else

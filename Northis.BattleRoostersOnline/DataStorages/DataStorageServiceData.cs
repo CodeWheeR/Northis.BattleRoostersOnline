@@ -166,12 +166,19 @@ namespace Northis.BattleRoostersOnline.Models
 
 			if (File.Exists("Resources\\RoostersStorage.xml"))
 			{
-				lock (_RoostersFileLocker)
+				try
 				{
-					using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.Open))
+					lock (_RoostersFileLocker)
 					{
-						userRoosters = (List<UserRoosters>)serializer.ReadObject(fileStream);
+						using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.Open))
+						{
+							userRoosters = (List<UserRoosters>) serializer.ReadObject(fileStream);
+						}
 					}
+				}
+				catch (SerializationException e)
+				{
+					userRoosters = new List<UserRoosters>();
 				}
 
 				lock (RoostersData)

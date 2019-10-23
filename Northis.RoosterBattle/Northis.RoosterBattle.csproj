@@ -124,6 +124,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ColorToDescriptionConverter.cs" />
     <Compile Include="Converters\BooleanToWindowState.cs" />
     <Compile Include="Converters\EnumValueToDescription.cs" />
     <Compile Include="Converters\HealthValueToBool.cs" />
