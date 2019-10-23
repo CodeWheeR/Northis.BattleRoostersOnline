@@ -27,10 +27,10 @@ namespace Northis.BattleRoostersOnline.Implements
 		public async Task FindMatchAsync(string token, RoosterDto rooster)
 		{
 			var callback = OperationContext.Current.GetCallbackChannel<IBattleServiceCallback>();
-			await FindMatch(token, rooster, callback);
+			await FindMatchAsync(token, rooster, callback);
 		}
 
-		public async Task FindMatch(string token, RoosterDto rooster, IBattleServiceCallback callback)
+		public async Task FindMatchAsync(string token, RoosterDto rooster, IBattleServiceCallback callback)
 		{
 			if (!Storage.LoggedUsers.ContainsKey(token))
 			{

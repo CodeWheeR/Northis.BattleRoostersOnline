@@ -1,12 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using CommonServiceLocator;
+﻿using System.Threading.Tasks;
 using DataTransferObjects;
-using Northis.BattleRoostersOnline.Implements;
-using Northis.BattleRoostersOnline.Models;
 using NUnit.Framework;
-using Unity;
-using Unity.ServiceLocation;
 
 namespace Nortis.BattleRoostersOnlineTests
 {
@@ -14,24 +8,17 @@ namespace Nortis.BattleRoostersOnlineTests
 	/// Тестирует сервис авторизации.
 	/// </summary>
 	[TestFixture]
-	public class AuthenticateServiceTests
+	public class AuthenticateServiceTests : ServiceModuleTests
 	{
-		/// <summary>
-		/// Сервис авторизации.
-		/// </summary>
-		private AuthenticateService _authenticateService = new AuthenticateService();
+		#region Methods
+		#region Public
 		/// <summary>
 		/// Настраивает тестовое окружение.
 		/// </summary>
 		[SetUp]
 		public void Setup()
 		{
-			UnityContainer container = new UnityContainer();
-
-			container.RegisterInstance(new ServicesStorage());
-
-			UnityServiceLocator locator = new UnityServiceLocator(container);
-			ServiceLocator.SetLocatorProvider(() => locator);
+			SetupServiceLocator();
 		}
 		/// <summary>
 		/// Проверят возвращаемый токен.
@@ -39,7 +26,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public void LogInTest1()
 		{
-			Assert.IsNotNull(_authenticateService.LogInAsync("Login", "Password"));
+			Assert.IsNotNull(authenticateService.LogInAsync("Login", "Password"));
 		}
 		/// <summary>
 		/// Проверяет реакцию сервиса на неверный логин и пароль.
@@ -47,7 +34,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LogInTest2()
 		{
-			string result =  await _authenticateService.LogInAsync("Login", "Password");
+			string result =  await authenticateService.LogInAsync("Login1", "Password", callbackAuth.Object);
 
 			Assert.AreEqual(AuthenticateStatus.WrongLoginOrPassword.ToString(), result);
 		}
@@ -57,8 +44,8 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LogInTest3()
 		{
-			await _authenticateService.RegisterAsync("NewUser", "password");
-			string result = await _authenticateService.LogInAsync("NewUser", "password");
+			await authenticateService.RegisterAsync("NewUser", "password", callbackAuth.Object);
+			string result = await authenticateService.LogInAsync("NewUser", "password", callbackAuth.Object);
 
 			Assert.AreEqual(AuthenticateStatus.AlreadyLoggedIn.ToString(), result);
 		}
@@ -68,7 +55,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LogInTest4()
 		{
-			string result = await _authenticateService.RegisterAsync("NewUser", "password");
+			string result = await authenticateService.RegisterAsync("NewUser", "password", callbackAuth.Object);
 
 			Assert.IsNotNull(result);
 		}
@@ -78,7 +65,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task RegisterTest1()
 		{
-			string result = await _authenticateService.RegisterAsync("NewUser", "password");
+			string result = await authenticateService.RegisterAsync("NewUser", "password", callbackAuth.Object);
 
 			Assert.IsNotNull(result);
 		}
@@ -89,8 +76,8 @@ namespace Nortis.BattleRoostersOnlineTests
 		public async Task RegisterTest2()
 		{
 			string result;
-			await _authenticateService.RegisterAsync("NewUser", "password");
-			result = await _authenticateService.RegisterAsync("NewUser", "password");
+			await authenticateService.RegisterAsync("NewUser", "password", callbackAuth.Object);
+			result = await authenticateService.RegisterAsync("NewUser", "password", callbackAuth.Object);
 
 			Assert.AreEqual(result, AuthenticateStatus.AlreadyRegistered.ToString());
 		}
@@ -106,7 +93,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[TestCase("so ssss so", "password")]
 		public async Task RegisterTest2(string login, string password)
 		{
-			string result = await _authenticateService.RegisterAsync(login, password);
+			string result = await authenticateService.RegisterAsync(login, password, callbackAuth.Object);
 
 			Assert.AreEqual(result, AuthenticateStatus.WrongDataFormat.ToString());
 		}
@@ -116,9 +103,9 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LogOutTest1()
 		{
-			ServiceLocator.Current.GetInstance<ServicesStorage>().LoggedUsers.Add("SomeKey", "SomeValue");
+			string token = await authenticateService.RegisterAsync("Login", "Password", callbackAuth.Object);
 
-			bool logOutStatus = await _authenticateService.LogOutAsync("SomeKey");
+			bool logOutStatus = await authenticateService.LogOutAsync(token);
 
 			Assert.AreEqual(logOutStatus, true);
 		}
@@ -128,7 +115,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LogOutTest2()
 		{
-			bool logOutStatus = await _authenticateService.LogOutAsync("SomeKey");
+			bool logOutStatus = await authenticateService.LogOutAsync("SomeKey");
 
 			Assert.AreEqual(logOutStatus, false);
 		}
@@ -138,7 +125,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task EncryptTest1()
 		{
-			Assert.IsNotNull(_authenticateService.EncryptAsync("Text"));
+			Assert.IsNotNull(authenticateService.EncryptAsync("Text"));
 		}
 		/// <summary>
 		/// Проверка корректность шифрования строки.
@@ -146,7 +133,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task EncryptTest2()
 		{
-			Assert.IsNotEmpty(await _authenticateService.EncryptAsync("Text"));
+			Assert.IsNotEmpty(await authenticateService.EncryptAsync("Text"));
 		}
 		/// <summary>
 		/// Проверяет корректность расшифровки.
@@ -158,9 +145,10 @@ namespace Nortis.BattleRoostersOnlineTests
 			string encryptText;
 
 
-			encryptText = await _authenticateService.EncryptAsync(sourceText);
-			Assert.AreEqual(sourceText, _authenticateService.Decrypt(encryptText));
+			encryptText = await authenticateService.EncryptAsync(sourceText);
+			Assert.AreEqual(sourceText, authenticateService.Decrypt(encryptText));
 		}
-
+		#endregion
+		#endregion
 	}
 }

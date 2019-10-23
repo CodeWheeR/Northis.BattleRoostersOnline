@@ -1,14 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using CommonServiceLocator;
+﻿using System.Threading.Tasks;
 using DataTransferObjects;
-using Northis.BattleRoostersOnline.Contracts;
-using Northis.BattleRoostersOnline.Implements;
-using Northis.BattleRoostersOnline.Models;
 using NUnit.Framework;
-using Unity;
-using Unity.ServiceLocation;
-using Moq;
 
 namespace Nortis.BattleRoostersOnlineTests
 {
@@ -16,26 +8,17 @@ namespace Nortis.BattleRoostersOnlineTests
 	/// Тестирует сервис проведения битвы.
 	/// </summary>
 	[TestFixture]
-	public class BattleServiceTests
+	public class BattleServiceTests : ServiceModuleTests
 	{
-		/// <summary>
-		/// Сервис проведения битвы.
-		/// </summary>
-		private BattleService _battleService = new BattleService();
+		#region Methods
+		#region Public
 		/// <summary>
 		/// Настраивает тестовое окружение.
 		/// </summary>
 		[SetUp]
 		public void Setup()
 		{
-			UnityContainer container = new UnityContainer();
-
-			container.RegisterInstance(new ServicesStorage());
-
-			container.RegisterType<IBattleServiceCallback>();
-
-			UnityServiceLocator locator = new UnityServiceLocator(container);
-			ServiceLocator.SetLocatorProvider(() => locator);
+			SetupServiceLocator();
 		}
 		/// <summary>
 		/// Проверяет корректность работы метода поиска матча.
@@ -43,9 +26,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task FindMatchTest()
 		{
-			var callback = new Mock<IBattleServiceCallback>();
-
-			Assert.DoesNotThrow((() => _battleService.FindMatch("SomeToken", new RoosterDto(), callback.Object)));
+			Assert.DoesNotThrowAsync((() =>  battleService.FindMatchAsync("SomeToken", new RoosterDto(), callbackBattle.Object)));
 		}
 		/// <summary>
 		/// Проверяет корректность работы метода отмены матча.
@@ -53,13 +34,11 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task CancelFightTest()
 		{
-			var callback = new Mock<IBattleServiceCallback>();
-
-			Session session = new Session("SomeToken");
-
-			session.RegisterFighter("SomeToken", new RoosterDto(), callback.Object);
-			ServiceLocator.Current.GetInstance<ServicesStorage>().Sessions.Add("SomeToken", session);
-			Assert.DoesNotThrow((() => _battleService.CancelFinding("SomeToken")));
+			string token = await authenticateService.RegisterAsync("Login1", "Password", callbackAuth.Object);
+			await battleService.FindMatchAsync(token, new RoosterDto(), callbackBattle.Object);
+			Assert.DoesNotThrow((() => battleService.CancelFinding(token)));
 		}
+		#endregion
+		#endregion
 	}
 }
