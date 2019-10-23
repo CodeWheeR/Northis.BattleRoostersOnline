@@ -17,15 +17,26 @@ namespace Northis.BattleRoostersOnline.Implements
 	[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
 	public class EditService : BaseServiceWithStorage, IEditService
 	{
+		#region Fields
+		#region Private
+		/// <summary>
+		/// Объект, блокирующий доступ к файлу с петухами нескольким процессам.
+		/// </summary>
+		private object _lockerIO = new object();
+		#endregion
+		#endregion
+
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="EditService" /> класса.
+		/// Инициализирует новый экземпляр <see cref="EditService"/> класса.
 		/// </summary>
 		public EditService()
 		{
-			Storage.LoadRoosters();
+			Load();
 		}
 		#endregion
+
+
 
 		#region Methods
 		#region Public
@@ -40,33 +51,62 @@ namespace Northis.BattleRoostersOnline.Implements
 			var login = await GetLoginAsync(token);
 
 			await Task.Run(() =>
-					  {
-						  if (Storage.RoostersData.ContainsKey(login))
-						  {
-							  lock (Storage.RoostersData)
-							  {
-								  Storage.RoostersData[login]
-										 .Add(rooster);
-							  }
-						  }
-						  else
-						  {
-							  lock (Storage.RoostersData)
-							  {
-								  Storage.RoostersData.Add(login,
-														   new List<RoosterDto>
-														   {
-															   rooster
-														   });
-							  }
-						  }
-					  })
-					  .ConfigureAwait(false);
+			{
+				if (Storage.RoostersData.ContainsKey(login))
+				{
+					lock (Storage.RoostersData)
+					{
+						Storage.RoostersData[login]
+							   .Add(rooster);
+					}
+				}
+				else
+				{
+					lock (Storage.RoostersData)
+					{
+						Storage.RoostersData.Add(login,
+												 new List<RoosterDto>
+												 {
+													 rooster
+												 });
+					}
+				}
+			}).ConfigureAwait(false);
 
-			Storage.SaveRoostersAsync();
+			SaveAsync();
 		}
+		/// <summary>
+		/// Загружает петухов.
+		/// </summary>
+		public void Load()
+		{
+			List<UserRoosters> userRoosters;
+			var serializer = new DataContractSerializer(typeof(List<UserRoosters>));
 
+			if (File.Exists("Resources\\RoostersStorage.xml"))
+			{
+				lock (_lockerIO)
+				{
+					using (var fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
+					{
+						Storage.RoostersData.Clear();
 
+						userRoosters = (List<UserRoosters>)serializer.ReadObject(fileStream);
+
+						lock (Storage.RoostersData)
+						{
+							for (var i = 0; i < userRoosters.Count; i++)
+							{
+								Storage.RoostersData.Add(userRoosters[i]
+															 .Login,
+														 userRoosters[i]
+															 .Roosters.ToList());
+							}
+						}
+					}
+				}
+			}
+		}
 		/// <summary>
 		/// Асинхронно получает петухов пользователя.
 		/// </summary>
@@ -79,18 +119,50 @@ namespace Northis.BattleRoostersOnline.Implements
 			var login = await GetLoginAsync(token);
 
 			return await Task.Run<IEnumerable<RoosterDto>>(() =>
-							 {
-								 if (Storage.RoostersData.ContainsKey(login))
-								 {
-									 return Storage.RoostersData[login];
-								 }
+			{
+				if (Storage.RoostersData.ContainsKey(login))
+				{
+					return Storage.RoostersData[login];
+				}
 
-								 return new List<RoosterDto>();
-							 })
-							 .ConfigureAwait(false);
+				return new List<RoosterDto>();
+			}).ConfigureAwait(false);
 		}
+		/// <summary>
+		/// Асинхронно сохраняет петухов.
+		/// </summary>
+		public async Task SaveAsync()
+		{
+			await Task.Run(() =>
+			{
+				var roosters = new List<UserRoosters>();
 
+				lock (Storage.RoostersData)
+				{
+					foreach (var val in Storage.RoostersData)
+					{
+						roosters.Add(new UserRoosters(val.Key, val.Value));
+					}
+				}
 
+				var serializer = new DataContractSerializer(roosters.GetType());
+
+				if (Directory.Exists("Resources") == false)
+				{
+					Directory.CreateDirectory("Resources");
+				}
+
+				lock (_lockerIO)
+				{
+					using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.Create))
+					{
+						serializer.WriteObject(fileStream, roosters);
+					}
+				}
+
+				
+			});
+		}
 		/// <summary>
 		/// Асинхронно редактирует петуха.
 		/// </summary>
@@ -112,9 +184,8 @@ namespace Northis.BattleRoostersOnline.Implements
 				}
 			}
 
-			Storage.SaveRoostersAsync();
+			SaveAsync();
 		}
-
 		/// <summary>
 		/// Асинхронно удаляет петуха.
 		/// </summary>
@@ -135,8 +206,7 @@ namespace Northis.BattleRoostersOnline.Implements
 						   .RemoveAt(roosterSeqNum);
 				}
 			}
-
-			Storage.SaveRoostersAsync();
+			SaveAsync();
 		}
 		#endregion
 		#endregion

@@ -107,7 +107,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </returns>
 		public async Task<string> RegisterAsync(string login, string password, IAuthenticateServiceCallback callback)
 		{
-			if (login.Length < 5 || IsNullOrWhiteSpace(login) || password.Length < 5 || IsNullOrWhiteSpace(password) || login.Contains(" "))
+			if (IsNullOrWhiteSpace(login) || login.Length < 5  || IsNullOrWhiteSpace(password) || password.Length < 5 || login.Contains(" "))
 			{
 				return AuthenticateStatus.WrongDataFormat.ToString();
 			}

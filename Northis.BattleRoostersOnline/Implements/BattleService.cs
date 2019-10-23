@@ -13,7 +13,8 @@ namespace Northis.BattleRoostersOnline.Implements
 	/// </summary>
 	/// <seealso cref="Northis.BattleRoostersOnline.Implements.BaseServiceWithStorage" />
 	/// <seealso cref="Northis.BattleRoostersOnline.Contracts.IBattleService" />
-	internal class BattleService : BaseServiceWithStorage, IBattleService
+
+	public class BattleService : BaseServiceWithStorage, IBattleService
 	{
 		#region Methods
 		#region Public
@@ -23,9 +24,15 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
 		/// <returns>Task.</returns>
+
 		public async Task FindMatchAsync(string token, RoosterDto rooster)
 		{
 			var callback = OperationContext.Current.GetCallbackChannel<IBattleServiceCallback>();
+			await FindMatch(token, rooster, callback);
+		}
+
+		public async Task FindMatch(string token, RoosterDto rooster, IBattleServiceCallback callback)
+		{
 			if (!Storage.LoggedUsers.ContainsKey(token))
 			{
 				Task.Run(() => callback.FindedMatch("User was not found"));
@@ -51,6 +58,7 @@ namespace Northis.BattleRoostersOnline.Implements
 					Storage.Sessions.Add(matchToken, session);
 				}
 			});
+
 		}
 
 		/// <summary>
@@ -63,6 +71,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		public bool CancelFinding(string token)
 		{
 			var session = Storage.Sessions.Reverse()
+
 								 .First(x => x.Value.RemoveFighter(token))
 								 .Value;
 			if (session != null)
@@ -80,6 +89,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
 		/// <returns>Task.</returns>
+
 		public async Task StartBattleAsync(string token, string matchToken)
 		{
 			await Task.Run(async () =>
@@ -95,38 +105,6 @@ namespace Northis.BattleRoostersOnline.Implements
 			});
 		}
 
-		/// <summary>
-		/// Нереализованный контракт операции.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="matchToken">Токен матча.</param>
-		/// <returns>
-		/// Task.
-		/// </returns>
-		/// <exception cref="NotImplementedException"></exception>
-		public Task Beak(string token, string matchToken) => throw new NotImplementedException();
-
-		/// <summary>
-		/// Нереализованный контракт операции.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="matchToken">Токен матча.</param>
-		/// <returns>
-		/// Task.
-		/// </returns>
-		/// <exception cref="NotImplementedException"></exception>
-		public Task Bite(string token, string matchToken) => throw new NotImplementedException();
-
-		/// <summary>
-		/// Нереализованный контракт операции.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="matchToken">Токен матча.</param>
-		/// <returns>
-		/// Task.
-		/// </returns>
-		/// <exception cref="NotImplementedException"></exception>
-		public Task Pull(string token, string matchToken) => throw new NotImplementedException();
 
 		/// <summary>
 		/// Производит сдачу боя.
@@ -134,11 +112,13 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
 		/// <returns>Task.</returns>
+
 		public async Task GiveUpAsync(string token, string matchToken)
 		{
 			await Task.Run(async () =>
 			{
 				var session = Storage.Sessions[matchToken];
+
 				OperationContext.Current?.Channel?.Close();
 				session.StopSession(true);
 			});
