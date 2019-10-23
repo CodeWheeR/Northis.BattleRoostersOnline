@@ -23,7 +23,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
 		/// <returns>Task.</returns>
-		public async Task FindMatch(string token, RoosterDto rooster)
+		public async Task FindMatchAsync(string token, RoosterDto rooster)
 		{
 			var callback = OperationContext.Current.GetCallbackChannel<IBattleServiceCallback>();
 			if (!Storage.LoggedUsers.ContainsKey(token))
@@ -80,7 +80,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
 		/// <returns>Task.</returns>
-		public async Task StartBattle(string token, string matchToken)
+		public async Task StartBattleAsync(string token, string matchToken)
 		{
 			await Task.Run(async () =>
 			{
@@ -134,12 +134,12 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
 		/// <returns>Task.</returns>
-		public async Task GiveUp(string token, string matchToken)
+		public async Task GiveUpAsync(string token, string matchToken)
 		{
 			await Task.Run(async () =>
 			{
 				var session = Storage.Sessions[matchToken];
-				OperationContext.Current.Channel.Close();
+				OperationContext.Current?.Channel?.Close();
 				session.StopSession(true);
 			});
 		}

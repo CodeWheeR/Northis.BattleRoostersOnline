@@ -17,7 +17,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <param name="rooster">Петух.</param>
 		/// <returns>Task.</returns>
 		[OperationContract(IsInitiating = true)]
-		Task FindMatch(string token, RoosterDto rooster);
+		Task FindMatchAsync(string token, RoosterDto rooster);
 
 		/// <summary>
 		/// Контракт операции, отвечающий за отмену поиска матча.
@@ -34,34 +34,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <param name="matchToken">Токен матча.</param>
 		/// <returns>Task.</returns>
 		[OperationContract(IsInitiating = true)]
-		Task StartBattle(string token, string matchToken);
-
-		/// <summary>
-		/// Нереализованный контракт операции.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="matchToken">Токен матча.</param>
-		/// <returns>Task.</returns>
-		[OperationContract]
-		Task Beak(string token, string matchToken);
-
-		/// <summary>
-		/// Нереализованный контракт операции.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="matchToken">Токен матча.</param>
-		/// <returns>Task.</returns>
-		[OperationContract]
-		Task Bite(string token, string matchToken);
-
-		/// <summary>
-		/// Нереализованный контракт операции.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="matchToken">Токен матча.</param>
-		/// <returns>Task.</returns>
-		[OperationContract]
-		Task Pull(string token, string matchToken);
+		Task StartBattleAsync(string token, string matchToken);
 
 		/// <summary>
 		/// Контракт операции, отвечающий за сдачу боя.
@@ -70,6 +43,6 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <param name="matchToken">Токен матча.</param>
 		/// <returns>Task.</returns>
 		[OperationContract(IsTerminating = true)]
-		Task GiveUp(string token, string matchToken);
+		Task GiveUpAsync(string token, string matchToken);
 	}
 }

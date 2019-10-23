@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using CommonServiceLocator;
+using DataTransferObjects;
 using Northis.BattleRoostersOnline.Models;
 using Unity;
 using Unity.ServiceLocation;
@@ -14,11 +20,13 @@ namespace Northis.BattleRoostersOnline.Implements
 	public abstract class BaseServiceWithStorage
 	{
 		#region Fields
+
 		#region Private
 		/// <summary>
 		/// Генератор рандомных значений.
 		/// </summary>
 		private readonly Random _rand = new Random();
+
 		#endregion
 		#endregion
 
@@ -107,6 +115,40 @@ namespace Northis.BattleRoostersOnline.Implements
 			return Task.Run(() => GenerateToken());
 		}
 		#endregion
+
+
+		///// <summary>
+		///// Асинхронно сохраняет петухов.
+		///// </summary>
+		//public async Task SaveRoostersAsync()
+		//{
+		//	await Storage.SaveRoostersAsync();
+		//}
+
+
+		///// <summary>
+		///// Загружает петухов.
+		///// </summary>
+		//public void LoadRoosters()
+		//{
+		//	Storage.LoadRoosters();
+		//}
+
+		///// <summary>
+		///// Асинхронно сохраняет данные пользователя.
+		///// </summary>
+		//public async Task SaveUserDataAsync()
+		//{
+		//	await Storage.SaveUserDataAsync();
+		//}
+
+		///// <summary>
+		///// Загружает данные пользователя.
+		///// </summary>
+		//public void LoadUserData()
+		//{
+		//	Storage.LoadUserData();
+		//}
 		#endregion
 	}
 }

@@ -8,5 +8,6 @@
 		<converters:EnumValueToStringPath x:Key="EnumValueToStringPath" />
 		<converters:HeathValueToBool x:Key="HealthToBoolConverter" />
 		<converters:EnumValueToDescription x:Key="EnumValueToDescription" />
+		<converters:BooleanToWindowState x:Key="BooleanToWindowState"/>
 	</Application.Resources>
 </Application>

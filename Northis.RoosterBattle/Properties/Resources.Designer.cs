@@ -179,7 +179,7 @@ namespace Northis.RoosterBattle.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Сведения о бойце: .
+        ///   Ищет локализованную строку, похожую на Сведения о бойце.
         /// </summary>
         public static string FighterDetails {
             get {
@@ -239,6 +239,15 @@ namespace Northis.RoosterBattle.Properties {
         public static string HugeCrest {
             get {
                 return ResourceManager.GetString("HugeCrest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Топ петуховодов.
+        /// </summary>
+        public static string LeaderBoard {
+            get {
+                return ResourceManager.GetString("LeaderBoard", resourceCulture);
             }
         }
         
@@ -338,15 +347,6 @@ namespace Northis.RoosterBattle.Properties {
         public static string Thickness {
             get {
                 return ResourceManager.GetString("Thickness", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на .
-        /// </summary>
-        public static string token {
-            get {
-                return ResourceManager.GetString("token", resourceCulture);
             }
         }
         

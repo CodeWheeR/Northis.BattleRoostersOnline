@@ -26,7 +26,7 @@ namespace Northis.RoosterBattle.ViewModels
 		public static readonly PropertyData LoginProperty = RegisterProperty(nameof(Login), typeof(string));
 		#endregion
 
-		private readonly AuthenticateServiceClient _authenticateServiceClient = new AuthenticateServiceClient();
+		private readonly AuthenticateServiceClient _authenticateServiceClient;
 
 		private IUIVisualizerService _uiVisualizerService;
 
@@ -52,8 +52,10 @@ namespace Northis.RoosterBattle.ViewModels
 		/// Инициализует новый объект класса <see cref="AuthViewModel" />.
 		/// </summary>
 		/// <param name="uiVisualizerService">The UI visualizer service.</param>
-		public AuthViewModel(IUIVisualizerService uiVisualizerService)
+		/// <param name="authService">Объект подключения к серверу по каналу авторизации.</param>
+		public AuthViewModel(IUIVisualizerService uiVisualizerService, AuthenticateServiceClient authService)
 		{
+			_authenticateServiceClient = authService;
 			_uiVisualizerService = uiVisualizerService;
 			AuthCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.LogInAsync, passwordBox));
 			RegCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.RegisterAsync, passwordBox));

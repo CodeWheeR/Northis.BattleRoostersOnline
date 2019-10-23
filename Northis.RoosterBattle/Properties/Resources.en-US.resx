@@ -155,7 +155,7 @@
     <value>Fight</value>
   </data>
   <data name="FighterDetails" xml:space="preserve">
-    <value>Fighter details:</value>
+    <value>Fighter details</value>
   </data>
   <data name="FightWindow" xml:space="preserve">
     <value>Fight window</value>
@@ -213,5 +213,14 @@
   </data>
   <data name="WinStreak" xml:space="preserve">
     <value>Win streak: </value>
+  </data>
+  <data name="CancelFinding" xml:space="preserve">
+    <value>Cancel finding</value>
+  </data>
+  <data name="FindMatch" xml:space="preserve">
+    <value>Find match</value>
+  </data>
+  <data name="LeaderBoard" xml:space="preserve">
+    <value>Roostermasters Top</value>
   </data>
 </root>

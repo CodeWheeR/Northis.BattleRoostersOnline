@@ -23,7 +23,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		public EditService()
 		{
-			Load();
+			Storage.LoadRoosters();
 		}
 		#endregion
 
@@ -63,38 +63,9 @@ namespace Northis.BattleRoostersOnline.Implements
 					  })
 					  .ConfigureAwait(false);
 
-			SaveAsync();
+			Storage.SaveRoostersAsync();
 		}
 
-		/// <summary>
-		/// Загружает петухов.
-		/// </summary>
-		public void Load()
-		{
-			List<UserRoosters> userRoosters;
-			var serializer = new DataContractSerializer(typeof(List<UserRoosters>));
-
-			if (File.Exists("Resources\\RoostersStorage.xml"))
-			{
-				using (var fileStream = new FileStream("Resources/RoostersStorage.xml", FileMode.Open))
-				{
-					Storage.RoostersData.Clear();
-
-					userRoosters = (List<UserRoosters>) serializer.ReadObject(fileStream);
-
-					lock (Storage.RoostersData)
-					{
-						for (var i = 0; i < userRoosters.Count; i++)
-						{
-							Storage.RoostersData.Add(userRoosters[i]
-														 .Login,
-													 userRoosters[i]
-														 .Roosters.ToList());
-						}
-					}
-				}
-			}
-		}
 
 		/// <summary>
 		/// Асинхронно получает петухов пользователя.
@@ -119,36 +90,6 @@ namespace Northis.BattleRoostersOnline.Implements
 							 .ConfigureAwait(false);
 		}
 
-		/// <summary>
-		/// Асинхронно сохраняет петухов.
-		/// </summary>
-		public async Task SaveAsync()
-		{
-			await Task.Run(() =>
-			{
-				var roosters = new List<UserRoosters>();
-
-				lock (Storage.RoostersData)
-				{
-					foreach (var val in Storage.RoostersData)
-					{
-						roosters.Add(new UserRoosters(val.Key, val.Value));
-					}
-				}
-
-				var serializer = new DataContractSerializer(roosters.GetType());
-
-				if (Directory.Exists("Resources") == false)
-				{
-					Directory.CreateDirectory("Resources");
-				}
-
-				using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.OpenOrCreate))
-				{
-					serializer.WriteObject(fileStream, roosters);
-				}
-			});
-		}
 
 		/// <summary>
 		/// Асинхронно редактирует петуха.
@@ -171,7 +112,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				}
 			}
 
-			SaveAsync();
+			Storage.SaveRoostersAsync();
 		}
 
 		/// <summary>
@@ -195,7 +136,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				}
 			}
 
-			SaveAsync();
+			Storage.SaveRoostersAsync();
 		}
 		#endregion
 		#endregion

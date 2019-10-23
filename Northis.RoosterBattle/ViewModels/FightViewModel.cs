@@ -19,8 +19,6 @@ namespace Northis.RoosterBattle.ViewModels
 	internal class FightViewModel : ViewModelBase
 	{
 		#region Fields
-		private CancellationTokenSource _tokenSource = new CancellationTokenSource();
-		private ObservableCollection<RoosterModel> _sourceRoosters;
 		private BattleServiceClient _battleServiceClient;
 		private readonly string _userToken;
 

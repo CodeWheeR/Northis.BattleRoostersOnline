@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Catel;
 using Catel.Data;
 using Catel.ExceptionHandling;
+using Catel.IoC;
 using Catel.MVVM;
 using Catel.Services;
 using Northis.RoosterBattle.GameServer;
@@ -29,7 +31,7 @@ namespace Northis.RoosterBattle.ViewModels
 		/// </summary>
 		private readonly IExceptionService _exceptionService;
 		private readonly EditServiceClient _editServiceClient = new EditServiceClient();
-		private readonly AuthenticateServiceClient _authenticateServiceClient = new AuthenticateServiceClient();
+		private readonly AuthenticateServiceClient _authenticateServiceClient;
 		private string token;
 
 		#region Static		
@@ -42,14 +44,29 @@ namespace Northis.RoosterBattle.ViewModels
 		/// </summary>
 		public static readonly PropertyData RoostersProperty = RegisterProperty(nameof(Roosters), typeof(IEnumerable<RoosterModel>));
 		public static readonly PropertyData SelectedIndexProperty = RegisterProperty(nameof(SelectedIndex), typeof(int));
+		public static readonly PropertyData StatisticsProperty = RegisterProperty(nameof(Statistics), typeof(StatisticsModel[]));
+		public static readonly PropertyData LoggenInProperty = RegisterProperty(nameof(ShowWindow), typeof(bool));
 		#endregion
 		#endregion
 
 		#region Properties		
+
+		public bool ShowWindow
+		{
+			get => GetValue<bool>(LoggenInProperty);
+			set => SetValue(LoggenInProperty, value);
+		}
+
 		public int SelectedIndex
 		{
 			get => GetValue<int>(SelectedIndexProperty);
 			set => SetValue(SelectedIndexProperty, value);
+		}
+
+		public StatisticsModel[] Statistics
+		{
+			get => GetValue<StatisticsModel[]>(StatisticsProperty);
+			set => SetValue(StatisticsProperty, value);
 		}
 
 		/// <summary>
@@ -108,11 +125,6 @@ namespace Northis.RoosterBattle.ViewModels
 			set => SetValue(RoostersProperty, value);
 		}
 
-		public ICommand InitializeViewModelCommand
-		{
-			get;
-		}
-
 		/// <summary>
 		/// Свойство, предоставляющее или устанавливающее текущего выбранного петуха.
 		/// </summary>
@@ -135,6 +147,11 @@ namespace Northis.RoosterBattle.ViewModels
 		/// <param name="uiVisualizerService">Сервис визуализации окон приложения.</param>
 		public RoosterBrowserViewModel(IUIVisualizerService uiVisualizerService, IExceptionService exceptionService)
 		{
+			_authenticateServiceClient = new AuthenticateServiceClient(new InstanceContext(new Callbacks.AuthenticationServiceCallback(this)));
+			var container = this.GetServiceLocator();
+			container.RegisterType<AuthenticateServiceClient>();
+			container.RegisterInstance(_authenticateServiceClient);
+
 			_uiVisualizerService = uiVisualizerService;
 			_exceptionService = exceptionService;
 			Roosters = new ObservableCollection<RoosterModel>();
@@ -159,11 +176,14 @@ namespace Northis.RoosterBattle.ViewModels
 				Application.Current.Shutdown();
 			}
 
+
 			Argument.IsNotNull(nameof(_exceptionService), _exceptionService);
 
 			UpdateRoostersAsync();
 
+
 			await base.InitializeAsync();
+			ShowWindow = true;
 		}
 
 		/// <summary>
@@ -253,7 +273,9 @@ namespace Northis.RoosterBattle.ViewModels
 		/// </summary>
 		private async Task StartRoostersFightAsync()
 		{
+			ShowWindow = false;
 			await _uiVisualizerService.ShowAsync<FightViewModel>(SelectedRooster);
+			ShowWindow = true;
 			UpdateRoostersAsync();
 		}
 		#endregion

@@ -1,4 +1,7 @@
-﻿namespace Northis.RoosterBattle.Views
+﻿using System.ComponentModel;
+using System.Windows.Controls;
+
+namespace Northis.RoosterBattle.Views
 {
 	/// <summary>
 	/// Логика взаимодействия для RoosterBrowserWindow.xaml
@@ -8,6 +11,13 @@
 		public RoosterBrowserWindow()
 		{
 			InitializeComponent();
+		}
+
+		private void LeaderBoard_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+		{
+			var descriptor = ((PropertyDescriptor) e.PropertyDescriptor);
+			if (!string.IsNullOrWhiteSpace(descriptor.DisplayName))
+				e.Column.Header = descriptor.DisplayName;
 		}
 	}
 }

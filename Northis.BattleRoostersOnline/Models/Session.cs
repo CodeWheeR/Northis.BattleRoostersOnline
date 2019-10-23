@@ -111,6 +111,25 @@ namespace Northis.BattleRoostersOnline.Models
 			#endregion
 
 			#region Methods
+
+			private void CarefulCallback(Action callback)
+			{
+				try
+				{
+					if (CallbackState == CommunicationState.Opened)
+					{
+						callback();
+					}
+				}
+				catch (Exception e)
+				{
+					if (e is CommunicationException || e is TimeoutException || e is ObjectDisposedException)
+					{
+						(_callback as ICommunicationObject)?.Close();
+					}
+				}
+			}
+
 			#region Public
 			/// <summary>
 			/// Возвращает состояние callback.
@@ -118,7 +137,7 @@ namespace Northis.BattleRoostersOnline.Models
 			/// <value>
 			/// Состояние callback.
 			/// </value>
-			public CommunicationState CallbackState => ((ICommunicationObject) _callback).State;
+			public CommunicationState CallbackState => _callback is ICommunicationObject co ? co.State : CommunicationState.Closed;
 
 			/// <summary>
 			/// Асинхронно возвращает состояние петухов.
@@ -129,17 +148,7 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				await Task.Run(() =>
 				{
-					try
-					{
-						if (CallbackState == CommunicationState.Opened)
-						{
-							_callback.GetRoosterStatus(yourRooster, enemyRooster);
-						}
-					}
-					catch (CommunicationException e)
-					{
-						Debug.WriteLine(e);
-					}
+					CarefulCallback(() => _callback.GetRoosterStatus(yourRooster, enemyRooster));
 				});
 			}
 
@@ -151,17 +160,7 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				await Task.Run(() =>
 				{
-					try
-					{
-						if (CallbackState == CommunicationState.Opened)
-						{
-							_callback.GetBattleMessage(message);
-						}
-					}
-					catch (CommunicationException e)
-					{
-						Debug.WriteLine(e);
-					}
+					CarefulCallback(() => _callback.GetBattleMessage(message));
 				});
 			}
 
@@ -172,17 +171,7 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				await Task.Run(() =>
 				{
-					try
-					{
-						if (CallbackState == CommunicationState.Opened)
-						{
-							_callback.GetStartSign();
-						}
-					}
-					catch (CommunicationException e)
-					{
-						Debug.WriteLine(e);
-					}
+					CarefulCallback(() => _callback.GetStartSign());
 				});
 			}
 
@@ -194,17 +183,7 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				await Task.Run(() =>
 				{
-					try
-					{
-						if (CallbackState == CommunicationState.Opened)
-						{
-							_callback.FindedMatch(token);
-						}
-					}
-					catch (CommunicationException e)
-					{
-						Debug.WriteLine(e);
-					}
+					CarefulCallback(() => _callback.FindedMatch(token));
 				});
 			}
 
@@ -215,17 +194,7 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				await Task.Run(() =>
 				{
-					try
-					{
-						if (CallbackState == CommunicationState.Opened)
-						{
-							_callback.GetEndSign();
-						}
-					}
-					catch (CommunicationException e)
-					{
-						Debug.WriteLine(e);
-					}
+					CarefulCallback(() => _callback.GetEndSign());
 				});
 			}
 			#endregion
@@ -372,6 +341,8 @@ namespace Northis.BattleRoostersOnline.Models
 		{
 			IsStarted = true;
 			BattleEnded?.Invoke(this, EventArgs.Empty);
+			StatisticsPublisher.GetInstance()
+							   .UpdateStatistics();
 		}
 
 		/// <summary>
@@ -421,25 +392,24 @@ namespace Northis.BattleRoostersOnline.Models
 								   await Task.Delay(300, token);
 							   }
 
-							   SendEndSign();
-
 							   if (FirstUser.Rooster.Health == 0 && SecondUser.Rooster.Health == 0)
 							   {
-								   await SetWinstreak(FirstUser, 0);
-								   await SetWinstreak(SecondUser, 0);
+								   Task.WaitAll(SetWinstreak(FirstUser, 0), 
+												SetWinstreak(SecondUser, 0));
 							   }
 							   else if (FirstUser.Rooster.Health == 0)
 							   {
-								   await SetWinstreak(FirstUser, 0);
-								   await SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1);
+								   Task.WaitAll(SetWinstreak(FirstUser, 0), 
+												SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1));
 							   }
 							   else
 							   {
-								   await SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1);
-								   await SetWinstreak(SecondUser, 0);
+								   Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1), 
+												SetWinstreak(SecondUser, 0));
 							   }
 
 							   Storage.Sessions.Remove(Token);
+							   SendEndSign();
 						   },
 						   token);
 		}
@@ -558,33 +528,17 @@ namespace Northis.BattleRoostersOnline.Models
 				{
 					autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
 
-					await SetWinstreak(deserter, 0);
-					await SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1);
+					Task.WaitAll(SetWinstreak(deserter, 0), 
+								 SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
 
 					SendEndSign();
 				}
 				catch (CommunicationException e)
 				{
-					Debug.WriteLine(e);
+					Debug.WriteLine(e.TargetSite + ": " + e);
 				}
 
 				Storage.Sessions.Remove(Token);
-			}
-		}
-
-		/// <summary>
-		/// Устанавливает дезертира.
-		/// </summary>
-		/// <param name="deserter">Дезертир.</param>
-		private void SetDeserter(UserData deserter)
-		{
-			if (FirstUser.Token == deserter.Token)
-			{
-				FirstUser.Rooster = null;
-			}
-			else if (SecondUser.Token == deserter.Token)
-			{
-				SecondUser.Rooster = null;
 			}
 		}
 

@@ -18,7 +18,7 @@
 	MaxWidth="800"
 	MaxHeight="600"
 	d:DataContext="{d:DesignInstance viewModels:FightViewModel}"
-	mc:Ignorable="d">
+	mc:Ignorable="d" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
 	<catel:Window.Resources />
 	<Grid>
 		<Grid.ColumnDefinitions>

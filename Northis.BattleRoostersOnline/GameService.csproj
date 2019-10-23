@@ -75,8 +75,10 @@
     <Compile Include="Contracts\IBattleService.cs" />
     <Compile Include="Contracts\IBattleServiceCallback.cs" />
     <Compile Include="Contracts\IEditService.cs" />
-    <Compile Include="Contracts\INotifyCallbackContract.cs" />
+    <Compile Include="Contracts\IAuthenticateServiceCallback.cs" />
     <Compile Include="DataStorages\ServicesStorage.cs" />
+    <Compile Include="Events\GlobalStatisticsEventArgs.cs" />
+    <Compile Include="Implements\StatisticsPublisher.cs" />
     <Compile Include="Models\CrestSize.cs" />
     <Compile Include="Models\RoosterColor.cs" />
     <Compile Include="Models\Session.cs" />

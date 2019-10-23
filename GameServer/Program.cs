@@ -23,7 +23,7 @@ namespace GameServer
 
 			try
 			{
-				selfHost.AddServiceEndpoint(typeof(IAuthenticateService), new WSHttpBinding(), "AuthenticationService");
+				selfHost.AddServiceEndpoint(typeof(IAuthenticateService), new WSDualHttpBinding(), "AuthenticationService");
 
 				selfHost.AddServiceEndpoint(typeof(IEditService), new WSHttpBinding(), "EditService");
 

@@ -146,7 +146,7 @@
     <value>Бой</value>
   </data>
   <data name="FighterDetails" xml:space="preserve">
-    <value>Сведения о бойце: </value>
+    <value>Сведения о бойце</value>
   </data>
   <data name="FightWindow" xml:space="preserve">
     <value>Окно битвы</value>
@@ -214,13 +214,13 @@
   <data name="White" xml:space="preserve">
     <value>Белый</value>
   </data>
-  <data name="token" xml:space="preserve">
-    <value />
-  </data>
   <data name="CancelFinding" xml:space="preserve">
     <value>Отменить поиск</value>
   </data>
   <data name="FindMatch" xml:space="preserve">
     <value>Найти противника</value>
+  </data>
+  <data name="LeaderBoard" xml:space="preserve">
+    <value>Топ петуховодов</value>
   </data>
 </root>

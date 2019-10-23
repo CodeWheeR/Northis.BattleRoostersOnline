@@ -86,7 +86,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> LogIn(string login, string password) => await _authenticateService.LogIn(login, password);
+		public async Task<string> LogInAsync(string login, string password) => await _authenticateService.LogInAsync(login, password);
 
 		/// <summary>
 		/// Регистрирует нового пользователя.
@@ -96,7 +96,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> Register(string login, string password) => await _authenticateService.Register(login, password);
+		public async Task<string> RegisterAsync(string login, string password) => await _authenticateService.RegisterAsync(login, password);
 
 		/// <summary>
 		/// Осуществляет выход пользователя из системы.
@@ -105,7 +105,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// true - в случае успешного выхода, иначе - false.
 		/// </returns>
-		public async Task<bool> LogOut(string token) => await _authenticateService.LogOut(token);
+		public async Task<bool> LogOutAsync(string token) => await _authenticateService.LogOutAsync(token);
 
 		/// <summary>
 		/// Возвращает статус авторизации пользователя.
@@ -120,7 +120,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
-		public async Task FindMatch(string token, RoosterDto rooster) => _battleService.FindMatch(token, rooster);
+		public async Task FindMatchAsync(string token, RoosterDto rooster) => _battleService.FindMatchAsync(token, rooster);
 
 		/// <summary>
 		/// Осуществляет отмену поиска матча.
@@ -136,7 +136,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
-		public async Task StartBattle(string token, string matchToken) => _battleService.StartBattle(token, matchToken);
+		public async Task StartBattleAsync(string token, string matchToken) => _battleService.StartBattleAsync(token, matchToken);
 
 		/// <summary>
 		/// Нереализованный контракт операции.
@@ -167,7 +167,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
-		public async Task GiveUp(string token, string matchToken) => await _battleService.GiveUp(token, matchToken);
+		public async Task GiveUpAsync(string token, string matchToken) => await _battleService.GiveUpAsync(token, matchToken);
 		#endregion
 		#endregion
 	}

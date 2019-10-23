@@ -35,6 +35,83 @@ namespace Northis.RoosterBattle.GameServer {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StatisticsDto", Namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects")]
+    [System.SerializableAttribute()]
+    public partial class StatisticsDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RoosterNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int WinStreakField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RoosterName {
+            get {
+                return this.RoosterNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RoosterNameField, value) != true)) {
+                    this.RoosterNameField = value;
+                    this.RaisePropertyChanged("RoosterName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int WinStreak {
+            get {
+                return this.WinStreakField;
+            }
+            set {
+                if ((this.WinStreakField.Equals(value) != true)) {
+                    this.WinStreakField = value;
+                    this.RaisePropertyChanged("WinStreak");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RoosterDto", Namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects")]
     [System.SerializableAttribute()]
     public partial class RoosterDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -321,7 +398,7 @@ namespace Northis.RoosterBattle.GameServer {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServer.IAuthenticateService", SessionMode=System.ServiceModel.SessionMode.Required)]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServer.IAuthenticateService", CallbackContract=typeof(Northis.RoosterBattle.GameServer.IAuthenticateServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IAuthenticateService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticateService/LogIn", ReplyAction="http://tempuri.org/IAuthenticateService/LogInResponse")]
@@ -350,30 +427,38 @@ namespace Northis.RoosterBattle.GameServer {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IAuthenticateServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticateService/GetNewGlobalStatistics", ReplyAction="http://tempuri.org/IAuthenticateService/GetNewGlobalStatisticsResponse")]
+        void GetNewGlobalStatistics(Northis.RoosterBattle.GameServer.StatisticsDto[] statistics);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IAuthenticateServiceChannel : Northis.RoosterBattle.GameServer.IAuthenticateService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class AuthenticateServiceClient : System.ServiceModel.ClientBase<Northis.RoosterBattle.GameServer.IAuthenticateService>, Northis.RoosterBattle.GameServer.IAuthenticateService {
+    public partial class AuthenticateServiceClient : System.ServiceModel.DuplexClientBase<Northis.RoosterBattle.GameServer.IAuthenticateService>, Northis.RoosterBattle.GameServer.IAuthenticateService {
         
-        public AuthenticateServiceClient() {
+        public AuthenticateServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public AuthenticateServiceClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public AuthenticateServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public AuthenticateServiceClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public AuthenticateServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public AuthenticateServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public AuthenticateServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public AuthenticateServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public AuthenticateServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
         }
         
         public string LogIn(string login1, string password) {
