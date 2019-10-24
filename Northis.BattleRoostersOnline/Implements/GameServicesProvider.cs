@@ -4,6 +4,7 @@ using System.ServiceModel;
 using System.Threading.Tasks;
 using DataTransferObjects;
 using Northis.BattleRoostersOnline.Contracts;
+using Northis.BattleRoostersOnline.Models;
 
 namespace Northis.BattleRoostersOnline.Implements
 {
@@ -59,7 +60,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="roosterId">Идентификатор петуха.</param>
 		/// <param name="rooster">Петух.</param>
-		public async Task EditAsync(string token, int roosterId, RoosterDto rooster) => await _editService.EditAsync(token, roosterId, rooster);
+		public async Task EditAsync(string token, RoosterModel editRooster, RoosterDto rooster) => await _editService.EditAsync(token, editRooster, rooster);
 
 		/// <summary>
 		/// Асинхронно возвращает петухов пользователя.
@@ -74,8 +75,8 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// Асинхронно удаляет петухов.
 		/// </summary>
 		/// <param name="token">Токен.</param>
-		/// <param name="roosterId">Идентификатор петуха.</param>
-		public async Task RemoveAsync(string token, int roosterId) => _editService.RemoveAsync(token, roosterId);
+		/// <param name="deleteRooster">Удаляемый петух.</param>
+		public async Task RemoveAsync(string token, RoosterModel deleteRooster) => _editService.RemoveAsync(token, deleteRooster);
 
 		/// <summary>
 		/// Осуществляет вход пользователя в систему.

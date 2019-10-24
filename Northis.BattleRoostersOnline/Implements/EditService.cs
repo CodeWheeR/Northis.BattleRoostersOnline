@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using DataTransferObjects;
 using Northis.BattleRoostersOnline.Contracts;
+using Northis.BattleRoostersOnline.Models;
 
 namespace Northis.BattleRoostersOnline.Implements
 {
@@ -91,43 +89,39 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// Асинхронно редактирует петуха.
 		/// </summary>
 		/// <param name="token">Токен.</param>
-		/// <param name="roosterSeqNum">Порядковый номер петуха.</param>
-		/// <param name="rooster">Петух.</param>
-		public async Task EditAsync(string token, int roosterSeqNum, RoosterDto rooster)
+		/// <param name="editRooster">Редактируемый петух.</param>
+		/// <param name="rooster">Отредактированный петух.</param>
+		public async Task EditAsync(string token, RoosterModel editRooster, RoosterDto rooster)
 		{
+			var editingRooster = editRooster.ToRoosterDto();
 			var login = await GetLoginAsync(token);
 			if (StorageService.RoostersData.ContainsKey(login) &&
-				StorageService.RoostersData[login]
-					   .Count >
-				roosterSeqNum &&
-				roosterSeqNum >= 0)
+				StorageService.RoostersData[login].Contains(editingRooster))
 			{
 				lock (StorageService.RoostersData)
 				{
-					StorageService.RoostersData[login][roosterSeqNum] = rooster;
+					StorageService.RoostersData[login][StorageService.RoostersData[login].IndexOf(editingRooster)] = rooster;
 				}
 			}
-
 			StorageService.SaveRoostersAsync();
 		}
 		/// <summary>
 		/// Асинхронно удаляет петуха.
 		/// </summary>
 		/// <param name="token">Токен.</param>
-		/// <param name="roosterSeqNum">Порядковый номер петуха.</param>
-		public async Task RemoveAsync(string token, int roosterSeqNum)
+		/// <param name="deleteRooster">Удаляемый петух.</param>
+		public async Task RemoveAsync(string token, RoosterModel deleteRooster)
 		{
+			var deletingRooster = deleteRooster.ToRoosterDto();
 			var login = await GetLoginAsync(token);
 			if (StorageService.RoostersData.ContainsKey(login) &&
 				StorageService.RoostersData[login]
-					   .Count >
-				roosterSeqNum &&
-				roosterSeqNum >= 0)
+					   .Contains(deletingRooster))
 			{
 				lock (StorageService.RoostersData)
 				{
 					StorageService.RoostersData[login]
-						   .RemoveAt(roosterSeqNum);
+						   .RemoveAt(StorageService.RoostersData[login].IndexOf(deletingRooster));
 				}
 			}
 			StorageService.SaveRoostersAsync();
