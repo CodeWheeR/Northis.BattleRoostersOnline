@@ -18,7 +18,7 @@ namespace GameServer
 		/// <param name="args">Аргументы.</param>
 		private static void Main(string[] args)
 		{
-			var baseAddress = new Uri("http://localhost:7777/Northis.BattleRoostersOnline");
+			var baseAddress = new Uri("http://10.88.99.75:7777/Northis.BattleRoostersOnline");
 
 			var selfHost = new ServiceHost(typeof(GameServicesProvider), baseAddress);
 
@@ -28,7 +28,8 @@ namespace GameServer
 
 				var authBinding = new WSDualHttpBinding()
 				{
-					SendTimeout = new TimeSpan(0, 0, 0, 60),
+					OpenTimeout = new TimeSpan(0, 0, 0, 5),
+					SendTimeout = new TimeSpan(0, 0, 0, 5),
 					Security = new WSDualHttpSecurity()
 					{
 						Mode = WSDualHttpSecurityMode.None
@@ -37,7 +38,7 @@ namespace GameServer
 
 				var battleBinding = new WSDualHttpBinding()
 				{
-					SendTimeout = new TimeSpan(0, 0, 0, 60),
+					SendTimeout = new TimeSpan(0, 0, 0, 1),
 					Security = new WSDualHttpSecurity()
 					{
 						Mode = WSDualHttpSecurityMode.None,

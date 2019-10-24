@@ -228,7 +228,7 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			if (!BattleEnded)
 			{
-				await _battleServiceClient.GiveUpAsync(_userToken, MatchToken);
+				_battleServiceClient.GiveUpAsync(_userToken, MatchToken);
 			}
 
 			await base.OnClosingAsync();
@@ -241,7 +241,7 @@ namespace Northis.RoosterBattle.ViewModels
 		private async Task StartFightAsync()
 		{
 			BattleStarted = true;
-			await _battleServiceClient.StartBattleAsync(_userToken, MatchToken);
+			_battleServiceClient.StartBattleAsync(_userToken, MatchToken);
 		}
 
 		/// <summary>
@@ -253,7 +253,7 @@ namespace Northis.RoosterBattle.ViewModels
 			ShowDeadFirst = false;
 			ShowDeadSecond = false;
 			IsFinding = true;
-			await _battleServiceClient.FindMatchAsync(_userToken, FirstFighter.ToRoosterDto());
+			_battleServiceClient.FindMatchAsync(_userToken, FirstFighter.ToRoosterDto());
 		}
 
 		/// <summary>

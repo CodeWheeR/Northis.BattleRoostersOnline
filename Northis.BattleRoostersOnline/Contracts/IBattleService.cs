@@ -16,8 +16,8 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
 		/// <returns>Task.</returns>
-		[OperationContract(IsInitiating = true)]
-		Task FindMatchAsync(string token, RoosterDto rooster);
+		[OperationContract(IsInitiating = true, IsOneWay = true)]
+		void FindMatchAsync(string token, RoosterDto rooster);
 
 		/// <summary>
 		/// Контракт операции, отвечающий за отмену поиска матча.
@@ -33,8 +33,8 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
 		/// <returns>Task.</returns>
-		[OperationContract(IsInitiating = true)]
-		Task StartBattleAsync(string token, string matchToken);
+		[OperationContract(IsInitiating = true, IsOneWay = true)]
+		void StartBattleAsync(string token, string matchToken);
 
 		/// <summary>
 		/// Контракт операции, отвечающий за сдачу боя.
@@ -42,7 +42,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
 		/// <returns>Task.</returns>
-		[OperationContract(IsTerminating = true)]
-		Task GiveUpAsync(string token, string matchToken);
+		[OperationContract(IsTerminating = true, IsOneWay = true)]
+		void GiveUpAsync(string token, string matchToken);
 	}
 }

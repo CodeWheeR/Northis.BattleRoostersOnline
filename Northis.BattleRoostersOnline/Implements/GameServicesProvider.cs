@@ -51,7 +51,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
-		public async Task AddAsync(string token, RoosterDto rooster) => await _editService.AddAsync(token, rooster);
+		public void AddAsync(string token, RoosterDto rooster) => _editService.AddAsync(token, rooster);
 
 		/// <summary>
 		/// Асинхнронно редактирует петуха.
@@ -59,7 +59,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="sourceRooster">Исходный петух.</param>
 		/// <param name="editRooster">Редактированный петух.</param>
-		public async Task EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster) => await _editService.EditAsync(token, sourceRooster, editRooster);
+		public void EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster) => _editService.EditAsync(token, sourceRooster, editRooster);
 
 		/// <summary>
 		/// Асинхронно возвращает петухов пользователя.
@@ -75,7 +75,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="deleteRooster">Удаляемый петух.</param>
-		public async Task RemoveAsync(string token, RoosterDto deleteRooster) => await _editService.RemoveAsync(token, deleteRooster);
+		public void RemoveAsync(string token, RoosterDto deleteRooster) => _editService.RemoveAsync(token, deleteRooster);
 
 		/// <summary>
 		/// Осуществляет вход пользователя в систему.
@@ -119,7 +119,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
-		public async Task FindMatchAsync(string token, RoosterDto rooster) => await _battleService.FindMatchAsync(token, rooster);
+		public void FindMatchAsync(string token, RoosterDto rooster) => _battleService.FindMatchAsync(token, rooster);
 
 		/// <summary>
 		/// Осуществляет отмену поиска матча.
@@ -135,14 +135,14 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
-		public async Task StartBattleAsync(string token, string matchToken) => await _battleService.StartBattleAsync(token, matchToken);
+		public void StartBattleAsync(string token, string matchToken) => _battleService.StartBattleAsync(token, matchToken);
 
 		/// <summary>
 		/// Осуществляет сдачу боя.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
-		public async Task GiveUpAsync(string token, string matchToken) => await _battleService.GiveUpAsync(token, matchToken);
+		public void GiveUpAsync(string token, string matchToken) => _battleService.GiveUpAsync(token, matchToken);
 		#endregion
 	}
 }

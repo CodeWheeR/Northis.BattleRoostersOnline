@@ -117,7 +117,18 @@ namespace Northis.RoosterBattle.ViewModels
 				return;
 			}
 
-			var token = await authMethod(Login, password);
+			string token = "";
+			try
+			{
+				token = authMethod(Login, password)
+					.Result;
+			}
+			catch (Exception e)
+			{
+				MessageBox.Show(e.ToString());
+			}
+
+			//var token = await authMethod(Login, password);
 
 			AuthenticateStatus result;
 

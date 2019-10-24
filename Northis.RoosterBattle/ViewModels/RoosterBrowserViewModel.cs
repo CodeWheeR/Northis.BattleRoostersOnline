@@ -241,7 +241,7 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			var sourceRooster = SelectedRooster.ToRoosterDto();
 			await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(SelectedRooster);
-			await _editServiceClient.EditAsync(token, sourceRooster, SelectedRooster.ToRoosterDto());
+			_editServiceClient.EditAsync(token, sourceRooster, SelectedRooster.ToRoosterDto());
 			UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
 		}
 
@@ -251,7 +251,7 @@ namespace Northis.RoosterBattle.ViewModels
 		/// <returns></returns>
 		private async Task DeleteRoosterAsync()
 		{
-			await _editServiceClient.RemoveAsync(token, SelectedRooster.ToRoosterDto());
+			_editServiceClient.RemoveAsync(token, SelectedRooster.ToRoosterDto());
 			UpdateRoostersAsync();
 		}
 
@@ -264,7 +264,7 @@ namespace Northis.RoosterBattle.ViewModels
 			var rooster = new RoosterModel();
 			if (await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(rooster) == true)
 			{
-				await _editServiceClient.AddAsync(token, rooster.ToRoosterDto());
+				_editServiceClient.AddAsync(token, rooster.ToRoosterDto());
 				UpdateRoostersAsync();
 			}
 		}

@@ -64,12 +64,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetNewGlobalStatisticsResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Edit">
+  <xs:element name="EditAsync">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
@@ -78,12 +73,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="EditResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Add">
+  <xs:element name="AddAsync">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
@@ -91,22 +81,12 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AddResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Remove">
+  <xs:element name="RemoveAsync">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="rooster" nillable="true" type="q6:RoosterDto" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RemoveResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GetUserRoosters">
@@ -123,17 +103,12 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="FindMatch">
+  <xs:element name="FindMatchAsync">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="rooster" nillable="true" type="q8:RoosterDto" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="FindMatchResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="CancelFinding">
@@ -150,7 +125,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="StartBattle">
+  <xs:element name="StartBattleAsync">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
@@ -158,22 +133,12 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="StartBattleResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GiveUp">
+  <xs:element name="GiveUpAsync">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="matchToken" nillable="true" type="xs:string" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GiveUpResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GetRoosterStatus">
@@ -184,11 +149,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetRoosterStatusResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetBattleMessage">
     <xs:complexType>
       <xs:sequence>
@@ -196,17 +156,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetBattleMessageResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetStartSign">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetStartSignResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -218,17 +168,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="FindedMatchResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetEndSign">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetEndSignResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

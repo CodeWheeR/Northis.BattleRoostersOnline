@@ -285,9 +285,6 @@
     <WCFMetadataStorage Include="Connected Services\GameServer\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\GameServer\Northis.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Connected Services\GameServer\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -298,6 +295,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServer\Northis.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

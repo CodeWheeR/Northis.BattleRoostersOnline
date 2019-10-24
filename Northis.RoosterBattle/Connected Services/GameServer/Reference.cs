@@ -429,7 +429,7 @@ namespace Northis.RoosterBattle.GameServer {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IAuthenticateServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticateService/GetNewGlobalStatistics", ReplyAction="http://tempuri.org/IAuthenticateService/GetNewGlobalStatisticsResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAuthenticateService/GetNewGlobalStatistics")]
         void GetNewGlobalStatistics(Northis.RoosterBattle.GameServer.StatisticsDto[] statistics);
     }
     
@@ -498,23 +498,23 @@ namespace Northis.RoosterBattle.GameServer {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServer.IEditService")]
     public interface IEditService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        void Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/EditAsync")]
+        void EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        System.Threading.Tasks.Task EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/EditAsync")]
+        System.Threading.Tasks.Task EditAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
-        void Add(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/AddAsync")]
+        void AddAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
-        System.Threading.Tasks.Task AddAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/AddAsync")]
+        System.Threading.Tasks.Task AddAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
-        void Remove(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/RemoveAsync")]
+        void RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
-        System.Threading.Tasks.Task RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/RemoveAsync")]
+        System.Threading.Tasks.Task RemoveAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/GetUserRoosters", ReplyAction="http://tempuri.org/IEditService/GetUserRoostersResponse")]
         Northis.RoosterBattle.GameServer.RoosterDto[] GetUserRoosters(string token);
@@ -550,28 +550,28 @@ namespace Northis.RoosterBattle.GameServer {
                 base(binding, remoteAddress) {
         }
         
-        public void Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
-            base.Channel.Edit(token, sourceRooster, editRooster);
+        public void EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
+            base.Channel.EditAsync(token, sourceRooster, editRooster);
         }
         
-        public System.Threading.Tasks.Task EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
-            return base.Channel.EditAsync(token, sourceRooster, editRooster);
+        public System.Threading.Tasks.Task EditAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
+            return base.Channel.EditAsyncAsync(token, sourceRooster, editRooster);
         }
         
-        public void Add(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            base.Channel.Add(token, rooster);
+        public void AddAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            base.Channel.AddAsync(token, rooster);
         }
         
-        public System.Threading.Tasks.Task AddAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            return base.Channel.AddAsync(token, rooster);
+        public System.Threading.Tasks.Task AddAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            return base.Channel.AddAsyncAsync(token, rooster);
         }
         
-        public void Remove(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            base.Channel.Remove(token, rooster);
+        public void RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            base.Channel.RemoveAsync(token, rooster);
         }
         
-        public System.Threading.Tasks.Task RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            return base.Channel.RemoveAsync(token, rooster);
+        public System.Threading.Tasks.Task RemoveAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            return base.Channel.RemoveAsyncAsync(token, rooster);
         }
         
         public Northis.RoosterBattle.GameServer.RoosterDto[] GetUserRoosters(string token) {
@@ -587,11 +587,11 @@ namespace Northis.RoosterBattle.GameServer {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServer.IBattleService", CallbackContract=typeof(Northis.RoosterBattle.GameServer.IBattleServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IBattleService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/FindMatch", ReplyAction="http://tempuri.org/IBattleService/FindMatchResponse")]
-        void FindMatch(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/FindMatchAsync")]
+        void FindMatchAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/FindMatch", ReplyAction="http://tempuri.org/IBattleService/FindMatchResponse")]
-        System.Threading.Tasks.Task FindMatchAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/FindMatchAsync")]
+        System.Threading.Tasks.Task FindMatchAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/CancelFinding", ReplyAction="http://tempuri.org/IBattleService/CancelFindingResponse")]
         bool CancelFinding(string token);
@@ -599,35 +599,35 @@ namespace Northis.RoosterBattle.GameServer {
         [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/CancelFinding", ReplyAction="http://tempuri.org/IBattleService/CancelFindingResponse")]
         System.Threading.Tasks.Task<bool> CancelFindingAsync(string token);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/StartBattle", ReplyAction="http://tempuri.org/IBattleService/StartBattleResponse")]
-        void StartBattle(string token, string matchToken);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/StartBattleAsync")]
+        void StartBattleAsync(string token, string matchToken);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/StartBattle", ReplyAction="http://tempuri.org/IBattleService/StartBattleResponse")]
-        System.Threading.Tasks.Task StartBattleAsync(string token, string matchToken);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/StartBattleAsync")]
+        System.Threading.Tasks.Task StartBattleAsyncAsync(string token, string matchToken);
         
-        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/GiveUp", ReplyAction="http://tempuri.org/IBattleService/GiveUpResponse")]
-        void GiveUp(string token, string matchToken);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, IsTerminating=true, Action="http://tempuri.org/IBattleService/GiveUpAsync")]
+        void GiveUpAsync(string token, string matchToken);
         
-        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/GiveUp", ReplyAction="http://tempuri.org/IBattleService/GiveUpResponse")]
-        System.Threading.Tasks.Task GiveUpAsync(string token, string matchToken);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, IsTerminating=true, Action="http://tempuri.org/IBattleService/GiveUpAsync")]
+        System.Threading.Tasks.Task GiveUpAsyncAsync(string token, string matchToken);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IBattleServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GetRoosterStatus", ReplyAction="http://tempuri.org/IBattleService/GetRoosterStatusResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/GetRoosterStatus")]
         void GetRoosterStatus(Northis.RoosterBattle.GameServer.RoosterDto yourRooster, Northis.RoosterBattle.GameServer.RoosterDto enemyRooster);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GetBattleMessage", ReplyAction="http://tempuri.org/IBattleService/GetBattleMessageResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/GetBattleMessage")]
         void GetBattleMessage(string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GetStartSign", ReplyAction="http://tempuri.org/IBattleService/GetStartSignResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/GetStartSign")]
         void GetStartSign();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/FindedMatch", ReplyAction="http://tempuri.org/IBattleService/FindedMatchResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/FindedMatch")]
         void FindedMatch(string token);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GetEndSign", ReplyAction="http://tempuri.org/IBattleService/GetEndSignResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/GetEndSign")]
         void GetEndSign();
     }
     
@@ -659,12 +659,12 @@ namespace Northis.RoosterBattle.GameServer {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void FindMatch(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            base.Channel.FindMatch(token, rooster);
+        public void FindMatchAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            base.Channel.FindMatchAsync(token, rooster);
         }
         
-        public System.Threading.Tasks.Task FindMatchAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            return base.Channel.FindMatchAsync(token, rooster);
+        public System.Threading.Tasks.Task FindMatchAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            return base.Channel.FindMatchAsyncAsync(token, rooster);
         }
         
         public bool CancelFinding(string token) {
@@ -675,20 +675,20 @@ namespace Northis.RoosterBattle.GameServer {
             return base.Channel.CancelFindingAsync(token);
         }
         
-        public void StartBattle(string token, string matchToken) {
-            base.Channel.StartBattle(token, matchToken);
+        public void StartBattleAsync(string token, string matchToken) {
+            base.Channel.StartBattleAsync(token, matchToken);
         }
         
-        public System.Threading.Tasks.Task StartBattleAsync(string token, string matchToken) {
-            return base.Channel.StartBattleAsync(token, matchToken);
+        public System.Threading.Tasks.Task StartBattleAsyncAsync(string token, string matchToken) {
+            return base.Channel.StartBattleAsyncAsync(token, matchToken);
         }
         
-        public void GiveUp(string token, string matchToken) {
-            base.Channel.GiveUp(token, matchToken);
+        public void GiveUpAsync(string token, string matchToken) {
+            base.Channel.GiveUpAsync(token, matchToken);
         }
         
-        public System.Threading.Tasks.Task GiveUpAsync(string token, string matchToken) {
-            return base.Channel.GiveUpAsync(token, matchToken);
+        public System.Threading.Tasks.Task GiveUpAsyncAsync(string token, string matchToken) {
+            return base.Channel.GiveUpAsyncAsync(token, matchToken);
         }
     }
 }

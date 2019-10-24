@@ -13,33 +13,33 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// </summary>
 		/// <param name="yourRooster">Ваш петух.</param>
 		/// <param name="enemyRooster">Петух противника.</param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void GetRoosterStatus(RoosterDto yourRooster, RoosterDto enemyRooster);
 
 		/// <summary>
 		/// Контракт операции, ответственный за предрставление информации о битве.
 		/// </summary>
 		/// <param name="message">Сообщение.</param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void GetBattleMessage(string message);
 
 		/// <summary>
 		/// Контракт операции, ответственный за предоставление информации о начале боя.
 		/// </summary>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void GetStartSign();
 
 		/// <summary>
 		/// Контракт операции, ответственный за оповещение о нахождении матча.
 		/// </summary>
 		/// <param name="token">Токен.</param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void FindedMatch(string token);
 
 		/// <summary>
 		/// Контракт операции, ответственный за оповещение об окончании матча.
 		/// </summary>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void GetEndSign();
 	}
 }

@@ -33,7 +33,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
 		/// <returns>Task.</returns>
-		public async Task AddAsync(string token, RoosterDto rooster)
+		public async void AddAsync(string token, RoosterDto rooster)
 		{
 			var login = await GetLoginAsync(token);
 
@@ -91,7 +91,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="editRooster">Редактируемый петух.</param>
-		public async Task EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster)
+		public async void EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster)
 		{
 			var login = await GetLoginAsync(token);
 			if (StorageService.RoostersData.ContainsKey(login) &&
@@ -110,7 +110,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="deleteRooster">Удаляемый петух.</param>
-		public async Task RemoveAsync(string token, RoosterDto deleteRooster)
+		public async void RemoveAsync(string token, RoosterDto deleteRooster)
 		{
 			var login = await GetLoginAsync(token);
 			if (StorageService.RoostersData.ContainsKey(login) &&
