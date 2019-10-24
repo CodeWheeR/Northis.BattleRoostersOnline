@@ -1503,27 +1503,27 @@
   </wsdl:binding>
   <wsdl:service name="GameServicesProvider">
     <wsdl:port name="WSDualHttpBinding_IAuthenticateService" binding="tns:WSDualHttpBinding_IAuthenticateService">
-      <soap12:address location="http://localhost:23555/Northis.BattleRoostersOnline/AuthenticationService" />
+      <soap12:address location="http://10.88.99.75:23555/Northis.BattleRoostersOnline/AuthenticationService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://localhost:23555/Northis.BattleRoostersOnline/AuthenticationService</wsa10:Address>
+        <wsa10:Address>http://10.88.99.75:23555/Northis.BattleRoostersOnline/AuthenticationService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="WSHttpBinding_IEditService" binding="tns:WSHttpBinding_IEditService">
-      <soap12:address location="http://localhost:23555/Northis.BattleRoostersOnline/EditService" />
+      <soap12:address location="http://10.88.99.75:23555/Northis.BattleRoostersOnline/EditService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://localhost:23555/Northis.BattleRoostersOnline/EditService</wsa10:Address>
+        <wsa10:Address>http://10.88.99.75:23555/Northis.BattleRoostersOnline/EditService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="WSDualHttpBinding_IBattleService" binding="tns:WSDualHttpBinding_IBattleService">
-      <soap12:address location="http://localhost:23555/Northis.BattleRoostersOnline/BattleService" />
+      <soap12:address location="http://10.88.99.75:23555/Northis.BattleRoostersOnline/BattleService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://localhost:23555/Northis.BattleRoostersOnline/BattleService</wsa10:Address>
+        <wsa10:Address>http://10.88.99.75:23555/Northis.BattleRoostersOnline/BattleService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>

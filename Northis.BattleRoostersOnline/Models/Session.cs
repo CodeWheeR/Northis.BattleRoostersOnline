@@ -345,7 +345,6 @@ namespace Northis.BattleRoostersOnline.Models
 		/// </summary>
 		public void SendEndSign()
 		{
-			IsStarted = true;
 			BattleEnded?.Invoke(this, EventArgs.Empty);
 			StatisticsPublisher.GetInstance()
 							   .UpdateStatistics();

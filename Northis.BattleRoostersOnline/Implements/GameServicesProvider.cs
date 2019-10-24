@@ -57,9 +57,9 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// Асинхнронно редактирует петуха.
 		/// </summary>
 		/// <param name="token">Токен.</param>
-		/// <param name="roosterId">Идентификатор петуха.</param>
-		/// <param name="rooster">Петух.</param>
-		public async Task EditAsync(string token, RoosterDto editRooster) => await _editService.EditAsync(token, editRooster);
+		/// <param name="sourceRooster">Исходный петух.</param>
+		/// <param name="editRooster">Редактированный петух.</param>
+		public async Task EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster) => await _editService.EditAsync(token, sourceRooster, editRooster);
 
 		/// <summary>
 		/// Асинхронно возвращает петухов пользователя.
@@ -75,7 +75,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="deleteRooster">Удаляемый петух.</param>
-		public async Task RemoveAsync(string token, RoosterDto deleteRooster) => _editService.RemoveAsync(token, deleteRooster);
+		public async Task RemoveAsync(string token, RoosterDto deleteRooster) => await _editService.RemoveAsync(token, deleteRooster);
 
 		/// <summary>
 		/// Осуществляет вход пользователя в систему.
@@ -119,7 +119,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
-		public async Task FindMatchAsync(string token, RoosterDto rooster) => _battleService.FindMatchAsync(token, rooster);
+		public async Task FindMatchAsync(string token, RoosterDto rooster) => await _battleService.FindMatchAsync(token, rooster);
 
 		/// <summary>
 		/// Осуществляет отмену поиска матча.
@@ -135,31 +135,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
-		public async Task StartBattleAsync(string token, string matchToken) => _battleService.StartBattleAsync(token, matchToken);
-
-		/// <summary>
-		/// Нереализованный контракт операции.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="matchToken">Токен матча.</param>
-		/// <exception cref="NotImplementedException"></exception>
-		public async Task Beak(string token, string matchToken) => throw new NotImplementedException();
-
-		/// <summary>
-		/// Нереализованный контракт операции.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="matchToken">Токен матча.</param>
-		/// <exception cref="NotImplementedException"></exception>
-		public async Task Bite(string token, string matchToken) => throw new NotImplementedException();
-
-		/// <summary>
-		/// Нереализованный контракт операции.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="matchToken">Токен матча.</param>
-		/// <exception cref="NotImplementedException"></exception>
-		public async Task Pull(string token, string matchToken) => throw new NotImplementedException();
+		public async Task StartBattleAsync(string token, string matchToken) => await _battleService.StartBattleAsync(token, matchToken);
 
 		/// <summary>
 		/// Осуществляет сдачу боя.

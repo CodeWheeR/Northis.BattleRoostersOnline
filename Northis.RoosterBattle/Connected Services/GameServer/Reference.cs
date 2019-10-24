@@ -499,10 +499,10 @@ namespace Northis.RoosterBattle.GameServer {
     public interface IEditService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        void Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
+        void Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        System.Threading.Tasks.Task EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
+        System.Threading.Tasks.Task EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
         void Add(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
@@ -550,12 +550,12 @@ namespace Northis.RoosterBattle.GameServer {
                 base(binding, remoteAddress) {
         }
         
-        public void Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
-            base.Channel.Edit(token, editRooster);
+        public void Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
+            base.Channel.Edit(token, sourceRooster, editRooster);
         }
         
-        public System.Threading.Tasks.Task EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
-            return base.Channel.EditAsync(token, editRooster);
+        public System.Threading.Tasks.Task EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
+            return base.Channel.EditAsync(token, sourceRooster, editRooster);
         }
         
         public void Add(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {

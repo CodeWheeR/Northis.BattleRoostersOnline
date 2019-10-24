@@ -16,9 +16,10 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// Контракт операции, ответственный за редактирование выбранного петуха конкретного пользователя.
 		/// </summary>
 		/// <param name="token">Идентификатор.</param>
-		/// <param name="editRooster">Редактируемый петух.</param>
+		/// <param name="sourceRooster">Изменяемый петух.</param>
+		/// <param name="editRooster">Редактированный петух.</param>
 		[OperationContract]
-		Task EditAsync(string token, RoosterDto editRooster);
+		Task EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster);
 
 		/// <summary>
 		/// Контракт операции, ответственный за добавление петуха.

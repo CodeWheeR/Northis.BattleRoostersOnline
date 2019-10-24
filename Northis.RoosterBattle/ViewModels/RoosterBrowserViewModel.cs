@@ -239,8 +239,9 @@ namespace Northis.RoosterBattle.ViewModels
 		/// <returns>Окно редактирования.</returns>
 		private async Task EditRoosterAsync()
 		{
+			var sourceRooster = SelectedRooster.ToRoosterDto();
 			await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(SelectedRooster);
-			await _editServiceClient.EditAsync(token, SelectedRooster.ToRoosterDto());
+			await _editServiceClient.EditAsync(token, sourceRooster, SelectedRooster.ToRoosterDto());
 			UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
 		}
 

@@ -18,7 +18,7 @@ namespace GameServer
 		/// <param name="args">Аргументы.</param>
 		private static void Main(string[] args)
 		{
-			var baseAddress = new Uri("http://localhost:23555/Northis.BattleRoostersOnline/");
+			var baseAddress = new Uri("http://10.88.99.75:23555/Northis.BattleRoostersOnline/");
 
 			var selfHost = new ServiceHost(typeof(GameServicesProvider), baseAddress);
 

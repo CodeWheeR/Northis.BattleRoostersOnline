@@ -91,16 +91,15 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="editRooster">Редактируемый петух.</param>
-		public async Task EditAsync(string token, RoosterDto editRooster)
+		public async Task EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster)
 		{
 			var login = await GetLoginAsync(token);
 			if (StorageService.RoostersData.ContainsKey(login) &&
-				StorageService.RoostersData[login].Contains(editRooster))
+				StorageService.RoostersData[login].Contains(sourceRooster))
 			{
 				lock (StorageService.RoostersData)
 				{
-					StorageService.RoostersData[login]
-								  .RemoveAll(dto => dto.Name == editRooster.Name);
+					StorageService.RoostersData[login].Remove(sourceRooster);
 					StorageService.RoostersData[login].Add(editRooster);
 				}
 			}
@@ -120,8 +119,10 @@ namespace Northis.BattleRoostersOnline.Implements
 			{
 				lock (StorageService.RoostersData)
 				{
+					var rooster = StorageService.RoostersData[login]
+												.First(dto => dto.Name == deleteRooster.Name);
 					StorageService.RoostersData[login]
-								  .RemoveAll(dto => dto.Name == deleteRooster.Name);
+								  .Remove(rooster);
 				}
 			}
 			StorageService.SaveRoostersAsync();
