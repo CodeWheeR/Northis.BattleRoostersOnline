@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Окрасы петуха, от которых зависят применяемые модификации.
 	/// </summary>
-	internal enum RoosterColor
+	public enum RoosterColor
 	{
 		/// <summary>
 		/// Петух получает +20 к максимальной удаче.

@@ -9,7 +9,7 @@ namespace Northis.BattleRoostersOnline.Models
 	/// Предоставляет модель петуха.
 	/// </summary>
 	/// <seealso cref="ValidatableModelBase" />
-	internal class RoosterModel : ICloneable
+	public class RoosterModel : ICloneable
 	{
 		#region Fields		
 		#region Private

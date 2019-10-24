@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Размер гребня. Повышает урон
 	/// </summary>
-	internal enum CrestSize
+	public enum CrestSize
 	{
 		/// <summary>
 		/// Повышает урон на 0%
