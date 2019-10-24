@@ -6,9 +6,12 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Threading.Tasks;
+using CommonServiceLocator;
 using DataTransferObjects;
 using Northis.BattleRoostersOnline.DataStorages;
 using Northis.BattleRoostersOnline.Implements;
+using Unity;
+using Unity.ServiceLocation;
 
 namespace Northis.BattleRoostersOnline.Models
 {
@@ -16,7 +19,7 @@ namespace Northis.BattleRoostersOnline.Models
 	/// Класс, инкапсулирующий в себе данные о пользователях, петухах, авторизированных пользователях, игровых сессиях.
 	/// </summary>
 	[Serializable]
-	public class DataStorageServiceData : IDataStorageService
+	public class DataStorageService : IDataStorageService
 	{
 		#region Fields
 		/// <summary>
@@ -34,9 +37,9 @@ namespace Northis.BattleRoostersOnline.Models
 		
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="DataStorageServiceData" /> класса.
+		/// Инициализирует новый экземпляр <see cref="DataStorageService" /> класса.
 		/// </summary>
-		public DataStorageServiceData()
+		public DataStorageService()
 		{
 			UserData = new Dictionary<string, string>();
 			RoostersData = new Dictionary<string, List<RoosterDto>>();
@@ -147,7 +150,7 @@ namespace Northis.BattleRoostersOnline.Models
 
 				lock (_RoostersFileLocker)
 				{
-					using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.OpenOrCreate))
+					using (var fileStream = new FileStream("Resources\\RoostersStorage.xml", FileMode.Create))
 					{
 						serializer.WriteObject(fileStream, roosters);
 					}
@@ -212,7 +215,7 @@ namespace Northis.BattleRoostersOnline.Models
 
 				lock (_UsersFileLocker)
 				{
-					using (var fs = new FileStream("Resources\\users.dat", FileMode.OpenOrCreate))
+					using (var fs = new FileStream("Resources\\users.dat", FileMode.Create))
 					{
 						_formatter.Serialize(fs, UserData);
 					}
@@ -237,5 +240,19 @@ namespace Northis.BattleRoostersOnline.Models
 			}
 		}
 		#endregion
+
+		public static void InitContainer()
+		{
+			if (!ServiceLocator.IsLocationProviderSet)
+			{
+				var container = new UnityContainer();
+				container.RegisterType<IDataStorageService, DataStorageService>();
+				container.RegisterInstance(new DataStorageService());
+
+				var locator = new UnityServiceLocator(container);
+				ServiceLocator.SetLocatorProvider(() => locator);
+			}
+		}
+
 	}
 }

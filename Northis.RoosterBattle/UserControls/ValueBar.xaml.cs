@@ -118,7 +118,7 @@ namespace Northis.RoosterBattle.UserControls
 
 		private static void ReloadValueBar(ValueBar obj, int maxValue, double newValue)
 		{
-			obj.Level.Margin = new Thickness(0, 0, obj.ActualWidth / 100 * (maxValue - newValue), 0);
+			obj.Level.Margin = new Thickness(0, 0, obj.ActualWidth / 100 * (100 - (newValue != 0 ? newValue / maxValue * 100 : 0)), 0);
 		}
 
 		private static void OnMaxValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -131,7 +131,7 @@ namespace Northis.RoosterBattle.UserControls
 		{
 			if (Math.Abs(_lastObjectSize - ActualWidth) > 0.01)
 			{
-				Level.Margin = new Thickness(0, 0, ActualWidth / 100 * (100 - ValueLevel), 0);
+				Level.Margin = new Thickness(0, 0, ActualWidth / 100 * (100 - (ValueLevel != 0 ? ValueLevel / MaxValue * 100 : 0)), 0);
 				_lastObjectSize = ActualWidth;
 			}
 		}

@@ -43,17 +43,15 @@ namespace Northis.BattleRoostersOnline.Implements
 				{
 					foreach (var usersRoosters in StorageService.RoostersData)
 					{
-						if (usersRoosters.Value.Count == 0)
+						foreach (var rooster in usersRoosters.Value)
 						{
-							continue;
+							stats.Add(new StatisticsDto()
+							{
+								UserName = usersRoosters.Key,
+								RoosterName = rooster.Name,
+								WinStreak = rooster.WinStreak
+							});
 						}
-						var rooster = usersRoosters.Value.First(r => r.WinStreak == usersRoosters.Value.Max(m => m.WinStreak));
-						stats.Add(new StatisticsDto()
-						{
-							UserName = usersRoosters.Key,
-							RoosterName = rooster.Name,
-							WinStreak = rooster.WinStreak
-						});
 					}
 				}
 
@@ -81,7 +79,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		public void Subscribe(string token, IAuthenticateServiceCallback callback)
 		{
 			if (callback is ICommunicationObject co)
-				co.Closing += (x, y) => ClearSubscribtion(token);
+				co.Closing += (x, y) => ClearSubscription(token);
 
 			_subscribers.Add(token, callback);
 			Task.Run(() => {
@@ -185,7 +183,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// Выполняет отписку пользователя от оповещений.
 		/// </summary>
 		/// <param name="token">Токен пользователя.</param>
-		private void ClearSubscribtion(string token)
+		private void ClearSubscription(string token)
 		{
 			if (_subscribers.ContainsKey(token))
 			{

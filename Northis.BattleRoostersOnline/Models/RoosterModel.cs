@@ -383,7 +383,7 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				var totalDamage = 0.0;
 				var luck = _luckMeter.Next(0, 100);
-				if (luck <= Luck)
+				if (luck < Luck)
 				{
 					totalDamage += 2 * Damage;
 				}

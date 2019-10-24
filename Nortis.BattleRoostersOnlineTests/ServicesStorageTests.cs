@@ -13,7 +13,7 @@ namespace Nortis.BattleRoostersOnlineTests
 	[TestFixture]
 	public class ServicesStorageTests : ServiceModuleTests
 	{
-		private DataStorageServiceData _dataStorageServiceData = new DataStorageServiceData();
+		private DataStorageService _dataStorageService = new DataStorageService();
 
 		/// <summary>
 		/// Проверяет метод загрузки петухов на предмет исключительных ситуаций.
@@ -21,7 +21,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public void LoadTest1()
 		{
-			Assert.DoesNotThrow(() => _dataStorageServiceData.LoadRoosters());
+			Assert.DoesNotThrow(() => _dataStorageService.LoadRoosters());
 
 		}
 		/// <summary>
@@ -38,8 +38,8 @@ namespace Nortis.BattleRoostersOnlineTests
 				new RoosterDto()
 			});
 
-			await _dataStorageServiceData.SaveRoostersAsync();
-			_dataStorageServiceData.LoadRoosters();
+			await _dataStorageService.SaveRoostersAsync();
+			_dataStorageService.LoadRoosters();
 
 			Assert.AreEqual(Storage.RoostersData.Count, backupRoosters + 1);
 			Assert.AreEqual(Storage.RoostersData["SomeKey"].Count, 3);
@@ -50,7 +50,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task SaveTest1()
 		{
-			Assert.DoesNotThrowAsync(() => _dataStorageServiceData.SaveRoostersAsync());
+			Assert.DoesNotThrowAsync(() => _dataStorageService.SaveRoostersAsync());
 		}
 		/// <summary>
 		/// Проверяет корректность метода сохранения петухов.
@@ -62,8 +62,8 @@ namespace Nortis.BattleRoostersOnlineTests
 			RoosterDto rooster = new RoosterDto();
 			Storage.RoostersData.Add(token, new List<RoosterDto> { rooster });
 
-			await _dataStorageServiceData.SaveRoostersAsync();
-			_dataStorageServiceData.LoadRoosters();
+			await _dataStorageService.SaveRoostersAsync();
+			_dataStorageService.LoadRoosters();
 
 
 			Assert.AreEqual(token, Storage.RoostersData.ElementAt(0).Key);
@@ -77,7 +77,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task SaveUsersTest1()
 		{
-			Assert.DoesNotThrowAsync(() => _dataStorageServiceData.SaveUserDataAsync());
+			Assert.DoesNotThrowAsync(() => _dataStorageService.SaveUserDataAsync());
 		}
 		/// <summary>
 		/// Проверяет корректность работы метода загрузки данных пользователя.
@@ -85,7 +85,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public async Task LoadUsersTest1()
 		{
-			Assert.DoesNotThrow(() => _dataStorageServiceData.LoadUserData());
+			Assert.DoesNotThrow(() => _dataStorageService.LoadUserData());
 		}
 	}
 }

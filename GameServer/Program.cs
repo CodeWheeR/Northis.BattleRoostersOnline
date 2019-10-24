@@ -3,6 +3,7 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using Northis.BattleRoostersOnline.Contracts;
 using Northis.BattleRoostersOnline.Implements;
+using Northis.BattleRoostersOnline.Models;
 
 namespace GameServer
 {
@@ -23,14 +24,16 @@ namespace GameServer
 
 			try
 			{
+				DataStorageService.InitContainer();
+
 				var authBinding = new WSDualHttpBinding()
 				{
-					SendTimeout = new TimeSpan(0, 0, 0, 5)
+					SendTimeout = new TimeSpan(0, 0, 0, 60)
 				};
 
 				var battleBinding = new WSDualHttpBinding()
 				{
-					SendTimeout = new TimeSpan(0, 0, 0, 1)
+					SendTimeout = new TimeSpan(0, 0, 0, 60)
 				};
 
 				selfHost.AddServiceEndpoint(typeof(IAuthenticateService), authBinding, "AuthenticationService");

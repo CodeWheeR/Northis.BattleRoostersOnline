@@ -221,8 +221,6 @@ namespace Northis.RoosterBattle.Models
 		{
 			if (rooster != null)
 			{
-				Health = rooster.Health;
-				MaxHealth = rooster.MaxHealth;
 				Stamina = rooster.Stamina;
 				Brickness = rooster.Brickness;
 				Luck = rooster.Luck;
@@ -233,6 +231,8 @@ namespace Northis.RoosterBattle.Models
 				Weight = rooster.Weight;
 				Name = rooster.Name;
 				WinStreak = rooster.WinStreak;
+				Health = rooster.Health;
+				MaxHealth = rooster.MaxHealth;
 			}
 		}
 		#endregion

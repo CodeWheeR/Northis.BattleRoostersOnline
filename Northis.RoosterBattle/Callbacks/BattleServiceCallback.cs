@@ -29,7 +29,8 @@ namespace Northis.RoosterBattle.Callbacks
 		/// <param name="enemyRooster">Петух врага.</param>
 		public void GetRoosterStatus(RoosterDto yourRooster, RoosterDto enemyRooster)
 		{
-			_fightVm.FirstFighter = new RoosterModel(yourRooster);
+			var rooster = new RoosterModel(yourRooster);
+			_fightVm.FirstFighter = rooster;
 			if (enemyRooster != null)
 			{
 				_fightVm.SecondFighter = new RoosterModel(enemyRooster);

@@ -62,6 +62,8 @@ namespace Northis.BattleRoostersOnline.Implements
 			}).ConfigureAwait(false);
 
 			StorageService.SaveRoostersAsync();
+			StatisticsPublisher.GetInstance()
+							   .UpdateStatistics();
 		}
 		/// <summary>
 		/// Асинхронно получает петухов пользователя.
@@ -129,6 +131,8 @@ namespace Northis.BattleRoostersOnline.Implements
 				}
 			}
 			StorageService.SaveRoostersAsync();
+			StatisticsPublisher.GetInstance()
+							   .UpdateStatistics();
 		}
 		#endregion
 		#endregion

@@ -25,7 +25,7 @@ namespace Nortis.BattleRoostersOnlineTests
 			string token = await authenticateService.RegisterAsync("Login1", "Password", callbackAuth.Object);
 			await editor.AddAsync(token, new RoosterDto());
 
-			Assert.AreEqual(ServiceLocator.Current.GetInstance<DataStorageServiceData>().RoostersData.Count, 1);
+			Assert.AreEqual(ServiceLocator.Current.GetInstance<DataStorageService>().RoostersData.Count, 1);
 		}
 		/// <summary>
 		/// Проверяет метод на предмет выброса исключений.
@@ -45,7 +45,7 @@ namespace Nortis.BattleRoostersOnlineTests
 
 			await editor.AddAsync("SomeToken", rooster);
 
-			Assert.IsTrue(ServiceLocator.Current.GetInstance<DataStorageServiceData>().RoostersData.ElementAt(0).Value[0].Equals(rooster));
+			Assert.IsTrue(ServiceLocator.Current.GetInstance<DataStorageService>().RoostersData.ElementAt(0).Value[0].Equals(rooster));
 		}
 		
 		/// <summary>
@@ -76,7 +76,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[TestCase("NotFoundToken", 0)]
 		public async Task EditTest(string token, int val)
 		{
-			ServiceLocator.Current.GetInstance<DataStorageServiceData>().RoostersData.Add("FoundToken", new List<RoosterDto>
+			ServiceLocator.Current.GetInstance<DataStorageService>().RoostersData.Add("FoundToken", new List<RoosterDto>
 			{
 				new RoosterDto()
 			});
@@ -93,7 +93,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[TestCase("NotFoundToken", 1000)]
 		public async Task RemoveTest(string token, int val)
 		{
-			ServiceLocator.Current.GetInstance<DataStorageServiceData>().RoostersData.Add("FoundToken", new List<RoosterDto>
+			ServiceLocator.Current.GetInstance<DataStorageService>().RoostersData.Add("FoundToken", new List<RoosterDto>
 			{
 				new RoosterDto()
 			});

@@ -65,8 +65,8 @@ namespace Nortis.BattleRoostersOnlineTests
 			{
 				UnityContainer container = new UnityContainer();
 
-				container.RegisterType<IDataStorageService, DataStorageServiceData>();
-				container.RegisterInstance(new DataStorageServiceData());
+				container.RegisterType<IDataStorageService, DataStorageService>();
+				container.RegisterInstance(new DataStorageService());
 
 				UnityServiceLocator locator = new UnityServiceLocator(container);
 				ServiceLocator.SetLocatorProvider(() => locator);
