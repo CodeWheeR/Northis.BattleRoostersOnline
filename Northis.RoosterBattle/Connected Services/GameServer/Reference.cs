@@ -499,10 +499,10 @@ namespace Northis.RoosterBattle.GameServer {
     public interface IEditService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        void Edit(string token, int roosterID, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        void Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        System.Threading.Tasks.Task EditAsync(string token, int roosterID, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        System.Threading.Tasks.Task EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
         void Add(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
@@ -511,10 +511,10 @@ namespace Northis.RoosterBattle.GameServer {
         System.Threading.Tasks.Task AddAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
-        void Remove(string token, int roosterID);
+        void Remove(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
-        System.Threading.Tasks.Task RemoveAsync(string token, int roosterID);
+        System.Threading.Tasks.Task RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/GetUserRoosters", ReplyAction="http://tempuri.org/IEditService/GetUserRoostersResponse")]
         Northis.RoosterBattle.GameServer.RoosterDto[] GetUserRoosters(string token);
@@ -550,12 +550,12 @@ namespace Northis.RoosterBattle.GameServer {
                 base(binding, remoteAddress) {
         }
         
-        public void Edit(string token, int roosterID, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            base.Channel.Edit(token, roosterID, rooster);
+        public void Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
+            base.Channel.Edit(token, editRooster);
         }
         
-        public System.Threading.Tasks.Task EditAsync(string token, int roosterID, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            return base.Channel.EditAsync(token, roosterID, rooster);
+        public System.Threading.Tasks.Task EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
+            return base.Channel.EditAsync(token, editRooster);
         }
         
         public void Add(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
@@ -566,12 +566,12 @@ namespace Northis.RoosterBattle.GameServer {
             return base.Channel.AddAsync(token, rooster);
         }
         
-        public void Remove(string token, int roosterID) {
-            base.Channel.Remove(token, roosterID);
+        public void Remove(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            base.Channel.Remove(token, rooster);
         }
         
-        public System.Threading.Tasks.Task RemoveAsync(string token, int roosterID) {
-            return base.Channel.RemoveAsync(token, roosterID);
+        public System.Threading.Tasks.Task RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            return base.Channel.RemoveAsync(token, rooster);
         }
         
         public Northis.RoosterBattle.GameServer.RoosterDto[] GetUserRoosters(string token) {
@@ -604,24 +604,6 @@ namespace Northis.RoosterBattle.GameServer {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/StartBattle", ReplyAction="http://tempuri.org/IBattleService/StartBattleResponse")]
         System.Threading.Tasks.Task StartBattleAsync(string token, string matchToken);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Beak", ReplyAction="http://tempuri.org/IBattleService/BeakResponse")]
-        void Beak(string token, string matchToken);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Beak", ReplyAction="http://tempuri.org/IBattleService/BeakResponse")]
-        System.Threading.Tasks.Task BeakAsync(string token, string matchToken);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Bite", ReplyAction="http://tempuri.org/IBattleService/BiteResponse")]
-        void Bite(string token, string matchToken);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Bite", ReplyAction="http://tempuri.org/IBattleService/BiteResponse")]
-        System.Threading.Tasks.Task BiteAsync(string token, string matchToken);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Pull", ReplyAction="http://tempuri.org/IBattleService/PullResponse")]
-        void Pull(string token, string matchToken);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/Pull", ReplyAction="http://tempuri.org/IBattleService/PullResponse")]
-        System.Threading.Tasks.Task PullAsync(string token, string matchToken);
         
         [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/GiveUp", ReplyAction="http://tempuri.org/IBattleService/GiveUpResponse")]
         void GiveUp(string token, string matchToken);
@@ -699,30 +681,6 @@ namespace Northis.RoosterBattle.GameServer {
         
         public System.Threading.Tasks.Task StartBattleAsync(string token, string matchToken) {
             return base.Channel.StartBattleAsync(token, matchToken);
-        }
-        
-        public void Beak(string token, string matchToken) {
-            base.Channel.Beak(token, matchToken);
-        }
-        
-        public System.Threading.Tasks.Task BeakAsync(string token, string matchToken) {
-            return base.Channel.BeakAsync(token, matchToken);
-        }
-        
-        public void Bite(string token, string matchToken) {
-            base.Channel.Bite(token, matchToken);
-        }
-        
-        public System.Threading.Tasks.Task BiteAsync(string token, string matchToken) {
-            return base.Channel.BiteAsync(token, matchToken);
-        }
-        
-        public void Pull(string token, string matchToken) {
-            base.Channel.Pull(token, matchToken);
-        }
-        
-        public System.Threading.Tasks.Task PullAsync(string token, string matchToken) {
-            return base.Channel.PullAsync(token, matchToken);
         }
         
         public void GiveUp(string token, string matchToken) {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using DataTransferObjects;
@@ -90,17 +91,17 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="editRooster">Редактируемый петух.</param>
-		/// <param name="rooster">Отредактированный петух.</param>
-		public async Task EditAsync(string token, RoosterModel editRooster, RoosterDto rooster)
+		public async Task EditAsync(string token, RoosterDto editRooster)
 		{
-			var editingRooster = editRooster.ToRoosterDto();
 			var login = await GetLoginAsync(token);
 			if (StorageService.RoostersData.ContainsKey(login) &&
-				StorageService.RoostersData[login].Contains(editingRooster))
+				StorageService.RoostersData[login].Contains(editRooster))
 			{
 				lock (StorageService.RoostersData)
 				{
-					StorageService.RoostersData[login][StorageService.RoostersData[login].IndexOf(editingRooster)] = rooster;
+					StorageService.RoostersData[login]
+								  .RemoveAll(dto => dto.Name == editRooster.Name);
+					StorageService.RoostersData[login].Add(editRooster);
 				}
 			}
 			StorageService.SaveRoostersAsync();
@@ -110,18 +111,17 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="deleteRooster">Удаляемый петух.</param>
-		public async Task RemoveAsync(string token, RoosterModel deleteRooster)
+		public async Task RemoveAsync(string token, RoosterDto deleteRooster)
 		{
-			var deletingRooster = deleteRooster.ToRoosterDto();
 			var login = await GetLoginAsync(token);
 			if (StorageService.RoostersData.ContainsKey(login) &&
 				StorageService.RoostersData[login]
-					   .Contains(deletingRooster))
+					   .Contains(deleteRooster))
 			{
 				lock (StorageService.RoostersData)
 				{
 					StorageService.RoostersData[login]
-						   .RemoveAt(StorageService.RoostersData[login].IndexOf(deletingRooster));
+								  .RemoveAll(dto => dto.Name == deleteRooster.Name);
 				}
 			}
 			StorageService.SaveRoostersAsync();

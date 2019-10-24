@@ -240,7 +240,7 @@ namespace Northis.RoosterBattle.ViewModels
 		private async Task EditRoosterAsync()
 		{
 			await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(SelectedRooster);
-			await _editServiceClient.EditAsync(token, SelectedIndex, SelectedRooster.ToRoosterDto());
+			await _editServiceClient.EditAsync(token, SelectedRooster.ToRoosterDto());
 			UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
 		}
 
@@ -250,7 +250,7 @@ namespace Northis.RoosterBattle.ViewModels
 		/// <returns></returns>
 		private async Task DeleteRoosterAsync()
 		{
-			await _editServiceClient.RemoveAsync(token, SelectedIndex);
+			await _editServiceClient.RemoveAsync(token, SelectedRooster.ToRoosterDto());
 			UpdateRoostersAsync();
 		}
 

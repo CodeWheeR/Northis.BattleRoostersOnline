@@ -81,14 +81,14 @@ namespace Nortis.BattleRoostersOnlineTests
 			});
 			
 
-			Assert.DoesNotThrowAsync(() => editor.EditAsync(token, new RoosterModel(), new RoosterDto()));
+			Assert.DoesNotThrowAsync(() => editor.EditAsync(token, new RoosterModel().ToRoosterDto()));
 		}
 		/// <summary>
 		/// Проверяет корректность редактирования нужного петуха.
 		/// </summary>
 		public async Task EditTest2()
 		{
-			RoosterModel editedRooster = new RoosterModel();
+			RoosterDto editedRooster = new RoosterDto();
 			RoosterDto rooster1 = new RoosterDto();
 			RoosterDto rooster2 = new RoosterDto();
 			RoosterDto rooster3 = new RoosterDto();
@@ -99,9 +99,9 @@ namespace Nortis.BattleRoostersOnlineTests
 				rooster3
 			});
 
-			await editor.EditAsync("FoundToken", editedRooster, rooster1);
+			await editor.EditAsync("FoundToken", editedRooster);
 
-			Assert.IsTrue(editedRooster.ToRoosterDto().Equals(Storage.RoostersData["FoundToken"][0]));
+			Assert.IsTrue(editedRooster.Equals(Storage.RoostersData["FoundToken"][0]));
 		}
 		/// <summary>
 		/// Проверяет работу метода редактирования с недопустимыми параметрами.
@@ -119,7 +119,7 @@ namespace Nortis.BattleRoostersOnlineTests
 				rooster
 			});
 
-			Assert.DoesNotThrowAsync(() => editor.RemoveAsync(token, new RoosterModel(rooster)));
+			Assert.DoesNotThrowAsync(() => editor.RemoveAsync(token,rooster));
 		}
 		/// <summary>
 		/// Проверяет корректность удаления нужного петуха.
@@ -137,7 +137,7 @@ namespace Nortis.BattleRoostersOnlineTests
 				rooster3
 			});
 
-			await editor.RemoveAsync(token, new RoosterModel(rooster1));
+			await editor.RemoveAsync(token, rooster1);
 
 			Assert.AreEqual(false,Storage.RoostersData[token].Contains(rooster1));
 		}
