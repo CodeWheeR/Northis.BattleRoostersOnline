@@ -185,20 +185,20 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Connected Services\GameServer\DataTransferObjects.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Connected Services\GameServer\GameServicesProvider.wsdl" />
     <None Include="Connected Services\GameServer\Northis.RoosterBattle.GameServer.AuthenticateStatus.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServer\Northis.RoosterBattle.GameServer.RoosterDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\GameServer\service.wsdl" />
-    <None Include="Connected Services\GameServer\service.xsd">
+    <None Include="Connected Services\GameServer\Northis.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GameServer\service1.xsd">
+    <None Include="Connected Services\GameServer\Northis1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServer\Northis2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
@@ -283,6 +283,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\GameServer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServer\Northis.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\GameServer\configuration91.svcinfo" />
