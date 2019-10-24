@@ -2,6 +2,7 @@
 using System.ServiceModel;
 using System.Threading.Tasks;
 using DataTransferObjects;
+using Northis.BattleRoostersOnline.Models;
 
 namespace Northis.BattleRoostersOnline.Contracts
 {
@@ -15,10 +16,10 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// Контракт операции, ответственный за редактирование выбранного петуха конкретного пользователя.
 		/// </summary>
 		/// <param name="token">Идентификатор.</param>
-		/// <param name="roosterId">Порядковый номер петуха.</param>
+		/// <param name="editRooster">Редактируемый петух.</param>
 		/// <param name="rooster">Петух.</param>
 		[OperationContract]
-		Task EditAsync(string token, int roosterId, RoosterDto rooster);
+		Task EditAsync(string token, RoosterModel editRooster, RoosterDto rooster);
 
 		/// <summary>
 		/// Контракт операции, ответственный за добавление петуха.
@@ -33,10 +34,10 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// Контракт операции, ответственный за удаление петуха.
 		/// </summary>
 		/// <param name="token">Токен.</param>
-		/// <param name="roosterId">Идентификатор петуха.</param>
+		/// <param name="rooster">Удаляемый петух.</param>
 		/// <returns>Task.</returns>
 		[OperationContract]
-		Task RemoveAsync(string token, int roosterId);
+		Task RemoveAsync(string token, RoosterModel rooster);
 
 		/// <summary>
 		/// Контракт операции, ответственный за возврат петухов пользователя.
