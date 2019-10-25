@@ -3,6 +3,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using DataTransferObjects;
+using NLog;
 using Northis.BattleRoostersOnline.Contracts;
 using Northis.BattleRoostersOnline.Models;
 
@@ -16,6 +17,8 @@ namespace Northis.BattleRoostersOnline.Implements
 
 	public class BattleService : BaseServiceWithStorage, IBattleService
 	{
+		private Logger _logger = LogManager.GetCurrentClassLogger();
+
 		#region Public Methods
 		/// <summary>
 		/// Производит поиск матча.
@@ -35,28 +38,37 @@ namespace Northis.BattleRoostersOnline.Implements
 			if (!StorageService.LoggedUsers.ContainsKey(token))
 			{
 				Task.Run(() => callback.FindedMatch("User was not found"));
+				_logger.Warn($"Попытка поиска матча не авторизованным пользователем {token}");
 				return;
 			}
 
-			await Task.Run(async () =>
+			try
 			{
-				Session session;
-				if (StorageService.Sessions.Count > 0 &&
-					!StorageService.Sessions.Last()
-								   .Value.IsReady)
+				await Task.Run(async () =>
 				{
-					session = StorageService.Sessions.Last()
-											.Value;
-					session.RegisterFighter(token, rooster, callback);
-				}
-				else
-				{
-					var matchToken = await GenerateTokenAsync();
-					session = new Session(matchToken);
-					session.RegisterFighter(token, rooster, callback);
-					StorageService.Sessions.Add(matchToken, session);
-				}
-			});
+					Session session;
+					if (StorageService.Sessions.Count > 0 &&
+						!StorageService.Sessions.Last()
+									   .Value.IsReady)
+					{
+						session = StorageService.Sessions.Last()
+												.Value;
+						session.RegisterFighter(token, rooster, callback);
+					}
+					else
+					{
+						var matchToken = await GenerateTokenAsync();
+						session = new Session(matchToken);
+						session.RegisterFighter(token, rooster, callback);
+						StorageService.Sessions.Add(matchToken, session);
+					}
+				});
+			}
+			catch (Exception e)
+			{
+				_logger.Error(e);
+				throw;
+			}
 
 		}
 
@@ -67,19 +79,31 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// true - в случае успешной отмены поиска, иначе - false.
 		/// </returns>
-		public bool CancelFinding(string token)
+		public async Task<bool> CancelFinding(string token)
 		{
-			var session = StorageService.Sessions.Reverse()
-
-								 .First(x => x.Value.RemoveFighter(token))
-								 .Value;
-			if (session != null)
+			try
 			{
-				StorageService.Sessions.Remove(session.Token);
-				return true;
-			}
+				return await Task.Run<bool>(() =>
+				{
+					var session = StorageService.Sessions.Reverse()
+												.First(x => x.Value.RemoveFighter(token))
+												.Value;
+					if (session != null)
+					{
+						StorageService.Sessions.Remove(session.Token);
+						_logger.Info($"Поиск матча был отменен пользователем {token}, сессия {session.Token} закрыта");
+						return true;
+					}
 
-			return false;
+					return false;
+				});
+			}
+			catch (Exception e)
+			{
+				_logger.Error(e);
+				throw;
+			}
+			
 		}
 
 		/// <summary>
@@ -91,17 +115,25 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		public async void StartBattleAsync(string token, string matchToken)
 		{
-			await Task.Run(async () =>
+			try
 			{
-				var session = StorageService.Sessions[matchToken];
-				session.SetReady(token);
-
-				if (session.CheckForReadiness())
+				await Task.Run(async () =>
 				{
-					session.SendStartSign();
-					await session.StartBattle();
-				}
-			});
+					var session = StorageService.Sessions[matchToken];
+					session.SetReady(token);
+
+					if (session.CheckForReadiness())
+					{
+						session.SendStartSign();
+						await session.StartBattle();
+					}
+				});
+			}
+			catch (Exception e)
+			{
+				_logger.Error(e);
+				throw;
+			}
 		}
 
 
@@ -114,13 +146,23 @@ namespace Northis.BattleRoostersOnline.Implements
 
 		public async void GiveUpAsync(string token, string matchToken)
 		{
-			await Task.Run(async () =>
+			try
 			{
-				var session = StorageService.Sessions[matchToken];
+				await Task.Run(async () =>
+				{
+					var session = StorageService.Sessions[matchToken];
 
-				OperationContext.Current?.Channel?.Close();
-				session.StopSession(true);
-			});
+					OperationContext.Current?.Channel?.Close();
+					session.StopSession(true);
+				});
+				var login = await GetLoginAsync(token);
+				_logger.Info($"Пользователь {(login == "" ? token : login)} дезертировал");
+			}
+			catch (Exception e)
+			{
+				_logger.Error(e);
+				throw;
+			}
 		}
 		#endregion
 	}

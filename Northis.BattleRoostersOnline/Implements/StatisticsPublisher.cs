@@ -7,6 +7,7 @@ using System.Text;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using DataTransferObjects;
+using NLog;
 using Northis.BattleRoostersOnline.Contracts;
 using Northis.BattleRoostersOnline.Events;
 
@@ -28,6 +29,8 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// Кэшированное значение статистики
 		/// </summary>
 		private List<StatisticsDto> _cachedStatistics = new List<StatisticsDto>();
+
+		private Logger _logger = LogManager.GetCurrentClassLogger();
 		#endregion
 
 		#region Public Methods		
@@ -36,33 +39,41 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		public async Task UpdateStatistics()
 		{
-			await Task.Run(() =>
+			try
 			{
-				var stats = new List<StatisticsDto>();
-				lock (StorageService.RoostersData)
+				await Task.Run(() =>
 				{
-					foreach (var usersRoosters in StorageService.RoostersData)
+					var stats = new List<StatisticsDto>();
+					lock (StorageService.RoostersData)
 					{
-						foreach (var rooster in usersRoosters.Value)
+						foreach (var usersRoosters in StorageService.RoostersData)
 						{
-							stats.Add(new StatisticsDto()
+							foreach (var rooster in usersRoosters.Value)
 							{
-								UserName = usersRoosters.Key,
-								RoosterName = rooster.Name,
-								WinStreak = rooster.WinStreak
-							});
+								stats.Add(new StatisticsDto()
+								{
+									UserName = usersRoosters.Key,
+									RoosterName = rooster.Name,
+									WinStreak = rooster.WinStreak
+								});
+							}
 						}
 					}
-				}
 
-				lock (_cachedStatistics)
-				{
-					_cachedStatistics = stats.OrderByDescending(x => x.WinStreak)
-											 .ToList();
-				}
+					lock (_cachedStatistics)
+					{
+						_cachedStatistics = stats.OrderByDescending(x => x.WinStreak)
+												 .ToList();
+					}
 
-				OnStatisticsChanged();
-			});
+					OnStatisticsChanged();
+				});
+			}
+			catch (Exception e)
+			{
+				_logger.Error(e);
+				throw; 
+			}
 		}
 
 		/// <summary>
@@ -78,13 +89,23 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="callback">The callback.</param>
 		public void Subscribe(string token, IAuthenticateServiceCallback callback)
 		{
-			if (callback is ICommunicationObject co)
-				co.Closing += (x, y) => ClearSubscription(token);
+			try
+			{
+				if (callback is ICommunicationObject co)
+					co.Closing += (x, y) => ClearSubscription(token);
 
-			_subscribers.Add(token, callback);
-			Task.Run(() => {
-				callback.GetNewGlobalStatistics(_cachedStatistics);
-			});
+				_subscribers.Add(token, callback);
+				Task.Run(() =>
+				{
+					callback.GetNewGlobalStatistics(_cachedStatistics);
+				});
+			}
+			catch (Exception e)
+			{
+				_logger.Error(e);
+				throw;
+			}
+			
 		}
 
 		/// <summary>
@@ -141,7 +162,7 @@ namespace Northis.BattleRoostersOnline.Implements
 			}
 			catch (CommunicationException e)
 			{
-				Debug.WriteLine(e.TargetSite + ": " + e.Message);
+				_logger.Error(e);
 			}
 		}
 
@@ -164,6 +185,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				{
 					if (e is CommunicationException || e is ObjectDisposedException || e is TimeoutException)
 					{
+						_logger.Error(e);
 						if (_subscribers.ContainsKey(receiverToken) && _subscribers[receiverToken] is ICommunicationObject co)
 						{
 							if (co.State == CommunicationState.Opened)

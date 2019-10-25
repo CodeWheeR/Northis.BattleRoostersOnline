@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using DataTransferObjects;
+using NLog;
 using Northis.BattleRoostersOnline.Contracts;
 using Northis.BattleRoostersOnline.Models;
 
@@ -18,10 +20,7 @@ namespace Northis.BattleRoostersOnline.Implements
 	{
 		#region Fields
 		#region Private
-		/// <summary>
-		/// Объект, блокирующий доступ к файлу с петухами нескольким процессам.
-		/// </summary>
-		private object _lockerIO = new object();
+		private Logger _logger = LogManager.GetCurrentClassLogger();
 		#endregion
 		#endregion
 
@@ -37,28 +36,38 @@ namespace Northis.BattleRoostersOnline.Implements
 		{
 			var login = await GetLoginAsync(token);
 
-			await Task.Run(() =>
+			try
 			{
-				if (StorageService.RoostersData.ContainsKey(login))
+				await Task.Run(() =>
 				{
-					lock (StorageService.RoostersData)
+					if (StorageService.RoostersData.ContainsKey(login))
 					{
-						StorageService.RoostersData[login]
-							   .Add(rooster);
+						lock (StorageService.RoostersData)
+						{
+							StorageService.RoostersData[login]
+										  .Add(rooster);
+						}
 					}
-				}
-				else
-				{
-					lock (StorageService.RoostersData)
+					else
 					{
-						StorageService.RoostersData.Add(login,
-												 new List<RoosterDto>
-												 {
-													 rooster
-												 });
+						lock (StorageService.RoostersData)
+						{
+							StorageService.RoostersData.Add(login,
+															new List<RoosterDto>
+															{
+																rooster
+															});
+						}
 					}
-				}
-			}).ConfigureAwait(false);
+				});
+			}
+			catch (Exception e)
+			{
+				_logger.Error(e);
+				//Дальнейший проброс исключения отсутствует, потому как в случае ошибки
+				//в данном методе не возникает никаких критических изменений и 
+				//сервер может продолжить свое функционирование
+			}
 
 			StorageService.SaveRoostersAsync();
 			StatisticsPublisher.GetInstance()
@@ -75,15 +84,23 @@ namespace Northis.BattleRoostersOnline.Implements
 		{
 			var login = await GetLoginAsync(token);
 
-			return await Task.Run<IEnumerable<RoosterDto>>(() =>
+			try
 			{
-				if (StorageService.RoostersData.ContainsKey(login))
+				return await Task.Run<IEnumerable<RoosterDto>>(() =>
 				{
-					return StorageService.RoostersData[login];
-				}
+					if (StorageService.RoostersData.ContainsKey(login))
+					{
+						return StorageService.RoostersData[login];
+					}
 
+					return new List<RoosterDto>();
+				});
+			}
+			catch (Exception e)
+			{
+				_logger.Error(e);
 				return new List<RoosterDto>();
-			}).ConfigureAwait(false);
+			}
 		}
 
 		/// <summary>
@@ -93,17 +110,32 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="editRooster">Редактируемый петух.</param>
 		public async void EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster)
 		{
-			var login = await GetLoginAsync(token);
-			if (StorageService.RoostersData.ContainsKey(login) &&
-				StorageService.RoostersData[login].Contains(sourceRooster))
+			try
 			{
-				lock (StorageService.RoostersData)
+				await Task.Run(async () =>
 				{
-					StorageService.RoostersData[login].Remove(sourceRooster);
-					StorageService.RoostersData[login].Add(editRooster);
-				}
+					var login = await GetLoginAsync(token);
+					if (StorageService.RoostersData.ContainsKey(login) &&
+						StorageService.RoostersData[login]
+									  .Contains(sourceRooster))
+					{
+						lock (StorageService.RoostersData)
+						{
+							StorageService.RoostersData[login]
+										  .Remove(sourceRooster);
+							StorageService.RoostersData[login]
+										  .Add(editRooster);
+						}
+					}
+
+					StorageService.SaveRoostersAsync();
+				});
 			}
-			StorageService.SaveRoostersAsync();
+			catch (Exception e)
+			{
+				_logger.Error(e);
+			}
+			
 		}
 		/// <summary>
 		/// Асинхронно удаляет петуха.
@@ -112,22 +144,33 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="deleteRooster">Удаляемый петух.</param>
 		public async void RemoveAsync(string token, RoosterDto deleteRooster)
 		{
-			var login = await GetLoginAsync(token);
-			if (StorageService.RoostersData.ContainsKey(login) &&
-				StorageService.RoostersData[login]
-					   .Contains(deleteRooster))
+			try
 			{
-				lock (StorageService.RoostersData)
+				await Task.Run(async () =>
 				{
-					var rooster = StorageService.RoostersData[login]
-												.First(dto => dto.Name == deleteRooster.Name);
-					StorageService.RoostersData[login]
-								  .Remove(rooster);
-				}
+					var login = await GetLoginAsync(token);
+					if (StorageService.RoostersData.ContainsKey(login) &&
+						StorageService.RoostersData[login]
+									  .Contains(deleteRooster))
+					{
+						lock (StorageService.RoostersData)
+						{
+							var rooster = StorageService.RoostersData[login]
+														.First(dto => dto.Name == deleteRooster.Name);
+							StorageService.RoostersData[login]
+										  .Remove(rooster);
+						}
+					}
+
+					StorageService.SaveRoostersAsync();
+					StatisticsPublisher.GetInstance()
+									   .UpdateStatistics();
+				});
 			}
-			StorageService.SaveRoostersAsync();
-			StatisticsPublisher.GetInstance()
-							   .UpdateStatistics();
+			catch (Exception e)
+			{
+				_logger.Error(e);
+			}
 		}
 		#endregion
 		#endregion

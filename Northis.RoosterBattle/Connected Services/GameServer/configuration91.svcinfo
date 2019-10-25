@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="3Ye2ppiegKDWasd7bLGJAE95G7A=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="tPVZyv9ufLNO+b5xQip1J1J00P8=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="wsDualHttpBinding" name="WSDualHttpBinding_IAuthenticateService">
       <properties>
@@ -269,8 +269,8 @@
         <property path="/security" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.WSHttpSecurityElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.WSHttpSecurityElement</serializedValue>
         </property>
-        <property path="/security/mode" isComplexType="false" isExplicitlyDefined="false" clrType="System.ServiceModel.SecurityMode, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>Message</serializedValue>
+        <property path="/security/mode" isComplexType="false" isExplicitlyDefined="true" clrType="System.ServiceModel.SecurityMode, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+          <serializedValue>None</serializedValue>
         </property>
         <property path="/security/transport" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.WSHttpTransportSecurityElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.WSHttpTransportSecurityElement</serializedValue>
@@ -315,10 +315,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="WSDualHttpBinding_IAuthenticateService" contract="GameServer.IAuthenticateService" bindingType="wsDualHttpBinding" address="http://10.88.99.75:7777/Northis.BattleRoostersOnline/AuthenticationService" bindingConfiguration="WSDualHttpBinding_IAuthenticateService">
+    <endpoint name="WSDualHttpBinding_IAuthenticateService" contract="GameServer.IAuthenticateService" bindingType="wsDualHttpBinding" address="http://10.88.99.75:8080/Northis.BattleRoostersOnline/AuthenticationService" bindingConfiguration="WSDualHttpBinding_IAuthenticateService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://10.88.99.75:7777/Northis.BattleRoostersOnline/AuthenticationService</serializedValue>
+          <serializedValue>http://10.88.99.75:8080/Northis.BattleRoostersOnline/AuthenticationService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -400,10 +400,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="WSHttpBinding_IEditService" contract="GameServer.IEditService" bindingType="wsHttpBinding" address="http://10.88.99.75:7777/Northis.BattleRoostersOnline/EditService" bindingConfiguration="WSHttpBinding_IEditService">
+    <endpoint name="WSHttpBinding_IEditService" contract="GameServer.IEditService" bindingType="wsHttpBinding" address="http://10.88.99.75:8080/Northis.BattleRoostersOnline/EditService" bindingConfiguration="WSHttpBinding_IEditService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://10.88.99.75:7777/Northis.BattleRoostersOnline/EditService</serializedValue>
+          <serializedValue>http://10.88.99.75:8080/Northis.BattleRoostersOnline/EditService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -429,8 +429,8 @@
         <property path="/identity/userPrincipalName" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.UserPrincipalNameElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.UserPrincipalNameElement</serializedValue>
         </property>
-        <property path="/identity/userPrincipalName/value" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>AA-BUTURLAKIN\AA-Buturlakin</serializedValue>
+        <property path="/identity/userPrincipalName/value" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+          <serializedValue />
         </property>
         <property path="/identity/servicePrincipalName" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.ServicePrincipalNameElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.ServicePrincipalNameElement</serializedValue>
@@ -485,10 +485,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="WSDualHttpBinding_IBattleService" contract="GameServer.IBattleService" bindingType="wsDualHttpBinding" address="http://10.88.99.75:7777/Northis.BattleRoostersOnline/BattleService" bindingConfiguration="WSDualHttpBinding_IBattleService">
+    <endpoint name="WSDualHttpBinding_IBattleService" contract="GameServer.IBattleService" bindingType="wsDualHttpBinding" address="http://10.88.99.75:8080/Northis.BattleRoostersOnline/BattleService" bindingConfiguration="WSDualHttpBinding_IBattleService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://10.88.99.75:7777/Northis.BattleRoostersOnline/BattleService</serializedValue>
+          <serializedValue>http://10.88.99.75:8080/Northis.BattleRoostersOnline/BattleService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

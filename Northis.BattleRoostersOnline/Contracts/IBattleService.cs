@@ -25,7 +25,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <param name="token">Токен.</param>
 		/// <returns>true - в случае успешной отмены поиска, иначе - false.</returns>
 		[OperationContract(IsTerminating = true)]
-		bool CancelFinding(string token);
+		Task<bool> CancelFinding(string token);
 
 		/// <summary>
 		/// Контракт операции, отвечающий за старт поединка петухов.

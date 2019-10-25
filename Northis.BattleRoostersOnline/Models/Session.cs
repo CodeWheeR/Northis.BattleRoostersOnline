@@ -5,6 +5,7 @@ using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using DataTransferObjects;
+using NLog;
 using Northis.BattleRoostersOnline.Contracts;
 using Northis.BattleRoostersOnline.Events;
 using Northis.BattleRoostersOnline.Implements;
@@ -46,6 +47,8 @@ namespace Northis.BattleRoostersOnline.Models
 		/// Источник токена отмены для проверки соединения.
 		/// </summary>
 		private readonly CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
+
+		private Logger _logger = LogManager.GetCurrentClassLogger();
 		#endregion
 		#endregion
 
@@ -61,6 +64,9 @@ namespace Northis.BattleRoostersOnline.Models
 			/// Callback-сервис.
 			/// </summary>
 			private readonly IBattleServiceCallback _callback;
+
+			private Logger _logger = LogManager.GetCurrentClassLogger();
+
 			#endregion
 			#endregion
 
@@ -123,6 +129,7 @@ namespace Northis.BattleRoostersOnline.Models
 				}
 				catch (Exception e)
 				{
+					_logger.Error(e);	
 					if (e is CommunicationException || e is TimeoutException || e is ObjectDisposedException)
 					{
 						(_callback as ICommunicationObject)?.Close();
@@ -272,7 +279,11 @@ namespace Northis.BattleRoostersOnline.Models
 		/// Инициализирует новый экземпляр <see cref="Session" /> класса.
 		/// </summary>
 		/// <param name="token">Токен.</param>
-		public Session(string token) => Token = token;
+		public Session(string token)
+		{
+			Token = token;
+			_logger.Info($"Инициализована новая сессия {token}");
+		}
 		#endregion
 
 		#region Methods
@@ -285,7 +296,6 @@ namespace Northis.BattleRoostersOnline.Models
 		/// <param name="callback">Callback сервис.</param>
 		public void RegisterFighter(string token, RoosterDto fighter, IBattleServiceCallback callback)
 		{
-			
 			if (FirstUser == null)
 			{
 				FirstUser = new UserData(callback)
@@ -294,6 +304,7 @@ namespace Northis.BattleRoostersOnline.Models
 					Token = token,
 					IsReady = false
 				};
+				_logger.Info($"В сессию {token} добавился первый боец");
 				Subscribe(FirstUser);
 			}
 			else if (SecondUser == null)
@@ -305,6 +316,7 @@ namespace Northis.BattleRoostersOnline.Models
 					Token = token,
 					IsReady = false
 				};
+				_logger.Info($"В сессию {token} добавился второй боец");
 				Subscribe(SecondUser);
 				SendReadySignAsync();
 				ConnectionMonitor();
@@ -328,6 +340,8 @@ namespace Northis.BattleRoostersOnline.Models
 				return true;
 			}
 
+			_logger.Info($"Поиск соперника в сессии {token} был отменен");
+
 			return false;
 		}
 
@@ -336,6 +350,7 @@ namespace Northis.BattleRoostersOnline.Models
 		/// </summary>
 		public void SendStartSign()
 		{
+			_logger.Info($"В сессии {Token} началось сражение");
 			IsStarted = true;
 			BattleStarted?.Invoke(this, EventArgs.Empty);
 		}
@@ -345,6 +360,7 @@ namespace Northis.BattleRoostersOnline.Models
 		/// </summary>
 		public void SendEndSign()
 		{
+			_logger.Info($"В сессии {Token} закончилось сражение");
 			BattleEnded?.Invoke(this, EventArgs.Empty);
 			StatisticsPublisher.GetInstance()
 							   .UpdateStatistics();
@@ -356,6 +372,7 @@ namespace Northis.BattleRoostersOnline.Models
 		/// <param name="needCheck">Необходимость проверки на дезертирство. <c>true</c> [need check].</param>
 		public void StopSession(bool needCheck = false)
 		{
+			_logger.Info($"Вызвана остановка сессии {Token} по причине дезертирства");
 			_battleTokenSource.Cancel();
 			_connectionMonitorTokenSource.Cancel();
 			if (needCheck)
@@ -371,48 +388,52 @@ namespace Northis.BattleRoostersOnline.Models
 		public async Task StartBattle()
 		{
 			var token = _battleTokenSource.Token;
-
-			await Task.Run(async () =>
-						   {
-							   while (FirstUser.Rooster.Health > 0 && SecondUser.Rooster.Health > 0 && !token.IsCancellationRequested)
+			try
+			{
+				await Task.Run(async () =>
 							   {
-								   MakeHitWithFeedback(FirstUser.Rooster, SecondUser.Rooster);
-								   SendRoosterStatus();
-
-								   await Task.Delay(300, token);
-
-								   if (SecondUser.Rooster.Health == 0)
+								   while (FirstUser.Rooster.Health > 0 && SecondUser.Rooster.Health > 0 && !token.IsCancellationRequested)
 								   {
-									   break;
+									   MakeHitWithFeedback(FirstUser.Rooster, SecondUser.Rooster);
+									   SendRoosterStatus();
+
+									   await Task.Delay(300, token);
+
+									   if (SecondUser.Rooster.Health == 0)
+									   {
+										   break;
+									   }
+
+									   MakeHitWithFeedback(SecondUser.Rooster, FirstUser.Rooster);
+									   SendRoosterStatus();
+
+									   await Task.Delay(300, token);
 								   }
 
-								   MakeHitWithFeedback(SecondUser.Rooster, FirstUser.Rooster);
-								   SendRoosterStatus();
+								   if (FirstUser.Rooster.Health == 0 && SecondUser.Rooster.Health == 0)
+								   {
+									   Task.WaitAll(SetWinstreak(FirstUser, 0), SetWinstreak(SecondUser, 0));
+								   }
+								   else if (FirstUser.Rooster.Health == 0)
+								   {
+									   Task.WaitAll(SetWinstreak(FirstUser, 0), SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1));
+								   }
+								   else
+								   {
+									   Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1), SetWinstreak(SecondUser, 0));
+								   }
 
-								   await Task.Delay(300, token);
-							   }
-
-							   if (FirstUser.Rooster.Health == 0 && SecondUser.Rooster.Health == 0)
-							   {
-								   Task.WaitAll(SetWinstreak(FirstUser, 0), 
-												SetWinstreak(SecondUser, 0));
-							   }
-							   else if (FirstUser.Rooster.Health == 0)
-							   {
-								   Task.WaitAll(SetWinstreak(FirstUser, 0), 
-												SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1));
-							   }
-							   else
-							   {
-								   Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1), 
-												SetWinstreak(SecondUser, 0));
-							   }
-
-							   StorageService.Sessions.Remove(Token);
-							   StorageService.SaveRoostersAsync();
-							   SendEndSign();
-						   },
-						   token);
+								   StorageService.Sessions.Remove(Token);
+								   StorageService.SaveRoostersAsync();
+								   SendEndSign();
+							   },
+							   token);
+			}
+			catch (Exception e)
+			{
+				_logger.Error(e);
+				throw;
+			}
 		}
 
 		/// <summary>
@@ -421,15 +442,24 @@ namespace Northis.BattleRoostersOnline.Models
 		public async Task ConnectionMonitor()
 		{
 			var token = _connectionMonitorTokenSource.Token;
-			await Task.Run(async () =>
-						   {
-							   while (!IsStarted && !token.IsCancellationRequested)
+			try
+			{
+				await Task.Run(async () =>
 							   {
-								   await Task.Delay(1000, token);
-								   SendRoosterStatus();
-							   }
-						   },
-						   token);
+								   while (!IsStarted && !token.IsCancellationRequested)
+								   {
+									   await Task.Delay(1000, token);
+									   SendRoosterStatus();
+								   }
+							   },
+							   token);
+			}
+			catch (Exception e)
+			{
+				_logger.Error(e);
+				throw;
+			}
+			
 		}
 
 		/// <summary>
@@ -500,19 +530,22 @@ namespace Northis.BattleRoostersOnline.Models
 
 		private async void CheckForDeserting(string token)
 		{
-			if (!IsReady)
+			await Task.Run(() =>
 			{
-				return;
-			}
+				if (!IsReady)
+				{
+					return;
+				}
 
-			if (FirstUser != null && FirstUser.Token == token)
-			{
-				CheckForDeserting(FirstUser, SecondUser);
-			}
-			else if (SecondUser != null && SecondUser.Token == token)
-			{
-				CheckForDeserting(SecondUser, FirstUser);
-			}
+				if (FirstUser != null && FirstUser.Token == token)
+				{
+					CheckForDeserting(FirstUser, SecondUser);
+				}
+				else if (SecondUser != null && SecondUser.Token == token)
+				{
+					CheckForDeserting(SecondUser, FirstUser);
+				}
+			});
 		}
 
 		/// <summary>
@@ -522,29 +555,40 @@ namespace Northis.BattleRoostersOnline.Models
 		/// <param name="autoWinner">Технический победитель.</param>
 		private async void CheckForDeserting(UserData deserter, UserData autoWinner)
 		{
-			if (deserter.CallbackState != CommunicationState.Opened)
+			try
 			{
-				if (!_battleTokenSource.IsCancellationRequested)
+				await Task.Run(() =>
 				{
-					StopSession();
-				}
+					if (deserter.CallbackState != CommunicationState.Opened)
+					{
+						if (!_battleTokenSource.IsCancellationRequested)
+						{
+							StopSession();
+						}
 
-				try
-				{
-					autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
+						try
+						{
+							autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
 
-					Task.WaitAll(SetWinstreak(deserter, 0), 
-								 SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
+							Task.WaitAll(SetWinstreak(deserter, 0), SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
 
-					SendEndSign();
-				}
-				catch (CommunicationException e)
-				{
-					Debug.WriteLine(e.TargetSite + ": " + e);
-				}
+							SendEndSign();
+						}
+						catch (CommunicationException e)
+						{
+							Debug.WriteLine(e.TargetSite + ": " + e);
+						}
 
-				StorageService.Sessions.Remove(Token);
+						StorageService.Sessions.Remove(Token);
+					}
+				});
 			}
+			catch (Exception e)
+			{
+				_logger.Error(e);
+				throw;
+			}
+
 		}
 
 		/// <summary>

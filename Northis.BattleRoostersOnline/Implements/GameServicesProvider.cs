@@ -128,7 +128,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// true - в случае успешной отмены поиска, иначе - false.
 		/// </returns>
-		public bool CancelFinding(string token) => _battleService.CancelFinding(token);
+		public async Task<bool> CancelFinding(string token) => await _battleService.CancelFinding(token);
 
 		/// <summary>
 		/// Осушествляет запуск поединка петухов.
