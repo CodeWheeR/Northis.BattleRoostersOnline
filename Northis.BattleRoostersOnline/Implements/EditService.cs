@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using DataTransferObjects;
@@ -32,7 +33,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
 		/// <returns>Task.</returns>
-		public async void AddAsync(string token, RoosterDto rooster)
+		public async Task<bool> AddAsync(string token, RoosterDto rooster)
 		{
 			var login = await GetLoginAsync(token);
 
@@ -64,14 +65,14 @@ namespace Northis.BattleRoostersOnline.Implements
 			catch (Exception e)
 			{
 				_logger.Error(e);
-				//Дальнейший проброс исключения отсутствует, потому как в случае ошибки
-				//в данном методе не возникает никаких критических изменений и 
-				//сервер может продолжить свое функционирование
+				return false;
 			}
 
 			StorageService.SaveRoostersAsync();
 			StatisticsPublisher.GetInstance()
 							   .UpdateStatistics();
+
+			return true;
 		}
 		/// <summary>
 		/// Асинхронно получает петухов пользователя.
@@ -108,7 +109,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="editRooster">Редактируемый петух.</param>
-		public async void EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster)
+		public async Task<bool> EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster)
 		{
 			try
 			{
@@ -134,15 +135,18 @@ namespace Northis.BattleRoostersOnline.Implements
 			catch (Exception e)
 			{
 				_logger.Error(e);
+				return false;
 			}
-			
+
+			return true;
+
 		}
 		/// <summary>
 		/// Асинхронно удаляет петуха.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="deleteRooster">Удаляемый петух.</param>
-		public async void RemoveAsync(string token, RoosterDto deleteRooster)
+		public async Task<bool> RemoveAsync(string token, RoosterDto deleteRooster)
 		{
 			try
 			{
@@ -170,7 +174,10 @@ namespace Northis.BattleRoostersOnline.Implements
 			catch (Exception e)
 			{
 				_logger.Error(e);
+				return false;
 			}
+
+			return true;
 		}
 		#endregion
 		#endregion

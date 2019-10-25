@@ -35,9 +35,9 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://10.88.99.75/Northis.BattleRoostersOnline?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://10.88.99.75/Northis.BattleRoostersOnline?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://10.88.99.75/Northis.BattleRoostersOnline?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects" />
+      <xsd:import schemaLocation="http://10.88.99.75:8080/Northis.BattleRoostersOnline?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://10.88.99.75:8080/Northis.BattleRoostersOnline?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://10.88.99.75:8080/Northis.BattleRoostersOnline?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IAuthenticateService_LogIn_InputMessage">
@@ -67,14 +67,23 @@
   <wsdl:message name="IAuthenticateService_GetNewGlobalStatistics_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GetNewGlobalStatistics" />
   </wsdl:message>
-  <wsdl:message name="IEditService_EditAsync_InputMessage">
-    <wsdl:part name="parameters" element="tns:EditAsync" />
+  <wsdl:message name="IEditService_Edit_InputMessage">
+    <wsdl:part name="parameters" element="tns:Edit" />
   </wsdl:message>
-  <wsdl:message name="IEditService_AddAsync_InputMessage">
-    <wsdl:part name="parameters" element="tns:AddAsync" />
+  <wsdl:message name="IEditService_Edit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditResponse" />
   </wsdl:message>
-  <wsdl:message name="IEditService_RemoveAsync_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveAsync" />
+  <wsdl:message name="IEditService_Add_InputMessage">
+    <wsdl:part name="parameters" element="tns:Add" />
+  </wsdl:message>
+  <wsdl:message name="IEditService_Add_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEditService_Remove_InputMessage">
+    <wsdl:part name="parameters" element="tns:Remove" />
+  </wsdl:message>
+  <wsdl:message name="IEditService_Remove_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveResponse" />
   </wsdl:message>
   <wsdl:message name="IEditService_GetUserRoosters_InputMessage">
     <wsdl:part name="parameters" element="tns:GetUserRoosters" />
@@ -134,14 +143,17 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IEditService">
-    <wsdl:operation name="EditAsync">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEditService/EditAsync" message="tns:IEditService_EditAsync_InputMessage" />
+    <wsdl:operation name="Edit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEditService/Edit" message="tns:IEditService_Edit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEditService/EditResponse" message="tns:IEditService_Edit_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="AddAsync">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEditService/AddAsync" message="tns:IEditService_AddAsync_InputMessage" />
+    <wsdl:operation name="Add">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEditService/Add" message="tns:IEditService_Add_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEditService/AddResponse" message="tns:IEditService_Add_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RemoveAsync">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEditService/RemoveAsync" message="tns:IEditService_RemoveAsync_InputMessage" />
+    <wsdl:operation name="Remove">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEditService/Remove" message="tns:IEditService_Remove_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEditService/RemoveResponse" message="tns:IEditService_Remove_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetUserRoosters">
       <wsdl:input wsaw:Action="http://tempuri.org/IEditService/GetUserRoosters" message="tns:IEditService_GetUserRoosters_InputMessage" />
@@ -227,23 +239,32 @@
   <wsdl:binding name="WSHttpBinding_IEditService" type="tns:IEditService">
     <wsp:PolicyReference URI="#WSHttpBinding_IEditService_policy" />
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="EditAsync">
-      <soap12:operation soapAction="http://tempuri.org/IEditService/EditAsync" style="document" />
+    <wsdl:operation name="Edit">
+      <soap12:operation soapAction="http://tempuri.org/IEditService/Edit" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddAsync">
-      <soap12:operation soapAction="http://tempuri.org/IEditService/AddAsync" style="document" />
+    <wsdl:operation name="Add">
+      <soap12:operation soapAction="http://tempuri.org/IEditService/Add" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RemoveAsync">
-      <soap12:operation soapAction="http://tempuri.org/IEditService/RemoveAsync" style="document" />
+    <wsdl:operation name="Remove">
+      <soap12:operation soapAction="http://tempuri.org/IEditService/Remove" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUserRoosters">
       <soap12:operation soapAction="http://tempuri.org/IEditService/GetUserRoosters" style="document" />
@@ -318,21 +339,21 @@
   </wsdl:binding>
   <wsdl:service name="GameServicesProvider">
     <wsdl:port name="WSDualHttpBinding_IAuthenticateService" binding="tns:WSDualHttpBinding_IAuthenticateService">
-      <soap12:address location="http://10.88.99.75/Northis.BattleRoostersOnline/AuthenticationService" />
+      <soap12:address location="http://10.88.99.75:8080/Northis.BattleRoostersOnline/AuthenticationService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://10.88.99.75/Northis.BattleRoostersOnline/AuthenticationService</wsa10:Address>
+        <wsa10:Address>http://10.88.99.75:8080/Northis.BattleRoostersOnline/AuthenticationService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="WSHttpBinding_IEditService" binding="tns:WSHttpBinding_IEditService">
-      <soap12:address location="http://10.88.99.75/Northis.BattleRoostersOnline/EditService" />
+      <soap12:address location="http://10.88.99.75:8080/Northis.BattleRoostersOnline/EditService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://10.88.99.75/Northis.BattleRoostersOnline/EditService</wsa10:Address>
+        <wsa10:Address>http://10.88.99.75:8080/Northis.BattleRoostersOnline/EditService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="WSDualHttpBinding_IBattleService" binding="tns:WSDualHttpBinding_IBattleService">
-      <soap12:address location="http://10.88.99.75/Northis.BattleRoostersOnline/BattleService" />
+      <soap12:address location="http://10.88.99.75:8080/Northis.BattleRoostersOnline/BattleService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://10.88.99.75/Northis.BattleRoostersOnline/BattleService</wsa10:Address>
+        <wsa10:Address>http://10.88.99.75:8080/Northis.BattleRoostersOnline/BattleService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

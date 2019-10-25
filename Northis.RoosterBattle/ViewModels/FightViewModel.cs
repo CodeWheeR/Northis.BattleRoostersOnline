@@ -74,7 +74,7 @@ namespace Northis.RoosterBattle.ViewModels
 		public FightViewModel(RoosterModel rooster)
 		{
 			FirstFighter = rooster;
-
+			BattleEnded = true;
 			FindMatchCommand = new TaskCommand(FindMatchAsync, () => !ShowDeadFirst && !IsFinding && string.IsNullOrWhiteSpace(MatchToken));
 			CancelFindingCommand = new TaskCommand(CancelFindingAsync, () => IsFinding && string.IsNullOrWhiteSpace(MatchToken));
 			StartFightCommand = new TaskCommand(StartFightAsync, () => !string.IsNullOrWhiteSpace(MatchToken) && !BattleStarted && !BattleEnded);
@@ -229,6 +229,10 @@ namespace Northis.RoosterBattle.ViewModels
 			if (!BattleEnded)
 			{
 				_battleServiceClient.GiveUpAsync(_userToken, MatchToken);
+			}
+			else if (IsFinding)
+			{
+				_battleServiceClient.CancelFindingAsync(_userToken);
 			}
 
 			await base.OnClosingAsync();

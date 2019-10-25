@@ -498,23 +498,23 @@ namespace Northis.RoosterBattle.GameServer {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServer.IEditService")]
     public interface IEditService {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/EditAsync")]
-        void EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
+        bool Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/EditAsync")]
-        System.Threading.Tasks.Task EditAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
+        System.Threading.Tasks.Task<bool> EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/AddAsync")]
-        void AddAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
+        bool Add(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/AddAsync")]
-        System.Threading.Tasks.Task AddAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
+        System.Threading.Tasks.Task<bool> AddAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/RemoveAsync")]
-        void RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
+        bool Remove(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEditService/RemoveAsync")]
-        System.Threading.Tasks.Task RemoveAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
+        System.Threading.Tasks.Task<bool> RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/GetUserRoosters", ReplyAction="http://tempuri.org/IEditService/GetUserRoostersResponse")]
         Northis.RoosterBattle.GameServer.RoosterDto[] GetUserRoosters(string token);
@@ -550,28 +550,28 @@ namespace Northis.RoosterBattle.GameServer {
                 base(binding, remoteAddress) {
         }
         
-        public void EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
-            base.Channel.EditAsync(token, sourceRooster, editRooster);
+        public bool Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
+            return base.Channel.Edit(token, sourceRooster, editRooster);
         }
         
-        public System.Threading.Tasks.Task EditAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
-            return base.Channel.EditAsyncAsync(token, sourceRooster, editRooster);
+        public System.Threading.Tasks.Task<bool> EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
+            return base.Channel.EditAsync(token, sourceRooster, editRooster);
         }
         
-        public void AddAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            base.Channel.AddAsync(token, rooster);
+        public bool Add(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            return base.Channel.Add(token, rooster);
         }
         
-        public System.Threading.Tasks.Task AddAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            return base.Channel.AddAsyncAsync(token, rooster);
+        public System.Threading.Tasks.Task<bool> AddAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            return base.Channel.AddAsync(token, rooster);
         }
         
-        public void RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            base.Channel.RemoveAsync(token, rooster);
+        public bool Remove(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            return base.Channel.Remove(token, rooster);
         }
         
-        public System.Threading.Tasks.Task RemoveAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            return base.Channel.RemoveAsyncAsync(token, rooster);
+        public System.Threading.Tasks.Task<bool> RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+            return base.Channel.RemoveAsync(token, rooster);
         }
         
         public Northis.RoosterBattle.GameServer.RoosterDto[] GetUserRoosters(string token) {

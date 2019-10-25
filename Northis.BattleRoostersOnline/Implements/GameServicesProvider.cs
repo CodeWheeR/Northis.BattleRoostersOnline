@@ -51,7 +51,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
-		public void AddAsync(string token, RoosterDto rooster) => _editService.AddAsync(token, rooster);
+		public Task<bool> AddAsync(string token, RoosterDto rooster) =>  _editService.AddAsync(token, rooster);
 
 		/// <summary>
 		/// Асинхнронно редактирует петуха.
@@ -59,7 +59,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="sourceRooster">Исходный петух.</param>
 		/// <param name="editRooster">Редактированный петух.</param>
-		public void EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster) => _editService.EditAsync(token, sourceRooster, editRooster);
+		public Task<bool> EditAsync(string token, RoosterDto sourceRooster, RoosterDto editRooster) => _editService.EditAsync(token, sourceRooster, editRooster);
 
 		/// <summary>
 		/// Асинхронно возвращает петухов пользователя.
@@ -68,14 +68,14 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// Коллекцию петухов.
 		/// </returns>
-		public async Task<IEnumerable<RoosterDto>> GetUserRoostersAsync(string token) => await _editService.GetUserRoostersAsync(token);
+		public Task<IEnumerable<RoosterDto>> GetUserRoostersAsync(string token) => _editService.GetUserRoostersAsync(token);
 
 		/// <summary>
 		/// Асинхронно удаляет петухов.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="deleteRooster">Удаляемый петух.</param>
-		public void RemoveAsync(string token, RoosterDto deleteRooster) => _editService.RemoveAsync(token, deleteRooster);
+		public Task<bool> RemoveAsync(string token, RoosterDto deleteRooster) => _editService.RemoveAsync(token, deleteRooster);
 
 		/// <summary>
 		/// Осуществляет вход пользователя в систему.
@@ -85,7 +85,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> LogInAsync(string login, string password) => await _authenticateService.LogInAsync(login, password);
+		public Task<string> LogInAsync(string login, string password) => _authenticateService.LogInAsync(login, password);
 
 		/// <summary>
 		/// Регистрирует нового пользователя.
@@ -95,7 +95,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> RegisterAsync(string login, string password) => await _authenticateService.RegisterAsync(login, password);
+		public Task<string> RegisterAsync(string login, string password) => _authenticateService.RegisterAsync(login, password);
 
 		/// <summary>
 		/// Осуществляет выход пользователя из системы.
@@ -104,7 +104,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// true - в случае успешного выхода, иначе - false.
 		/// </returns>
-		public async Task<bool> LogOutAsync(string token) => await _authenticateService.LogOutAsync(token);
+		public Task<bool> LogOutAsync(string token) => _authenticateService.LogOutAsync(token);
 
 		/// <summary>
 		/// Возвращает статус авторизации пользователя.
@@ -128,7 +128,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>
 		/// true - в случае успешной отмены поиска, иначе - false.
 		/// </returns>
-		public async Task<bool> CancelFinding(string token) => await _battleService.CancelFinding(token);
+		public Task<bool> CancelFinding(string token) => _battleService.CancelFinding(token);
 
 		/// <summary>
 		/// Осушествляет запуск поединка петухов.

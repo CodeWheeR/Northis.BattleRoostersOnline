@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.ServiceModel;
 using System.ServiceModel.Activation.Configuration;
 using System.ServiceModel.Description;
@@ -23,7 +24,27 @@ namespace GameServer
 		{
 			AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
-			var baseAddress = new Uri("http://10.88.99.75/Northis.BattleRoostersOnline");
+			string address = "";
+
+			try
+			{
+				address = ConfigurationManager.AppSettings["baseAddress"];
+			}
+			catch (ConfigurationErrorsException)
+			{
+				Console.WriteLine("IP-адрес по ключу baseAddress в разделе AppSettings файла конфигураций не найден. Завершаю работу...");
+				Console.ReadKey();
+				return;
+			}
+
+			if (address == "")
+			{
+				Console.WriteLine("IP-адрес по ключу baseAddress в разделе AppSettings файла конфигураций не найден. Завершаю работу...");
+				Console.ReadKey();
+				return;
+			}
+
+			var baseAddress = new Uri(address);
 
 			var selfHost = new ServiceHost(typeof(GameServicesProvider), baseAddress);
 
