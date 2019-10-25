@@ -67,7 +67,7 @@
 						</Style>
 					</StackPanel.Resources>
 					<Label
-						Height="30"
+						Height="35"
 						Content="{Binding FirstFighter.Name}"
 						FontSize="18"
 						FontWeight="Bold" />
@@ -185,7 +185,7 @@
 				<Button Grid.ColumnSpan="3"
 				        Content="{x:Static res:Resources.StartFight}"
 				        HorizontalAlignment="Center"
-				        Margin="0,0,0,160"
+				        Margin="0,0,0,156"
 				        VerticalAlignment="Bottom"
 				        Width="90"
 				        Command="{Binding StartFightCommand}" />

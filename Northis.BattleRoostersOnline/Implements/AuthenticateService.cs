@@ -70,7 +70,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				}
 			});
 
-			_logger.Info($"Пользователь {login} вошел в сеть");
+			_logger.Info($"Пользователь {login} вошел в сеть с токеном {token}");
 
 			StatisticsPublisher.GetInstance().Subscribe(token, callback);
 			return token;
@@ -129,7 +129,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		{
 			if (!StorageService.LoggedUsers.ContainsKey(token))
 			{
-				_logger.Warn("Попытка дисконекта от неавторизованного пользователя " + token);
+				_logger.Warn($"Попытка дисконекта от неавторизованного пользователя {token}");
 				return false;
 			}
 

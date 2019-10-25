@@ -32,12 +32,15 @@
 			<RowDefinition Height="50" />
 			<RowDefinition Height="50" />
 		</Grid.RowDefinitions>
-		<TextBlock Grid.ColumnSpan="2"
-				   FontSize="19"
-				   FontWeight="Bold"
-				   Margin="10,10,10,10"
-				   Text="Петушиный бой &#x0a; (v0.1.0 Под-пре-альфа)"
-				   TextAlignment="Center" />
+		<StackPanel Grid.ColumnSpan="2"
+		            Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<Image Width="60" Margin="0,0,10,0" Source="../Resources/RoosterIco.jpg"></Image>
+			<TextBlock Grid.ColumnSpan="2"
+			           FontSize="19"
+			           FontWeight="Bold"
+			           Text="Петушиный бой &#x0a;(v0.1.0 Под-пре-альфа)"
+			           TextAlignment="Center" />
+		</StackPanel>
 		<TextBlock Grid.Row="1"
 				   Grid.Column="0"
 				   Text="Логин" />

@@ -304,7 +304,7 @@ namespace Northis.BattleRoostersOnline.Models
 					Token = token,
 					IsReady = false
 				};
-				_logger.Info($"В сессию {token} добавился первый боец");
+				_logger.Info($"В сессию {Token} добавился первый боец {token}");
 				Subscribe(FirstUser);
 			}
 			else if (SecondUser == null)
@@ -316,7 +316,7 @@ namespace Northis.BattleRoostersOnline.Models
 					Token = token,
 					IsReady = false
 				};
-				_logger.Info($"В сессию {token} добавился второй боец");
+				_logger.Info($"В сессию {Token} добавился второй боец {token}");
 				Subscribe(SecondUser);
 				SendReadySignAsync();
 				ConnectionMonitor();
@@ -340,7 +340,7 @@ namespace Northis.BattleRoostersOnline.Models
 				return true;
 			}
 
-			_logger.Info($"Поиск соперника в сессии {token} был отменен");
+			_logger.Info($"Поиск соперника в сессии {Token} был отменен пользователем {token}");
 
 			return false;
 		}

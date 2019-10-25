@@ -120,8 +120,7 @@ namespace Northis.RoosterBattle.ViewModels
 			string token = "";
 			try
 			{
-				token = authMethod(Login, password)
-					.Result;
+				token = await authMethod(Login, password);
 			}
 			catch (Exception e)
 			{
