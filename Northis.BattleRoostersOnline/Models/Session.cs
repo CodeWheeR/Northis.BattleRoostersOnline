@@ -116,8 +116,15 @@ namespace Northis.BattleRoostersOnline.Models
 			}
 			#endregion
 
-			#region Methods
-
+			#region Methods			
+			/// <summary>
+			/// Вызывает принудительное закрытие канала связи.
+			/// </summary>
+			public void CloseCallbackChannel()
+			{
+				if (_callback is ICommunicationObject co)
+					co.Close();
+			}
 			private void CarefulCallback(Action callback)
 			{
 				try
@@ -388,78 +395,61 @@ namespace Northis.BattleRoostersOnline.Models
 		public async Task StartBattle()
 		{
 			var token = _battleTokenSource.Token;
-			try
-			{
-				await Task.Run(async () =>
+			CatchUnhandledException(Task.Run(async () =>
+						   {
+							   while (FirstUser.Rooster.Health > 0 && SecondUser.Rooster.Health > 0 && !token.IsCancellationRequested)
 							   {
-								   while (FirstUser.Rooster.Health > 0 && SecondUser.Rooster.Health > 0 && !token.IsCancellationRequested)
+								   MakeHitWithFeedback(FirstUser.Rooster, SecondUser.Rooster);
+								   SendRoosterStatus();
+
+								   await Task.Delay(300, token);
+
+								   if (SecondUser.Rooster.Health == 0)
 								   {
-									   MakeHitWithFeedback(FirstUser.Rooster, SecondUser.Rooster);
-									   SendRoosterStatus();
-
-									   await Task.Delay(300, token);
-
-									   if (SecondUser.Rooster.Health == 0)
-									   {
-										   break;
-									   }
-
-									   MakeHitWithFeedback(SecondUser.Rooster, FirstUser.Rooster);
-									   SendRoosterStatus();
-
-									   await Task.Delay(300, token);
+									   break;
 								   }
 
-								   if (FirstUser.Rooster.Health == 0 && SecondUser.Rooster.Health == 0)
-								   {
-									   Task.WaitAll(SetWinstreak(FirstUser, 0), SetWinstreak(SecondUser, 0));
-								   }
-								   else if (FirstUser.Rooster.Health == 0)
-								   {
-									   Task.WaitAll(SetWinstreak(FirstUser, 0), SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1));
-								   }
-								   else
-								   {
-									   Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1), SetWinstreak(SecondUser, 0));
-								   }
+								   MakeHitWithFeedback(SecondUser.Rooster, FirstUser.Rooster);
+								   SendRoosterStatus();
 
-								   StorageService.Sessions.Remove(Token);
-								   StorageService.SaveRoostersAsync();
-								   SendEndSign();
-							   },
-							   token);
+								   await Task.Delay(300, token);
+							   }
+
+							   if (FirstUser.Rooster.Health == 0 && SecondUser.Rooster.Health == 0)
+							   {
+								   Task.WaitAll(SetWinstreak(FirstUser, 0), SetWinstreak(SecondUser, 0));
+							   }
+							   else if (FirstUser.Rooster.Health == 0)
+							   {
+								   Task.WaitAll(SetWinstreak(FirstUser, 0), SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1));
+							   }
+							   else
+							   {
+								   Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1), SetWinstreak(SecondUser, 0));
+							   }
+
+							   StorageService.Sessions.Remove(Token);
+							   StorageService.SaveRoostersAsync();
+							   SendEndSign();
+						   },
+						   token));
 			}
-			catch (Exception e)
-			{
-				_logger.Error(e);
-				throw;
-			}
-		}
 
 		/// <summary>
 		/// Асинхронно проверяет состояние сессии.
 		/// </summary>
-		public async Task ConnectionMonitor()
+		public async void ConnectionMonitor()
 		{
 			var token = _connectionMonitorTokenSource.Token;
-			try
-			{
-				await Task.Run(async () =>
-							   {
-								   while (!IsStarted && !token.IsCancellationRequested)
-								   {
-									   await Task.Delay(1000, token);
-									   SendRoosterStatus();
-								   }
-							   },
-							   token);
-			}
-			catch (Exception e)
-			{
-				_logger.Error(e);
-				throw;
-			}
-			
+			CatchUnhandledException(Task.Run(async () =>
+											 {
+												 while (!IsStarted && !token.IsCancellationRequested)
+												 {
+													 await Task.Delay(1000, token);
+													 SendRoosterStatus();
+												 }
+											 },
+											 token));
 		}
 
 		/// <summary>
@@ -555,40 +545,33 @@ namespace Northis.BattleRoostersOnline.Models
 		/// <param name="autoWinner">Технический победитель.</param>
 		private async void CheckForDeserting(UserData deserter, UserData autoWinner)
 		{
-			try
+			CatchUnhandledException(Task.Run(() =>
 			{
-				await Task.Run(() =>
+				if (deserter.CallbackState != CommunicationState.Opened)
 				{
-					if (deserter.CallbackState != CommunicationState.Opened)
+					if (!_battleTokenSource.IsCancellationRequested)
 					{
-						if (!_battleTokenSource.IsCancellationRequested)
-						{
-							StopSession();
-						}
-
-						try
-						{
-							autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
-
-							Task.WaitAll(SetWinstreak(deserter, 0), SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
-
-							SendEndSign();
-						}
-						catch (CommunicationException e)
-						{
-							Debug.WriteLine(e.TargetSite + ": " + e);
-						}
-
-						StorageService.Sessions.Remove(Token);
+						StopSession();
 					}
-				});
-			}
-			catch (Exception e)
-			{
-				_logger.Error(e);
-				throw;
-			}
 
+					try
+					{
+						autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
+
+						Task.WaitAll(SetWinstreak(deserter, 0), SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
+
+						SendEndSign();
+
+						autoWinner.CloseCallbackChannel();
+					}
+					catch (CommunicationException e)
+					{
+						_logger.Error(e);
+					}
+
+					StorageService.Sessions.Remove(Token);
+				}
+			}));
 		}
 
 		/// <summary>
@@ -649,6 +632,26 @@ namespace Northis.BattleRoostersOnline.Models
 											SecondUser.Rooster != null ? SecondUser.Rooster.ToRoosterDto() : null);
 			SecondUser.GetRoosterStatusAsync(SecondUser.Rooster != null ? SecondUser.Rooster.ToRoosterDto() : null,
 											 FirstUser.Rooster != null ? FirstUser.Rooster.ToRoosterDto() : null);
+		}
+
+		/// <summary>
+		/// Заготовка для отлова необработанных исключений.
+		/// </summary>
+		/// <param name="task">The task.</param>
+		private async void CatchUnhandledException(Task task)
+		{
+			try
+			{
+				await task;
+			}
+			catch (Exception e)
+			{
+				if (e.GetType() != typeof(TaskCanceledException))
+				{
+					_logger.Error(e);
+					throw;
+				}
+			}
 		}
 		#endregion
 		#endregion

@@ -285,6 +285,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\RoosterIco.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Rooster.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\GameServer\" />
   </ItemGroup>
   <ItemGroup>
@@ -301,12 +307,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\RoosterIco.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Rooster.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

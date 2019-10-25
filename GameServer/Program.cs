@@ -23,7 +23,7 @@ namespace GameServer
 		{
 			AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
-			var baseAddress = new Uri("http://10.88.99.75:8080/Northis.BattleRoostersOnline");
+			var baseAddress = new Uri("http://10.88.99.75/Northis.BattleRoostersOnline");
 
 			var selfHost = new ServiceHost(typeof(GameServicesProvider), baseAddress);
 
@@ -63,17 +63,20 @@ namespace GameServer
 
 			Console.ReadLine();
 		}
-
+		/// <summary>
+		/// Действие при обработке Unhandled Exception.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
 		{
 			var logger = LogManager.GetCurrentClassLogger();
 			if (e.ExceptionObject is Exception ex)
-				logger.Fatal(ex, "Unhandled Exception");
+				logger.Fatal(ex);
 			else
 				logger.Fatal(e.ExceptionObject);
 
-			Console.WriteLine(e.ExceptionObject.ToString());
-			Console.WriteLine("Press Enter to continue");
+			Console.WriteLine( $"[FATAL] Возникло необработанное исключение {e.ExceptionObject.GetType()}. Проверьте логи...");
 			Console.ReadLine();
 			Environment.Exit(1);
 		}
