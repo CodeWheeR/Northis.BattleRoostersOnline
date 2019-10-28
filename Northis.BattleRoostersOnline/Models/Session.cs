@@ -49,6 +49,8 @@ namespace Northis.BattleRoostersOnline.Models
 		private readonly CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
 
 		private Logger _logger = LogManager.GetCurrentClassLogger();
+
+		private object _desertLocker = new object();
 		#endregion
 		#endregion
 
@@ -90,6 +92,13 @@ namespace Northis.BattleRoostersOnline.Models
 				get;
 				set;
 			}
+
+			public string RoosterToken
+			{
+				get;
+				set;
+			}
+
 
 			/// <summary>
 			/// Возвращает или задает петуха.
@@ -258,6 +267,12 @@ namespace Northis.BattleRoostersOnline.Models
 			set;
 		}
 
+		internal bool IsEnded
+		{
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// Возвращает токен.
 		/// </summary>
@@ -323,6 +338,7 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				FirstUser = new UserData(callback)
 				{
+					RoosterToken = fighter.Token,
 					Rooster = new RoosterModel(fighter),
 					Token = token,
 					IsReady = false
@@ -336,6 +352,7 @@ namespace Northis.BattleRoostersOnline.Models
 				IsReady = true;
 				SecondUser = new UserData(callback)
 				{
+					RoosterToken = fighter.Token,
 					Rooster = new RoosterModel(fighter),
 					Token = token,
 					IsReady = false
@@ -385,6 +402,7 @@ namespace Northis.BattleRoostersOnline.Models
 		/// </summary>
 		public void SendEndSign()
 		{
+			IsEnded = true;
 			_logger.Info($"В сессии {Token} закончилось сражение");
 			BattleEnded?.Invoke(this, EventArgs.Empty);
 			StatisticsPublisher.GetInstance()
@@ -513,7 +531,11 @@ namespace Northis.BattleRoostersOnline.Models
 		{
 			SessionStarted += (x, y) => userData.FindedMatchAsync(y.MatchToken);
 			BattleStarted += (x, y) => userData.GetStartSignAsync();
-			BattleEnded += (x, y) => userData.GetEndSignAsync();
+			BattleEnded += (x, y) =>
+			{
+				userData.GetEndSignAsync();
+				userData.UnsubscribeOnClosing((x1, y1) => CheckForDeserting(userData.Token));
+			};
 		}
 
 		/// <summary>
@@ -575,18 +597,25 @@ namespace Northis.BattleRoostersOnline.Models
 						StopSession();
 					}
 
-					try
+					lock (_desertLocker)
 					{
-						autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
-						Task.WaitAll(SetWinstreak(deserter, 0), SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
-						SendEndSign();
-						autoWinner.UnsubscribeOnClosing((x, y) => CheckForDeserting(autoWinner.Token));
+						if (IsEnded)
+							return;
 
+						try
+						{
+							autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
+							Task.WaitAll(SetWinstreak(deserter, 0), SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
+							SendEndSign();
+							autoWinner.UnsubscribeOnClosing((x, y) => CheckForDeserting(autoWinner.Token));
+
+						}
+						catch (CommunicationException e)
+						{
+							_logger.Error(e);
+						}
 					}
-					catch (CommunicationException e)
-					{
-						_logger.Error(e);
-					}
+					
 
 					lock (StorageService.Sessions)
 					{
@@ -604,8 +633,9 @@ namespace Northis.BattleRoostersOnline.Models
 		private async Task SetWinstreak(UserData userData, int value)
 		{
 			var login = await GetLoginAsync(userData.Token);
-			var rooster = StorageService.RoostersData[login]
-								 .First(x => x.Name == userData.Rooster.Name);
+			if (string.IsNullOrWhiteSpace(login))
+				return;
+			var rooster = StorageService.RoostersData[login][userData.RoosterToken];
 			lock (StorageService.RoostersData)
 			{
 				rooster.WinStreak = value;

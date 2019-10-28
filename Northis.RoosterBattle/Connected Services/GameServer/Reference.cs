@@ -156,6 +156,9 @@ namespace Northis.RoosterBattle.GameServer {
         private int ThicknessField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TokenField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private double WeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -323,6 +326,19 @@ namespace Northis.RoosterBattle.GameServer {
                 if ((this.ThicknessField.Equals(value) != true)) {
                     this.ThicknessField = value;
                     this.RaisePropertyChanged("Thickness");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Token {
+            get {
+                return this.TokenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TokenField, value) != true)) {
+                    this.TokenField = value;
+                    this.RaisePropertyChanged("Token");
                 }
             }
         }
@@ -499,10 +515,10 @@ namespace Northis.RoosterBattle.GameServer {
     public interface IEditService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        bool Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
+        bool Edit(string token, string sourceRoosterToken, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        System.Threading.Tasks.Task<bool> EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
+        System.Threading.Tasks.Task<bool> EditAsync(string token, string sourceRoosterToken, Northis.RoosterBattle.GameServer.RoosterDto editRooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
         bool Add(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
@@ -511,10 +527,10 @@ namespace Northis.RoosterBattle.GameServer {
         System.Threading.Tasks.Task<bool> AddAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
-        bool Remove(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        bool Remove(string token, string deleteRoosterToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
-        System.Threading.Tasks.Task<bool> RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        System.Threading.Tasks.Task<bool> RemoveAsync(string token, string deleteRoosterToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/GetUserRoosters", ReplyAction="http://tempuri.org/IEditService/GetUserRoostersResponse")]
         Northis.RoosterBattle.GameServer.RoosterDto[] GetUserRoosters(string token);
@@ -550,12 +566,12 @@ namespace Northis.RoosterBattle.GameServer {
                 base(binding, remoteAddress) {
         }
         
-        public bool Edit(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
-            return base.Channel.Edit(token, sourceRooster, editRooster);
+        public bool Edit(string token, string sourceRoosterToken, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
+            return base.Channel.Edit(token, sourceRoosterToken, editRooster);
         }
         
-        public System.Threading.Tasks.Task<bool> EditAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto sourceRooster, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
-            return base.Channel.EditAsync(token, sourceRooster, editRooster);
+        public System.Threading.Tasks.Task<bool> EditAsync(string token, string sourceRoosterToken, Northis.RoosterBattle.GameServer.RoosterDto editRooster) {
+            return base.Channel.EditAsync(token, sourceRoosterToken, editRooster);
         }
         
         public bool Add(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
@@ -566,12 +582,12 @@ namespace Northis.RoosterBattle.GameServer {
             return base.Channel.AddAsync(token, rooster);
         }
         
-        public bool Remove(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            return base.Channel.Remove(token, rooster);
+        public bool Remove(string token, string deleteRoosterToken) {
+            return base.Channel.Remove(token, deleteRoosterToken);
         }
         
-        public System.Threading.Tasks.Task<bool> RemoveAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
-            return base.Channel.RemoveAsync(token, rooster);
+        public System.Threading.Tasks.Task<bool> RemoveAsync(string token, string deleteRoosterToken) {
+            return base.Channel.RemoveAsync(token, deleteRoosterToken);
         }
         
         public Northis.RoosterBattle.GameServer.RoosterDto[] GetUserRoosters(string token) {
@@ -588,10 +604,10 @@ namespace Northis.RoosterBattle.GameServer {
     public interface IBattleService {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/FindMatchAsync")]
-        void FindMatchAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        void FindMatchAsync(string token, string rooster);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/FindMatchAsync")]
-        System.Threading.Tasks.Task FindMatchAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster);
+        System.Threading.Tasks.Task FindMatchAsyncAsync(string token, string rooster);
         
         [System.ServiceModel.OperationContractAttribute(IsTerminating=true, Action="http://tempuri.org/IBattleService/CancelFinding", ReplyAction="http://tempuri.org/IBattleService/CancelFindingResponse")]
         bool CancelFinding(string token);
@@ -659,11 +675,11 @@ namespace Northis.RoosterBattle.GameServer {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void FindMatchAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+        public void FindMatchAsync(string token, string rooster) {
             base.Channel.FindMatchAsync(token, rooster);
         }
         
-        public System.Threading.Tasks.Task FindMatchAsyncAsync(string token, Northis.RoosterBattle.GameServer.RoosterDto rooster) {
+        public System.Threading.Tasks.Task FindMatchAsyncAsync(string token, string rooster) {
             return base.Channel.FindMatchAsyncAsync(token, rooster);
         }
         

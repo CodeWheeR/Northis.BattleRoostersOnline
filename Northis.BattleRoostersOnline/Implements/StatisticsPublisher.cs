@@ -53,8 +53,8 @@ namespace Northis.BattleRoostersOnline.Implements
 								stats.Add(new StatisticsDto()
 								{
 									UserName = usersRoosters.Key,
-									RoosterName = rooster.Name,
-									WinStreak = rooster.WinStreak
+									RoosterName = rooster.Value.Name,
+									WinStreak = rooster.Value.WinStreak
 								});
 							}
 						}

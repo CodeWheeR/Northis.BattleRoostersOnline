@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -241,7 +242,7 @@ namespace Northis.RoosterBattle.ViewModels
 		{
 			var sourceRooster = SelectedRooster.ToRoosterDto();
 			await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(SelectedRooster);
-			await _editServiceClient.EditAsync(token, sourceRooster, SelectedRooster.ToRoosterDto());
+			await _editServiceClient.EditAsync(token, SelectedRooster.Token, SelectedRooster.ToRoosterDto());
 			UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
 		}
 
@@ -251,7 +252,7 @@ namespace Northis.RoosterBattle.ViewModels
 		/// <returns></returns>
 		private async Task DeleteRoosterAsync()
 		{
-			await _editServiceClient.RemoveAsync(token, SelectedRooster.ToRoosterDto());
+			await _editServiceClient.RemoveAsync(token, SelectedRooster.Token);
 			UpdateRoostersAsync();
 		}
 

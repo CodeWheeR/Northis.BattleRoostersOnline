@@ -14,16 +14,6 @@ namespace Nortis.BattleRoostersOnlineTests
 	public class ServicesStorageTests : ServiceModuleTests
 	{
 		private DataStorageService _dataStorageService = new DataStorageService();
-
-		/// <summary>
-		/// Проверяет метод загрузки петухов на предмет исключительных ситуаций.
-		/// </summary>
-		[Test]
-		public void LoadTest1()
-		{
-			Assert.DoesNotThrow(() => _dataStorageService.LoadRoosters());
-
-		}
 		/// <summary>
 		/// Проверяет количество петухов после загрузки.
 		/// </summary>
@@ -31,11 +21,11 @@ namespace Nortis.BattleRoostersOnlineTests
 		public async Task LoadTest2()
 		{
 			var backupRoosters = Storage.RoostersData.Count;
-			Storage.RoostersData.Add("SomeKey", new List<RoosterDto>
+			Storage.RoostersData.Add("SomeKey", new Dictionary<string, RoosterDto>
 			{
-				new RoosterDto(),
-				new RoosterDto(),
-				new RoosterDto()
+				{"Rooster1", new RoosterDto()},
+				{"Rooster2", new RoosterDto()},
+				{"Rooster3", new RoosterDto()}
 			});
 
 			await _dataStorageService.SaveRoostersAsync();
@@ -60,16 +50,16 @@ namespace Nortis.BattleRoostersOnlineTests
 		{
 			string token = "First";
 			RoosterDto rooster = new RoosterDto();
-			Storage.RoostersData.Add(token, new List<RoosterDto> { rooster });
+			Storage.RoostersData.Add(token, new Dictionary<string, RoosterDto>
+			{
+				{"Rooster", rooster}
+			});
 
 			await _dataStorageService.SaveRoostersAsync();
 			_dataStorageService.LoadRoosters();
 
 
-			Assert.AreEqual(token, Storage.RoostersData.ElementAt(0).Key);
-			Assert.IsTrue(Storage.RoostersData.ElementAt(0)
-										.Value.ElementAt(0)
-										.Equals(rooster));
+			Assert.IsTrue(Storage.RoostersData[token].ContainsKey("Rooster"));
 		}
 		/// <summary>
 		/// Проверяет корректность работы метода сохранения данных пользователя.

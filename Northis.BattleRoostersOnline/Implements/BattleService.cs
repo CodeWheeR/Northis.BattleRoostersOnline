@@ -27,13 +27,13 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="rooster">Петух.</param>
 		/// <returns>Task.</returns>
 
-		public void FindMatchAsync(string token, RoosterDto rooster)
+		public void FindMatchAsync(string token, string roosterToken)
 		{
 			var callback = OperationContext.Current.GetCallbackChannel<IBattleServiceCallback>();
-			FindMatchAsync(token, rooster, callback);
+			FindMatchAsync(token, roosterToken, callback);
 		}
 
-		public async void FindMatchAsync(string token, RoosterDto rooster, IBattleServiceCallback callback)
+		public async void FindMatchAsync(string token, string roosterToken, IBattleServiceCallback callback)
 		{
 			if (!StorageService.LoggedUsers.ContainsKey(token))
 			{
@@ -47,19 +47,20 @@ namespace Northis.BattleRoostersOnline.Implements
 				await Task.Run(async () =>
 				{
 					Session session;
+					var login = await GetLoginAsync(token);
 					if (StorageService.Sessions.Count > 0 &&
 						!StorageService.Sessions.Last()
 									   .Value.IsReady)
 					{
 						session = StorageService.Sessions.Last()
 												.Value;
-						session.RegisterFighter(token, rooster, callback);
+						session.RegisterFighter(token, StorageService.RoostersData[login][roosterToken], callback);
 					}
 					else
 					{
 						var matchToken = await GenerateTokenAsync();
 						session = new Session(matchToken);
-						session.RegisterFighter(token, rooster, callback);
+						session.RegisterFighter(token, StorageService.RoostersData[login][roosterToken], callback);
 						StorageService.Sessions.Add(matchToken, session);
 					}
 				});
