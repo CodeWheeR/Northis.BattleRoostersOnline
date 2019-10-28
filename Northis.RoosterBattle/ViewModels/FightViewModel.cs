@@ -257,7 +257,7 @@ namespace Northis.RoosterBattle.ViewModels
 			ShowDeadFirst = false;
 			ShowDeadSecond = false;
 			IsFinding = true;
-			_battleServiceClient.FindMatchAsync(_userToken, FirstFighter.ToRoosterDto());
+			_battleServiceClient.FindMatchAsync(_userToken, FirstFighter.Token);
 		}
 
 		/// <summary>

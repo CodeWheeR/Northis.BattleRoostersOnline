@@ -9,10 +9,20 @@ namespace DataTransferObjects
 	[DataContract]
 	public class RoosterDto
 	{
-		#region .ctor
-		#endregion
+		#region Properties		
+		/// <summary>
+		/// Gets the token.
+		/// </summary>
+		/// <value>
+		/// The token.
+		/// </value>
+		[DataMember]
+		public string Token
+		{
+			get;
+			set;
+		}
 
-		#region Properties
 		/// <summary>
 		/// Возвращает или задает вес петуха.
 		/// </summary>

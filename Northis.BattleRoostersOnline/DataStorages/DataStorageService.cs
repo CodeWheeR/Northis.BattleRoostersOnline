@@ -42,7 +42,7 @@ namespace Northis.BattleRoostersOnline.Models
 		public DataStorageService()
 		{
 			UserData = new Dictionary<string, string>();
-			RoostersData = new Dictionary<string, List<RoosterDto>>();
+			RoostersData = new Dictionary<string, Dictionary<string, RoosterDto>>();
 			LoggedUsers = new Dictionary<string, string>();
 			Sessions = new Dictionary<string, Session>();
 			Task.Run(() => InitContent());
@@ -68,7 +68,7 @@ namespace Northis.BattleRoostersOnline.Models
 		/// <value>
 		/// Данные петухов.
 		/// </value>
-		public Dictionary<string, List<RoosterDto>> RoostersData
+		public Dictionary<string, Dictionary<string,RoosterDto>> RoostersData
 		{
 			get;
 		}
@@ -137,7 +137,7 @@ namespace Northis.BattleRoostersOnline.Models
 				{
 					foreach (var val in RoostersData)
 					{
-						roosters.Add(new UserRoosters(val.Key, val.Value));
+						roosters.Add(new UserRoosters(val.Key, val.Value.Values));
 					}
 				}
 
@@ -188,12 +188,13 @@ namespace Northis.BattleRoostersOnline.Models
 				{
 					RoostersData.Clear();
 
-					for (var i = 0; i < userRoosters.Count; i++)
+					foreach (var roosters in userRoosters)
 					{
-						RoostersData.Add(userRoosters[i]
-											 .Login,
-										 userRoosters[i]
-											 .Roosters.ToList());
+						RoostersData.Add(roosters.Login, new Dictionary<string, RoosterDto>());
+						foreach (var rooster in roosters.Roosters)
+						{
+							RoostersData[roosters.Login].Add(rooster.Token, rooster);
+						}
 					}
 				}
 				

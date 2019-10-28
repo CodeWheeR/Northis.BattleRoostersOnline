@@ -17,7 +17,7 @@ namespace Northis.BattleRoostersOnline.Contracts
 		/// <param name="rooster">Петух.</param>
 		/// <returns>Task.</returns>
 		[OperationContract(IsInitiating = true, IsOneWay = true)]
-		void FindMatchAsync(string token, RoosterDto rooster);
+		void FindMatchAsync(string token, string rooster);
 
 		/// <summary>
 		/// Контракт операции, отвечающий за отмену поиска матча.

@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Security;
+using System.Windows;
 using Catel.ExceptionHandling;
 using Catel.IoC;
 using Catel.Logging;
@@ -16,6 +19,8 @@ namespace Northis.RoosterBattle
 	{
 		public App()
 		{
+			AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
+
 			LogManager.AddDebugListener();
 
 			var serviceLocator = this.GetServiceLocator();
@@ -27,19 +32,31 @@ namespace Northis.RoosterBattle
 				var messageService = serviceLocator.ResolveType<IMessageService>();
 				await messageService.ShowAsync("Ошибка чтения файла сохранения. Мои соболезнования...", "Ошибка!", MessageButton.OK, MessageImage.Error);
 			});
-
-			uiVisualizerService.ShowDialogAsync<RoosterBrowserViewModel>();
+			StartApp(uiVisualizerService);
 		}
+
+
+
 
 		private async void StartApp(IUIVisualizerService uiVisualizerService)
 		{
-			await uiVisualizerService.ShowDialogAsync<AuthViewModel>()
-									 .ConfigureAwait(true);
-			if (Current.Resources.Contains("UserToken"))
+			try
 			{
-				await uiVisualizerService.ShowDialogAsync<RoosterBrowserViewModel>()
-										 .ConfigureAwait(true);
+				await uiVisualizerService.ShowDialogAsync<RoosterBrowserViewModel>();
 			}
+			catch (Exception e)
+			{
+				throw;
+			}
+		}
+
+		private void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+		{
+			using (StreamWriter writer = new StreamWriter("FATAL.txt"))
+			{
+				writer.WriteLine(e.ExceptionObject);
+			}
+			MessageBox.Show("Возникло необработанное исключение. Проверьте Log 'Fatal.txt'");
 		}
 	}
 }

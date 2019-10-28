@@ -221,6 +221,7 @@ namespace Northis.RoosterBattle.Models
 		{
 			if (rooster != null)
 			{
+				Token = rooster.Token;
 				Stamina = rooster.Stamina;
 				Brickness = rooster.Brickness;
 				Luck = rooster.Luck;
@@ -250,7 +251,10 @@ namespace Northis.RoosterBattle.Models
 			set => SetValue(NameProperty, value);
 		}
 
-		 
+		public string Token
+		{
+			get;
+		}
 
 		/// <summary>
 		/// Возвращает или устанавливает количество побед петуха.
@@ -486,6 +490,7 @@ namespace Northis.RoosterBattle.Models
 		public RoosterDto ToRoosterDto() =>
 			new RoosterDto
 			{
+				Token = Token,
 				Height = Height,
 				ColorDto = ColorDtoParse(Color),
 				Health = Health,

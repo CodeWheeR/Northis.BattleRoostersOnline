@@ -42,7 +42,7 @@ namespace DataTransferObjects
 		/// Инициализирует новый объект <see cref="UserRoosters" /> структуры.
 		/// </summary>
 		/// <param name="roosterDictionary">The rooster dictionary.</param>
-		public UserRoosters(string login, List<RoosterDto> roosters)
+		public UserRoosters(string login, IEnumerable<RoosterDto> roosters)
 		{
 			Login = login;
 			Roosters = roosters;

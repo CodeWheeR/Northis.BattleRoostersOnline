@@ -75,13 +75,14 @@ namespace Nortis.BattleRoostersOnlineTests
 		[TestCase("NotFoundToken")]
 		public async Task EditTest1(string token)
 		{
-			Storage.RoostersData.Add("FoundToken", new List<RoosterDto>
+			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterDto>()
 			{
-				new RoosterDto()
+				{
+					"some", new RoosterDto()
+				}
 			});
-			
 
-			//Assert.DoesNotThrowAsync(() => editor.EditAsync(token, Storage.RoostersData["FoundToken"].First(), new RoosterModel().ToRoosterDto()));
+			//Assert.DoesNotThrowAsync(() => editor.EditAsync(token, "some", new RoosterModel().ToRoosterDto()));
 		}
 		/// <summary>
 		/// Проверяет корректность редактирования нужного петуха.

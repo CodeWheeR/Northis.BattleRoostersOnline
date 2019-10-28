@@ -91,6 +91,12 @@ namespace Northis.BattleRoostersOnline.Models
 				set;
 			}
 
+			public string RoosterToken
+			{
+				get;
+				set;
+			}
+
 			/// <summary>
 			/// Возвращает или задает петуха.
 			/// </summary>
@@ -323,6 +329,7 @@ namespace Northis.BattleRoostersOnline.Models
 			{
 				FirstUser = new UserData(callback)
 				{
+					RoosterToken = fighter.Token,
 					Rooster = new RoosterModel(fighter),
 					Token = token,
 					IsReady = false
@@ -336,6 +343,7 @@ namespace Northis.BattleRoostersOnline.Models
 				IsReady = true;
 				SecondUser = new UserData(callback)
 				{
+					RoosterToken = fighter.Token,
 					Rooster = new RoosterModel(fighter),
 					Token = token,
 					IsReady = false
@@ -604,8 +612,7 @@ namespace Northis.BattleRoostersOnline.Models
 		private async Task SetWinstreak(UserData userData, int value)
 		{
 			var login = await GetLoginAsync(userData.Token);
-			var rooster = StorageService.RoostersData[login]
-								 .First(x => x.Name == userData.Rooster.Name);
+			var rooster = StorageService.RoostersData[login][userData.RoosterToken];
 			lock (StorageService.RoostersData)
 			{
 				rooster.WinStreak = value;
