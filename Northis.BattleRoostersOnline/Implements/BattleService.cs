@@ -85,17 +85,21 @@ namespace Northis.BattleRoostersOnline.Implements
 			{
 				return await Task.Run<bool>(() =>
 				{
-					var session = StorageService.Sessions.Reverse()
-												.First(x => x.Value.RemoveFighter(token))
-												.Value;
-					if (session != null)
+					if (StorageService.Sessions.Count > 0)
 					{
-						StorageService.Sessions.Remove(session.Token);
-						_logger.Info($"Поиск матча был отменен пользователем {token}, сессия {session.Token} закрыта");
-						return true;
-					}
+						var session = StorageService.Sessions.Reverse()
+													.First(x => x.Value.RemoveFighter(token))
+													.Value;
+						if (session != null)
+						{
+							StorageService.Sessions.Remove(session.Token);
+							_logger.Info($"Поиск матча был отменен пользователем {token}, сессия {session.Token} закрыта");
+							return true;
+						}
 
-					return false;
+						return false;
+					}
+					return true;
 				});
 			}
 			catch (Exception e)

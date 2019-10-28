@@ -241,8 +241,7 @@ namespace DataTransferObjects
 				   Name == obj.Name &&
 				   Stamina == obj.Stamina &&
 				   Thickness == obj.Thickness &&
-				   Weight == obj.Weight &&
-				   WinStreak == obj.WinStreak;
+				   Weight == obj.Weight;
 		}
 		#endregion
 		#endregion

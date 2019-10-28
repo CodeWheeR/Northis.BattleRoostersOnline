@@ -66,6 +66,7 @@ namespace Northis.RoosterBattle.Callbacks
 		public void FindedMatch(string token)
 		{
 			_fightVm.BattleEnded = false;
+			_fightVm.IsFinding = false;
 			_fightVm.MatchToken = token;
 			_fightVm.BattleLog += "Матч найден. Когда будете готовы, нажмите кнопку \"Начать бой\"" + Environment.NewLine;
 		}
