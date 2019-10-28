@@ -23,9 +23,10 @@ namespace Nortis.BattleRoostersOnlineTests
 		public async Task AddTest1()
 		{
 			string token = await authenticateService.RegisterAsync("Login1", "Password", callbackAuth.Object);
-			//await editor.AddAsync(token, new RoosterDto());
 
-			Assert.AreEqual(ServiceLocator.Current.GetInstance<DataStorageService>().RoostersData.Count, 1);
+			await editor.AddAsync(token, new RoosterDto());
+
+			Assert.AreEqual(Storage.RoostersData.Count, 1);
 		}
 		/// <summary>
 		/// Проверяет метод на предмет выброса исключений.
@@ -33,19 +34,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		[Test]
 		public void AddTest2()
 		{
-			//Assert.DoesNotThrowAsync(async () => await editor.AddAsync("SomeToken", new RoosterDto()));
-		}
-		/// <summary>
-		/// Проверяет количество петухов пользователя после добавления.
-		/// </summary>
-		[Test]
-		public async Task AddTest3()
-		{
-			RoosterDto rooster = new RoosterDto();
-
-			//await editor.AddAsync("SomeToken", rooster);
-
-			Assert.IsTrue(ServiceLocator.Current.GetInstance<DataStorageService>().RoostersData.ElementAt(0).Value[0].Equals(rooster));
+			Assert.DoesNotThrowAsync( () => editor.AddAsync("SomeToken", new RoosterDto()));
 		}
 		
 		/// <summary>
@@ -101,16 +90,16 @@ namespace Nortis.BattleRoostersOnlineTests
 			};
 			RoosterDto rooster2 = new RoosterDto();
 			RoosterDto rooster3 = new RoosterDto();
-			Storage.RoostersData.Add("FoundToken", new List<RoosterDto>
+			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterDto>
 			{
-				rooster1,
-				rooster2,
-				rooster3
+				{ "Rooster1",rooster1},
+				{ "Rooster2",rooster2},
+				{ "Rooster3",rooster3}
 			});
 
-			//await editor.EditAsync("FoundToken", Storage.RoostersData["FoundToken"].First(x => x.Name == "asdshka"), editedRooster);
+			await editor.EditAsync("FoundToken","Rooster2" , editedRooster);
 
-			Assert.IsTrue(editedRooster.Equals(Storage.RoostersData["FoundToken"].First(x => x.Name == "asdshka")));
+			Assert.IsTrue(editedRooster.Equals(Storage.RoostersData["FoundToken"]["Rooster2"]));
 		}
 		/// <summary>
 		/// Проверяет работу метода редактирования с недопустимыми параметрами.
@@ -123,12 +112,12 @@ namespace Nortis.BattleRoostersOnlineTests
 		{
 			RoosterDto rooster = new RoosterDto();
 
-			ServiceLocator.Current.GetInstance<DataStorageService>().RoostersData.Add("FoundToken", new List<RoosterDto>
+			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterDto>
 			{
-				rooster
+				{"Rooster1", rooster}
 			});
 
-			//Assert.DoesNotThrowAsync(() => editor.RemoveAsync(token,rooster));
+			Assert.DoesNotThrowAsync(() => editor.RemoveAsync(token,rooster.Token));
 		}
 		/// <summary>
 		/// Проверяет корректность удаления нужного петуха.
@@ -139,16 +128,16 @@ namespace Nortis.BattleRoostersOnlineTests
 			RoosterDto rooster1 = new RoosterDto();
 			RoosterDto rooster2 = new RoosterDto();
 			RoosterDto rooster3 = new RoosterDto();
-			ServiceLocator.Current.GetInstance<DataStorageService>().RoostersData.Add("FoundToken", new List<RoosterDto>
+			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterDto>
 			{
-				rooster1,
-				rooster2,
-				rooster3
+				{ "Rooster1",rooster1},
+				{ "Rooster2",rooster2},
+				{ "Rooster3",rooster3}
 			});
 
-			//await editor.RemoveAsync(token, rooster1);
+			await editor.RemoveAsync(token, "Rooster1");
 
-			Assert.AreEqual(false,Storage.RoostersData[token].Contains(rooster1));
+			Assert.AreEqual(false,Storage.RoostersData["FoundToken"].ContainsKey("Rooster1"));
 		}
 
 

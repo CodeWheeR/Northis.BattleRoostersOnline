@@ -23,13 +23,6 @@ namespace Nortis.BattleRoostersOnlineTests
 		/// <summary>
 		/// Проверяет корректность работы метода отмены матча.
 		/// </summary>
-		[Test]
-		public async Task CancelFightTest()
-		{
-			string token = await authenticateService.RegisterAsync("Login1", "Password", callbackAuth.Object);
-			 battleService.FindMatchAsync(token, new RoosterDto(), callbackBattle.Object);
-			Assert.DoesNotThrow((() => battleService.CancelFinding(token)));
-		}
 		#endregion
 		#endregion
 	}
