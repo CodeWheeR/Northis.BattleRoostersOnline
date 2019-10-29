@@ -4,11 +4,12 @@ using System.Security;
 using System.Windows;
 using Catel.ExceptionHandling;
 using Catel.IoC;
-using Catel.Logging;
 using Catel.Services;
 using Newtonsoft.Json;
 using Northis.RoosterBattle.ViewModels;
 using Northis.RoosterBattle.Views;
+using NLog;
+using LogManager = Catel.Logging.LogManager;
 
 namespace Northis.RoosterBattle
 {
@@ -19,6 +20,17 @@ namespace Northis.RoosterBattle
 	{
 		public App()
 		{
+			Logger logger = NLog.LogManager.GetLogger("ClientLogger"); // Здесь проверял layouts в файлы
+
+			logger.Debug("TestLogs");
+			logger.Trace("Проверка");
+			logger.Fatal("TestLogs");
+			logger.Info("TestLogs");
+			logger.Warn("TestLogs");
+			logger.Error("TestLogs");
+
+
+
 			AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
 			LogManager.AddDebugListener();
