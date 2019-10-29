@@ -23,6 +23,7 @@ namespace Nortis.BattleRoostersOnlineTests
 		/// <summary>
 		/// Проверяет корректность работы метода отмены матча.
 		/// </summary>
+		
 		#endregion
 		#endregion
 	}

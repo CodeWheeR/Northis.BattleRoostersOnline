@@ -1,12 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using CommonServiceLocator;
 using DataTransferObjects;
 using Northis.BattleRoostersOnline.Models;
 using NUnit.Framework;
-using Unity;
-using Unity.ServiceLocation;
 
 namespace Nortis.BattleRoostersOnlineTests
 {
