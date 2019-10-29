@@ -35,7 +35,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <returns>Task.</returns>
 		public async Task<bool> AddAsync(string token, RoosterDto rooster)
 		{
-			if (rooster == null)
+			if (string.IsNullOrWhiteSpace(token) || string.IsNullOrEmpty(token) || rooster == null)
 			{
 				return false;
 			}
@@ -110,10 +110,15 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="editRooster">Редактируемый петух.</param>
 		public async Task<bool> EditAsync(string token, string sourceRoosterToken, RoosterDto editRooster)
 		{
-			if (token == null || sourceRoosterToken == null || editRooster == null)
+			if (string.IsNullOrWhiteSpace(token) ||
+				string.IsNullOrEmpty(token) ||
+				string.IsNullOrWhiteSpace(sourceRoosterToken) ||
+				string.IsNullOrWhiteSpace(sourceRoosterToken) ||
+				editRooster == null)
 			{
 				return false;
 			}
+
 
 			try
 			{
@@ -156,7 +161,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		/// <param name="deleteRoosterToken">Удаляемый петух.</param>
 		public async Task<bool> RemoveAsync(string token, string deleteRoosterToken)
 		{
-			if (deleteRoosterToken == null || token == null)
+			if (string.IsNullOrWhiteSpace(token) || string.IsNullOrEmpty(token) || string.IsNullOrWhiteSpace(deleteRoosterToken) || string.IsNullOrEmpty(deleteRoosterToken))
 			{
 				return false;
 			}
