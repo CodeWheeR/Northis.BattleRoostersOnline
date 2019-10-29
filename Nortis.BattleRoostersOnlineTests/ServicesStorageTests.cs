@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DataTransferObjects;
-using Northis.BattleRoostersOnline.Models;
+using Northis.BattleRoostersOnline.DataTransferObjects;
+using Northis.BattleRoostersOnline.GameService.DataStorages;
+using Northis.BattleRoostersOnline.Tests;
 using NUnit.Framework;
 
 namespace Nortis.BattleRoostersOnlineTests
