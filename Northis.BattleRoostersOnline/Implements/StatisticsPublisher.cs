@@ -6,17 +6,16 @@ using System.Linq.Expressions;
 using System.Text;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using DataTransferObjects;
+using Northis.BattleRoostersOnline.DataTransferObjects;
 using NLog;
-using Northis.BattleRoostersOnline.Contracts;
-using Northis.BattleRoostersOnline.Events;
+using Northis.BattleRoostersOnline.GameService.Contracts;
 
-namespace Northis.BattleRoostersOnline.Implements
+namespace Northis.BattleRoostersOnline.GameService.Implements
 {
 	/// <summary>
 	/// Singleton-класс, отвечающий за обновление и отправку клиентам глобальной статистики.
 	/// </summary>
-	/// <seealso cref="Northis.BattleRoostersOnline.Implements.BaseServiceWithStorage" />
+	/// <seealso cref="BaseServiceWithStorage" />
 	class StatisticsPublisher : BaseServiceWithStorage
 	{
 		#region Fields
@@ -191,6 +190,7 @@ namespace Northis.BattleRoostersOnline.Implements
 							if (co.State == CommunicationState.Opened)
 							{
 								co.Close();
+								_subscribers.Remove(receiverToken);
 							}
 						}
 					}

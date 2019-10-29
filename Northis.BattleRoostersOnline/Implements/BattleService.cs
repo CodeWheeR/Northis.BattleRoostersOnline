@@ -2,18 +2,18 @@
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using DataTransferObjects;
+using Northis.BattleRoostersOnline.DataTransferObjects;
 using NLog;
-using Northis.BattleRoostersOnline.Contracts;
-using Northis.BattleRoostersOnline.Models;
+using Northis.BattleRoostersOnline.GameService.Contracts;
+using Northis.BattleRoostersOnline.GameService.Models;
 
-namespace Northis.BattleRoostersOnline.Implements
+namespace Northis.BattleRoostersOnline.GameService.Implements
 {
 	/// <summary>
 	/// Предоставляет сервис проведения поединков.
 	/// </summary>
-	/// <seealso cref="Northis.BattleRoostersOnline.Implements.BaseServiceWithStorage" />
-	/// <seealso cref="Northis.BattleRoostersOnline.Contracts.IBattleService" />
+	/// <seealso cref="BaseServiceWithStorage" />
+	/// <seealso cref="Northis.BattleRoostersOnline.GameService.Contracts.IBattleService" />
 
 	public class BattleService : BaseServiceWithStorage, IBattleService
 	{

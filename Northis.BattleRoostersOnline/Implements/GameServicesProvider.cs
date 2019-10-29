@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using DataTransferObjects;
-using Northis.BattleRoostersOnline.Contracts;
+using Northis.BattleRoostersOnline.DataTransferObjects;
+using Northis.BattleRoostersOnline.GameService.Contracts;
 
-namespace Northis.BattleRoostersOnline.Implements
+namespace Northis.BattleRoostersOnline.GameService.Implements
 {
 	/// <summary>
 	/// Класс предоставляющий обобщенный игровой сервис.
 	/// </summary>
-	/// <seealso cref="Northis.BattleRoostersOnline.Contracts.IAuthenticateService" />
-	/// <seealso cref="Northis.BattleRoostersOnline.Contracts.IEditService" />
-	/// <seealso cref="Northis.BattleRoostersOnline.Contracts.IBattleService" />
+	/// <seealso cref="Northis.BattleRoostersOnline.GameService.Contracts.IAuthenticateService" />
+	/// <seealso cref="Northis.BattleRoostersOnline.GameService.Contracts.IEditService" />
+	/// <seealso cref="Northis.BattleRoostersOnline.GameService.Contracts.IBattleService" />
 	[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
 	public class GameServicesProvider : IAuthenticateService, IEditService, IBattleService
 	{

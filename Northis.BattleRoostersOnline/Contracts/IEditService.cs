@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using DataTransferObjects;
-using Northis.BattleRoostersOnline.Models;
+using Northis.BattleRoostersOnline.DataTransferObjects;
+using Northis.BattleRoostersOnline.GameService.Models;
 
-namespace Northis.BattleRoostersOnline.Contracts
+namespace Northis.BattleRoostersOnline.GameService.Contracts
 {
 	/// <summary>
 	/// Контракт, отвечающий за работу с петухами.

@@ -5,9 +5,10 @@ using System.ServiceModel.Activation.Configuration;
 using System.ServiceModel.Description;
 using System.Threading;
 using NLog;
-using Northis.BattleRoostersOnline.Contracts;
-using Northis.BattleRoostersOnline.Implements;
-using Northis.BattleRoostersOnline.Models;
+
+using Northis.BattleRoostersOnline.GameService.Contracts;
+using Northis.BattleRoostersOnline.GameService.DataStorages;
+using Northis.BattleRoostersOnline.GameService.Implements;
 
 namespace GameServer
 {

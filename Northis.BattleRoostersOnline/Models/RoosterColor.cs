@@ -1,4 +1,4 @@
-﻿namespace Northis.BattleRoostersOnline.Models
+﻿namespace Northis.BattleRoostersOnline.GameService.Models
 {
 	/// <summary>
 	/// Окрасы петуха, от которых зависят применяемые модификации.

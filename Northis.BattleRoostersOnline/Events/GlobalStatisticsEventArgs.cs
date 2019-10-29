@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataTransferObjects;
+using Northis.BattleRoostersOnline.DataTransferObjects;
 
-namespace Northis.BattleRoostersOnline.Events
+namespace Northis.BattleRoostersOnline.GameService.Events
 {
 	/// <summary>
 	/// Предназначен для хранения новой статистики для передачи в событие.

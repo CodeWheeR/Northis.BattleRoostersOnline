@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataTransferObjects;
-using Northis.BattleRoostersOnline.Models;
 
-namespace Northis.BattleRoostersOnline.DataStorages
+using Northis.BattleRoostersOnline.DataTransferObjects;
+using Northis.BattleRoostersOnline.GameService.Models;
+
+namespace Northis.BattleRoostersOnline.GameService.DataStorages
 {
 	public interface IDataStorageService
 	{

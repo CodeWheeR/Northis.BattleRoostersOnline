@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using DataTransferObjects;
+using Northis.BattleRoostersOnline.DataTransferObjects;
 using NUnit.Framework;
 
-namespace Nortis.BattleRoostersOnlineTests
+namespace Northis.BattleRoostersOnline.Tests
 {
 	/// <summary>
 	/// Тестирует сервис проведения битвы.

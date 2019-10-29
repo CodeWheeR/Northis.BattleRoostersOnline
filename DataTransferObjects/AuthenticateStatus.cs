@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace DataTransferObjects
+namespace Northis.BattleRoostersOnline.DataTransferObjects
 {
 	/// <summary>
 	/// Перечисление-контракт данных, передающее пользователю статус аунтефикации.

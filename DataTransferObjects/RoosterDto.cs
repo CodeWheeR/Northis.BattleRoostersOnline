@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DataTransferObjects
+namespace Northis.BattleRoostersOnline.DataTransferObjects
 {
 	/// <summary>
 	/// Класс-контракт данных, инкапсулирующий в себе характеристики петуха.

@@ -1,7 +1,7 @@
 ﻿using System.ServiceModel;
-using DataTransferObjects;
+using Northis.BattleRoostersOnline.DataTransferObjects;
 
-namespace Northis.BattleRoostersOnline.Contracts
+namespace Northis.BattleRoostersOnline.GameService.Contracts
 {
 	/// <summary>
 	/// Контракт сервиса Callbacks, оповещающего клиентов.

@@ -1,15 +1,15 @@
 ﻿using System;
 using CommonServiceLocator;
 using Moq;
-using Northis.BattleRoostersOnline.Contracts;
-using Northis.BattleRoostersOnline.DataStorages;
-using Northis.BattleRoostersOnline.Implements;
-using Northis.BattleRoostersOnline.Models;
+using Northis.BattleRoostersOnline.GameService.Contracts;
+using Northis.BattleRoostersOnline.GameService.DataStorages;
+using Northis.BattleRoostersOnline.GameService.Implements;
+using Northis.BattleRoostersOnline.GameService.Models;
 using NUnit.Framework;
 using Unity;
 using Unity.ServiceLocation;
 
-namespace Nortis.BattleRoostersOnlineTests
+namespace Northis.BattleRoostersOnline.Tests
 {
 	/// <summary>
 	/// Настраивает тестовое окружение и содержит реализации сервисов и Callback-ов к ним.
