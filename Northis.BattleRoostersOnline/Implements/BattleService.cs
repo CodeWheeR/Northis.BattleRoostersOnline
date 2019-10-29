@@ -58,7 +58,7 @@ namespace Northis.BattleRoostersOnline.Implements
 					}
 					else
 					{
-						var matchToken = await GenerateTokenAsync();
+						var matchToken = await GenerateTokenAsync(StorageService.Sessions.ContainsKey);
 						session = new Session(matchToken);
 						session.RegisterFighter(token, StorageService.RoostersData[login][roosterToken], callback);
 						StorageService.Sessions.Add(matchToken, session);

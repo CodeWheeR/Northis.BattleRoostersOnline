@@ -85,6 +85,7 @@
     <Compile Include="DataStorages\IDataStorageService.cs" />
     <Compile Include="DataStorages\DataStorageService.cs" />
     <Compile Include="Events\GlobalStatisticsEventArgs.cs" />
+    <Compile Include="Implements\BaseService.cs" />
     <Compile Include="Implements\StatisticsPublisher.cs" />
     <Compile Include="Models\CrestSize.cs" />
     <Compile Include="Models\RoosterColor.cs" />

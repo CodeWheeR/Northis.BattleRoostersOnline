@@ -61,7 +61,7 @@ namespace Northis.BattleRoostersOnline.Implements
 				return AuthenticateStatus.AlreadyLoggedIn.ToString();
 			}
 
-			token = await GenerateTokenAsync();
+			token = await GenerateTokenAsync(StorageService.LoggedUsers.ContainsKey);
 			await Task.Run(() =>
 			{
 				lock (StorageService.UserData)

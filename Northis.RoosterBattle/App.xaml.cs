@@ -52,7 +52,7 @@ namespace Northis.RoosterBattle
 
 		private void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
 		{
-			using (StreamWriter writer = new StreamWriter("FATAL.txt"))
+			using (StreamWriter writer = new StreamWriter("FATAL.txt", true))
 			{
 				writer.WriteLine(e.ExceptionObject);
 			}

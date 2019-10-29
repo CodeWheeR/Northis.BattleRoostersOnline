@@ -238,7 +238,7 @@ namespace DataTransferObjects
 		/// <param name="obj">Объект для сравнения.</param>
 		/// <returns>true - если равен; иначе - false.</returns>
 		public bool Equals(RoosterDto obj)
-		{
+		{ 
 			return Brickness == obj.Brickness &&
 				   ColorDto == obj.ColorDto &&
 				   Crest == obj.Crest &&
