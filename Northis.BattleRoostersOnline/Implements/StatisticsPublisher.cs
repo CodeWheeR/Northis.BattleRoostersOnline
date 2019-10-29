@@ -191,6 +191,7 @@ namespace Northis.BattleRoostersOnline.Implements
 							if (co.State == CommunicationState.Opened)
 							{
 								co.Close();
+								_subscribers.Remove(receiverToken);
 							}
 						}
 					}

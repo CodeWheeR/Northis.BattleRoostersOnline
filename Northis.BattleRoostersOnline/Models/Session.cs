@@ -51,6 +51,8 @@ namespace Northis.BattleRoostersOnline.Models
 		private Logger _logger = LogManager.GetCurrentClassLogger();
 
 		private object _desertLocker = new object();
+
+		private string FirstFighterLogin;
 		#endregion
 		#endregion
 
@@ -332,10 +334,11 @@ namespace Northis.BattleRoostersOnline.Models
 		/// <param name="token">Токен.</param>
 		/// <param name="fighter">Боец.</param>
 		/// <param name="callback">Callback сервис.</param>
-		public void RegisterFighter(string token, RoosterDto fighter, IBattleServiceCallback callback)
+		public async void RegisterFighter(string token, RoosterDto fighter, IBattleServiceCallback callback)
 		{
 			if (FirstUser == null)
 			{
+				FirstFighterLogin = StorageService.LoggedUsers[token];
 				FirstUser = new UserData(callback)
 				{
 					RoosterToken = fighter.Token,
@@ -349,6 +352,11 @@ namespace Northis.BattleRoostersOnline.Models
 			}
 			else if (SecondUser == null)
 			{
+				if (StorageService.LoggedUsers[token] == FirstFighterLogin)
+				{
+					_logger.Warn($"Попытка добавиться в сессию противниками с одинаковыми логинами {FirstFighterLogin}");
+					return;
+				}
 				IsReady = true;
 				SecondUser = new UserData(callback)
 				{
