@@ -1,8 +1,9 @@
 ﻿using System.ServiceModel;
 using System.Threading.Tasks;
-using DataTransferObjects;
 
-namespace Northis.BattleRoostersOnline.Contracts
+using Northis.BattleRoostersOnline.DataTransferObjects;
+
+namespace Northis.BattleRoostersOnline.GameService.Contracts
 {
 	/// <summary>
 	/// Контракт сервиса, обеспечивающего авторизацию пользователя.

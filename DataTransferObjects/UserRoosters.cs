@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace DataTransferObjects
+namespace Northis.BattleRoostersOnline.DataTransferObjects
 {
 	/// <summary>
 	/// Класс-контракт данных, предназначенный для сериализации петухов пользователя в XML-документ.

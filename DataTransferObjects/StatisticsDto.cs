@@ -1,4 +1,4 @@
-﻿namespace DataTransferObjects
+﻿namespace Northis.BattleRoostersOnline.DataTransferObjects
 {
 	public class StatisticsDto
 	{

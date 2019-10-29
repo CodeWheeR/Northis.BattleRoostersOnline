@@ -4,18 +4,18 @@ using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
-using DataTransferObjects;
+using Northis.BattleRoostersOnline.DataTransferObjects;
 using NLog;
-using Northis.BattleRoostersOnline.Contracts;
-using Northis.BattleRoostersOnline.Events;
-using Northis.BattleRoostersOnline.Implements;
+using Northis.BattleRoostersOnline.GameService.Contracts;
+using Northis.BattleRoostersOnline.GameService.Events;
+using Northis.BattleRoostersOnline.GameService.Implements;
 
-namespace Northis.BattleRoostersOnline.Models
+namespace Northis.BattleRoostersOnline.GameService.Models
 {
 	/// <summary>
 	/// Класс, работающий с игровой сессией.
 	/// </summary>
-	/// <seealso cref="Northis.BattleRoostersOnline.Implements.BaseServiceWithStorage" />
+	/// <seealso cref="Northis.BattleRoostersOnline.GameService.Implements.BaseServiceWithStorage" />
 	public class Session : BaseServiceWithStorage
 	{
 		#region Events

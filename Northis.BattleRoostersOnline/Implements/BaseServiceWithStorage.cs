@@ -6,13 +6,13 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using CommonServiceLocator;
-using DataTransferObjects;
-using Northis.BattleRoostersOnline.DataStorages;
-using Northis.BattleRoostersOnline.Models;
+using Northis.BattleRoostersOnline.DataTransferObjects;
+using Northis.BattleRoostersOnline.GameService.DataStorages;
+using Northis.BattleRoostersOnline.GameService.Models;
 using Unity;
 using Unity.ServiceLocation;
 
-namespace Northis.BattleRoostersOnline.Implements
+namespace Northis.BattleRoostersOnline.GameService.Implements
 {
 	/// <summary>
 	/// Абстрактный базовый класс реализаций контрактов сервиса. Инкапсулирует в себе свойство хранилища основных данных типа

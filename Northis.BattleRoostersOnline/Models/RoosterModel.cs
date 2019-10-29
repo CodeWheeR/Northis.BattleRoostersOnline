@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataTransferObjects;
+using Northis.BattleRoostersOnline.DataTransferObjects;
 
-namespace Northis.BattleRoostersOnline.Models
+namespace Northis.BattleRoostersOnline.GameService.Models
 {
 	/// <summary>
 	/// Предоставляет модель петуха.

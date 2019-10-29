@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CommonServiceLocator;
-using DataTransferObjects;
-using Northis.BattleRoostersOnline.Models;
+using Northis.BattleRoostersOnline.DataTransferObjects;
+using Northis.BattleRoostersOnline.GameService.DataStorages;
+using Northis.BattleRoostersOnline.GameService.Models;
 using NUnit.Framework;
 using Unity;
 using Unity.ServiceLocation;
 
-namespace Nortis.BattleRoostersOnlineTests
+namespace Northis.BattleRoostersOnline.Tests
 {
 	[TestFixture]
 	public class ServicesStorageTests : ServiceModuleTests

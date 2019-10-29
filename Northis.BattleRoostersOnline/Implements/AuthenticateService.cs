@@ -5,18 +5,18 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
-using DataTransferObjects;
+using Northis.BattleRoostersOnline.DataTransferObjects;
 using NLog;
-using Northis.BattleRoostersOnline.Contracts;
+using Northis.BattleRoostersOnline.GameService.Contracts;
 using static System.String;
 
-namespace Northis.BattleRoostersOnline.Implements
+namespace Northis.BattleRoostersOnline.GameService.Implements
 {
 	/// <summary>
 	/// Предоставляет сервис аунтефикации.
 	/// </summary>
-	/// <seealso cref="Northis.BattleRoostersOnline.Implements.BaseServiceWithStorage" />
-	/// <seealso cref="Northis.BattleRoostersOnline.Contracts.IAuthenticateService" />
+	/// <seealso cref="BaseServiceWithStorage" />
+	/// <seealso cref="Northis.BattleRoostersOnline.GameService.Contracts.IAuthenticateService" />
 	public class AuthenticateService : BaseServiceWithStorage, IAuthenticateService
 	{
 		private Logger _logger = LogManager.GetCurrentClassLogger();

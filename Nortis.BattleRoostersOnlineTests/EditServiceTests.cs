@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CommonServiceLocator;
-using DataTransferObjects;
-using Northis.BattleRoostersOnline.Models;
+using Northis.BattleRoostersOnline.DataTransferObjects;
+using Northis.BattleRoostersOnline.GameService.Models;
 using NUnit.Framework;
 
-namespace Nortis.BattleRoostersOnlineTests
+namespace Northis.BattleRoostersOnline.Tests
 {
 	/// <summary>
 	/// Проверяет работу сервиса редактирования.

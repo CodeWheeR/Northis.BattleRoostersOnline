@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Northis.BattleRoostersOnline.Events
+namespace Northis.BattleRoostersOnline.GameService.Events
 {
 	/// <summary>
 	/// Хранит информацию о событии поиска матча.

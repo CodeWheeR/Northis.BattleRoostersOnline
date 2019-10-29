@@ -8,8 +8,8 @@
     <ProjectGuid>{51A9CBE9-121F-40B3-9454-4684FE0B2D75}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Northis.BattleRoostersOnline</RootNamespace>
-    <AssemblyName>Northis.BattleRoostersOnline</AssemblyName>
+    <RootNamespace>Northis.BattleRoostersOnline.GameService</RootNamespace>
+    <AssemblyName>Northis.BattleRoostersOnline.GameService</AssemblyName>
     <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>

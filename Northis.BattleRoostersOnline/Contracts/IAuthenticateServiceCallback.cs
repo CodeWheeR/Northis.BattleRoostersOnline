@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
-using DataTransferObjects;
 
-namespace Northis.BattleRoostersOnline.Contracts
+using Northis.BattleRoostersOnline.DataTransferObjects;
+
+namespace Northis.BattleRoostersOnline.GameService.Contracts
 {
 	/// <summary>
 	/// Контракт сервиса, ответственного за оповещения.

@@ -7,13 +7,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Threading.Tasks;
 using CommonServiceLocator;
-using DataTransferObjects;
-using Northis.BattleRoostersOnline.DataStorages;
-using Northis.BattleRoostersOnline.Implements;
 using Unity;
 using Unity.ServiceLocation;
 
-namespace Northis.BattleRoostersOnline.Models
+using Northis.BattleRoostersOnline.DataTransferObjects;
+using Northis.BattleRoostersOnline.GameService.Implements;
+using Northis.BattleRoostersOnline.GameService.Models;
+
+namespace Northis.BattleRoostersOnline.GameService.DataStorages
 {
 	/// <summary>
 	/// Класс, инкапсулирующий в себе данные о пользователях, петухах, авторизированных пользователях, игровых сессиях.

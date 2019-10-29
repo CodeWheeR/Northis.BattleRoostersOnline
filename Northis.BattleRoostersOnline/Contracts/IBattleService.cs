@@ -1,8 +1,7 @@
 ﻿using System.ServiceModel;
 using System.Threading.Tasks;
-using DataTransferObjects;
 
-namespace Northis.BattleRoostersOnline.Contracts
+namespace Northis.BattleRoostersOnline.GameService.Contracts
 {
 	/// <summary>
 	/// Контракт сервиса, отвечающего за проведение битвы петухов.

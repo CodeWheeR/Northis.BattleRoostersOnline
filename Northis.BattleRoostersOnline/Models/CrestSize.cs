@@ -1,4 +1,4 @@
-﻿namespace Northis.BattleRoostersOnline.Models
+﻿namespace Northis.BattleRoostersOnline.GameService.Models
 {
 	/// <summary>
 	/// Размер гребня. Повышает урон
