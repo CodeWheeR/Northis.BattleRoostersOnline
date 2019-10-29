@@ -18,17 +18,8 @@ namespace Northis.BattleRoostersOnline.Implements
 	/// Абстрактный базовый класс реализаций контрактов сервиса. Инкапсулирует в себе свойство хранилища основных данных типа
 	/// ServiceStorage.
 	/// </summary>
-	public abstract class BaseServiceWithStorage
+	public abstract class BaseServiceWithStorage : BaseService
 	{
-		#region Fields
-
-		/// <summary>
-		/// Генератор рандомных значений.
-		/// </summary>
-		private readonly Random _rand = new Random();
-
-		#endregion
-
 		#region Properties
 		/// <summary>
 		/// Возвращает хранилище основных данных.
@@ -78,7 +69,7 @@ namespace Northis.BattleRoostersOnline.Implements
 		protected async Task<string> GetLoginAsync(string token) =>
 			await Task.Run(() =>
 			{
-				if (token != null && StorageService.LoggedUsers.ContainsKey(token))
+				if (!string.IsNullOrWhiteSpace(token) && StorageService.LoggedUsers.ContainsKey(token))
 				{
 					return StorageService.LoggedUsers[token];
 				}
@@ -86,31 +77,6 @@ namespace Northis.BattleRoostersOnline.Implements
 				return "";
 			});
 
-		/// <summary>
-		/// Генерирует токен.
-		/// </summary>
-		/// <returns>Токен.</returns>
-		protected string GenerateToken()
-		{
-			var tokenGeneratorSymbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			var answer = "";
-
-			for (var i = 0; i < 16; i++)
-			{
-				answer += tokenGeneratorSymbols[_rand.Next(0, tokenGeneratorSymbols.Length - 1)];
-			}
-
-			return answer;
-		}
-
-		/// <summary>
-		/// Асинхронно генерирует токен.
-		/// </summary>
-		/// <returns>Токен.</returns>
-		protected Task<string> GenerateTokenAsync()
-		{
-			return Task.Run(() => GenerateToken());
-		}
 		#endregion
 	}
 }

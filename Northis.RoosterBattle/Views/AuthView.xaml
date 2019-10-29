@@ -38,7 +38,7 @@
 			<TextBlock Grid.ColumnSpan="2"
 			           FontSize="19"
 			           FontWeight="Bold"
-			           Text="Петушиный бой &#x0a;(v0.1.0 Под-пре-альфа)"
+			           Text="Петушиный бой &#x0a;(v0.1.1 Над-под-пре-альфа)"
 			           TextAlignment="Center" />
 		</StackPanel>
 		<TextBlock Grid.Row="1"

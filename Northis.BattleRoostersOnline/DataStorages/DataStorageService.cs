@@ -19,7 +19,7 @@ namespace Northis.BattleRoostersOnline.Models
 	/// Класс, инкапсулирующий в себе данные о пользователях, петухах, авторизированных пользователях, игровых сессиях.
 	/// </summary>
 	[Serializable]
-	public class DataStorageService : IDataStorageService
+	public class DataStorageService : BaseService, IDataStorageService
 	{
 		#region Fields
 		/// <summary>
@@ -95,8 +95,9 @@ namespace Northis.BattleRoostersOnline.Models
 			get;
 		}
 		#endregion
-		
+
 		#region Private Methods
+
 		private async Task MonitorConnections()
 		{
 			var token = _connectionMonitorTokenSource.Token;
@@ -193,7 +194,14 @@ namespace Northis.BattleRoostersOnline.Models
 						RoostersData.Add(roosters.Login, new Dictionary<string, RoosterDto>());
 						foreach (var rooster in roosters.Roosters)
 						{
-							RoostersData[roosters.Login].Add(rooster.Token, rooster);
+							if (!string.IsNullOrWhiteSpace(rooster.Token))
+							{
+								RoostersData[roosters.Login].Add(rooster.Token, rooster);
+							}
+							else
+							{
+								RoostersData[roosters.Login].Add(GenerateToken(RoostersData[roosters.Login].ContainsKey), rooster);
+							}
 						}
 					}
 				}

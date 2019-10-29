@@ -55,7 +55,7 @@ namespace Northis.BattleRoostersOnline.Implements
 					}
 					lock (StorageService.RoostersData)
 					{
-						rooster.Token = GenerateToken();
+						rooster.Token = GenerateToken(StorageService.RoostersData.ContainsKey);
 						StorageService.RoostersData[login]
 									  .Add(rooster.Token, rooster);
 					}
@@ -128,6 +128,10 @@ namespace Northis.BattleRoostersOnline.Implements
 						{
 							StorageService.RoostersData[login]
 										  .Remove(sourceRoosterToken);
+
+							editRooster.WinStreak = StorageService.RoostersData[login][sourceRoosterToken]
+																  .WinStreak;
+
 							StorageService.RoostersData[login]
 										  .Add(sourceRoosterToken, editRooster);
 						}
