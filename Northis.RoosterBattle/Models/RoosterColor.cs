@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Northis.RoosterBattle.Properties;
+using Northis.BattleRoostersOnline.GameClient.Properties;
 
-namespace Northis.RoosterBattle.Models
+namespace Northis.BattleRoostersOnline.GameClient.Models
 {
 	/// <summary>
 	/// Окрасы петуха, от которых зависят применяемые модификации.

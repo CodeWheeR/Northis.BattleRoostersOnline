@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Northis.RoosterBattle.Properties
+namespace Northis.BattleRoostersOnline.GameClient.Properties
 {
 
 

@@ -9,10 +9,10 @@ using System.Windows.Markup;
 using Catel.Data;
 using Catel.MVVM;
 using Catel.Services;
-using Northis.RoosterBattle.GameServer;
-using Northis.RoosterBattle.Models;
+using Northis.BattleRoostersOnline.GameClient.GameServer;
+using Northis.BattleRoostersOnline.GameClient.Models;
 
-namespace Northis.RoosterBattle.ViewModels
+namespace Northis.BattleRoostersOnline.GameClient.ViewModels
 {
 	internal class AuthViewModel : ViewModelBase
 	{

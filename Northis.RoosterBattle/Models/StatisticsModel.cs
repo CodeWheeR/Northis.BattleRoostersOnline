@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Catel.ComponentModel;
-using Northis.RoosterBattle.GameServer;
+using Northis.BattleRoostersOnline.GameClient.GameServer;
 
-namespace Northis.RoosterBattle.Models
+namespace Northis.BattleRoostersOnline.GameClient.Models
 {
 	class StatisticsModel
 	{

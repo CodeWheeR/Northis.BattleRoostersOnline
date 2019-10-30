@@ -1,8 +1,8 @@
-﻿using Northis.RoosterBattle.GameServer;
-using Northis.RoosterBattle.Models;
-using Northis.RoosterBattle.ViewModels;
+﻿using Northis.BattleRoostersOnline.GameClient.GameServer;
+using Northis.BattleRoostersOnline.GameClient.Models;
+using Northis.BattleRoostersOnline.GameClient.ViewModels;
 
-namespace Northis.RoosterBattle.Callbacks
+namespace Northis.BattleRoostersOnline.GameClient.Callbacks
 {
 	class AuthenticationServiceCallback : IAuthenticateServiceCallback
 	{

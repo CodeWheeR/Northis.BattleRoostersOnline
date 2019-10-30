@@ -1,4 +1,4 @@
-﻿namespace Northis.RoosterBattle.Views
+﻿namespace Northis.BattleRoostersOnline.GameClient.Views
 {
 	/// <summary>
 	/// Логика взаимодействия для AuthView.xaml

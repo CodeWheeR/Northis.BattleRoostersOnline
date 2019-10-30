@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Catel.Data;
-using Northis.RoosterBattle.GameServer;
+using Northis.BattleRoostersOnline.GameClient.GameServer;
 
-namespace Northis.RoosterBattle.Models
+namespace Northis.BattleRoostersOnline.GameClient.Models
 {
 	/// <summary>
 	/// Предоставляет модель петуха.

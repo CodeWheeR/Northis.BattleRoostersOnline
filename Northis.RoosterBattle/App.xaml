@@ -1,9 +1,9 @@
 ﻿<Application
-	x:Class="Northis.RoosterBattle.App"
+	x:Class="Northis.BattleRoostersOnline.GameClient.App"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:converters="clr-namespace:Northis.RoosterBattle.Converters"
-	xmlns:local="clr-namespace:Northis.RoosterBattle">
+	xmlns:converters="clr-namespace:Northis.BattleRoostersOnline.GameClient.Converters"
+	xmlns:local="clr-namespace:Northis.BattleRoostersOnline.GameClient">
 	<Application.Resources>
 		<converters:EnumValueToStringPath x:Key="EnumValueToStringPath" />
 		<converters:HeathValueToBool x:Key="HealthToBoolConverter" />

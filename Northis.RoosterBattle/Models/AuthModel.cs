@@ -1,6 +1,6 @@
 ﻿using Catel.Data;
 
-namespace Northis.RoosterBattle.Models
+namespace Northis.BattleRoostersOnline.GameClient.Models
 {
 	/// <summary>
 	/// Модель пользовательских данных для авторизации

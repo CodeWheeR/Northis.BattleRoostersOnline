@@ -1,4 +1,4 @@
-﻿namespace Northis.RoosterBattle.Views
+﻿namespace Northis.BattleRoostersOnline.GameClient.Views
 {
 	public partial class EditRoosterView
 	{

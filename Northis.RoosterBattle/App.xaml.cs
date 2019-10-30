@@ -6,12 +6,12 @@ using Catel.ExceptionHandling;
 using Catel.IoC;
 using Catel.Services;
 using Newtonsoft.Json;
-using Northis.RoosterBattle.ViewModels;
-using Northis.RoosterBattle.Views;
 using NLog;
+using Northis.BattleRoostersOnline.GameClient.ViewModels;
+using Northis.BattleRoostersOnline.GameClient.Views;
 using LogManager = Catel.Logging.LogManager;
 
-namespace Northis.RoosterBattle
+namespace Northis.BattleRoostersOnline.GameClient
 {
 	/// <summary>
 	/// Логика взаимодействия для App.xaml
@@ -20,17 +20,6 @@ namespace Northis.RoosterBattle
 	{
 		public App()
 		{
-			Logger logger = NLog.LogManager.GetLogger("ClientLogger"); // Здесь проверял layouts в файлы
-
-			logger.Debug("TestLogs");
-			logger.Trace("Проверка");
-			logger.Fatal("TestLogs");
-			logger.Info("TestLogs");
-			logger.Warn("TestLogs");
-			logger.Error("TestLogs");
-
-
-
 			AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
 			LogManager.AddDebugListener();

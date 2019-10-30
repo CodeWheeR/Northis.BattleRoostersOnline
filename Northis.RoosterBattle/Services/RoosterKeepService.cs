@@ -1,4 +1,4 @@
-﻿namespace Northis.RoosterBattle.Services
+﻿namespace Northis.BattleRoostersOnline.GameClient.Services
 {
 	/// <summary>
 	/// Предоставляет механизмы сохранения и загрузки информации о петухах.

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using Catel.MVVM.Converters;
-using Northis.RoosterBattle.Extensions;
-using Northis.RoosterBattle.Models;
+using Northis.BattleRoostersOnline.GameClient.Extensions;
+using Northis.BattleRoostersOnline.GameClient.Models;
 
-namespace Northis.RoosterBattle.Converters
+namespace Northis.BattleRoostersOnline.GameClient.Converters
 {
 	/// <summary>
 	/// Конвертирует значение перечисления RoosterColor в описание модификации.

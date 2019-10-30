@@ -9,12 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTransferObjects", "Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServer", "GameServer\GameServer.csproj", "{D1E44F17-8BEE-430D-AEB1-E0C1446C4692}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northis.RoosterBattle", "Northis.RoosterBattle\Northis.RoosterBattle.csproj", "{6EC71B20-5FD2-4242-A975-889BE84194A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameClient", "Northis.RoosterBattle\GameClient.csproj", "{6EC71B20-5FD2-4242-A975-889BE84194A0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{51A9CBE9-121F-40B3-9454-4684FE0B2D75} = {51A9CBE9-121F-40B3-9454-4684FE0B2D75}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nortis.BattleRoostersOnlineTests", "Nortis.BattleRoostersOnlineTests\Nortis.BattleRoostersOnlineTests.csproj", "{C361A8A7-6FD9-49FD-BBA5-D332C3C3E4E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameService.Tests", "Nortis.BattleRoostersOnlineTests\GameService.Tests.csproj", "{C361A8A7-6FD9-49FD-BBA5-D332C3C3E4E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

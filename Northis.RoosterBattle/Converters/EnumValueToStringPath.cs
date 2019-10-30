@@ -2,7 +2,7 @@
 using System.Globalization;
 using Catel.MVVM.Converters;
 
-namespace Northis.RoosterBattle.Converters
+namespace Northis.BattleRoostersOnline.GameClient.Converters
 {
 	/// <summary>
 	/// Конвертирует значение перечисления RoosterColor в путь к изображениям петухов.

@@ -140,9 +140,6 @@ namespace Northis.BattleRoostersOnline.Tests
 			Assert.AreEqual(false,Storage.RoostersData["FoundToken"].ContainsKey("Rooster1"));
 		}
 
-
-
-
 		#endregion
 		#endregion
 	}

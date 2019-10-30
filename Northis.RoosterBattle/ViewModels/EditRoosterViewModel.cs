@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Catel.Data;
 using Catel.MVVM;
-using Northis.RoosterBattle.Models;
+using Northis.BattleRoostersOnline.GameClient.Models;
 
-namespace Northis.RoosterBattle.ViewModels
+namespace Northis.BattleRoostersOnline.GameClient.ViewModels
 {
 	/// <summary>
 	/// Обеспечивает взаимодействие модели RoosterModel и представления EditRooster.

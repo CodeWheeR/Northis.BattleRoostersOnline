@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Northis.RoosterBattle.UserControls
+namespace Northis.BattleRoostersOnline.GameClient.UserControls
 {
 	/// <summary>
 	/// Логика взаимодействия для ValueBar.xaml

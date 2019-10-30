@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Catel.Data;
-using Northis.RoosterBattle.Models;
+using Northis.BattleRoostersOnline.GameClient.Models;
 
-namespace Northis.RoosterBattle.Validators
+namespace Northis.BattleRoostersOnline.GameClient.Validators
 {
 	internal class RoosterModelValidator : ValidatorBase<RoosterModel>
 	{

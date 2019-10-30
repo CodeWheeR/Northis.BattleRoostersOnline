@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Catel.Data;
 
-namespace Northis.RoosterBattle.Models
+namespace Northis.BattleRoostersOnline.GameClient.Models
 {
 	/// <summary>
 	/// Отвечает за сохранение и загрузку конфигураций петухов.

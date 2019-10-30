@@ -6,11 +6,11 @@ using System.Windows;
 using System.Windows.Input;
 using Catel.Data;
 using Catel.MVVM;
-using Northis.RoosterBattle.Callbacks;
-using Northis.RoosterBattle.GameServer;
-using Northis.RoosterBattle.Models;
+using Northis.BattleRoostersOnline.GameClient.Callbacks;
+using Northis.BattleRoostersOnline.GameClient.GameServer;
+using Northis.BattleRoostersOnline.GameClient.Models;
 
-namespace Northis.RoosterBattle.ViewModels
+namespace Northis.BattleRoostersOnline.GameClient.ViewModels
 {
 	/// <summary>
 	/// Обеспечивает взаимодействие представления ... и модели RoosterModel

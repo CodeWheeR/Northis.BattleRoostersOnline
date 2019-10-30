@@ -11,10 +11,10 @@ using Catel.ExceptionHandling;
 using Catel.IoC;
 using Catel.MVVM;
 using Catel.Services;
-using Northis.RoosterBattle.GameServer;
-using Northis.RoosterBattle.Models;
+using Northis.BattleRoostersOnline.GameClient.GameServer;
+using Northis.BattleRoostersOnline.GameClient.Models;
 
-namespace Northis.RoosterBattle.ViewModels
+namespace Northis.BattleRoostersOnline.GameClient.ViewModels
 {
 	/// <summary>
 	/// Обеспечивает взаимодействие модели RoosterModel и представления RoosterBrowserWindow.

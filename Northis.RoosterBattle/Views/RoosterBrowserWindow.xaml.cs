@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace Northis.RoosterBattle.Views
+namespace Northis.BattleRoostersOnline.GameClient.Views
 {
 	/// <summary>
 	/// Логика взаимодействия для RoosterBrowserWindow.xaml

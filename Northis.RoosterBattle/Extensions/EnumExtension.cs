@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Resources;
 
-namespace Northis.RoosterBattle.Extensions
+namespace Northis.BattleRoostersOnline.GameClient.Extensions
 {
 	/// <summary>
 	/// Предоставляет новые методы расширения для объектов класса Enum.
