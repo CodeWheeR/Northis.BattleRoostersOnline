@@ -1,0 +1,3 @@
+﻿namespace Northis.BattleRoostersOnline.Client
+{
+}

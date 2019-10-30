@@ -1,0 +1,238 @@
+﻿<catel:Window
+	x:Class="Northis.BattleRoostersOnline.Client.Views.RoosterBrowserWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:catel="http://schemas.catelproject.com"
+	xmlns:res="clr-namespace:Northis.BattleRoostersOnline.Client.Properties"
+	xmlns:converters="clr-namespace:Northis.BattleRoostersOnline.Client.Converters"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+	xmlns:local="clr-namespace:Northis.BattleRoostersOnline.Client.Views"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:userControls="clr-namespace:Northis.BattleRoostersOnline.Client.UserControls"
+	xmlns:viewModels="clr-namespace:Northis.BattleRoostersOnline.Client.ViewModels"
+	xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+	Title="{x:Static res:Resources.MainWindowTitle}"
+	Width="1100"
+	Height="450"
+	MaxWidth="1100"
+	MaxHeight="450"
+	d:DataContext="{d:DesignInstance viewModels:RoosterBrowserViewModel}"
+	CanCloseUsingEscape="False"
+	mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowState="Minimized">
+	<i:Interaction.Triggers>
+		<ei:DataTrigger Binding ="{Binding ShowWindow}" Value="true">
+			<ei:ChangePropertyAction PropertyName="WindowState" Value="Normal"></ei:ChangePropertyAction>
+		</ei:DataTrigger>
+	</i:Interaction.Triggers>
+	<catel:Window.Resources>
+		<converters:EnumValueToStringPath x:Key="EnumValueToStringPath" />
+		<converters:HeathValueToBool x:Key="HealthToBoolConverter" />
+		<converters:EnumValueToDescription x:Key="EnumValueToDescription" />
+	</catel:Window.Resources>
+	<Grid>
+		
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="250" />
+			<ColumnDefinition />
+			<ColumnDefinition Width="270"/>
+		</Grid.ColumnDefinitions>
+
+		<Border
+			Margin="10,50,10,35"
+			BorderBrush="#FF838383"
+			BorderThickness="1">
+			<ScrollViewer Panel.ZIndex="1" VerticalScrollBarVisibility="Auto">
+				<ListBox
+					BorderBrush="{x:Null}"
+					ItemsSource="{Binding Roosters}"
+					SelectedItem="{Binding SelectedRooster}"
+					SelectedIndex="{Binding SelectedIndex}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Margin="2">
+								<TextBlock FontSize="18" Text="{Binding Name}" />
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="{x:Static res:Resources.Health}" />
+									<TextBlock Text="{Binding Health}" />
+								</StackPanel>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="{x:Static res:Resources.Stamina}" />
+									<TextBlock Text="{Binding Stamina}" />
+								</StackPanel>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="{x:Static res:Resources.WinStreak}" />
+									<TextBlock Text="{Binding WinStreak}" />
+								</StackPanel>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="MouseDoubleClick">
+							<catel:EventToCommand Command="{Binding EditRoosterCommand}" DisableAssociatedObjectOnCannotExecute="False" />
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</ListBox>
+			</ScrollViewer>
+		</Border>
+		<Label
+			Width="199"
+			Height="35"
+			Margin="10,10,0,0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Content="{x:Static res:Resources.AvaliableFighters}"
+			FontSize="18"
+			FontWeight="Bold" />
+		<Border
+			Grid.Column="1"
+			Margin="10,50,10,35"
+			BorderBrush="#FF838383"
+			BorderThickness="1">
+			<Grid>
+				<Border
+					Margin="10,10,209,64"
+					BorderBrush="#FF838383"
+					BorderThickness="1">
+					<Image Grid.Row="0" Source="{Binding SelectedRooster.Color, Converter={StaticResource EnumValueToStringPath}}" />
+				</Border>
+				<StackPanel
+					Width="184"
+					Margin="0,10,10,10"
+					HorizontalAlignment="Right">
+					<StackPanel.Resources>
+						<Style TargetType="{x:Type StackPanel}">
+							<Setter Property="Margin" Value="0,0,0,10" />
+						</Style>
+						<Style TargetType="TextBlock">
+							<Setter Property="Margin" Value="0,0,3,0" />
+						</Style>
+					</StackPanel.Resources>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.RoosterName}" />
+						<TextBlock Text="{Binding SelectedRooster.Name}" />
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.Color}" />
+						<TextBlock Text="{Binding SelectedRooster.Color, Converter={StaticResource EnumValueToDescription}}" />
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.Height}" />
+						<TextBlock Text="{Binding SelectedRooster.Height}" />
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.Weight}" />
+						<TextBlock Text="{Binding SelectedRooster.Weight}" />
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.CrestSize}" />
+						<TextBlock Text="{Binding SelectedRooster.Crest, Converter={StaticResource EnumValueToDescription}}" />
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.Thickness}" />
+						<TextBlock Text="{Binding SelectedRooster.Thickness}" />
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.Brickness}" />
+						<TextBlock Text="{Binding SelectedRooster.Brickness}" />
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.Luck}" />
+						<TextBlock Text="{Binding SelectedRooster.Luck}" />
+					</StackPanel>
+					<Separator Margin="0,5" />
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.Damage}" />
+						<TextBlock Text="{Binding SelectedRooster.Damage}" />
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.WinStreak}" />
+						<TextBlock Text="{Binding SelectedRooster.WinStreak}" />
+					</StackPanel>
+				</StackPanel>
+				<StackPanel
+					Margin="15,0,0,10"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Bottom"
+					Orientation="Horizontal">
+					<StackPanel.Resources>
+						<Style TargetType="{x:Type StackPanel}">
+							<Setter Property="Margin" Value="0,0,10,0" />
+						</Style>
+						<Style TargetType="{x:Type Label}">
+							<Setter Property="HorizontalContentAlignment" Value="Center" />
+							<Setter Property="FontSize" Value="14" />
+						</Style>
+					</StackPanel.Resources>
+					<StackPanel>
+						<Label Content="{x:Static res:Resources.Health}" />
+						<userControls:ValueBar
+							Width="155"
+							Height="20"
+							MaxValue="{Binding SelectedRooster.MaxHealth}"
+							TextSize="12"
+							ValueColor="Red"
+							ValueLevel="{Binding SelectedRooster.Health}" />
+					</StackPanel>
+					<StackPanel>
+						<Label Content="{x:Static res:Resources.Stamina}" />
+						<userControls:ValueBar
+							Width="155"
+							Height="20"
+							TextSize="12"
+							ValueColor="Yellow"
+							ValueLevel="{Binding SelectedRooster.Stamina}" />
+					</StackPanel>
+				</StackPanel>
+			</Grid>
+		</Border>
+		<Label
+			Grid.Column="1"
+			Width="553"
+			Height="35"
+			Margin="10,10,0,0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			HorizontalContentAlignment="Center"
+			VerticalContentAlignment="Center"
+			Content="{x:Static res:Resources.FighterDetails}"
+			FontSize="18"
+			FontWeight="Bold" Grid.ColumnSpan="2" />
+		<Button
+			Width="61"
+			Margin="0,0,10,10"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Bottom"
+			Command="{Binding DeleteRoosterCommand}"
+			Content="{x:Static res:Resources.ClearButton}"
+			RenderTransformOrigin="-0.114,0.246" Height="20" />
+		<Button
+			Width="59"
+			Margin="10,0,0,10"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Bottom"
+			Command="{Binding AddRoosterCommand}"
+			Content="{x:Static res:Resources.AddButton}" Height="20" />
+		<Button
+			Width="58"
+			Margin="0,0,0,10"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Bottom"
+			Command="{Binding FightCommand}"
+			Content="{x:Static res:Resources.FightButton}"
+			RenderTransformOrigin="0.643,0.567" Height="20" />
+		<DataGrid Grid.Column="2" Margin="0,50,10,0" ItemsSource="{Binding Statistics}" AutoGeneratingColumn="LeaderBoard_OnAutoGeneratingColumn" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+		<Label
+	  Grid.Column="2"
+	  Width="250"
+	  Height="35"
+	  Margin="10,10,0,0"
+	  HorizontalAlignment="Left"
+	  VerticalAlignment="Top"
+	  HorizontalContentAlignment="Center"
+	  VerticalContentAlignment="Center"
+	  Content="{x:Static res:Resources.LeaderBoard}"
+	  FontSize="18"
+	  FontWeight="Bold" />
+	</Grid>
+</catel:Window>
