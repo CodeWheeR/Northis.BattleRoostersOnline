@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Catel.Data;
 using Catel.MVVM;
+using NLog;
 using Northis.BattleRoostersOnline.Client.Models;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
@@ -72,10 +73,17 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			RoosterModel = selectedRooster;
 			ColorsArray = Enum.GetValues(typeof(RoosterColor));
 			CrestsArray = Enum.GetValues(typeof(CrestSize));
+			EditRoosterViewModelLogger.Info("Открыто окно редактирования петуха.");
 		}
 		#endregion
 
 		#region Properties
+		private Logger EditRoosterViewModelLogger
+		{
+			get;
+		} = LogManager.GetLogger("EditRoosterViewModelLogger");
+		
+		
 		/// <summary>
 		/// Возвращает или устанавливает типы окраски петуха.
 		/// </summary>
@@ -252,35 +260,42 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			if (string.IsNullOrWhiteSpace(Name))
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.NameProperty, "Поле Имя необходимо указать"));
+				EditRoosterViewModelLogger.Info("Поле Имя необходимо указать.");
 			}
 			else if (Name.Length > 15)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.NameProperty, "Длина имени петуха должна быть не больше 15 символов"));
+				EditRoosterViewModelLogger.Info("Длина имени петуха должна быть не больше 15 символов.");
 			}
 
 			if (Brickness < 0 || Brickness > RoosterModel.MaxBrickness)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.BricknessProperty, $"Значение Юркости должно быть от 0 до {RoosterModel.MaxBrickness}"));
+				EditRoosterViewModelLogger.Info($"Значение Юркости должно быть от 0 до {RoosterModel.MaxBrickness}.");
 			}
 
 			if (Weight < 2 || Weight > RoosterModel.MaxWeight)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.WeightProperty, $"Значение Веса должно быть от 0.0 до {RoosterModel.MaxWeight}.0"));
+				EditRoosterViewModelLogger.Info($"Значение Веса должно быть от 0.0 до {RoosterModel.MaxWeight}.0.");
 			}
 
 			if (Height < 20 || Height > 50)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.HeightProperty, $"Значение Роста должно быть от 20 до 50"));
+				EditRoosterViewModelLogger.Info($"Значение Роста должно быть от 20 до 50.");
 			}
 
 			if (Luck < 0 || Luck > RoosterModel.MaxLuck)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.LuckProperty, $"Значение Удачи должно быть от 0 до {RoosterModel.MaxLuck}"));
+				EditRoosterViewModelLogger.Info($"Значение Удачи должно быть от 0 до {RoosterModel.MaxLuck}.");
 			}
 
 			if (Thickness < 0 || Thickness > RoosterModel.MaxThickness)
 			{
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.ThicknessProperty, $"Значение Толщины покрова должно быть от 0 до {RoosterModel.MaxThickness}"));
+				EditRoosterViewModelLogger.Info($"Значение Толщины покрова должно быть от 0 до {RoosterModel.MaxThickness}.");
 			}
 		}
 	}
