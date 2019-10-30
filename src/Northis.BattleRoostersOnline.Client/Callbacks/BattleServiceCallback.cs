@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Windows;
+using NLog;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.ViewModels;
 using Northis.BattleRoostersOnline.Client.GameServer;
@@ -13,6 +15,9 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 	{
 		#region Fields
 		private readonly FightViewModel _fightVm;
+
+		private Logger _battleServiceCallbackLogger = LogManager.GetLogger("BattleServiceCallback");
+
 		#endregion
 
 		#region Public Methods		
@@ -39,6 +44,8 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 			{
 				_fightVm.SecondFighter = null;
 			}
+
+			_battleServiceCallbackLogger.Info("Статус готовности петухов к сражению обновлен.");
 		}
 
 		/// <summary>
@@ -48,6 +55,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		public void GetBattleMessage(string message)
 		{
 			_fightVm.BattleLog += message + Environment.NewLine;
+			_battleServiceCallbackLogger.Info($"Получено сообщение: {message}.");
 		}
 
 		/// <summary>
@@ -57,6 +65,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		{
 			_fightVm.BattleStarted = true;
 			_fightVm.BattleLog += "Бой начался" + Environment.NewLine;
+			_battleServiceCallbackLogger.Info($"Начало боя: .");
 		}
 
 		/// <summary>
@@ -65,10 +74,17 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		/// <param name="token">The token.</param>
 		public void FindedMatch(string token)
 		{
+			if (token == "User was not found")
+			{
+				MessageBox.Show("Попытка поиска матча не авторизованным пользователем");
+				_battleServiceCallbackLogger.Error("ППопытка поиска матча не авторизованным пользователем.");
+				return;
+			}
 			_fightVm.BattleEnded = false;
 			_fightVm.IsFinding = false;
 			_fightVm.MatchToken = token;
 			_fightVm.BattleLog += "Матч найден. Когда будете готовы, нажмите кнопку \"Начать бой\"" + Environment.NewLine;
+			_battleServiceCallbackLogger.Info("Получено сообщение: Матч найден. Когда будете готовы, нажмите кнопку \"Начать бой\".");
 		}
 
 		/// <summary>
@@ -78,6 +94,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		{
 			_fightVm.BattleEnded = true;
 			_fightVm.BattleLog += "Бой окончен" + Environment.NewLine;
+			_battleServiceCallbackLogger.Info("Получено сообщение: Бой окончен.");
 		}
 		#endregion
 	}

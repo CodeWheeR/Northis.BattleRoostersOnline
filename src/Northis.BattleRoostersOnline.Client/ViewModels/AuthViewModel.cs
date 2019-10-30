@@ -9,6 +9,7 @@ using System.Windows.Markup;
 using Catel.Data;
 using Catel.MVVM;
 using Catel.Services;
+using NLog;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.GameServer;
 
@@ -47,6 +48,8 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				AuthenticateStatus.WrongLoginOrPassword, "Неправильный логин или пароль"
 			}
 		};
+
+		private Logger _authViewModelLogger = LogManager.GetLogger("AuthViewModelLogger");
 		#endregion
 
 		#region .ctor		
@@ -61,6 +64,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			_uiVisualizerService = uiVisualizerService;
 			AuthCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.LogInAsync, passwordBox));
 			RegCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.RegisterAsync, passwordBox));
+			_authViewModelLogger.Info("Открыто окно авторизации.");
 		}
 		#endregion
 
@@ -113,6 +117,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			var password = passwordBox.Password;
 			if (string.IsNullOrWhiteSpace(Login) || string.IsNullOrWhiteSpace(password))
 			{
+				_authViewModelLogger.Warn("Поля логина и пароля не могут быть пустыми.");
 				MessageBox.Show("Поля логина и пароля не могут быть пустыми");
 				return;
 			}
@@ -124,6 +129,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			}
 			catch (Exception e)
 			{
+				_authViewModelLogger.Error("Неполадки с интернет-соединением!");
 				MessageBox.Show(e.ToString());
 			}
 
