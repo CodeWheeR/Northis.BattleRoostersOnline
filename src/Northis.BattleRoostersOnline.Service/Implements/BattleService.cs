@@ -41,13 +41,21 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				_logger.Warn($"Попытка поиска матча не авторизованным пользователем {token}");
 				return;
 			}
+			var login = await GetLoginAsync(token);
+
+			if (!StorageService.RoostersData.ContainsKey(login) || !StorageService.RoostersData[login]
+									.ContainsKey(roosterToken))
+			{
+				Task.Run(() => callback.FindedMatch("Rooster was not found"));
+				_logger.Warn($"Попытка поиска матча не созданным петухом {roosterToken}");
+				return;
+			}
 
 			try
 			{
 				await Task.Run(async () =>
 				{
 					Session session;
-					var login = await GetLoginAsync(token);
 					if (StorageService.Sessions.Count > 0 &&
 						!StorageService.Sessions.Last()
 									   .Value.IsReady)

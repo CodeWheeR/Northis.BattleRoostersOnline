@@ -20,26 +20,26 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		/// <summary>
 		/// Сервис редактирования.
 		/// </summary>
-		protected EditService editor = new EditService();
+		protected EditService Editor = new EditService();
 		/// <summary>
 		/// Сеовис аунтефикации.
 		/// </summary>
-		protected AuthenticateService authenticateService = new AuthenticateService();
+		protected AuthenticateService AuthenticateService = new AuthenticateService();
 		/// <summary>
 		/// Сервис проведения битвы.
 		/// </summary>
-		protected BattleService battleService = new BattleService();
+		protected BattleService BattleService = new BattleService();
 		/// <summary>
 		/// Callback аунтефикации.
 		/// </summary>
-		protected Mock<IAuthenticateServiceCallback> callbackAuth = new Mock<IAuthenticateServiceCallback>();
+		protected Mock<IAuthenticateServiceCallback> CallbackAuth = new Mock<IAuthenticateServiceCallback>();
 		/// <summary>
 		/// Callback битв.
 		/// </summary>
 		protected Mock<IBattleServiceCallback> callbackBattle = new Mock<IBattleServiceCallback>();
 		#endregion
 
-		#region Methods
+		#region Properties
 
 		protected IDataStorageService Storage
 		{

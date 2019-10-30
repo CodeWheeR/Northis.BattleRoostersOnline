@@ -167,32 +167,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		}
 
 		/// <summary>
-		/// Возвращает или задает силу удара петуха.
-		/// </summary>
-		/// <value>
-		/// Сила удара.
-		/// </value>
-		[DataMember]
-		public double Hit
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Возвращает или задает урон петуха.
-		/// </summary>
-		/// <value>
-		/// Урон петуха.
-		/// </value>
-		[DataMember]
-		public double Damage
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
 		/// Возвращает или задает максимальное здоровье петуха.
 		/// </summary>
 		/// <value>
@@ -242,10 +216,8 @@ namespace Northis.BattleRoostersOnline.Dto
 			return Brickness == obj.Brickness &&
 				   ColorDto == obj.ColorDto &&
 				   Crest == obj.Crest &&
-				   Damage == obj.Damage &&
 				   Health == obj.Health &&
 				   Height == obj.Height &&
-				   Hit == obj.Hit &&
 				   Luck == obj.Luck &&
 				   MaxHealth == obj.MaxHealth &&
 				   Name == obj.Name &&

@@ -164,7 +164,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </summary>
 		/// <param name="sourceString">исходная строка.</param>
 		/// <returns>Зашифрованная строка.</returns>
-		public async Task<string> EncryptAsync(string sourceString)
+		private async Task<string> EncryptAsync(string sourceString)
 		{
 			return await Task.Run<string>(() =>
 			{
@@ -178,22 +178,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			});
 		}
 
-		/// <summary>
-		/// Расшифровывает поступившую зашифрованную строку.
-		/// </summary>
-		/// <param name="sourceString">Зашифрованная строка.</param>
-		/// <returns>Расшифрованная строка.</returns>
-		public string Decrypt(string sourceString)
-		{
-			var result = "";
-			for (var i = 0; i < sourceString.Length; i++)
-			{
-				result += (char) (sourceString[i] / (i / 2 + 2));
-			}
-
-			return result;
-		}
-		
 		/// <summary>
 		/// Асинхронно собирает глобальную статистику по пользователям.
 		/// </summary>

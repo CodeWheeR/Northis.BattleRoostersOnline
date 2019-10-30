@@ -10,67 +10,67 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 	[TestFixture]
 	public class AuthenticateServiceTests : ServiceModuleTests
 	{
-		#region Methods
+		#region Test Methods
 		#region Public
 
 		/// <summary>
 		/// Проверят возвращаемый токен.
 		/// </summary>
-		[Test]
-		public void LogInTest1()
+		[TestCase("NewUser", "password")]
+		public void LogIn(string login, string password)
 		{
-			Assert.IsNotNull(authenticateService.LogInAsync("Login", "Password"));
+			Assert.IsNotNull(AuthenticateService.LogInAsync(login, password));
 		}
 		/// <summary>
 		/// Проверяет реакцию сервиса на неверный логин и пароль.
 		/// </summary>
-		[Test]
-		public async Task LogInTest2()
+		[TestCase("NewUser", "password")]
+		public async Task WrongLogInData(string login, string password)
 		{
-			string result =  await authenticateService.LogInAsync("Login1", "Password", callbackAuth.Object);
+			string result =  await AuthenticateService.LogInAsync(login, password, CallbackAuth.Object);
 
 			Assert.AreEqual(AuthenticateStatus.WrongLoginOrPassword.ToString(), result);
 		}
 		/// <summary>
 		/// Проверяет реакцию сервиса на вход уже авторизированного пользователя.
 		/// </summary>
-		[Test]
-		public async Task LogInTest3()
+		[TestCase("NewUser","password")]
+		public async Task AlreadyLoggedIn(string login, string password)
 		{
-			await authenticateService.RegisterAsync("NewUser", "password", callbackAuth.Object);
-			string result = await authenticateService.LogInAsync("NewUser", "password", callbackAuth.Object);
+			await AuthenticateService.RegisterAsync(login, password, CallbackAuth.Object);
+			string result = await AuthenticateService.LogInAsync(login, password, CallbackAuth.Object);
 
 			Assert.AreEqual(AuthenticateStatus.AlreadyLoggedIn.ToString(), result);
 		}
 		/// <summary>
 		/// Проверяет регистрацию нового пользователя.
 		/// </summary>
-		[Test]
-		public async Task LogInTest4()
+		[TestCase("NewUser", "password")]
+		public async Task CorrectAuthorize(string login, string password)
 		{
-			string result = await authenticateService.RegisterAsync("NewUser", "password", callbackAuth.Object);
+			string result = await AuthenticateService.RegisterAsync(login, password, CallbackAuth.Object);
 
 			Assert.IsNotNull(result);
 		}
 		/// <summary>
 		/// Проверяет регистрацию нового пользователя.
 		/// </summary>
-		[Test]
-		public async Task RegisterTest1()
+		[TestCase("NewUser", "password")]
+		public async Task Register(string login, string password)
 		{
-			string result = await authenticateService.RegisterAsync("NewUser", "password", callbackAuth.Object);
+			string result = await AuthenticateService.RegisterAsync(login, password, CallbackAuth.Object);
 
 			Assert.IsNotNull(result);
 		}
 		/// <summary>
 		/// Проверяет поведение сервиса при регистрации уже зарегистрированного пользователя.
 		/// </summary>
-		[Test]
-		public async Task RegisterTest2()
+		[TestCase("NewUser", "password")]
+		public async Task AlreadyRegistered(string login, string password)
 		{
 			string result;
-			await authenticateService.RegisterAsync("NewUser", "password", callbackAuth.Object);
-			result = await authenticateService.RegisterAsync("NewUser", "password", callbackAuth.Object);
+			await AuthenticateService.RegisterAsync(login, password, CallbackAuth.Object);
+			result = await AuthenticateService.RegisterAsync(login, password, CallbackAuth.Object);
 
 			Assert.AreEqual(result, AuthenticateStatus.AlreadyRegistered.ToString());
 		}
@@ -84,62 +84,33 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[TestCase("sosssso", "pas")]
 		[TestCase("sssaaoso", null)]
 		[TestCase("so ssss so", "password")]
-		public async Task RegisterTest2(string login, string password)
+		public async Task WrongDataFormat(string login, string password)
 		{
-			string result = await authenticateService.RegisterAsync(login, password, callbackAuth.Object);
+			string result = await AuthenticateService.RegisterAsync(login, password, CallbackAuth.Object);
 
 			Assert.AreEqual(result, AuthenticateStatus.WrongDataFormat.ToString());
 		}
 		/// <summary>
 		/// Проверяет корректность выхода пользователя из учетной записи.
 		/// </summary>
-		[Test]
-		public async Task LogOutTest1()
+		[TestCase("NewUser", "password")]
+		public async Task LogOut(string login, string password)
 		{
-			string token = await authenticateService.RegisterAsync("Login", "Password", callbackAuth.Object);
+			string token = await AuthenticateService.RegisterAsync(login, password, CallbackAuth.Object);
 
-			bool logOutStatus = await authenticateService.LogOutAsync(token);
+			bool logOutStatus = await AuthenticateService.LogOutAsync(token);
 
 			Assert.AreEqual(logOutStatus, true);
 		}
 		/// <summary>
 		/// Проверяет попытку выхода неавторизированного пользователя.
 		/// </summary>
-		[Test]
-		public async Task LogOutTest2()
+		[TestCase("SomeKey")]
+		public async Task LogOutNotAuthorized(string token)
 		{
-			bool logOutStatus = await authenticateService.LogOutAsync("SomeKey");
+			bool logOutStatus = await AuthenticateService.LogOutAsync(token);
 
 			Assert.AreEqual(logOutStatus, false);
-		}
-		/// <summary>
-		/// Проверяет корректность шифрования строки.
-		/// </summary>
-		[Test]
-		public async Task EncryptTest1()
-		{
-			Assert.IsNotNull(authenticateService.EncryptAsync("Text"));
-		}
-		/// <summary>
-		/// Проверка корректность шифрования строки.
-		/// </summary>
-		[Test]
-		public async Task EncryptTest2()
-		{
-			Assert.IsNotEmpty(await authenticateService.EncryptAsync("Text"));
-		}
-		/// <summary>
-		/// Проверяет корректность расшифровки.
-		/// </summary>
-		[Test]
-		public async Task DecryptTest1()
-		{
-			string sourceText = "Hello";
-			string encryptText;
-
-
-			encryptText = await authenticateService.EncryptAsync(sourceText);
-			Assert.AreEqual(sourceText, authenticateService.Decrypt(encryptText));
 		}
 		#endregion
 		#endregion

@@ -178,7 +178,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			/// <value>
 			/// Состояние callback.
 			/// </value>
-			public CommunicationState CallbackState => _callback is ICommunicationObject co ? co.State : CommunicationState.Closed;
+			public CommunicationState CallbackState => _callback is ICommunicationObject co ? co.State : CommunicationState.Opened;
 
 			/// <summary>
 			/// Асинхронно возвращает состояние петухов.
@@ -355,6 +355,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				if (StorageService.LoggedUsers[token] == FirstFighterLogin)
 				{
 					_logger.Warn($"Попытка добавиться в сессию противниками с одинаковыми логинами {FirstFighterLogin}");
+					callback.FindedMatch("SameLogins");
 					return;
 				}
 				IsReady = true;

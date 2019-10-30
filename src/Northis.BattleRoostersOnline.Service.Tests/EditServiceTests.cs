@@ -14,7 +14,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 	[TestFixture]
 	public class EditServiceTests : ServiceModuleTests
 	{
-		#region Methods
+		#region Test Methods
 		#region Public
 		/// <summary>
 		/// Проверяет корректность метода добавления нового петуха пользователя.
@@ -22,9 +22,8 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[Test]
 		public async Task AddTest1()
 		{
-			string token = await authenticateService.RegisterAsync("Login1", "Password", callbackAuth.Object);
-
-			await editor.AddAsync(token, new RoosterDto());
+			string token = await AuthenticateService.RegisterAsync("Login1", "Password", CallbackAuth.Object);
+			await Editor.AddAsync(token, new RoosterDto());
 
 			Assert.AreEqual(Storage.RoostersData.Count, 1);
 		}
@@ -34,7 +33,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[Test]
 		public void AddTest2()
 		{
-			Assert.DoesNotThrowAsync( () => editor.AddAsync("SomeToken", new RoosterDto()));
+			Assert.DoesNotThrowAsync( () => Editor.AddAsync("SomeToken", new RoosterDto()));
 		}
 		
 		/// <summary>
@@ -43,7 +42,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[Test]
 		public async Task GetUserRoostersTest1()
 		{
-			IEnumerable<RoosterDto> roosters = await editor.GetUserRoostersAsync("NoFindToken");
+			IEnumerable<RoosterDto> roosters = await Editor.GetUserRoostersAsync("NoFindToken");
 
 			Assert.AreEqual(new List<RoosterDto>(), roosters.ToList());
 		}
@@ -53,7 +52,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[Test]
 		public async Task GetUserRoostersTest2()
 		{ 
-			Assert.DoesNotThrowAsync(() => editor.GetUserRoostersAsync("NotFindToken"));
+			Assert.DoesNotThrowAsync(() => Editor.GetUserRoostersAsync("NotFindToken"));
 		}
 		/// <summary>
 		/// Проверяет работу метода редактирования с недопустимыми параметрами.
@@ -97,7 +96,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 				{ "Rooster3",rooster3}
 			});
 
-			await editor.EditAsync("FoundToken","Rooster2" , editedRooster);
+			await Editor.EditAsync("FoundToken","Rooster2" , editedRooster);
 
 			Assert.IsTrue(editedRooster.Equals(Storage.RoostersData["FoundToken"]["Rooster2"]));
 		}
@@ -117,7 +116,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 				{"Rooster1", rooster}
 			});
 
-			Assert.DoesNotThrowAsync(() => editor.RemoveAsync(token,rooster.Token));
+			Assert.DoesNotThrowAsync(() => Editor.RemoveAsync(token,rooster.Token));
 		}
 		/// <summary>
 		/// Проверяет корректность удаления нужного петуха.
@@ -135,7 +134,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 				{ "Rooster3",rooster3}
 			});
 
-			await editor.RemoveAsync(token, "Rooster1");
+			await Editor.RemoveAsync(token, "Rooster1");
 
 			Assert.AreEqual(false,Storage.RoostersData["FoundToken"].ContainsKey("Rooster1"));
 		}

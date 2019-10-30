@@ -421,9 +421,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				Luck = Luck,
 				Name = Name,
 				Thickness = Thickness,
-				MaxHealth = MaxHealth,
-				Damage = Damage,
-				Hit = Hit
+				MaxHealth = MaxHealth
 			};
 
 		/// <summary>

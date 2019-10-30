@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Moq;
 using Northis.BattleRoostersOnline.Dto;
+using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Tests;
 using NUnit.Framework;
@@ -10,69 +13,98 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 	[TestFixture]
 	public class ServicesStorageTests : ServiceModuleTests
 	{
-		private DataStorageService _dataStorageService = new DataStorageService();
 		/// <summary>
 		/// Проверяет количество петухов после загрузки.
 		/// </summary>
 		[Test]
-		public async Task LoadTest2()
+		public async Task SaveAndLoadRoosters()
 		{
 			var backupRoosters = Storage.RoostersData.Count;
-			Storage.RoostersData.Add("SomeKey", new Dictionary<string, RoosterDto>
+			var roosters = new Dictionary<string, RoosterDto>
 			{
-				{"Rooster1", new RoosterDto()},
-				{"Rooster2", new RoosterDto()},
-				{"Rooster3", new RoosterDto()}
-			});
+				{
+					"Rooster1", new RoosterDto()
+					{
+						Weight = 1,
+						Height = 20,
+						Health = 100,
+						Stamina = 100,
+						Brickness = 10,
+						Thickness = 10,
+						Luck = 10,
+						Name = "CoCoCo",
+						Crest = CrestSizeDto.Small,
+						ColorDto = RoosterColorDto.Black,
+						MaxHealth = 100,
+						Token = "asdasd123",
+						WinStreak = 1
+					}
+				},
+				{
+					"Rooster2", new RoosterDto()
+					{
+						Weight = 2,
+						Height = 30,
+						Health = 89,
+						Stamina = 100,
+						Brickness = 20,
+						Thickness = 30,
+						Luck = 30,
+						Name = "CoCaCo",
+						Crest = CrestSizeDto.Big,
+						ColorDto = RoosterColorDto.Red,
+						MaxHealth = 120,
+						Token = "asdasd1234",
+						WinStreak = 10
+					}
+				}
+			};
+			Storage.RoostersData.Add("SomeKey", roosters);
 
-			await _dataStorageService.SaveRoostersAsync();
-			_dataStorageService.LoadRoosters();
+			await Storage.SaveRoostersAsync();
+			Storage.LoadRoosters();
 
 			Assert.AreEqual(Storage.RoostersData.Count, backupRoosters + 1);
-			Assert.AreEqual(Storage.RoostersData["SomeKey"].Count, 3);
+			Assert.IsTrue(Storage.RoostersData["SomeKey"].SequenceEqual(roosters));
 		}
+
 		/// <summary>
 		/// Проверяет корректность метода сохранения петухов на предмет исключительных ситуаций.
 		/// </summary>
+
 		[Test]
-		public async Task SaveTest1()
+		public async Task SaveAndLoadUsers()
 		{
-			Assert.DoesNotThrowAsync(() => _dataStorageService.SaveRoostersAsync());
-		}
-		/// <summary>
-		/// Проверяет корректность метода сохранения петухов.
-		/// </summary>
-		[Test]
-		public async Task SaveTest2()
-		{
-			string token = "First";
-			RoosterDto rooster = new RoosterDto();
-			Storage.RoostersData.Add(token, new Dictionary<string, RoosterDto>
+			var backupUsersCount = Storage.UserData.Count;
+			var users = new Dictionary<string, string>()
 			{
-				{"Rooster", rooster}
-			});
+				{
+					"user1", "password1"
+				},
+				{
+					"user2", "password2"
+				}
+			};
 
-			await _dataStorageService.SaveRoostersAsync();
-			_dataStorageService.LoadRoosters();
+			foreach (var i in users)
+			{
+				await AuthenticateService.RegisterAsync(i.Key, i.Value, Mock.Of<IAuthenticateServiceCallback>());
+			}
 
+			//Получаем зашифрованные пароли
+			foreach (var i in Storage.UserData)
+			{
+				if (users.ContainsKey(i.Key))
+				{
+					users[i.Key] = Storage.UserData[i.Key];
+				}
+			}
 
-			Assert.IsTrue(Storage.RoostersData[token].ContainsKey("Rooster"));
-		}
-		/// <summary>
-		/// Проверяет корректность работы метода сохранения данных пользователя.
-		/// </summary>
-		[Test]
-		public async Task SaveUsersTest1()
-		{
-			Assert.DoesNotThrowAsync(() => _dataStorageService.SaveUserDataAsync());
-		}
-		/// <summary>
-		/// Проверяет корректность работы метода загрузки данных пользователя.
-		/// </summary>
-		[Test]
-		public async Task LoadUsersTest1()
-		{
-			Assert.DoesNotThrow(() => _dataStorageService.LoadUserData());
+			await Storage.SaveUserDataAsync();
+			Storage.UserData.Clear();
+			Storage.LoadUserData();
+
+			Assert.IsTrue(Storage.UserData.SequenceEqual(users));
 		}
 	}
 }
