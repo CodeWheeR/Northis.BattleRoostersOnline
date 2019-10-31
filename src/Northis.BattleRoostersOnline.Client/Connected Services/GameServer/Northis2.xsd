@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/DataTransferObjects" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DataTransferObjects" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:simpleType name="AuthenticateStatus">
     <xs:restriction base="xs:string">
       <xs:enumeration value="OK" />
@@ -24,26 +24,33 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="StatisticsDto" nillable="true" type="tns:StatisticsDto" />
-  <xs:complexType name="RoosterDto">
+  <xs:complexType name="ArrayOfUsersStatisticsDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UsersStatisticsDto" nillable="true" type="tns:UsersStatisticsDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUsersStatisticsDto" nillable="true" type="tns:ArrayOfUsersStatisticsDto" />
+  <xs:complexType name="UsersStatisticsDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsOnline" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserScore" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UsersStatisticsDto" nillable="true" type="tns:UsersStatisticsDto" />
+  <xs:complexType name="RoosterEditDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="Brickness" type="xs:int" />
       <xs:element minOccurs="0" name="ColorDto" type="tns:RoosterColorDto" />
       <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeDto" />
-      <xs:element minOccurs="0" name="Damage" type="xs:double" />
-      <xs:element minOccurs="0" name="Health" type="xs:double" />
       <xs:element minOccurs="0" name="Height" type="xs:int" />
-      <xs:element minOccurs="0" name="Hit" type="xs:double" />
       <xs:element minOccurs="0" name="Luck" type="xs:int" />
-      <xs:element minOccurs="0" name="MaxHealth" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Stamina" type="xs:int" />
       <xs:element minOccurs="0" name="Thickness" type="xs:int" />
-      <xs:element minOccurs="0" name="Token" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Weight" type="xs:double" />
-      <xs:element minOccurs="0" name="WinStreak" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="RoosterDto" nillable="true" type="tns:RoosterDto" />
+  <xs:element name="RoosterEditDto" nillable="true" type="tns:RoosterEditDto" />
   <xs:simpleType name="RoosterColorDto">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Black" />
@@ -68,4 +75,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfRoosterDto" nillable="true" type="tns:ArrayOfRoosterDto" />
+  <xs:complexType name="RoosterDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Brickness" type="xs:int" />
+      <xs:element minOccurs="0" name="ColorDto" type="tns:RoosterColorDto" />
+      <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeDto" />
+      <xs:element minOccurs="0" name="Health" type="xs:double" />
+      <xs:element minOccurs="0" name="Height" type="xs:int" />
+      <xs:element minOccurs="0" name="Luck" type="xs:int" />
+      <xs:element minOccurs="0" name="MaxHealth" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Stamina" type="xs:int" />
+      <xs:element minOccurs="0" name="Thickness" type="xs:int" />
+      <xs:element minOccurs="0" name="Token" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Weight" type="xs:double" />
+      <xs:element minOccurs="0" name="WinStreak" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RoosterDto" nillable="true" type="tns:RoosterDto" />
 </xs:schema>

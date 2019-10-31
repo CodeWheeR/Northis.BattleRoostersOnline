@@ -70,7 +70,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						 .Callback<string>(d => token = d);
 
 			var userToken = await AuthenticateService.RegisterAsync("asdshka", "asdshka", Mock.Of<IAuthenticateServiceCallback>());
-			await Editor.AddAsync(userToken, new RoosterDto()
+			await Editor.AddAsync(userToken, new RoosterEditDto()
 			{
 
 			});
@@ -99,7 +99,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						 .Callback<string>(d => token = d);
 
 			var userToken = await AuthenticateService.RegisterAsync("asdshka", "asdshka", Mock.Of<IAuthenticateServiceCallback>());
-			await Editor.AddAsync(userToken, new RoosterDto()
+			await Editor.AddAsync(userToken, new RoosterEditDto()
 			{
 
 			});
@@ -109,7 +109,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 									  .Key;
 
 			var userToken2 = await AuthenticateService.RegisterAsync("asdshka2", "asdshka", Mock.Of<IAuthenticateServiceCallback>());
-			await Editor.AddAsync(userToken2, new RoosterDto()
+			await Editor.AddAsync(userToken2, new RoosterEditDto()
 			{
 
 			});

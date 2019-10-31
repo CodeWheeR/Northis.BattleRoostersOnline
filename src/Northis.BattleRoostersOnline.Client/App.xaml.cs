@@ -4,6 +4,7 @@ using System.Security;
 using System.Windows;
 using Catel.ExceptionHandling;
 using Catel.IoC;
+using Catel.Logging;
 using Catel.Services;
 using Newtonsoft.Json;
 using NLog;
@@ -53,11 +54,9 @@ namespace Northis.BattleRoostersOnline.Client
 
 		private void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
 		{
-			using (StreamWriter writer = new StreamWriter("FATAL.txt", true))
-			{
-				writer.WriteLine(e.ExceptionObject);
-			}
-			MessageBox.Show("Возникло необработанное исключение. Проверьте Log 'Fatal.txt'");
+			var logger = NLog.LogManager.GetCurrentClassLogger();
+			logger.Fatal(e);
+			MessageBox.Show("Возникло необработанное исключение. Проверьте Log 'Fatal'");
 		}
 	}
 }

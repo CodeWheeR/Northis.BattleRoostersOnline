@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://10.88.99.75:8080/Northis.BattleRoostersOnline?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects" />
+  <xs:import schemaLocation="http://10.88.99.75:8080/Northis.BattleRoostersOnline?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" />
   <xs:element name="LogIn">
     <xs:complexType>
       <xs:sequence>
@@ -53,14 +53,15 @@
   <xs:element name="GetLoginStatusResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="GetLoginStatusResult" type="q1:AuthenticateStatus" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="GetLoginStatusResult" type="q1:AuthenticateStatus" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetNewGlobalStatistics">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="statistics" nillable="true" type="q2:ArrayOfStatisticsDto" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="statistics" nillable="true" type="q2:ArrayOfStatisticsDto" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="usersStatistics" nillable="true" type="q3:ArrayOfUsersStatisticsDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -69,7 +70,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sourceRoosterToken" nillable="true" type="xs:string" />
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="editRooster" nillable="true" type="q3:RoosterDto" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="editRooster" nillable="true" type="q4:RoosterEditDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -84,7 +85,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="rooster" nillable="true" type="q4:RoosterDto" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="rooster" nillable="true" type="q5:RoosterEditDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -120,7 +121,7 @@
   <xs:element name="GetUserRoostersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="GetUserRoostersResult" nillable="true" type="q5:ArrayOfRoosterDto" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="GetUserRoostersResult" nillable="true" type="q6:ArrayOfRoosterDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -165,8 +166,8 @@
   <xs:element name="GetRoosterStatus">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="yourRooster" nillable="true" type="q6:RoosterDto" />
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/DataTransferObjects" minOccurs="0" name="enemyRooster" nillable="true" type="q7:RoosterDto" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="yourRooster" nillable="true" type="q7:RoosterDto" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="enemyRooster" nillable="true" type="q8:RoosterDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

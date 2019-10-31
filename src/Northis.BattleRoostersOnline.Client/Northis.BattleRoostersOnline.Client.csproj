@@ -143,6 +143,7 @@
     <Compile Include="Models\AuthModel.cs" />
     <Compile Include="Models\RoosterSettings.cs" />
     <Compile Include="Models\StatisticsModel.cs" />
+    <Compile Include="Models\UserStatistic.cs" />
     <Compile Include="Services\RoosterKeepService.cs" />
     <Compile Include="Validators\RoosterModelValidator.cs" />
     <Compile Include="ViewModels\AuthViewModel.cs" />
@@ -195,13 +196,23 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Connected Services\GameServer\GameServicesProvider.wsdl" />
     <None Include="Connected Services\GameServer\Northis.BattleRoostersOnline.Client.GameServer.AuthenticateStatus.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServer\Northis.BattleRoostersOnline.Client.GameServer.RoosterDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\GameServer\Northis.disco" />
+    <None Include="Connected Services\GameServer\configuration91.svcinfo" />
+    <None Include="Connected Services\GameServer\configuration.svcinfo" />
+    <None Include="Connected Services\GameServer\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Connected Services\GameServer\GameServicesProvider.wsdl" />
     <None Include="Connected Services\GameServer\Northis.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -211,9 +222,6 @@
     <None Include="Connected Services\GameServer\Northis2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -304,21 +312,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\GameServer\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServer\Northis.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServer\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServer\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServer\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

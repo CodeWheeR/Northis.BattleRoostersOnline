@@ -47,7 +47,7 @@
 		<TextBox Grid.Row="1"
 				 Grid.Column="1"
 				 Margin="5,10,10,10"
-				 Text="{Binding Login}" />
+				 Text="{Binding Login}" FontSize="16" />
 		<TextBlock Grid.Row="2"
 				   Grid.Column="0"
 				   VerticalAlignment="Center"
@@ -55,7 +55,7 @@
 		<PasswordBox x:Name="PasswordBox"
 					 Grid.Row="2"
 					 Grid.Column="1"
-					 Margin="5,10,10,10" />
+					 Margin="5,10,10,10" FontSize="16" />
 		<Button Grid.Row="3"
 				Grid.Column="0"
 				Command="{Binding RegCommand}"

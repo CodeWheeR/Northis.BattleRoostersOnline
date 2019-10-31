@@ -15,19 +15,16 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		public string UserName
 		{
 			get;
-			set;
 		}
 		[DisplayName("Имя петуха")]
 		public string RoosterName
 		{
 			get;
-			set;
 		}
 		[DisplayName("Череда побед")]
 		public int WinStreak
 		{
 			get;
-			set;
 		}
 
 		public StatisticsModel(StatisticsDto source = null)

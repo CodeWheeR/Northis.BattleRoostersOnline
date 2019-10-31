@@ -33,14 +33,18 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
 		/// <returns>Task.</returns>
-		public async Task<bool> AddAsync(string token, RoosterDto rooster)
+		public async Task<bool> AddAsync(string token, RoosterEditDto rooster)
 		{
-			if (string.IsNullOrWhiteSpace(token) || string.IsNullOrEmpty(token) || rooster == null)
+			if (string.IsNullOrWhiteSpace(token) || rooster == null)
 			{
 				return false;
 			}
 
 			var login = await GetLoginAsync(token);
+			if (login == "")
+			{
+				return false;
+			}
 
 			try
 			{
@@ -55,9 +59,10 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					}
 					lock (StorageService.RoostersData)
 					{
-						rooster.Token = GenerateToken(StorageService.RoostersData.ContainsKey);
+						var battleRooster =  new RoosterModel(rooster).ToRoosterDto();
+						battleRooster.Token = GenerateToken(StorageService.RoostersData.ContainsKey);
 						StorageService.RoostersData[login]
-									  .Add(rooster.Token, rooster);
+									  .Add(battleRooster.Token, battleRooster);
 					}
 				});
 			}
@@ -108,17 +113,14 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="editRooster">Редактируемый петух.</param>
-		public async Task<bool> EditAsync(string token, string sourceRoosterToken, RoosterDto editRooster)
+		public async Task<bool> EditAsync(string token, string sourceRoosterToken, RoosterEditDto editRooster)
 		{
 			if (string.IsNullOrWhiteSpace(token) ||
-				string.IsNullOrEmpty(token) ||
-				string.IsNullOrWhiteSpace(sourceRoosterToken) ||
 				string.IsNullOrWhiteSpace(sourceRoosterToken) ||
 				editRooster == null)
 			{
 				return false;
 			}
-
 
 			try
 			{
@@ -129,20 +131,23 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 						StorageService.RoostersData[login]
 									  .ContainsKey(sourceRoosterToken))
 					{
+						var battleRooster = new RoosterModel(editRooster).ToRoosterDto();
+						battleRooster.Token = sourceRoosterToken;
 						lock (StorageService.RoostersData)
 						{
+							battleRooster.WinStreak = StorageService.RoostersData[login][sourceRoosterToken]
+																	.WinStreak;
 							StorageService.RoostersData[login]
 										  .Remove(sourceRoosterToken);
 
-							editRooster.WinStreak = StorageService.RoostersData[login][sourceRoosterToken]
-																  .WinStreak;
-
 							StorageService.RoostersData[login]
-										  .Add(sourceRoosterToken, editRooster);
+										  .Add(sourceRoosterToken, battleRooster);
 						}
 					}
 
 					StorageService.SaveRoostersAsync();
+					StatisticsPublisher.GetInstance()
+									   .UpdateStatistics();
 				});
 			}
 			catch (Exception e)
@@ -161,7 +166,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <param name="deleteRoosterToken">Удаляемый петух.</param>
 		public async Task<bool> RemoveAsync(string token, string deleteRoosterToken)
 		{
-			if (string.IsNullOrWhiteSpace(token) || string.IsNullOrEmpty(token) || string.IsNullOrWhiteSpace(deleteRoosterToken) || string.IsNullOrEmpty(deleteRoosterToken))
+			if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(deleteRoosterToken))
 			{
 				return false;
 			}

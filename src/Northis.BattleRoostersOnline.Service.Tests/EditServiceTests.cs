@@ -23,7 +23,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		public async Task AddTest1()
 		{
 			string token = await AuthenticateService.RegisterAsync("Login1", "Password", CallbackAuth.Object);
-			await Editor.AddAsync(token, new RoosterDto());
+			await Editor.AddAsync(token, new RoosterEditDto());
 
 			Assert.AreEqual(Storage.RoostersData.Count, 1);
 		}
@@ -33,7 +33,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[Test]
 		public void AddTest2()
 		{
-			Assert.DoesNotThrowAsync( () => Editor.AddAsync("SomeToken", new RoosterDto()));
+			Assert.DoesNotThrowAsync( () => Editor.AddAsync("SomeToken", new RoosterEditDto()));
 		}
 		
 		/// <summary>
@@ -77,23 +77,23 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		/// </summary>
 		public async Task EditTest2()
 		{
-			RoosterDto editedRooster = new RoosterDto()
+			RoosterEditDto editedRooster = new RoosterEditDto()
 			{
 				Name = "asdshka",
 				Height = 50
 			};
-			RoosterDto rooster1 = new RoosterDto()
+			RoosterEditDto rooster1 = new RoosterEditDto()
 			{
 				Name = "asdshka",
 				Height = 20
 			};
-			RoosterDto rooster2 = new RoosterDto();
-			RoosterDto rooster3 = new RoosterDto();
+			RoosterEditDto rooster2 = new RoosterEditDto();
+			RoosterEditDto rooster3 = new RoosterEditDto();
 			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterDto>
 			{
-				{ "Rooster1",rooster1},
-				{ "Rooster2",rooster2},
-				{ "Rooster3",rooster3}
+				{ "Rooster1",rooster1.ToRoosterDto()},
+				{ "Rooster2",rooster2.ToRoosterDto()},
+				{ "Rooster3",rooster3.ToRoosterDto()}
 			});
 
 			await Editor.EditAsync("FoundToken","Rooster2" , editedRooster);

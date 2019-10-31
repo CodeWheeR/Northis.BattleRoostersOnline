@@ -19,7 +19,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		/// <param name="sourceRooster">Изменяемый петух.</param>
 		/// <param name="editRooster">Редактированный петух.</param>
 		[OperationContract]
-		Task<bool> EditAsync(string token, string sourceRoosterToken, RoosterDto editRooster);
+		Task<bool> EditAsync(string token, string sourceRoosterToken, RoosterEditDto editRooster);
 
 		/// <summary>
 		/// Контракт операции, ответственный за добавление петуха.
@@ -28,7 +28,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		/// <param name="rooster">Петух.</param>
 		/// <returns>Task.</returns>
 		[OperationContract]
-		Task<bool> AddAsync(string token, RoosterDto rooster);
+		Task<bool> AddAsync(string token, RoosterEditDto rooster);
 
 		/// <summary>
 		/// Контракт операции, ответственный за удаление петуха.

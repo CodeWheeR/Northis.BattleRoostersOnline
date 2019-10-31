@@ -49,6 +49,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		public static readonly PropertyData SelectedIndexProperty = RegisterProperty(nameof(SelectedIndex), typeof(int));
 		public static readonly PropertyData StatisticsProperty = RegisterProperty(nameof(Statistics), typeof(StatisticsModel[]));
 		public static readonly PropertyData LoggenInProperty = RegisterProperty(nameof(ShowWindow), typeof(bool));
+		public static readonly PropertyData UserStatiscticsProperty = RegisterProperty(nameof(UserStatistics), typeof(UserStatistic[]));
 		#endregion
 		#endregion
 
@@ -70,6 +71,12 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		{
 			get => GetValue<StatisticsModel[]>(StatisticsProperty);
 			set => SetValue(StatisticsProperty, value);
+		}
+
+		public UserStatistic[] UserStatistics
+		{
+			get => GetValue<UserStatistic[]>(UserStatiscticsProperty);
+			set => SetValue(UserStatiscticsProperty, value);
 		}
 
 		/// <summary>
@@ -226,12 +233,12 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// <param name="roosters">Полученный список петухов.</param>
 		private void UpdateRoosters(IEnumerable<RoosterDto> roosters)
 		{
-			var selectedRoosterName = "";
+			var selectedRoosterToken = "";
 
 			if (SelectedRooster != null)
 			{
 				_roosterBrowserViewModel.Info("Обновлено имя текущего выделенного петуха");
-				selectedRoosterName = SelectedRooster.Name;
+				selectedRoosterToken = SelectedRooster.Token;
 			}
 
 			((ObservableCollection<RoosterModel>) Roosters).Clear();
@@ -239,7 +246,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			foreach (var rooster in roosters)
 			{
 				var newRooster = new RoosterModel(rooster);
-				if (selectedRoosterName != "" && newRooster.Name == selectedRoosterName)
+				if (selectedRoosterToken != "" && newRooster.Token == selectedRoosterToken)
 				{
 					SelectedRooster = newRooster;
 				}
@@ -254,11 +261,12 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// <returns>Окно редактирования.</returns>
 		private async Task EditRoosterAsync()
 		{
-			var sourceRooster = SelectedRooster.ToRoosterDto();
-			await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(SelectedRooster);
 			_roosterBrowserViewModel.Info($"Открыто окно редактирования петуха с имененм {SelectedRooster.Name}.");
-			await _editServiceClient.EditAsync(token, SelectedRooster.Token, SelectedRooster.ToRoosterDto());
-			UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
+			if (await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(SelectedRooster) == true)
+			{
+				await _editServiceClient.EditAsync(token, SelectedRooster.Token, SelectedRooster.ToRoosterDto());
+				UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
+			}
 		}
 
 		/// <summary>
@@ -268,7 +276,11 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		private async Task DeleteRoosterAsync()
 		{
 			_roosterBrowserViewModel.Info($"Запуск удаления петуха {SelectedRooster.Name}.");
-			await _editServiceClient.RemoveAsync(token, SelectedRooster.Token);
+			if (await _editServiceClient.RemoveAsync(token, SelectedRooster.Token) == false)
+			{
+				_roosterBrowserViewModel.Warn($"Удаление петуха {SelectedRooster.Token} пользователя {token} неуспешно");
+				MessageBox.Show("Ошибка при удалении. Проверьте лог Warn");
+			}
 			_roosterBrowserViewModel.Info($"Петух был удален.");
 			UpdateRoostersAsync();
 		}
@@ -283,9 +295,18 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			_roosterBrowserViewModel.Info("Старт добавления нового петуха.");
 			if (await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(rooster) == true)
 			{
-				await _editServiceClient.AddAsync(token, rooster.ToRoosterDto());
-				UpdateRoostersAsync();
-				_roosterBrowserViewModel.Info("Новый петух добавлен в список петухов пользователя.");
+				if (await _editServiceClient.AddAsync(token, rooster.ToRoosterDto()))
+				{
+					UpdateRoostersAsync();
+					_roosterBrowserViewModel.Info("Новый петух добавлен в список петухов пользователя.");
+				}
+				else
+				{
+					MessageBox.Show("Ошибка при добавлении петуха");
+					_roosterBrowserViewModel.Info("Ошибка при добавлении петуха");
+				}
+
+				
 			}
 		}
 
@@ -296,7 +317,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		{
 			ShowWindow = false;
 			_roosterBrowserViewModel.Info("Открытие окна битвы петухов.");
-			await _uiVisualizerService.ShowAsync<FightViewModel>(SelectedRooster);
+			await _uiVisualizerService.ShowDialogAsync<FightViewModel>(SelectedRooster);
 			ShowWindow = true;
 			UpdateRoostersAsync();
 			_roosterBrowserViewModel.Info("Битва была проведена.");

@@ -204,6 +204,30 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Name = rooster.Name;
 			WinStreak = rooster.WinStreak;
 		}
+
+		/// <summary>
+		/// Инициализирует новый объект <see cref="RoosterModel" /> класса.
+		/// </summary>
+		/// <param name="rooster">Петух.</param>
+		public RoosterModel(RoosterEditDto rooster)
+			: this()
+		{
+			Brickness = rooster.Brickness;
+			Luck = rooster.Luck;
+			Thickness = rooster.Thickness;
+			Color = rooster.ColorDto;
+			Crest = rooster.Crest;
+			Height = rooster.Height;
+			Weight = rooster.Weight;
+			if (rooster.Name.Length > 15)
+			{
+				Name = rooster.Name.Substring(0,15);
+			}
+			else
+			{
+				Name = rooster.Name;
+			}
+		}
 		#endregion
 
 		#region Properties		

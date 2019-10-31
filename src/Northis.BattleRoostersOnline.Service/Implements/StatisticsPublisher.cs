@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.ServiceModel;
+using System.ServiceModel.Configuration;
 using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
 using NLog;
@@ -28,6 +29,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// Кэшированное значение статистики
 		/// </summary>
 		private List<StatisticsDto> _cachedStatistics = new List<StatisticsDto>();
+		private List<UsersStatisticsDto> _cachedUsersStatistics = new List<UsersStatisticsDto>();
 
 		private Logger _logger = LogManager.GetCurrentClassLogger();
 		#endregion
@@ -43,26 +45,52 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				await Task.Run(() =>
 				{
 					var stats = new List<StatisticsDto>();
+					var userStats = new List<UsersStatisticsDto>();
+					List<(string, List<RoosterDto>)> roosters;
 					lock (StorageService.RoostersData)
 					{
-						foreach (var usersRoosters in StorageService.RoostersData)
-						{
-							foreach (var rooster in usersRoosters.Value)
-							{
-								stats.Add(new StatisticsDto()
-								{
-									UserName = usersRoosters.Key,
-									RoosterName = rooster.Value.Name,
-									WinStreak = rooster.Value.WinStreak
-								});
-							}
-						}
+						roosters = StorageService.RoostersData.Select(x => (x.Key, x.Value.Values.ToList())).ToList();
+					}
+					var loggedUsers = new List<string>();
+					lock (StorageService.LoggedUsers)
+					{
+						loggedUsers = StorageService.LoggedUsers.Values.ToList();
 					}
 
+					foreach (var usersRoosters in roosters)
+					{
+						var scoresSum = usersRoosters.Item2.Sum((x) => x.WinStreak);
+						userStats.Add(new UsersStatisticsDto()
+						{
+							UserName = usersRoosters.Item1,
+							UserScore = scoresSum,
+							IsOnline = loggedUsers.Contains(usersRoosters.Item1)
+						});
+						
+					}
+
+					foreach (var usersRoosters in roosters)
+					{
+						foreach (var rooster in usersRoosters.Item2)
+						{
+							stats.Add(new StatisticsDto()
+							{
+								UserName = usersRoosters.Item1,
+								RoosterName = rooster.Name,
+								WinStreak = rooster.WinStreak
+							});
+						}
+					}
+					
 					lock (_cachedStatistics)
 					{
 						_cachedStatistics = stats.OrderByDescending(x => x.WinStreak)
 												 .ToList();
+					}
+
+					lock (_cachedUsersStatistics)
+					{
+						_cachedUsersStatistics = userStats.OrderByDescending(x => x.UserScore).ToList();
 					}
 
 					OnStatisticsChanged();
@@ -96,7 +124,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				_subscribers.Add(token, callback);
 				Task.Run(() =>
 				{
-					callback.GetNewGlobalStatistics(_cachedStatistics);
+					callback.GetNewGlobalStatistics(_cachedStatistics, _cachedUsersStatistics);
 				});
 			}
 			catch (Exception e)
@@ -177,7 +205,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				{
 					if (_subscribers.ContainsKey(receiverToken))
 					{
-						_subscribers[receiverToken].GetNewGlobalStatistics(_cachedStatistics);
+						_subscribers[receiverToken].GetNewGlobalStatistics(_cachedStatistics, _cachedUsersStatistics);
 					}
 				}
 				catch (Exception e)

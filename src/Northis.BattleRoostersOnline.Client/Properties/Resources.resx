@@ -223,4 +223,7 @@
   <data name="LeaderBoard" xml:space="preserve">
     <value>Топ петуховодов</value>
   </data>
+  <data name="RoostersLeaderBoard" xml:space="preserve">
+    <value>Топ петухов</value>
+  </data>
 </root>

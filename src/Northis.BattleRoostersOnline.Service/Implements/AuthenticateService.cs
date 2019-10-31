@@ -65,6 +65,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			await Task.Run(() =>
 			{
 				lock (StorageService.UserData)
+				lock(StorageService.LoggedUsers)
 				{
 					StorageService.LoggedUsers.Add(token, login);
 				}
@@ -73,6 +74,8 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			_logger.Info($"Пользователь {login} вошел в сеть с токеном {token}");
 
 			StatisticsPublisher.GetInstance().Subscribe(token, callback);
+			StatisticsPublisher.GetInstance()
+							   .UpdateStatistics();
 			return token;
 		}
 
@@ -145,8 +148,10 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 			_logger.Info($"Пользователь {login} вышел из сети");
 
-			await Task.Run(async () => (await StatisticsPublisher.GetInstanceAsync())
-													.Unsubscribe(token));
+			await Task.Run(() => StatisticsPublisher.GetInstance().Unsubscribe(token));
+			StatisticsPublisher.GetInstance()
+							   .UpdateStatistics();
+
 
 			return true;
 		}

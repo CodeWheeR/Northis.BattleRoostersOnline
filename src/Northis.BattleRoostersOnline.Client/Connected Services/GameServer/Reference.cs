@@ -14,7 +14,7 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticateStatus", Namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticateStatus", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
     public enum AuthenticateStatus : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -35,7 +35,7 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="StatisticsDto", Namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StatisticsDto", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
     [System.SerializableAttribute()]
     public partial class StatisticsDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -112,7 +112,275 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RoosterDto", Namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UsersStatisticsDto", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
+    [System.SerializableAttribute()]
+    public partial class UsersStatisticsDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsOnlineField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int UserScoreField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsOnline {
+            get {
+                return this.IsOnlineField;
+            }
+            set {
+                if ((this.IsOnlineField.Equals(value) != true)) {
+                    this.IsOnlineField = value;
+                    this.RaisePropertyChanged("IsOnline");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int UserScore {
+            get {
+                return this.UserScoreField;
+            }
+            set {
+                if ((this.UserScoreField.Equals(value) != true)) {
+                    this.UserScoreField = value;
+                    this.RaisePropertyChanged("UserScore");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RoosterEditDto", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
+    [System.SerializableAttribute()]
+    public partial class RoosterEditDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int BricknessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Northis.BattleRoostersOnline.Client.GameServer.RoosterColorDto ColorDtoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Northis.BattleRoostersOnline.Client.GameServer.CrestSizeDto CrestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int HeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int LuckField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ThicknessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double WeightField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Brickness {
+            get {
+                return this.BricknessField;
+            }
+            set {
+                if ((this.BricknessField.Equals(value) != true)) {
+                    this.BricknessField = value;
+                    this.RaisePropertyChanged("Brickness");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Northis.BattleRoostersOnline.Client.GameServer.RoosterColorDto ColorDto {
+            get {
+                return this.ColorDtoField;
+            }
+            set {
+                if ((this.ColorDtoField.Equals(value) != true)) {
+                    this.ColorDtoField = value;
+                    this.RaisePropertyChanged("ColorDto");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Northis.BattleRoostersOnline.Client.GameServer.CrestSizeDto Crest {
+            get {
+                return this.CrestField;
+            }
+            set {
+                if ((this.CrestField.Equals(value) != true)) {
+                    this.CrestField = value;
+                    this.RaisePropertyChanged("Crest");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Height {
+            get {
+                return this.HeightField;
+            }
+            set {
+                if ((this.HeightField.Equals(value) != true)) {
+                    this.HeightField = value;
+                    this.RaisePropertyChanged("Height");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Luck {
+            get {
+                return this.LuckField;
+            }
+            set {
+                if ((this.LuckField.Equals(value) != true)) {
+                    this.LuckField = value;
+                    this.RaisePropertyChanged("Luck");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Thickness {
+            get {
+                return this.ThicknessField;
+            }
+            set {
+                if ((this.ThicknessField.Equals(value) != true)) {
+                    this.ThicknessField = value;
+                    this.RaisePropertyChanged("Thickness");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Weight {
+            get {
+                return this.WeightField;
+            }
+            set {
+                if ((this.WeightField.Equals(value) != true)) {
+                    this.WeightField = value;
+                    this.RaisePropertyChanged("Weight");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RoosterColorDto", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
+    public enum RoosterColorDto : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Black = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Brown = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Blue = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Red = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        White = 4,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CrestSizeDto", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
+    public enum CrestSizeDto : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Small = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Medium = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Big = 2,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RoosterDto", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
     [System.SerializableAttribute()]
     public partial class RoosterDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -129,16 +397,10 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         private Northis.BattleRoostersOnline.Client.GameServer.CrestSizeDto CrestField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double DamageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private double HealthField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int HeightField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double HitField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int LuckField;
@@ -214,19 +476,6 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Damage {
-            get {
-                return this.DamageField;
-            }
-            set {
-                if ((this.DamageField.Equals(value) != true)) {
-                    this.DamageField = value;
-                    this.RaisePropertyChanged("Damage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public double Health {
             get {
                 return this.HealthField;
@@ -248,19 +497,6 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
                 if ((this.HeightField.Equals(value) != true)) {
                     this.HeightField = value;
                     this.RaisePropertyChanged("Height");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Hit {
-            get {
-                return this.HitField;
-            }
-            set {
-                if ((this.HitField.Equals(value) != true)) {
-                    this.HitField = value;
-                    this.RaisePropertyChanged("Hit");
                 }
             }
         }
@@ -379,40 +615,6 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RoosterColorDto", Namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects")]
-    public enum RoosterColorDto : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Black = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Brown = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Blue = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Red = 3,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        White = 4,
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CrestSizeDto", Namespace="http://schemas.datacontract.org/2004/07/DataTransferObjects")]
-    public enum CrestSizeDto : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Small = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Medium = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Big = 2,
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServer.IAuthenticateService", CallbackContract=typeof(Northis.BattleRoostersOnline.Client.GameServer.IAuthenticateServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IAuthenticateService {
@@ -446,7 +648,7 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
     public interface IAuthenticateServiceCallback {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAuthenticateService/GetNewGlobalStatistics")]
-        void GetNewGlobalStatistics(Northis.BattleRoostersOnline.Client.GameServer.StatisticsDto[] statistics);
+        void GetNewGlobalStatistics(Northis.BattleRoostersOnline.Client.GameServer.StatisticsDto[] statistics, Northis.BattleRoostersOnline.Client.GameServer.UsersStatisticsDto[] usersStatistics);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -515,16 +717,16 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
     public interface IEditService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        bool Edit(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterDto editRooster);
+        bool Edit(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto editRooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        System.Threading.Tasks.Task<bool> EditAsync(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterDto editRooster);
+        System.Threading.Tasks.Task<bool> EditAsync(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto editRooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
-        bool Add(string token, Northis.BattleRoostersOnline.Client.GameServer.RoosterDto rooster);
+        bool Add(string token, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
-        System.Threading.Tasks.Task<bool> AddAsync(string token, Northis.BattleRoostersOnline.Client.GameServer.RoosterDto rooster);
+        System.Threading.Tasks.Task<bool> AddAsync(string token, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto rooster);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Remove", ReplyAction="http://tempuri.org/IEditService/RemoveResponse")]
         bool Remove(string token, string deleteRoosterToken);
@@ -566,19 +768,19 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
                 base(binding, remoteAddress) {
         }
         
-        public bool Edit(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterDto editRooster) {
+        public bool Edit(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto editRooster) {
             return base.Channel.Edit(token, sourceRoosterToken, editRooster);
         }
         
-        public System.Threading.Tasks.Task<bool> EditAsync(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterDto editRooster) {
+        public System.Threading.Tasks.Task<bool> EditAsync(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto editRooster) {
             return base.Channel.EditAsync(token, sourceRoosterToken, editRooster);
         }
         
-        public bool Add(string token, Northis.BattleRoostersOnline.Client.GameServer.RoosterDto rooster) {
+        public bool Add(string token, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto rooster) {
             return base.Channel.Add(token, rooster);
         }
         
-        public System.Threading.Tasks.Task<bool> AddAsync(string token, Northis.BattleRoostersOnline.Client.GameServer.RoosterDto rooster) {
+        public System.Threading.Tasks.Task<bool> AddAsync(string token, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto rooster) {
             return base.Channel.AddAsync(token, rooster);
         }
         

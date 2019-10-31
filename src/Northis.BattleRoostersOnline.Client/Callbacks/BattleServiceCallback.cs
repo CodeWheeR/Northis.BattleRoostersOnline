@@ -77,7 +77,19 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 			if (token == "User was not found")
 			{
 				MessageBox.Show("Попытка поиска матча не авторизованным пользователем");
-				_battleServiceCallbackLogger.Error("ППопытка поиска матча не авторизованным пользователем.");
+				_battleServiceCallbackLogger.Error("Попытка поиска матча не авторизованным пользователем.");
+				return;
+			}
+			if (token == "Rooster was not found")
+			{
+				MessageBox.Show("Попытка поиска матча не авторизованным петухом");
+				_battleServiceCallbackLogger.Error("Попытка поиска матча не авторизованным петухом.");
+				return;
+			}
+			if (token == "SameLogin")
+			{
+				MessageBox.Show("Попытка начать бой друг с другом");
+				_battleServiceCallbackLogger.Error("Попытка начать бой друг с другом");
 				return;
 			}
 			_fightVm.BattleEnded = false;

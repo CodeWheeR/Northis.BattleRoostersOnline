@@ -297,6 +297,15 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Топ петухов.
+        /// </summary>
+        public static string RoostersLeaderBoard {
+            get {
+                return ResourceManager.GetString("RoostersLeaderBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Выбрать первым.
         /// </summary>
         public static string SelectAsFirst {

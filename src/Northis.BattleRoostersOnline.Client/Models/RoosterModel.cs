@@ -254,6 +254,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		public string Token
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -487,24 +488,17 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		/// Выполняет преобразование объекта к типу RoosterDto.
 		/// </summary>
 		/// <returns></returns>
-		public RoosterDto ToRoosterDto() =>
-			new RoosterDto
+		public RoosterEditDto ToRoosterDto() =>
+			new RoosterEditDto()
 			{
-				Token = Token,
 				Height = Height,
 				ColorDto = ColorDtoParse(Color),
-				Health = Health,
-				Stamina = Stamina,
 				Brickness = Brickness,
 				Crest = SizeDtoParse(Crest),
 				Weight = Weight,
-				WinStreak = WinStreak,
 				Luck = Luck,
 				Name = Name,
-				Thickness = Thickness,
-				MaxHealth = MaxHealth,
-				Damage = Damage,
-				Hit = Hit
+				Thickness = Thickness
 			};
 
 		/// <summary>
@@ -540,7 +534,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				Thickness = Thickness,
 				Name = Name,
 				WinStreak = WinStreak,
-				Damage = Damage
+				Token = Token
 			};
 		#endregion
 
