@@ -9,6 +9,8 @@ using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Implements;
+using Unity;
+using Unity.Wcf;
 
 namespace Northis.BattleRoostersOnline.Server
 {
@@ -47,12 +49,19 @@ namespace Northis.BattleRoostersOnline.Server
 
 			var baseAddress = new Uri(address);
 
-			var selfHost = new ServiceHost(typeof(GameServicesProvider), baseAddress);
+			var container = new UnityContainer();
+
+			container.RegisterType<IDataStorageService, DataStorageService>();
+
+			var selfHost = new UnityServiceHost(container, typeof(GameServicesProvider), baseAddress);
+
+			
+
+			//var selfHost = new ServiceHost(typeof(GameServicesProvider), baseAddress);
 
 			try
 			{
-				DataStorageService.InitContainer();
-
+				
 				var authBinding = new WSDualHttpBinding(WSDualHttpSecurityMode.None)
 				{
 					OpenTimeout = new TimeSpan(0, 0, 0, 5),
