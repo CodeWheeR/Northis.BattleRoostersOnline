@@ -28,19 +28,18 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// Храни.
 		/// </value>
 		/// <exception cref="NullReferenceException">Хранилище не инициализированно экземпляром класса.</exception>
-		protected IDataStorageService StorageService
+		protected static IDataStorageService StorageService
 		{
-			get
-			{
-				if (ServiceLocator.IsLocationProviderSet)
-				{
-					return ServiceLocator.Current.GetInstance<IDataStorageService>();
-				}
-
-				throw new NullReferenceException("StorageService is null");
-			}
+			get;
+			private set;
 		}
 		#endregion
+
+		public static void SerStorage(IDataStorageService service)
+		{
+			StorageService = service;
+		}
+
 
 		#region .ctor
 		/// <summary>

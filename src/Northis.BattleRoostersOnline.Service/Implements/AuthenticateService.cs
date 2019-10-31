@@ -21,6 +21,11 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	{
 		private Logger _logger = LogManager.GetCurrentClassLogger();
 
+		/// <summary>
+		/// Токен отмены операции мониторинга подключений.
+		/// </summary>
+		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
+
 		#region Public Methods
 
 		/// <summary>
@@ -32,6 +37,21 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// Токен.
 		/// </returns>
 		public async Task<string> LogInAsync(string login, string password) => await LogInAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>(), false);
+
+		public async Task MonitorConnections()
+		{
+			var token = _connectionMonitorTokenSource.Token;
+
+			await Task.Run(async () =>
+			{
+				while (!token.IsCancellationRequested)
+				{
+					StatisticsPublisher.GetInstance()
+									   .UpdateStatistics();
+					await Task.Delay(10000, token);
+				}
+			}, token);
+		}
 
 		/// <summary>
 		/// Осуществляет вход пользователя в систему.
@@ -68,6 +88,10 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				lock(StorageService.LoggedUsers)
 				{
 					StorageService.LoggedUsers.Add(token, login);
+					if (StorageService.LoggedUsers.Count == 1)
+					{
+						MonitorConnections();
+					}
 				}
 			});
 

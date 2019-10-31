@@ -27,10 +27,7 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// Бинарный сериализатор
 		/// </summary>
 		private readonly BinaryFormatter _formatter = new BinaryFormatter();
-		/// <summary>
-		/// Токен отмены операции мониторинга подключений.
-		/// </summary>
-		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
+		
 
 		private object _RoostersFileLocker = new object();
 		private object _UsersFileLocker = new object();
@@ -99,29 +96,12 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 
 		#region Private Methods
 
-		private async Task MonitorConnections()
-		{
-			var token = _connectionMonitorTokenSource.Token;
-
-			await Task.Run(async () =>
-			{
-				while (!token.IsCancellationRequested)
-				{
-					StatisticsPublisher.GetInstance()
-									   .UpdateStatistics();
-					await Task.Delay(10000, token);
-				}
-			}, token);
-		}
+		
 
 		private void InitContent()
 		{
 			LoadUserData();
 			LoadRoosters();
-
-			#pragma warning disable 4014
-			MonitorConnections();
-			#pragma warning restore 4014
 		}
 		#endregion
 
@@ -251,18 +231,6 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		}
 		#endregion
 
-		public static void InitContainer()
-		{
-			if (!ServiceLocator.IsLocationProviderSet)
-			{
-				var container = new UnityContainer();
-				container.RegisterType<IDataStorageService, DataStorageService>();
-				container.RegisterInstance(new DataStorageService());
-
-				var locator = new UnityServiceLocator(container);
-				ServiceLocator.SetLocatorProvider(() => locator);
-			}
-		}
 
 	}
 }

@@ -4,6 +4,7 @@ using System.ServiceModel;
 using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Contracts;
+using Northis.BattleRoostersOnline.Service.DataStorages;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
@@ -37,7 +38,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <summary>
 		/// Инициализирует новый объект <see cref="GameServicesProvider" /> класса.
 		/// </summary>
-		public GameServicesProvider()
+		public GameServicesProvider(IDataStorageService service)
 		{
 			_editService = new EditService();
 			_authenticateService = new AuthenticateService();
