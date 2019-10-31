@@ -59,7 +59,6 @@
     <Compile Include="RoosterColorDto.cs" />
     <Compile Include="RoosterEditDto.cs" />
     <Compile Include="StatisticsDto.cs" />
-    <Compile Include="UserRoosters.cs" />
     <Compile Include="UsersStatisticsDto.cs" />
   </ItemGroup>
   <ItemGroup>

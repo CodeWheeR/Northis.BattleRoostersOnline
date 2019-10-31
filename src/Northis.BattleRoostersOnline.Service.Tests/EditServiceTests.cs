@@ -63,10 +63,10 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[TestCase("NotFoundToken")]
 		public async Task EditTest1(string token)
 		{
-			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterDto>()
+			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterModel>()
 			{
 				{
-					"some", new RoosterDto()
+					"some", new RoosterModel()
 				}
 			});
 
@@ -89,11 +89,11 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			};
 			RoosterEditDto rooster2 = new RoosterEditDto();
 			RoosterEditDto rooster3 = new RoosterEditDto();
-			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterDto>
+			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterModel>
 			{
-				{ "Rooster1",rooster1.ToRoosterDto()},
-				{ "Rooster2",rooster2.ToRoosterDto()},
-				{ "Rooster3",rooster3.ToRoosterDto()}
+				{ "Rooster1", new RoosterModel(rooster1)},
+				{ "Rooster2", new RoosterModel(rooster2)},
+				{ "Rooster3", new RoosterModel(rooster3)}
 			});
 
 			await Editor.EditAsync("FoundToken","Rooster2" , editedRooster);
@@ -109,9 +109,9 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[TestCase("NotFoundToken")]
 		public async Task RemoveTest1(string token)
 		{
-			RoosterDto rooster = new RoosterDto();
+			RoosterModel rooster = new RoosterModel();
 
-			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterDto>
+			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterModel>
 			{
 				{"Rooster1", rooster}
 			});
@@ -124,10 +124,10 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		/// <param name="token">The token.</param>
 		public async Task RemoveTest2(string token)
 		{
-			RoosterDto rooster1 = new RoosterDto();
-			RoosterDto rooster2 = new RoosterDto();
-			RoosterDto rooster3 = new RoosterDto();
-			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterDto>
+			RoosterModel rooster1 = new RoosterModel();
+			RoosterModel rooster2 = new RoosterModel();
+			RoosterModel rooster3 = new RoosterModel();
+			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterModel>
 			{
 				{ "Rooster1",rooster1},
 				{ "Rooster2",rooster2},

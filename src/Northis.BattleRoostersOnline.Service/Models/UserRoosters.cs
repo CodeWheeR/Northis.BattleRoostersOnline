@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Northis.BattleRoostersOnline.Dto;
 
-namespace Northis.BattleRoostersOnline.Dto
+namespace Northis.BattleRoostersOnline.Service.Models
 {
 	/// <summary>
 	/// Класс-контракт данных, предназначенный для сериализации петухов пользователя в XML-документ.
@@ -30,7 +31,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Петухи.
 		/// </Roosters>
 		[DataMember]
-		public IEnumerable<RoosterDto> Roosters
+		public IEnumerable<RoosterModel> Roosters
 		{
 			get;
 			set;
@@ -42,7 +43,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Инициализирует новый объект <see cref="UserRoosters" /> структуры.
 		/// </summary>
 		/// <param name="roosterDictionary">The rooster dictionary.</param>
-		public UserRoosters(string login, IEnumerable<RoosterDto> roosters)
+		public UserRoosters(string login, IEnumerable<RoosterModel> roosters)
 		{
 			Login = login;
 			Roosters = roosters;

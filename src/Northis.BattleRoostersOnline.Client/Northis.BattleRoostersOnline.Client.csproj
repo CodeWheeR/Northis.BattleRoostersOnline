@@ -134,7 +134,6 @@
     </Compile>
     <Compile Include="Converters\MaxDoubleValueToTextLimiter.cs" />
     <Compile Include="Converters\MaxValueToTextLimiter.cs" />
-    <Compile Include="Converters\ColorToDescriptionConverter.cs" />
     <Compile Include="Converters\BooleanToWindowState.cs" />
     <Compile Include="Converters\EnumValueToDescription.cs" />
     <Compile Include="Converters\HealthValueToBool.cs" />

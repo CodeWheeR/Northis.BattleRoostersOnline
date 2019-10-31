@@ -231,6 +231,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		#endregion
 
 		#region Properties		
+
+		public string Token
+		{
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// Возвращает или устанавливает имя петуха.
 		/// </summary>

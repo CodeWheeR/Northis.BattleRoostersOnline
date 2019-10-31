@@ -95,12 +95,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				set;
 			}
 
-			public string RoosterToken
-			{
-				get;
-				set;
-			}
-
 
 			/// <summary>
 			/// Возвращает или задает петуха.
@@ -334,15 +328,14 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <param name="token">Токен.</param>
 		/// <param name="fighter">Боец.</param>
 		/// <param name="callback">Callback сервис.</param>
-		public async void RegisterFighter(string token, RoosterDto fighter, IBattleServiceCallback callback)
+		public async void RegisterFighter(string token, RoosterModel fighter, IBattleServiceCallback callback)
 		{
 			if (FirstUser == null)
 			{
 				FirstFighterLogin = StorageService.LoggedUsers[token];
 				FirstUser = new UserData(callback)
 				{
-					RoosterToken = fighter.Token,
-					Rooster = new RoosterModel(fighter),
+					Rooster = fighter,
 					Token = token,
 					IsReady = false
 				};
@@ -361,8 +354,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				IsReady = true;
 				SecondUser = new UserData(callback)
 				{
-					RoosterToken = fighter.Token,
-					Rooster = new RoosterModel(fighter),
+					Rooster = fighter,
 					Token = token,
 					IsReady = false
 				};
@@ -644,7 +636,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			var login = await GetLoginAsync(userData.Token);
 			if (string.IsNullOrWhiteSpace(login))
 				return;
-			var rooster = StorageService.RoostersData[login][userData.RoosterToken];
+			var rooster = StorageService.RoostersData[login][userData.Rooster.Token];
 			lock (StorageService.RoostersData)
 			{
 				rooster.WinStreak = value;

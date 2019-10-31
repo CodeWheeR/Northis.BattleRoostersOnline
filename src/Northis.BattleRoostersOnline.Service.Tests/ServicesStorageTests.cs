@@ -5,6 +5,7 @@ using Moq;
 using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
+using Northis.BattleRoostersOnline.Service.Models;
 using Northis.BattleRoostersOnline.Service.Tests;
 using NUnit.Framework;
 
@@ -20,10 +21,10 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		public async Task SaveAndLoadRoosters()
 		{
 			var backupRoosters = Storage.RoostersData.Count;
-			var roosters = new Dictionary<string, RoosterDto>
+			var roosters = new Dictionary<string, RoosterModel>
 			{
 				{
-					"Rooster1", new RoosterDto()
+					"Rooster1", new RoosterModel()
 					{
 						Weight = 1,
 						Height = 20,
@@ -34,14 +35,14 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						Luck = 10,
 						Name = "CoCoCo",
 						Crest = CrestSizeDto.Small,
-						ColorDto = RoosterColorDto.Black,
+						Color = RoosterColorDto.Black,
 						MaxHealth = 100,
 						Token = "asdasd123",
 						WinStreak = 1
 					}
 				},
 				{
-					"Rooster2", new RoosterDto()
+					"Rooster2", new RoosterModel()
 					{
 						Weight = 2,
 						Height = 30,
@@ -52,7 +53,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						Luck = 30,
 						Name = "CoCaCo",
 						Crest = CrestSizeDto.Big,
-						ColorDto = RoosterColorDto.Red,
+						Color = RoosterColorDto.Red,
 						MaxHealth = 120,
 						Token = "asdasd1234",
 						WinStreak = 10

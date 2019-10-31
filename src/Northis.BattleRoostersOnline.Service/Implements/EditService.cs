@@ -54,12 +54,12 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					{
 						lock (StorageService.RoostersData)
 						{
-							StorageService.RoostersData.Add(login, new Dictionary<string, RoosterDto>());
+							StorageService.RoostersData.Add(login, new Dictionary<string, RoosterModel>());
 						}
 					}
 					lock (StorageService.RoostersData)
 					{
-						var battleRooster =  new RoosterModel(rooster).ToRoosterDto();
+						var battleRooster =  new RoosterModel(rooster);
 						battleRooster.Token = GenerateToken(StorageService.RoostersData.ContainsKey);
 						StorageService.RoostersData[login]
 									  .Add(battleRooster.Token, battleRooster);
@@ -95,7 +95,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				{
 					if (StorageService.RoostersData.ContainsKey(login))
 					{
-						return StorageService.RoostersData[login].Values;
+						return StorageService.RoostersData[login].Values.Select(x => x.ToRoosterDto());
 					}
 
 					return new List<RoosterDto>();
@@ -127,11 +127,16 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				await Task.Run(async () =>
 				{
 					var login = await GetLoginAsync(token);
+					if (login == "")
+					{
+						return;
+					}
+
 					if (StorageService.RoostersData.ContainsKey(login) &&
 						StorageService.RoostersData[login]
 									  .ContainsKey(sourceRoosterToken))
 					{
-						var battleRooster = new RoosterModel(editRooster).ToRoosterDto();
+						var battleRooster = new RoosterModel(editRooster);
 						battleRooster.Token = sourceRoosterToken;
 						lock (StorageService.RoostersData)
 						{

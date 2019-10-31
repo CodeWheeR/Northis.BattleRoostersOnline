@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
+using Northis.BattleRoostersOnline.Service.Models;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
@@ -46,7 +47,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				{
 					var stats = new List<StatisticsDto>();
 					var userStats = new List<UsersStatisticsDto>();
-					List<(string, List<RoosterDto>)> roosters;
+					List<(string, List<RoosterModel>)> roosters;
 					lock (StorageService.RoostersData)
 					{
 						roosters = StorageService.RoostersData.Select(x => (x.Key, x.Value.Values.ToList())).ToList();

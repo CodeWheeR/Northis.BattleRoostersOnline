@@ -24,7 +24,7 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// <value>
 		/// Данные петухов.
 		/// </value>
-		Dictionary<string, Dictionary<string, RoosterDto>> RoostersData{ get; }
+		Dictionary<string, Dictionary<string, RoosterModel>> RoostersData{ get; }
 		/// <summary>
 		/// Возвращает или задает данные об авторизированных пользователях.
 		/// </summary>

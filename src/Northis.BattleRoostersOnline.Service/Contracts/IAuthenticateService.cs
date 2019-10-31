@@ -12,7 +12,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 	public interface IAuthenticateService
 	{
 		/// <summary>
-		/// Контракт операции, отвечающей за вход пользователя в систему.
+		/// Авторизует пользователя в системе.
 		/// </summary>
 		/// <param name="login">Логин.</param>
 		/// <param name="password">Пароль.</param>
@@ -21,7 +21,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		Task<string> LogInAsync(string login, string password);
 
 		/// <summary>
-		/// Контракт операции, регистрирующий нового пользователя.
+		/// Регистрирует нового пользователя.
 		/// </summary>
 		/// <param name="login">Логин.</param>
 		/// <param name="password">Пароль.</param>
@@ -30,7 +30,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		Task<string> RegisterAsync(string login, string password);
 
 		/// <summary>
-		/// Контракт операции, отвечающей за выход пользователя из системы.
+		/// Осуществляет выход пользователя из системы.
 		/// </summary>
 		/// <param name="token">The token.</param>
 		/// <returns>true - в случае успешного выхода, иначе - false.</returns>
@@ -38,7 +38,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		Task<bool> LogOutAsync(string token);
 
 		/// <summary>
-		/// Контракт операции, отвечающий за возврат статуса авторизации пользователя.
+		/// Возвращает статус авторизации.
 		/// </summary>
 		/// <returns>AuthenticateStatus.</returns>
 		[OperationContract]
