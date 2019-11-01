@@ -66,7 +66,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 							UserScore = scoresSum,
 							IsOnline = loggedUsers.Contains(usersRoosters.Item1)
 						});
-						
 					}
 
 					foreach (var usersRoosters in roosters)

@@ -150,13 +150,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					RoosterColorDto.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, 50)
 				},
 				{
-					RoosterColorDto.White, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10)
+					RoosterColorDto.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 10)
 				},
 				{
 					RoosterColorDto.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, 50)
 				},
 				{
-					RoosterColorDto.Black, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50)
+					RoosterColorDto.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 50)
 				}
 			};
 
@@ -173,13 +173,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					RoosterColorDto.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness)
 				},
 				{
-					RoosterColorDto.Black, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
+					RoosterColorDto.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
 				},
 				{
 					RoosterColorDto.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness)
 				},
 				{
-					RoosterColorDto.White, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
+					RoosterColorDto.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
 				}
 			};
 		}
@@ -191,13 +191,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		public RoosterModel(RoosterDto rooster)
 			: this()
 		{
+			Color = rooster.ColorDto;
 			Health = rooster.Health;
 			MaxHealth = rooster.MaxHealth;
 			Stamina = rooster.Stamina;
 			Brickness = rooster.Brickness;
 			Luck = rooster.Luck;
 			Thickness = rooster.Thickness;
-			Color = rooster.ColorDto;
 			Crest = rooster.Crest;
 			Height = rooster.Height;
 			Weight = rooster.Weight;
@@ -212,10 +212,10 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		public RoosterModel(RoosterEditDto rooster)
 			: this()
 		{
+			Color = rooster.ColorDto;
 			Brickness = rooster.Brickness;
 			Luck = rooster.Luck;
 			Thickness = rooster.Thickness;
-			Color = rooster.ColorDto;
 			Crest = rooster.Crest;
 			Height = rooster.Height;
 			Weight = rooster.Weight;
