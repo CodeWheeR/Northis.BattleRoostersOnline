@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Windows;
 using Catel.MVVM.Converters;
-using Northis.BattleRoostersOnline.Client.Extensions;
 
 namespace Northis.BattleRoostersOnline.Client.Converters
 {
@@ -21,7 +20,6 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <param name="culture">Региональные настройки и параметры.</param>
 		/// <returns>Строковый путь к изображению.</returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => (value as bool? == true) ? WindowState.Normal : WindowState.Minimized;
-
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>

@@ -21,7 +21,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		public static IDataStorageService StorageService
 		{
 			get;
-			private set;
+			set;
 		}
 		#endregion
 
@@ -30,7 +30,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// Устанавливает хранилище данных.
 		/// </summary>
 		/// <param name="service">Хранилище данных.</param>
-		public static void SerStorage(IDataStorageService service)
+		public static void SetStorage(IDataStorageService service)
 		{
 			StorageService = service;
 		}

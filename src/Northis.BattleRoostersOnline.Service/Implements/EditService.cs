@@ -93,7 +93,9 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				{
 					if (StorageService.RoostersData.ContainsKey(login))
 					{
-						return StorageService.RoostersData[login].Values.Select(x => x.ToRoosterDto());
+						//return 
+							var val = StorageService.RoostersData[login].Values.Select(x => x.ToRoosterDto());
+							return val;
 					}
 
 					return new List<RoosterDto>();

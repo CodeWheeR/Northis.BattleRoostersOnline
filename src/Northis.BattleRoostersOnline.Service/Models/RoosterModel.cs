@@ -173,13 +173,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					RoosterColorDto.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness)
 				},
 				{
-					RoosterColorDto.Black, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
+					RoosterColorDto.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
 				},
 				{
 					RoosterColorDto.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness)
 				},
 				{
-					RoosterColorDto.White, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
+					RoosterColorDto.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
 				}
 			};
 		}
@@ -452,7 +452,8 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				Luck = Luck,
 				Name = Name,
 				Thickness = Thickness,
-				MaxHealth = MaxHealth
+				MaxHealth = MaxHealth,
+				Token = Token
 			};
 
 		/// <summary>
@@ -490,7 +491,8 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				Luck = Luck,
 				Thickness = Thickness,
 				Name = Name,
-				WinStreak = WinStreak
+				WinStreak = WinStreak,
+				Token = Token
 			};
 		#endregion
 
