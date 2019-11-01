@@ -250,13 +250,17 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<string>(NameProperty);
 			set => SetValue(NameProperty, value);
 		}
-
+		/// <summary>
+		/// Возвращает или устанавливает токен.
+		/// </summary>
+		/// <value>
+		/// Токен.
+		/// </value>
 		public string Token
 		{
 			get;
 			set;
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает количество побед петуха.
 		/// </summary>
@@ -268,7 +272,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(WinStreakProperty);
 			set => SetValue(WinStreakProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает вес петуха.
 		/// </summary>
@@ -289,7 +292,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(MaxWeightProperty);
 			set => SetValue(MaxWeightProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает высоту петуха.
 		/// </summary>
@@ -305,7 +307,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				UpdateDamage();
 			}
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает здоровье петуха.
 		/// </summary>
@@ -317,7 +318,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<double>(HealthProperty);
 			set => SetValue(HealthProperty, Clamp(value, 0, _maxHealth));
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает максимальное здоровье петуха.
 		/// </summary>
@@ -329,7 +329,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(MaxHealthProperty);
 			set => SetValue(MaxHealthProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает выносливость петуха.
 		/// </summary>
@@ -341,7 +340,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(StaminaProperty);
 			set => SetValue(StaminaProperty, Clamp(value, 0, _maxStamina));
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает окрас петуха.
 		/// </summary>
@@ -358,7 +356,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				UpdateDamage();
 			}
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает юркость петуха.
 		/// </summary>
@@ -379,7 +376,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(MaxBricknessProperty);
 			set => SetValue(MaxBricknessProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает броню петуха.
 		/// </summary>
@@ -395,7 +391,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				UpdateDamage();
 			}
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает плотность петуха.
 		/// </summary>
@@ -415,7 +410,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(MaxThicknessProperty);
 			set => SetValue(MaxThicknessProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает удачу петуха.
 		/// </summary>
@@ -435,7 +429,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(MaxLuckProperty);
 			set => SetValue(MaxLuckProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает урон петуха.
 		/// </summary>
@@ -454,7 +447,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			}
 			set => SetValue(DamageProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает вычисленную силу удара петуха.
 		/// </summary>
@@ -500,7 +492,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				Name = Name,
 				Thickness = Thickness
 			};
-
 		/// <summary>
 		/// Принимает удар от другого петуха.
 		/// </summary>
@@ -515,7 +506,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 
 			Stamina -= 5;
 		}
-
 		/// <summary>
 		/// Создает новый объект, являющийся копией текущего экземпляра.
 		/// </summary>
@@ -543,7 +533,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		/// Выполняет повторное вычисление урона.
 		/// </summary>
 		private void UpdateDamage() => SetValue(DamageProperty, Damage);
-
 		/// <summary>
 		/// Выполняет ограничение значения минимальным и максимальным уровнем.
 		/// </summary>
@@ -552,7 +541,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		/// <param name="max">Возможный максимум.</param>
 		/// <returns></returns>
 		private T Clamp<T>(T value, T min, T max) where T : IComparable => value.CompareTo(min) < 0 ? min : value.CompareTo(max) > 0 ? max : value;
-
 		/// <summary>
 		/// Вычисляет порядковый индекс значения перечисления.
 		/// </summary>
@@ -564,7 +552,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 							.ToList();
 			return names.IndexOf(first.ToString());
 		}
-
 		/// <summary>
 		/// Выполняет смену модификаций при изменении цвета.
 		/// </summary>
@@ -574,7 +561,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			ColorModifications[Color]
 				.Invoke();
 		}
-
 		/// <summary>
 		/// Выполняет очистку всех модификаций.
 		/// </summary>
@@ -588,7 +574,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				}
 			}
 		}
-
 		/// <summary>
 		/// Выполняет смену максимального порога значения.
 		/// </summary>

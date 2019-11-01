@@ -17,9 +17,8 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<ObservableCollection<RoosterModel>>(RoostersProperty);
 			set => SetValue(RoostersProperty, value);
 		}
-
 		/// <summary>
-		/// Register the Roosters property so it is known in the class.
+		/// Зарегистрированное свойство петухи.
 		/// </summary>
 		public static readonly PropertyData RoostersProperty =
 			RegisterProperty("Roosters", typeof(ObservableCollection<RoosterModel>), () => new ObservableCollection<RoosterModel>());

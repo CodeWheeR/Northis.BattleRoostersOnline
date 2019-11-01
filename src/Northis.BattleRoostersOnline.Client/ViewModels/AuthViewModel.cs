@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Markup;
 using Catel.Data;
 using Catel.MVVM;
 using Catel.Services;
@@ -24,7 +22,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// </summary>
 		public static readonly PropertyData AuthModelProperty = RegisterProperty(nameof(AuthModel), typeof(AuthModel));
 		/// <summary>
-		/// Зарегистрированное свойство "Логин"
+		/// Зарегистрированное свойство "Логин".
 		/// </summary>
 		public static readonly PropertyData LoginProperty = RegisterProperty(nameof(Login), typeof(string));
 		#endregion
@@ -54,9 +52,9 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 		#region .ctor		
 		/// <summary>
-		/// Инициализует новый объект класса <see cref="AuthViewModel" />.
+		/// Инициализует новый объект <see cref="AuthViewModel" /> класса.
 		/// </summary>
-		/// <param name="uiVisualizerService">The UI visualizer service.</param>
+		/// <param name="uiVisualizerService">Сервис визуализации.</param>
 		/// <param name="authService">Объект подключения к серверу по каналу авторизации.</param>
 		public AuthViewModel(IUIVisualizerService uiVisualizerService, AuthenticateServiceClient authService)
 		{
@@ -78,7 +76,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get => GetValue<AuthModel>(AuthModelProperty);
 			set => SetValue(AuthModelProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает логин пользователя.
 		/// </summary>
@@ -88,7 +85,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get => GetValue<string>(LoginProperty);
 			set => SetValue(LoginProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает команду для авторизации.
 		/// </summary>
@@ -96,7 +92,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		{
 			get;
 		}
-
 		/// <summary>
 		/// Возвращает команду для регистрации.
 		/// </summary>
@@ -110,8 +105,8 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// <summary>
 		/// Выполняет переданный способ аутентификации на сервере.
 		/// </summary>
-		/// <param name="authMethod">The authentication method.</param>
-		/// <param name="passwordBox">The password box.</param>
+		/// <param name="authMethod">Метод аунтефикации.</param>
+		/// <param name="passwordBox">Хранилище и обработчик паролей.</param>
 		private async Task AuthenticateAsync(Func<string, string, Task<string>> authMethod, PasswordBox passwordBox)
 		{
 			var password = passwordBox.Password;
@@ -132,8 +127,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				_authViewModelLogger.Error("Неполадки с интернет-соединением!");
 				MessageBox.Show(e.ToString());
 			}
-
-			//var token = await authMethod(Login, password);
 
 			AuthenticateStatus result;
 

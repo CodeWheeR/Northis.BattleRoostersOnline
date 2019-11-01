@@ -11,6 +11,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 	/// <seealso cref="Catel.MVVM.Converters.IValueConverter" />
 	public class BooleanToWindowState : IValueConverter
 	{
+		#region Public Methods
 		/// <summary>
 		/// Конвертирует значение Enum, помеченного аттрибутом Display, в путь к картинке.
 		/// </summary>
@@ -30,5 +31,6 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+		#endregion
 	}
 }

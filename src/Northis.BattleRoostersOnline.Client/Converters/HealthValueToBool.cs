@@ -11,6 +11,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 	/// <seealso cref="Catel.MVVM.Converters.IValueConverter" />
 	public class HeathValueToBool : IValueConverter
 	{
+		#region Public Methods
 		/// <summary>
 		/// Конвертирует значение перечисления в путь к картинке.
 		/// </summary>
@@ -25,7 +26,6 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 			answer = (RoosterModel) value != null && (value as RoosterModel).Health == 0;
 			return answer;
 		}
-
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>
@@ -36,5 +36,6 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+		#endregion
 	}
 }

@@ -10,6 +10,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 	/// <seealso cref="Catel.MVVM.Converters.IValueConverter" />
 	public class EnumValueToStringPath : IValueConverter
 	{
+		#region Public Methods
 		/// <summary>
 		/// Конвертирует значение перечисления в путь к картинке.
 		/// </summary>
@@ -19,7 +20,6 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <param name="culture">Региональные настройки и параметры.</param>
 		/// <returns>Строковый путь к изображению.</returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => $"pack://application:,,,/Resources/{value}.jpg";
-
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>
@@ -30,5 +30,6 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+		#endregion
 	}
 }

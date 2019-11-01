@@ -143,7 +143,6 @@
     <Compile Include="Models\RoosterSettings.cs" />
     <Compile Include="Models\StatisticsModel.cs" />
     <Compile Include="Models\UserStatistic.cs" />
-    <Compile Include="Services\RoosterKeepService.cs" />
     <Compile Include="Validators\RoosterModelValidator.cs" />
     <Compile Include="ViewModels\AuthViewModel.cs" />
     <Compile Include="ViewModels\EditRoosterViewModel.cs" />
@@ -153,7 +152,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\IRoosterKeepService.cs" />
     <Compile Include="Views\AuthView.xaml.cs">
       <DependentUpon>AuthView.xaml</DependentUpon>
     </Compile>
@@ -312,5 +310,6 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\GameServer\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
