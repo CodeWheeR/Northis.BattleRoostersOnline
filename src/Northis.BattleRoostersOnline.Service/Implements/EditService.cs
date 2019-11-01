@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
@@ -24,7 +23,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		private Logger _logger = LogManager.GetCurrentClassLogger();
 		#endregion
 		#endregion
-
 		#region Methods
 		#region Public
 		/// <summary>

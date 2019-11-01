@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
-using CommonServiceLocator;
-using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.DataStorages;
-using Northis.BattleRoostersOnline.Service.Models;
-using Unity;
-using Unity.ServiceLocation;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
@@ -22,40 +12,27 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	{
 		#region Properties
 		/// <summary>
-		/// Возвращает хранилище основных данных.
+		/// Возвращает или устанавливает хранилище основных данных.
 		/// </summary>
 		/// <value>
-		/// Храни.
+		/// Хранилище данных.
 		/// </value>
 		/// <exception cref="NullReferenceException">Хранилище не инициализированно экземпляром класса.</exception>
-		protected static IDataStorageService StorageService
+		public static IDataStorageService StorageService
 		{
 			get;
 			private set;
 		}
 		#endregion
 
+		#region Public Methods
+		/// <summary>
+		/// Устанавливает хранилище данных.
+		/// </summary>
+		/// <param name="service">Хранилище данных.</param>
 		public static void SerStorage(IDataStorageService service)
 		{
 			StorageService = service;
-		}
-
-
-		#region .ctor
-		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="BaseServiceWithStorage" /> класса.
-		/// </summary>
-		protected BaseServiceWithStorage()
-		{
-			if (!ServiceLocator.IsLocationProviderSet)
-			{
-				var container = new UnityContainer();
-				container.RegisterType<IDataStorageService, DataStorageService>();
-				container.RegisterInstance(new DataStorageService());
-
-				var locator = new UnityServiceLocator(container);
-				ServiceLocator.SetLocatorProvider(() => locator);
-			}
 		}
 		#endregion
 

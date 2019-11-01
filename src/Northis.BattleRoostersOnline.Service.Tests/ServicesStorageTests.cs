@@ -60,12 +60,15 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 					}
 				}
 			};
+
 			Storage.RoostersData.Add("SomeKey", roosters);
 
 			await Storage.SaveRoostersAsync();
+
 			Storage.LoadRoosters();
 
 			Assert.AreEqual(Storage.RoostersData.Count, backupRoosters + 1);
+
 			Assert.IsTrue(Storage.RoostersData["SomeKey"].SequenceEqual(roosters));
 		}
 
@@ -102,7 +105,9 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			}
 
 			await Storage.SaveUserDataAsync();
+
 			Storage.UserData.Clear();
+
 			Storage.LoadUserData();
 
 			Assert.IsTrue(Storage.UserData.SequenceEqual(users));

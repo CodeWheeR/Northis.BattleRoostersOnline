@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
-using static System.String;
+using Northis.BattleRoostersOnline.Service.DataStorages;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
@@ -19,14 +17,21 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	/// <seealso cref="Northis.BattleRoostersOnline.Service.Contracts.IAuthenticateService" />
 	public class AuthenticateService : BaseServiceWithStorage, IAuthenticateService
 	{
+		#region Private Fields
 		private Logger _logger = LogManager.GetCurrentClassLogger();
-
-		/// <summary>
-		/// Токен отмены операции мониторинга подключений.
-		/// </summary>
+		
 		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
+		#endregion
+
+		#region .ctor
+		public AuthenticateService()
+		{
+			SerStorage(new DataStorageService());
+		}
+		#endregion
 
 		#region Public Methods
+
 
 		/// <summary>
 		/// Осуществляет вход пользователя в систему.
@@ -116,7 +121,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </returns>
 		public async Task<string> RegisterAsync(string login, string password, IAuthenticateServiceCallback callback)
 		{
-			if (IsNullOrWhiteSpace(login) || login.Length < 5  || IsNullOrWhiteSpace(password) || password.Length < 5 || login.Contains(" "))
+			if (string.IsNullOrWhiteSpace(login) || login.Length < 5  || string.IsNullOrWhiteSpace(password) || password.Length < 5 || login.Contains(" "))
 			{
 				_logger.Info($"Попытка авторизации незарегистрированным пользователем {login}");
 				return AuthenticateStatus.WrongDataFormat.ToString();

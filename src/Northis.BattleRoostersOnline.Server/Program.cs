@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Configuration;
 using System.ServiceModel;
-using System.ServiceModel.Activation.Configuration;
 using System.ServiceModel.Description;
-using System.Threading;
 using NLog;
-
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Implements;
@@ -52,12 +49,12 @@ namespace Northis.BattleRoostersOnline.Server
 			var container = new UnityContainer();
 
 			container.RegisterType<IDataStorageService, DataStorageService>();
+			container.RegisterType<IEditService, EditService>();
+			container.RegisterType<IBattleService, BattleService>();
+			container.RegisterType<IAuthenticateService, AuthenticateService>();
+
 
 			var selfHost = new UnityServiceHost(container, typeof(GameServicesProvider), baseAddress);
-
-			
-
-			//var selfHost = new ServiceHost(typeof(GameServicesProvider), baseAddress);
 
 			try
 			{

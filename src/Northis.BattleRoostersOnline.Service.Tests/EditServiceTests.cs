@@ -23,9 +23,10 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		public async Task AddTest1()
 		{
 			string token = await AuthenticateService.RegisterAsync("Login1", "Password", CallbackAuth.Object);
+
 			await Editor.AddAsync(token, new RoosterEditDto());
 
-			Assert.AreEqual(Storage.RoostersData.Count, 1);
+			Assert.AreEqual(1, Storage.RoostersData.Count);
 		}
 		/// <summary>
 		/// Проверяет метод на предмет выброса исключений.
