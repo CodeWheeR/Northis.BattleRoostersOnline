@@ -6,7 +6,7 @@ namespace Northis.BattleRoostersOnline.Dto
 	/// Перечисление-контракт данных, передающее размер гребня петуха.
 	/// </summary>
 	[DataContract]
-	public enum CrestSizeDto
+	public enum CrestSize
 	{
 		[EnumMember]
 		Small,

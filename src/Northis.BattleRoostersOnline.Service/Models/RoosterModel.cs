@@ -32,7 +32,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <summary>
 		/// Цвет петуха.
 		/// </summary>
-		private RoosterColorDto _color;
+		private Dto.RoosterColor _color;
 		/// <summary>
 		/// Уклонеине петуха.
 		/// </summary>
@@ -56,11 +56,11 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <summary>
 		/// Словарь с делегатами цветовых модификаций петухов.
 		/// </summary>
-		private readonly Dictionary<RoosterColorDto, Action> ColorModifications;
+		private readonly Dictionary<Dto.RoosterColor, Action> ColorModifications;
 		/// <summary>
 		/// Словарь с делегатами очистки цветовых модификаций петухов.
 		/// </summary>
-		private readonly Dictionary<RoosterColorDto, Action> ClearModifications;
+		private readonly Dictionary<Dto.RoosterColor, Action> ClearModifications;
 
 		#region Limiters		
 		/// <summary>
@@ -136,10 +136,10 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			MaxHealth = 100;
 			Stamina = 100;
 
-			ColorModifications = new Dictionary<RoosterColorDto, Action>
+			ColorModifications = new Dictionary<Dto.RoosterColor, Action>
 			{
 				{
-					RoosterColorDto.Red, () =>
+					Dto.RoosterColor.Red, () =>
 					{
 						ChangeMaxLimit(nameof(Health), 0, ref _maxHealth, 120);
 						MaxHealth = _maxHealth;
@@ -147,39 +147,39 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					}
 				},
 				{
-					RoosterColorDto.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, 50)
+					Dto.RoosterColor.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, 50)
 				},
 				{
-					RoosterColorDto.White, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10)
+					Dto.RoosterColor.White, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10)
 				},
 				{
-					RoosterColorDto.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, 50)
+					Dto.RoosterColor.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, 50)
 				},
 				{
-					RoosterColorDto.Black, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50)
+					Dto.RoosterColor.Black, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50)
 				}
 			};
 
-			ClearModifications = new Dictionary<RoosterColorDto, Action>
+			ClearModifications = new Dictionary<Dto.RoosterColor, Action>
 			{
 				{
-					RoosterColorDto.Red, () =>
+					Dto.RoosterColor.Red, () =>
 					{
 						ChangeMaxLimit(nameof(Health), 0, ref _maxHealth, DefaultMaxHealth);
 						MaxHealth = DefaultMaxHealth;
 					}
 				},
 				{
-					RoosterColorDto.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness)
+					Dto.RoosterColor.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness)
 				},
 				{
-					RoosterColorDto.Black, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
+					Dto.RoosterColor.Black, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
 				},
 				{
-					RoosterColorDto.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness)
+					Dto.RoosterColor.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness)
 				},
 				{
-					RoosterColorDto.White, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
+					Dto.RoosterColor.White, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
 				}
 			};
 		}
@@ -197,7 +197,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Brickness = rooster.Brickness;
 			Luck = rooster.Luck;
 			Thickness = rooster.Thickness;
-			Color = rooster.ColorDto;
+			Color = rooster.Color;
 			Crest = rooster.Crest;
 			Height = rooster.Height;
 			Weight = rooster.Weight;
@@ -215,7 +215,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Brickness = rooster.Brickness;
 			Luck = rooster.Luck;
 			Thickness = rooster.Thickness;
-			Color = rooster.ColorDto;
+			Color = rooster.Color;
 			Crest = rooster.Crest;
 			Height = rooster.Height;
 			Weight = rooster.Weight;
@@ -328,7 +328,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <value>
 		/// Окрас петуха.
 		/// </value>
-		public RoosterColorDto Color
+		public Dto.RoosterColor Color
 		{
 			get => _color;
 			set
@@ -356,7 +356,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <value>
 		/// Броня петуха.
 		/// </value>
-		public CrestSizeDto Crest
+		public Dto.CrestSize Crest
 		{
 			get;
 			set;
@@ -442,7 +442,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			new RoosterDto
 			{
 				Height = Height,
-				ColorDto = Color,
+				Color = Color,
 				Health = Health,
 				Stamina = Stamina,
 				Brickness = Brickness,

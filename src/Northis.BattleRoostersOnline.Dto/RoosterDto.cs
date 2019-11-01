@@ -82,7 +82,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Цвет петуха.
 		/// </value>
 		[DataMember]
-		public RoosterColorDto ColorDto
+		public RoosterColor Color
 		{
 			get;
 			set;
@@ -108,7 +108,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Размер гребня.
 		/// </value>
 		[DataMember]
-		public CrestSizeDto Crest
+		public CrestSize Crest
 		{
 			get;
 			set;
@@ -214,7 +214,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public bool Equals(RoosterDto obj)
 		{ 
 			return Brickness == obj.Brickness &&
-				   ColorDto == obj.ColorDto &&
+				   Color == obj.Color &&
 				   Crest == obj.Crest &&
 				   Health == obj.Health &&
 				   Height == obj.Height &&
