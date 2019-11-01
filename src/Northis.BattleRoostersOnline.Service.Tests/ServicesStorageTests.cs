@@ -8,6 +8,8 @@ using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Models;
 using Northis.BattleRoostersOnline.Service.Tests;
 using NUnit.Framework;
+using CrestSize = Northis.BattleRoostersOnline.Dto.CrestSize;
+using RoosterColor = Northis.BattleRoostersOnline.Dto.RoosterColor;
 
 namespace Northis.BattleRoostersOnline.Service.Tests
 {
@@ -34,8 +36,8 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						Thickness = 10,
 						Luck = 10,
 						Name = "CoCoCo",
-						Crest = CrestSizeDto.Small,
-						Color = RoosterColorDto.Black,
+						Crest = CrestSize.Small,
+						Color = RoosterColor.Black,
 						MaxHealth = 100,
 						Token = "asdasd123",
 						WinStreak = 1
@@ -52,8 +54,8 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						Thickness = 30,
 						Luck = 30,
 						Name = "CoCaCo",
-						Crest = CrestSizeDto.Big,
-						Color = RoosterColorDto.Red,
+						Crest = CrestSize.Big,
+						Color = RoosterColor.Red,
 						MaxHealth = 120,
 						Token = "asdasd1234",
 						WinStreak = 10

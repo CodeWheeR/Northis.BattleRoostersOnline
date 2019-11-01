@@ -53,10 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticateStatus.cs" />
-    <Compile Include="CrestSizeDto.cs" />
+    <Compile Include="CrestSize.cs" />
     <Compile Include="RoosterDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoosterColorDto.cs" />
+    <Compile Include="RoosterColor.cs" />
     <Compile Include="RoosterEditDto.cs" />
     <Compile Include="StatisticsDto.cs" />
     <Compile Include="UsersStatisticsDto.cs" />
