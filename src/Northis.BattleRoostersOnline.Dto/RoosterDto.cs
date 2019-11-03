@@ -4,17 +4,17 @@ using System.Runtime.Serialization;
 namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Класс-контракт данных, инкапсулирующий в себе характеристики петуха.
+	/// Класс-контракт данных. Инкапсулирует в себе характеристики петуха.
 	/// </summary>
 	[DataContract]
 	public class RoosterDto
 	{
 		#region Properties		
 		/// <summary>
-		/// Gets the token.
+		/// Возвращает токен.
 		/// </summary>
 		/// <value>
-		/// The token.
+		/// Токен.
 		/// </value>
 		[DataMember]
 		public string Token
@@ -179,25 +179,32 @@ namespace Northis.BattleRoostersOnline.Dto
 			set;
 		}
 
-		public int CompareTo(object obj)
-		{
-			throw new NotImplementedException();
-		}
-		#endregion
+        #endregion
 
-		#region Methods
-		#region Public
-		#region Overrided
-		/// <summary>
-		///  Определяет, равен ли заданный объект текущему объекту.
-		/// </summary>
-		/// <param name="obj">
-		///  Объект, который требуется сравнить с текущим объектом.
-		/// </param>
-		/// <returns>
-		///  Значение <see langword="true" />, если указанный объект равен текущему объекту; в противном случае — значение <see langword="false" />.
-		/// </returns>
-		public override bool Equals(object obj)
+        #region Public Methods
+
+        /// <summary>
+        /// Не реализованный метод сравнения.
+        /// </summary>
+        /// <param name="obj">Объект сравнения.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public int CompareTo(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        #region Overrided
+        /// <summary>
+        ///  Определяет, равен ли заданный объект текущему объекту.
+        /// </summary>
+        /// <param name="obj">
+        ///  Объект, который требуется сравнить с текущим объектом.
+        /// </param>
+        /// <returns>
+        ///  Значение <see langword="true" />, если указанный объект равен текущему объекту; в противном случае — значение <see langword="false" />.
+        /// </returns>
+        public override bool Equals(object obj)
 		{
 			if (obj is RoosterDto)
 			{
@@ -225,7 +232,6 @@ namespace Northis.BattleRoostersOnline.Dto
 				   Thickness == obj.Thickness &&
 				   Weight == obj.Weight;
 		}
-		#endregion
 		#endregion
 		#endregion
 	}

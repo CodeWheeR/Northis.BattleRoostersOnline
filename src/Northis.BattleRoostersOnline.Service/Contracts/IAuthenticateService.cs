@@ -6,18 +6,19 @@ using Northis.BattleRoostersOnline.Dto;
 namespace Northis.BattleRoostersOnline.Service.Contracts
 {
 	/// <summary>
-	/// Контракт сервиса, обеспечивающего авторизацию пользователя.
+	/// Контракт сервиса аунтефикации. Обеспечивает авторизацию пользователя.
 	/// </summary>
 	[ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IAuthenticateServiceCallback))]
 	public interface IAuthenticateService
 	{
-		/// <summary>
-		/// Авторизует пользователя в системе.
-		/// </summary>
-		/// <param name="login">Логин.</param>
-		/// <param name="password">Пароль.</param>
-		/// <returns>Токен.</returns>
-		[OperationContract(IsInitiating = true)]
+        #region Operation Contracts
+        /// <summary>
+        /// Авторизует пользователя в системе.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
+        /// <returns>Токен.</returns>
+        [OperationContract(IsInitiating = true)]
 		Task<string> LogInAsync(string login, string password);
 
 		/// <summary>
@@ -43,5 +44,6 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		/// <returns>AuthenticateStatus.</returns>
 		[OperationContract]
 		AuthenticateStatus GetLoginStatus();
-	}
+        #endregion
+    }
 }

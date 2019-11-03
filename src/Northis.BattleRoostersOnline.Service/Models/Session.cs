@@ -13,13 +13,12 @@ using Northis.BattleRoostersOnline.Service.Implements;
 namespace Northis.BattleRoostersOnline.Service.Models
 {
 	/// <summary>
-	/// Класс, работающий с игровой сессией.
+	/// Обеспечивает работу с игровой сессией.
 	/// </summary>
 	/// <seealso cref="Northis.BattleRoostersOnline.Service.Implements.BaseServiceWithStorage" />
 	public class Session : BaseServiceWithStorage
 	{
 		#region Events
-		#region Private
 		/// <summary>
 		/// Событие начала игровой сессии.
 		/// </summary>
@@ -35,10 +34,8 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// </summary>
 		private event EventHandler BattleEnded;
 		#endregion
-		#endregion
 
 		#region Fields
-		#region Private
 		/// <summary>
 		/// Источник токена отмены для битвы.
 		/// </summary>
@@ -49,36 +46,33 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		private readonly CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
 
 		private Logger _logger = LogManager.GetCurrentClassLogger();
-
+    
 		private object _desertLocker = new object();
 
 		private string FirstFighterLogin;
 		#endregion
-		#endregion
 
 		#region Inner
 		/// <summary>
-		/// Класс, инкапсулирующий пользовательские данные.
+		/// Инкапсулирует пользовательские данные.
 		/// </summary>
 		private class UserData
 		{
 			#region Fields
-			#region Private
 			/// <summary>
-			/// Callback-сервис.
+			/// Callback сервиса битвы.
 			/// </summary>
 			private readonly IBattleServiceCallback _callback;
 
 			private Logger _logger = LogManager.GetCurrentClassLogger();
 
 			#endregion
-			#endregion
 
 			#region .ctor
 			/// <summary>
 			/// Инициализирует новый объект <see cref="UserData" /> класса.
 			/// </summary>
-			/// <param name="callback">Callback-сервис.</param>
+			/// <param name="callback">Callback сервиса битвы.</param>
 			public UserData(IBattleServiceCallback callback) => _callback = callback;
 			#endregion
 
@@ -119,53 +113,68 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				get;
 				set;
 			}
-			#endregion
+            #endregion
 
-			#region Methods			
-			/// <summary>
-			/// Вызывает принудительное закрытие канала связи.
-			/// </summary>
-			public void CloseCallbackChannel()
+            #region Private Methods
+
+            /// <summary>
+            /// Осуществляет оповещение пользователя.
+            /// </summary>
+            /// <param name="callback">Метод оповещения пользователя.</param>
+            private void CarefulCallback(Action callback)
+            {
+                try
+                {
+                    if (CallbackState == CommunicationState.Opened)
+                    {
+                        callback();
+                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e);
+                    if (e is CommunicationException || e is TimeoutException || e is ObjectDisposedException)
+                    {
+                        (_callback as ICommunicationObject)?.Close();
+                    }
+                }
+            }
+
+            #endregion
+
+            #region Public Methods			
+            /// <summary>
+            /// Вызывает принудительное закрытие канала связи.
+            /// </summary>
+            public void CloseCallbackChannel()
 			{
 				if (_callback is ICommunicationObject co)
 					co.Close();
 			}
-
-			public void SubscribeOnClosing(EventHandler handler)
+            /// <summary>
+            /// Осуществляет подписку на завершение битвы.
+            /// </summary>
+            /// <param name="handler">Обработчик события.</param>
+            public void SubscribeOnClosing(EventHandler handler)
 			{
 				if (_callback is ICommunicationObject co)
 				{
 					co.Closing += handler;
 				}
 			}
-
-			public void UnsubscribeOnClosing(EventHandler handler)
+            /// <summary>
+            /// Осуществляет подписку от завершения битвы.
+            /// </summary>
+            /// <param name="handler">Обработчик события.</param>
+            public void UnsubscribeOnClosing(EventHandler handler)
 			{
 				if (_callback is ICommunicationObject co)
 				{
 					co.Closing -= handler;
 				}
 			}
-			private void CarefulCallback(Action callback)
-			{
-				try
-				{
-					if (CallbackState == CommunicationState.Opened)
-					{
-						callback();
-					}
-				}
-				catch (Exception e)
-				{
-					_logger.Error(e);	
-					if (e is CommunicationException || e is TimeoutException || e is ObjectDisposedException)
-					{
-						(_callback as ICommunicationObject)?.Close();
-					}
-				}
-			}
+            
 
-			#region Public
 			/// <summary>
 			/// Возвращает состояние callback.
 			/// </summary>
@@ -233,12 +242,10 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				});
 			}
 			#endregion
-			#endregion
 		}
 		#endregion
 
 		#region Properties
-		#region Internal
 		/// <summary>
 		/// Возвращает или задает текущее состояние сессии.
 		/// </summary>
@@ -262,8 +269,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			get;
 			set;
 		}
-
-		internal bool IsEnded
+        /// <summary>
+        /// Возвращает или задает индикатор завершенности.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> если процесс завершен; иначе, <c>false</c>.
+        /// </value>
+        internal bool IsEnded
 		{
 			get;
 			set;
@@ -279,9 +291,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		{
 			get;
 		}
-		#endregion
 
-		#region Private
 		/// <summary>
 		/// Возвращает или задает первого противника.
 		/// </summary>
@@ -306,7 +316,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			set;
 		}
 		#endregion
-		#endregion
 
 		#region .ctor
 		/// <summary>
@@ -320,14 +329,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		}
 		#endregion
 
-		#region Methods
-		#region Public
+		#region Public Methods
 		/// <summary>
 		/// Регистрирует бойца.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="fighter">Боец.</param>
-		/// <param name="callback">Callback сервис.</param>
+		/// <param name="callback">Метод оповещения пользователя.</param>
 		public async void RegisterFighter(string token, RoosterModel fighter, IBattleServiceCallback callback)
 		{
 			if (FirstUser == null)
@@ -493,7 +501,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		}
 
 		/// <summary>
-		/// Устанавливает готовность.
+		/// Устанавливает готовность к бою.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		public void SetReady(string token)
@@ -523,7 +531,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		}
 		#endregion
 
-		#region Private
+		#region Private Methods
 		/// <summary>
 		/// Подписывает указанного пользователя.
 		/// </summary>
@@ -561,8 +569,11 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			SessionStarted?.Invoke(this, new MatchFindedEventArgs(Token));
 			SendRoosterStatus();
 		}
-
-		private async void CheckForDeserting(string token)
+        /// <summary>
+        /// Осуществляет проверку на дезертирство бойцов.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        private async void CheckForDeserting(string token)
 		{
 			await Task.Run(() =>
 			{
@@ -583,7 +594,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		}
 
 		/// <summary>
-		/// Проверяет опонентов на преждевременный выход из игровой сессии.
+		/// Асинхронно проверяет опонентов на преждевременный выход из игровой сессии.
 		/// </summary>
 		/// <param name="deserter">Дезертир.</param>
 		/// <param name="autoWinner">Технический победитель.</param>
@@ -692,9 +703,9 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		}
 
 		/// <summary>
-		/// Заготовка для отлова необработанных исключений.
+		/// Асинхронно обрабатывает необработанные исключения.
 		/// </summary>
-		/// <param name="task">The task.</param>
+		/// <param name="task">Задача.</param>
 		private async void CatchUnhandledException(Task task)
 		{
 			try
@@ -710,7 +721,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				}
 			}
 		}
-		#endregion
 		#endregion
 	}
 }

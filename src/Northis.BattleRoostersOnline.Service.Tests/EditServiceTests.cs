@@ -15,9 +15,8 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 	public class EditServiceTests : ServiceModuleTests
 	{
 		#region Test Methods
-		#region Public
 		/// <summary>
-		/// Проверяет корректность метода добавления нового петуха пользователя.
+		/// Асинхронно проверяет корректность метода добавления нового петуха пользователя.
 		/// </summary>
 		[Test]
 		public async Task AddTest1()
@@ -38,7 +37,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		}
 		
 		/// <summary>
-		/// Проверяет корректность получения петухов пользователя.
+		/// Асинхронно проверяет корректность получения петухов пользователя.
 		/// </summary>
 		[Test]
 		public async Task GetUserRoostersTest1()
@@ -48,7 +47,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			Assert.AreEqual(new List<RoosterDto>(), roosters.ToList());
 		}
 		/// <summary>
-		/// Проверяет корректность метода получения петухов на предмет исключительных ситуаций.
+		/// Асинхронно проверяет корректность метода получения петухов на предмет исключительных ситуаций.
 		/// </summary>
 		[Test]
 		public async Task GetUserRoostersTest2()
@@ -56,7 +55,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			Assert.DoesNotThrowAsync(() => Editor.GetUserRoostersAsync("NotFindToken"));
 		}
 		/// <summary>
-		/// Проверяет работу метода редактирования с недопустимыми параметрами.
+		/// Асинхронно проверяет работу метода редактирования с недопустимыми параметрами.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		[TestCase("NotFoundToken")]
@@ -74,7 +73,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			//Assert.DoesNotThrowAsync(() => editor.EditAsync(token, "some", new RoosterModel().ToRoosterDto()));
 		}
 		/// <summary>
-		/// Проверяет корректность редактирования нужного петуха.
+		/// Асинхронно проверяет корректность редактирования нужного петуха.
 		/// </summary>
 		public async Task EditTest2()
 		{
@@ -102,9 +101,9 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			Assert.IsTrue(editedRooster.Equals(Storage.RoostersData["FoundToken"]["Rooster2"]));
 		}
 		/// <summary>
-		/// Проверяет работу метода редактирования с недопустимыми параметрами.
+		/// Асинхронно проверяет работу метода редактирования с недопустимыми параметрами.
 		/// </summary>
-		/// <param name="token">The token.</param>
+		/// <param name="token">Токен.</param>
 		[TestCase("NotFoundToken")]
 		[TestCase("NotFoundToken")]
 		[TestCase("NotFoundToken")]
@@ -120,9 +119,9 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			Assert.DoesNotThrowAsync(() => Editor.RemoveAsync(token,rooster.Token));
 		}
 		/// <summary>
-		/// Проверяет корректность удаления нужного петуха.
+		/// Асинхронно проверяет корректность удаления нужного петуха.
 		/// </summary>
-		/// <param name="token">The token.</param>
+		/// <param name="token">Токен.</param>
 		public async Task RemoveTest2(string token)
 		{
 			RoosterModel rooster1 = new RoosterModel();
@@ -140,7 +139,6 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			Assert.AreEqual(false,Storage.RoostersData["FoundToken"].ContainsKey("Rooster1"));
 		}
 
-		#endregion
 		#endregion
 	}
 }

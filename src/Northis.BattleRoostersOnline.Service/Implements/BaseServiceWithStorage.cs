@@ -5,7 +5,7 @@ using Northis.BattleRoostersOnline.Service.DataStorages;
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
 	/// <summary>
-	/// Абстрактный базовый класс реализаций контрактов сервиса. Инкапсулирует в себе свойство хранилища основных данных типа
+	/// Инкапсулирует в себе свойство хранилища основных данных типа
 	/// ServiceStorage.
 	/// </summary>
 	public abstract class BaseServiceWithStorage : BaseService
@@ -38,7 +38,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 		#region Protected Methods
 		/// <summary>
-		/// Асинхронно возвращает login пользователя.
+		/// Асинхронно возвращает логин пользователя.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <returns>Логин.</returns>

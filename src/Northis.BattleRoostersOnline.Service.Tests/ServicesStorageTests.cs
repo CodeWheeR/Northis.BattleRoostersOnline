@@ -13,11 +13,14 @@ using RoosterColor = Northis.BattleRoostersOnline.Dto.RoosterColor;
 
 namespace Northis.BattleRoostersOnline.Service.Tests
 {
-	[TestFixture]
+    /// <summary>
+    /// Тестирует работу хранилища данных.
+    /// </summary>
+    [TestFixture]
 	public class ServicesStorageTests : ServiceModuleTests
 	{
 		/// <summary>
-		/// Проверяет количество петухов после загрузки.
+		/// Асинхронно проверяет количество петухов после загрузки.
 		/// </summary>
 		[Test]
 		public async Task SaveAndLoadRoosters()
@@ -75,9 +78,8 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		}
 
 		/// <summary>
-		/// Проверяет корректность метода сохранения петухов на предмет исключительных ситуаций.
+		/// Асинхронно проверяет корректность метода сохранения петухов на предмет исключительных ситуаций.
 		/// </summary>
-
 		[Test]
 		public async Task SaveAndLoadUsers()
 		{
@@ -97,7 +99,6 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 				await AuthenticateService.RegisterAsync(i.Key, i.Value, Mock.Of<IAuthenticateServiceCallback>());
 			}
 
-			//Получаем зашифрованные пароли
 			foreach (var i in Storage.UserData)
 			{
 				if (users.ContainsKey(i.Key))

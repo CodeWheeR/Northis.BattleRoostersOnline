@@ -1,13 +1,18 @@
 ﻿namespace Northis.BattleRoostersOnline.Client.Views
 {
 	/// <summary>
-	/// Логика взаимодействия для AuthView.xaml
+	/// Обеспечивает логику взаимодействия с AuthView.xaml.
 	/// </summary>
 	public partial class AuthView
 	{
-		public AuthView()
+        #region .ctor
+        /// <summary>
+        /// Инициализирует новый экземпляр <see cref="AuthView"/> класса.
+        /// </summary>
+        public AuthView()
 		{
 			InitializeComponent();
 		}
-	}
+        #endregion
+    }
 }

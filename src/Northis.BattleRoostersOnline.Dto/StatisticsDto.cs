@@ -1,21 +1,44 @@
 ﻿namespace Northis.BattleRoostersOnline.Dto
 {
-	public class StatisticsDto
+    /// <summary>
+    /// Класс-контракт данных. Инкапсулирует в себе статистику.
+    /// </summary>
+    public class StatisticsDto
 	{
-		public string UserName
+        #region Properties        
+        /// <summary>
+        /// Возвращает или задает имя пользователя.
+        /// </summary>
+        /// <value>
+        /// Имя пользователя.
+        /// </value>
+        public string UserName
 		{
 			get;
 			set;
 		}
-		public string RoosterName
+        /// <summary>
+        /// Возвращает или задает имя петуха.
+        /// </summary>
+        /// <value>
+        /// Имя петуха.
+        /// </value>
+        public string RoosterName
 		{
 			get;
 			set;
 		}
-		public int WinStreak
+        /// <summary>
+        /// Возвращает или задает количество побед.
+        /// </summary>
+        /// <value>
+        /// Количество побед.
+        /// </value>
+        public int WinStreak
 		{
 			get;
 			set;
 		}
-	}
+        #endregion
+    }
 }

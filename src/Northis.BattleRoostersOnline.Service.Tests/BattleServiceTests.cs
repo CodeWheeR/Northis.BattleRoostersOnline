@@ -13,15 +13,16 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 	[TestFixture]
 	public class BattleServiceTests : ServiceModuleTests
 	{
-		private Mock<IBattleServiceCallback> findMatchMock;
+        #region Fields
+        private Mock<IBattleServiceCallback> findMatchMock;
 		private string token;
+        #endregion
 
-		#region Test Methods
-		#region Public
-		/// <summary>
-		/// Проверяет корректность работы метода поиска матча.
-		/// </summary>
-		[Test]
+        #region Test Methods
+        /// <summary>
+        /// Асинхронно проверяет корректность работы метода поиска матча.
+        /// </summary>
+        [Test]
 		public async Task UserWasNotFound()
 		{
 			var findMatchMock = new Mock<IBattleServiceCallback>();
@@ -38,7 +39,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		}
 
 		/// <summary>
-		/// Проверяет корректность работы метода поиска матча.
+		/// Асинхронно проверяет корректность работы метода поиска матча.
 		/// </summary>
 		[Test]
 		public async Task RoosterWasNotFound()
@@ -59,7 +60,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		}
 
 		/// <summary>
-		/// Проверяет корректность работы метода поиска матча.
+		/// Асинхронно проверяет корректность работы метода поиска матча.
 		/// </summary>
 		[Test]
 		public async Task SameLogins()
@@ -88,7 +89,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		}
 
 		/// <summary>
-		/// Проверяет корректность работы метода поиска матча.
+		/// Асинхронно проверяет корректность работы метода поиска матча.
 		/// </summary>
 		[Test]
 		public async Task FindMatch()
@@ -125,7 +126,6 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 
 			Assert.IsTrue(token != "" && token != "User was not found" && token != "Rooster was not found");
 		}
-		#endregion
 		#endregion
 	}
 }

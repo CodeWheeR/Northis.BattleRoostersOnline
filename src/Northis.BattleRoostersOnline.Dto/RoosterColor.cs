@@ -3,7 +3,7 @@
 namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Перечисление-контракт данных, передающее цвет петуха.
+	/// Перечисление-контракт данных. Передает цвет петуха.
 	/// </summary>
 	[DataContract]
 	public enum RoosterColor

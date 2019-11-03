@@ -12,7 +12,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 	public class RoosterModel : ICloneable
 	{
 		#region Fields		
-		#region Private
 		/// <summary>
 		/// Вес петуха.
 		/// </summary>
@@ -122,15 +121,14 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// Максимальная удачливость петуха по умолчанию.
 		/// </summary>
 		private const int DefaultMaxLuck = 30;
-		#endregion
-		#endregion
-		#endregion
+        #endregion
+        #endregion
 
-		#region .ctor
-		/// <summary>
-		/// Инициализует новый объект класса <see cref="RoosterModel" />.
-		/// </summary>
-		public RoosterModel()
+        #region .ctor
+        /// <summary>
+        /// Инициализует новый объект <see cref="RoosterModel" /> класса.
+        /// </summary>
+        public RoosterModel()
 		{
 			Health = 100;
 			MaxHealth = 100;
@@ -228,11 +226,16 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				Name = rooster.Name;
 			}
 		}
-		#endregion
+        #endregion
 
-		#region Properties		
-
-		public string Token
+        #region Properties		        
+        /// <summary>
+        /// Возвращает или устанавливает токен.
+        /// </summary>
+        /// <value>
+        /// Токен.
+        /// </value>
+        public string Token
 		{
 			get;
 			set;
@@ -302,7 +305,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// Возвращает или устанавливает максимальное здоровье петуха.
 		/// </summary>
 		/// <value>
-		/// The maximum health.
+		/// Максимальное здоровье петуха.
 		/// </value>
 		public int MaxHealth
 		{
@@ -435,7 +438,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 
 		#region Public Methods		
 		/// <summary>
-		/// Конвертирует петуха в DTO объект.
+		/// Конвертирует объект RoosterModel в объект RoosterDto.
 		/// </summary>
 		/// <returns>RoosterDto.</returns>
 		public RoosterDto ToRoosterDto() =>
@@ -498,16 +501,16 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <summary>
 		/// Выполняет ограничение значения минимальным и максимальным уровнем.
 		/// </summary>
-		/// <param name="value">Само значение.</param>
-		/// <param name="min">Возможный минимум.</param>
-		/// <param name="max">Возможный максимум.</param>
+		/// <param name="value">Значение.</param>
+		/// <param name="min">Минимум.</param>
+		/// <param name="max">Максимум.</param>
 		/// <returns>T.</returns>
 		private T Clamp<T>(T value, T min, T max) where T : IComparable => value.CompareTo(min) < 0 ? min : value.CompareTo(max) > 0 ? max : value;
 
 		/// <summary>
 		/// Вычисляет порядковый индекс значения перечисления.
 		/// </summary>
-		/// <param name="first">The first.</param>
+		/// <param name="first">Обыъект перечисления.</param>
 		/// <returns>Индекс.</returns>
 		private int CalcEnumIndex(Enum first)
 		{
@@ -543,10 +546,10 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <summary>
 		/// Выполняет смену максимального порога значения.
 		/// </summary>
-		/// <param name="propertyName">Name of the property.</param>
-		/// <param name="minValue">The minimum value.</param>
-		/// <param name="maxValue">The maximum value.</param>
-		/// <param name="newValue">The new value.</param>
+		/// <param name="propertyName">Имя свойства.</param>
+		/// <param name="minValue">Минимум.</param>
+		/// <param name="maxValue">Максимум.</param>
+		/// <param name="newValue">Новое значение.</param>
 		private void ChangeMaxLimit(string propertyName, int minValue, ref int maxValue, int newValue)
 		{
 			var property = GetType()
