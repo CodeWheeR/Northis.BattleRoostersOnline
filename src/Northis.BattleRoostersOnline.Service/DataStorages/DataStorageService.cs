@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using CommonServiceLocator;
 using Unity;
 using Unity.ServiceLocation;
@@ -35,8 +36,12 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// <summary>
 		/// Инициализирует новый экземпляр <see cref="DataStorageService" /> класса.
 		/// </summary>
-		public DataStorageService()
+		public DataStorageService(IMapper mapper = null)
 		{
+			if (mapper != null)
+			{
+				Mapper = mapper;
+			}
 			UserData = new Dictionary<string, string>();
 			RoostersData = new Dictionary<string, Dictionary<string, RoosterModel>>();
 			LoggedUsers = new Dictionary<string, string>();
@@ -53,6 +58,12 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// Данные пользователя.
 		/// </value>
 		public Dictionary<string, string> UserData
+		{
+			get;
+			private set;
+		}
+
+		public IMapper Mapper
 		{
 			get;
 			private set;

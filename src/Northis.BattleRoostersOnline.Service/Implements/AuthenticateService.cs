@@ -28,7 +28,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
         /// </summary>
         public AuthenticateService()
 		{
-			SetStorage(new DataStorageService());
+			//SetStorage(new DataStorageService());
 		}
 		#endregion
 

@@ -226,7 +226,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				Brickness = rooster.Brickness;
 				Luck = rooster.Luck;
 				Thickness = rooster.Thickness;
-				Color = ColorParse(rooster.ColorDto);
+				Color = ColorParse(rooster.Color);
 				Crest = SizeParse(rooster.Crest);
 				Height = rooster.Height;
 				Weight = rooster.Weight;
@@ -484,7 +484,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			new RoosterEditDto()
 			{
 				Height = Height,
-				ColorDto = ColorDtoParse(Color),
+				Color = ColorDtoParse(Color),
 				Brickness = Brickness,
 				Crest = SizeDtoParse(Crest),
 				Weight = Weight,
@@ -597,7 +597,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			}
 		}
 
-		private RoosterColor ColorParse(RoosterColorDto color)
+		private RoosterColor ColorParse(GameServer.RoosterColor color)
 		{
 			if (Enum.TryParse(color.ToString(), out RoosterColor outColor))
 			{
@@ -607,9 +607,9 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			throw new ArgumentException();
 		}
 
-		private RoosterColorDto ColorDtoParse(RoosterColor color)
+		private GameServer.RoosterColor ColorDtoParse(RoosterColor color)
 		{
-			if (Enum.TryParse(color.ToString(), out RoosterColorDto outColor))
+			if (Enum.TryParse(color.ToString(), out GameServer.RoosterColor outColor))
 			{
 				return outColor;
 			}
@@ -617,7 +617,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			throw new ArgumentException();
 		}
 
-		private CrestSize SizeParse(CrestSizeDto size)
+		private CrestSize SizeParse(GameServer.CrestSize size)
 		{
 			if (Enum.TryParse(size.ToString(), out CrestSize outSize))
 			{
@@ -627,9 +627,9 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			throw new ArgumentException();
 		}
 
-		private CrestSizeDto SizeDtoParse(CrestSize size)
+		private GameServer.CrestSize SizeDtoParse(CrestSize size)
 		{
-			if (Enum.TryParse(size.ToString(), out CrestSizeDto outSize))
+			if (Enum.TryParse(size.ToString(), out GameServer.CrestSize outSize))
 			{
 				return outSize;
 			}

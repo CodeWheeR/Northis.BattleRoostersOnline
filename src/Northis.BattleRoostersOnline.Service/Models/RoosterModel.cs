@@ -186,27 +186,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// Инициализирует новый объект <see cref="RoosterModel" /> класса.
 		/// </summary>
 		/// <param name="rooster">Петух.</param>
-		public RoosterModel(RoosterDto rooster)
-			: this()
-		{
-			Health = rooster.Health;
-			MaxHealth = rooster.MaxHealth;
-			Stamina = rooster.Stamina;
-			Brickness = rooster.Brickness;
-			Luck = rooster.Luck;
-			Thickness = rooster.Thickness;
-			Color = rooster.Color;
-			Crest = rooster.Crest;
-			Height = rooster.Height;
-			Weight = rooster.Weight;
-			Name = rooster.Name;
-			WinStreak = rooster.WinStreak;
-		}
-
-		/// <summary>
-		/// Инициализирует новый объект <see cref="RoosterModel" /> класса.
-		/// </summary>
-		/// <param name="rooster">Петух.</param>
 		public RoosterModel(RoosterEditDto rooster)
 			: this()
 		{
@@ -455,7 +434,8 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				Luck = Luck,
 				Name = Name,
 				Thickness = Thickness,
-				MaxHealth = MaxHealth
+				MaxHealth = MaxHealth,
+				Token = Token
 			};
 
 		/// <summary>

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using AutoMapper;
 using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Contracts;
+using Northis.BattleRoostersOnline.Service.DataStorages;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
@@ -37,7 +39,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <param name="authenticateService">Сервис аунтефикации.</param>
 		/// <param name="battleService">Сервис битвы.</param>
 		/// <param name="editService">Сервис редактирования.</param>
-		public GameServicesProvider(IAuthenticateService authenticateService, IBattleService battleService, IEditService editService)
+		public GameServicesProvider(IEditService editService, IAuthenticateService authenticateService, IBattleService battleService, IDataStorageService dataStorage)
 		{
 			_editService = editService;
 			_authenticateService = authenticateService;
