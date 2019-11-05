@@ -4,7 +4,7 @@ using Northis.BattleRoostersOnline.Client.Properties;
 namespace Northis.BattleRoostersOnline.Client.Models
 {
 	/// <summary>
-	/// Окрасы петуха, от которых зависят применяемые модификации.
+	/// Представляет окрасы петуха, от которых зависят применяемые модификации.
 	/// </summary>
 	internal enum RoosterColor
 	{

@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
-using static System.String;
+using Northis.BattleRoostersOnline.Service.DataStorages;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
@@ -19,7 +17,21 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	/// <seealso cref="Northis.BattleRoostersOnline.Service.Contracts.IAuthenticateService" />
 	public class AuthenticateService : BaseServiceWithStorage, IAuthenticateService
 	{
+		#region Private Fields
 		private Logger _logger = LogManager.GetCurrentClassLogger();
+		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
+        #endregion
+
+        #region .ctor        
+        /// <summary>
+        /// Инициализирует новый экземпляр <see cref="AuthenticateService"/> класса.
+        /// </summary>
+        /// <param name="storage">Объект хранилища. </param>
+        public AuthenticateService(IDataStorageService storage) : base(storage)
+		{
+			StatisticsPublisher.GetInstance(StorageService);
+		}
+		#endregion
 
 		#region Public Methods
 
@@ -32,14 +44,31 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// Токен.
 		/// </returns>
 		public async Task<string> LogInAsync(string login, string password) => await LogInAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>(), false);
+        /// <summary>
+        /// Осуществляет проверку состояния подключения клиентов.
+        /// </summary>
+        public async Task MonitorConnections()
+		{
+			var token = _connectionMonitorTokenSource.Token;
+
+			await Task.Run(async () =>
+			{
+				while (!token.IsCancellationRequested)
+				{
+					StatisticsPublisher.GetInstance()
+									   .UpdateStatistics();
+					await Task.Delay(10000, token);
+				}
+			}, token);
+		}
 
 		/// <summary>
 		/// Осуществляет вход пользователя в систему.
 		/// </summary>
 		/// <param name="login">Логин.</param>
 		/// <param name="password">Пароль.</param>
-		/// <param name="callback"></param>
-		/// <param name="isEncrypted"></param>
+		/// <param name="callback">Метод оповещения клиента.</param>
+		/// <param name="isEncrypted">Показатель зашифрованности поступившего пароля.</param>
 		/// <returns>
 		/// Токен.
 		/// </returns>
@@ -68,6 +97,10 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				lock(StorageService.LoggedUsers)
 				{
 					StorageService.LoggedUsers.Add(token, login);
+					if (StorageService.LoggedUsers.Count == 1)
+					{
+						MonitorConnections();
+					}
 				}
 			});
 
@@ -78,8 +111,15 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 							   .UpdateStatistics();
 			return token;
 		}
-
-		public async Task<string> RegisterAsync(string login, string password) =>
+        /// <summary>
+        /// Регистрирует нового пользователя.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
+        /// <returns>
+        /// Токен.
+        /// </returns>
+        public async Task<string> RegisterAsync(string login, string password) =>
 			await RegisterAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>());
 
 		/// <summary>
@@ -92,7 +132,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </returns>
 		public async Task<string> RegisterAsync(string login, string password, IAuthenticateServiceCallback callback)
 		{
-			if (IsNullOrWhiteSpace(login) || login.Length < 5  || IsNullOrWhiteSpace(password) || password.Length < 5 || login.Contains(" "))
+			if (string.IsNullOrWhiteSpace(login) || login.Length < 5  || string.IsNullOrWhiteSpace(password) || password.Length < 5 || login.Contains(" "))
 			{
 				_logger.Info($"Попытка авторизации незарегистрированным пользователем {login}");
 				return AuthenticateStatus.WrongDataFormat.ToString();
@@ -124,7 +164,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <summary>
 		/// Осуществляет выход пользователя из системы.
 		/// </summary>
-		/// <param name="token">токен.</param>
+		/// <param name="token">Токен.</param>
 		/// <returns>
 		/// true - в случае успешного выхода, иначе - false.
 		/// </returns>
@@ -160,18 +200,18 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// Возвращает статус авторизации пользователя.
 		/// </summary>
 		/// <returns>
-		/// AuthenticateStatus.
+		/// Статус аунтефикации.
 		/// </returns>
-		public AuthenticateStatus GetLoginStatus() => AuthenticateStatus.OK;
+		public AuthenticateStatus GetLoginStatus() => AuthenticateStatus.Ok;
 
 		/// <summary>
 		/// Зашифровывает исходную строку.
 		/// </summary>
-		/// <param name="sourceString">исходная строка.</param>
+		/// <param name="sourceString">Исходная строка.</param>
 		/// <returns>Зашифрованная строка.</returns>
-		private async Task<string> EncryptAsync(string sourceString)
+		private Task<string> EncryptAsync(string sourceString)
 		{
-			return await Task.Run<string>(() =>
+			return Task.Run<string>(() =>
 			{
 				var result = "";
 				for (var i = 0; i < sourceString.Length; i++)
@@ -186,7 +226,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <summary>
 		/// Асинхронно собирает глобальную статистику по пользователям.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>Статистика пользователей.</returns>
 		public async Task<IEnumerable<StatisticsDto>> GetGlobalStatisticsAsync()
 		{
 			return await Task.Run<IEnumerable<StatisticsDto>>(async () => (await StatisticsPublisher.GetInstanceAsync())

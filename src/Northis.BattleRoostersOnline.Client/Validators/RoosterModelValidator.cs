@@ -4,18 +4,23 @@ using Northis.BattleRoostersOnline.Client.Models;
 
 namespace Northis.BattleRoostersOnline.Client.Validators
 {
-	internal class RoosterModelValidator : ValidatorBase<RoosterModel>
+    /// <summary>
+    /// Класс, предоставляющий проверку вводимых пользователем значений.
+    /// </summary>
+    /// <seealso cref="ValidatorBase{Northis.BattleRoostersOnline.Client.Models.RoosterModel}" />
+    internal class RoosterModelValidator : ValidatorBase<RoosterModel>
 	{
+		#region Protected Methods
 		/// <summary>
-		/// Validates the fields of the specified instance. The results must be added to the list of validation
+		/// Осуществляет валидацию полей объекта. Результаты должны быть добавлены в лист валидации.
 		/// results.
 		/// </summary>
-		/// <param name="instance">The instance to validate.</param>
-		/// <param name="validationResults">The validation results.</param>
+		/// <param name="instance">Объект проверки.</param>
+		/// <param name="validationResults">Результаты валидации.</param>
 		/// <exception cref="T:System.ArgumentNullException">The <paramref name="instance" /> is <c>null</c>.</exception>
 		/// <exception cref="T:System.ArgumentNullException">The <paramref name="validationResults" /> is <c>null</c>.</exception>
 		/// <remarks>
-		/// There is no need to check for the arguments, they are already ensured to be correct in the
+		/// Нет необходимости проверять аргументы. Они уже проверены на правильность в
 		/// <see cref="T:Catel.Data.ValidatorBase`1" />.
 		/// </remarks>
 		protected override void ValidateFields(RoosterModel instance, List<IFieldValidationResult> validationResults)
@@ -50,5 +55,6 @@ namespace Northis.BattleRoostersOnline.Client.Validators
 				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.ThicknessProperty, "Thickness value mustn't be negative"));
 			}
 		}
+		#endregion
 	}
 }

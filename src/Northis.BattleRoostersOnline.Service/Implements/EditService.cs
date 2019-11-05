@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
+using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Models;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
 	/// <summary>
-	/// Класс, предоставляющий сервис редактирования.
+	/// Предоставляет сервис редактирования.
 	/// </summary>
 	/// <seealso cref="BaseServiceWithStorage" />
 	/// <seealso cref="Northis.BattleRoostersOnline.Service.Contracts.IEditService" />
@@ -20,20 +20,28 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	public class EditService : BaseServiceWithStorage, IEditService
 	{
 		#region Fields
-		#region Private
 		private Logger _logger = LogManager.GetCurrentClassLogger();
 		#endregion
+
+		#region ctor
+		/// <summary>
+		/// Инициализирует новый экземпляр <see cref="EditService"/> класса.
+		/// </summary>
+		/// <param name="storage">Объект хранилища. </param>
+		public EditService(IDataStorageService storage) : base(storage)
+		{
+
+		}
 		#endregion
 
-		#region Methods
-		#region Public
-		/// <summary>
-		/// Асинхронно добавляет петуха.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="rooster">Петух.</param>
-		/// <returns>Task.</returns>
-		public async Task<bool> AddAsync(string token, RoosterEditDto rooster)
+        #region Public Methods
+        /// <summary>
+        /// Асинхронно добавляет петуха.
+        /// </summary>
+        /// <param name="token">Токен.</param>
+        /// <param name="rooster">Петух.</param>
+        /// <returns>true, в случае успешного добавления, иначе - false.</returns>
+        public async Task<bool> AddAsync(string token, RoosterEditDto rooster)
 		{
 			if (string.IsNullOrWhiteSpace(token) || rooster == null)
 			{
@@ -54,12 +62,12 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					{
 						lock (StorageService.RoostersData)
 						{
-							StorageService.RoostersData.Add(login, new Dictionary<string, RoosterDto>());
+							StorageService.RoostersData.Add(login, new Dictionary<string, RoosterModel>());
 						}
 					}
 					lock (StorageService.RoostersData)
 					{
-						var battleRooster =  new RoosterModel(rooster).ToRoosterDto();
+						var battleRooster =  new RoosterModel(rooster);
 						battleRooster.Token = GenerateToken(StorageService.RoostersData.ContainsKey);
 						StorageService.RoostersData[login]
 									  .Add(battleRooster.Token, battleRooster);
@@ -95,7 +103,8 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				{
 					if (StorageService.RoostersData.ContainsKey(login))
 					{
-						return StorageService.RoostersData[login].Values;
+						var val = StorageService.RoostersData[login].Values.Select(x =>StorageService.Mapper.Map<RoosterModel, RoosterDto>(x));
+						return val;
 					}
 
 					return new List<RoosterDto>();
@@ -127,11 +136,16 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				await Task.Run(async () =>
 				{
 					var login = await GetLoginAsync(token);
+					if (login == "")
+					{
+						return;
+					}
+
 					if (StorageService.RoostersData.ContainsKey(login) &&
 						StorageService.RoostersData[login]
 									  .ContainsKey(sourceRoosterToken))
 					{
-						var battleRooster = new RoosterModel(editRooster).ToRoosterDto();
+						var battleRooster = new RoosterModel(editRooster);
 						battleRooster.Token = sourceRoosterToken;
 						lock (StorageService.RoostersData)
 						{
@@ -159,12 +173,13 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			return true;
 
 		}
-		/// <summary>
-		/// Асинхронно удаляет петуха.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="deleteRoosterToken">Удаляемый петух.</param>
-		public async Task<bool> RemoveAsync(string token, string deleteRoosterToken)
+        /// <summary>
+        /// Асинхронно удаляет петуха.
+        /// </summary>
+        /// <param name="token">Токен.</param>
+        /// <param name="deleteRoosterToken">Удаляемый петух.</param>
+        /// <returns>true, в случае успешного удаления, иначе - false.</returns>
+        public async Task<bool> RemoveAsync(string token, string deleteRoosterToken)
 		{
 			if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(deleteRoosterToken))
 			{
@@ -201,7 +216,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 			return true;
 		}
-		#endregion
 		#endregion
 	}
 }

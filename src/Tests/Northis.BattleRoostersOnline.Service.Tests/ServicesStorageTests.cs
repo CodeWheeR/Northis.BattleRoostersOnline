@@ -5,25 +5,35 @@ using Moq;
 using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
+using Northis.BattleRoostersOnline.Service.Models;
 using Northis.BattleRoostersOnline.Service.Tests;
 using NUnit.Framework;
 
 namespace Northis.BattleRoostersOnline.Service.Tests
 {
-	[TestFixture]
+    /// <summary>
+    /// Тестирует работу хранилища данных.
+    /// </summary>
+    [TestFixture]
 	public class ServicesStorageTests : ServiceModuleTests
 	{
+		[OneTimeSetUp]
+		public void SetUp()
+		{
+			Setup();
+		}
+
 		/// <summary>
-		/// Проверяет количество петухов после загрузки.
+		/// Асинхронно проверяет количество петухов после загрузки.
 		/// </summary>
 		[Test]
 		public async Task SaveAndLoadRoosters()
 		{
 			var backupRoosters = Storage.RoostersData.Count;
-			var roosters = new Dictionary<string, RoosterDto>
+			var roosters = new Dictionary<string, RoosterModel>
 			{
 				{
-					"Rooster1", new RoosterDto()
+					"Rooster1", new RoosterModel()
 					{
 						Weight = 1,
 						Height = 20,
@@ -33,15 +43,15 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						Thickness = 10,
 						Luck = 10,
 						Name = "CoCoCo",
-						Crest = CrestSizeDto.Small,
-						ColorDto = RoosterColorDto.Black,
+						Crest = CrestSizeType.Small,
+						Color = RoosterColorType.Black,
 						MaxHealth = 100,
 						Token = "asdasd123",
 						WinStreak = 1
 					}
 				},
 				{
-					"Rooster2", new RoosterDto()
+					"Rooster2", new RoosterModel()
 					{
 						Weight = 2,
 						Height = 30,
@@ -51,31 +61,32 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						Thickness = 30,
 						Luck = 30,
 						Name = "CoCaCo",
-						Crest = CrestSizeDto.Big,
-						ColorDto = RoosterColorDto.Red,
+						Crest = CrestSizeType.Big,
+						Color = RoosterColorType.Red,
 						MaxHealth = 120,
 						Token = "asdasd1234",
 						WinStreak = 10
 					}
 				}
 			};
+
 			Storage.RoostersData.Add("SomeKey", roosters);
 
 			await Storage.SaveRoostersAsync();
+
 			Storage.LoadRoosters();
 
 			Assert.AreEqual(Storage.RoostersData.Count, backupRoosters + 1);
+
 			Assert.IsTrue(Storage.RoostersData["SomeKey"].SequenceEqual(roosters));
 		}
 
 		/// <summary>
-		/// Проверяет корректность метода сохранения петухов на предмет исключительных ситуаций.
+		/// Асинхронно проверяет корректность метода сохранения петухов на предмет исключительных ситуаций.
 		/// </summary>
-
 		[Test]
 		public async Task SaveAndLoadUsers()
 		{
-			var backupUsersCount = Storage.UserData.Count;
 			var users = new Dictionary<string, string>()
 			{
 				{
@@ -91,7 +102,6 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 				await AuthenticateService.RegisterAsync(i.Key, i.Value, Mock.Of<IAuthenticateServiceCallback>());
 			}
 
-			//Получаем зашифрованные пароли
 			foreach (var i in Storage.UserData)
 			{
 				if (users.ContainsKey(i.Key))
@@ -101,7 +111,9 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			}
 
 			await Storage.SaveUserDataAsync();
+
 			Storage.UserData.Clear();
+
 			Storage.LoadUserData();
 
 			Assert.IsTrue(Storage.UserData.SequenceEqual(users));

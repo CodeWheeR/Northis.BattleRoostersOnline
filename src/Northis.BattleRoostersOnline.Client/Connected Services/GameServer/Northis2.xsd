@@ -2,7 +2,7 @@
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:simpleType name="AuthenticateStatus">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="OK" />
+      <xs:enumeration value="Ok" />
       <xs:enumeration value="WrongLoginOrPassword" />
       <xs:enumeration value="AlreadyRegistered" />
       <xs:enumeration value="AlreadyLoggedIn" />
@@ -41,8 +41,8 @@
   <xs:complexType name="RoosterEditDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="Brickness" type="xs:int" />
-      <xs:element minOccurs="0" name="ColorDto" type="tns:RoosterColorDto" />
-      <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeDto" />
+      <xs:element minOccurs="0" name="Color" type="tns:RoosterColorType" />
+      <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeType" />
       <xs:element minOccurs="0" name="Height" type="xs:int" />
       <xs:element minOccurs="0" name="Luck" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
@@ -51,7 +51,7 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RoosterEditDto" nillable="true" type="tns:RoosterEditDto" />
-  <xs:simpleType name="RoosterColorDto">
+  <xs:simpleType name="RoosterColorType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Black" />
       <xs:enumeration value="Brown" />
@@ -60,15 +60,15 @@
       <xs:enumeration value="White" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="RoosterColorDto" nillable="true" type="tns:RoosterColorDto" />
-  <xs:simpleType name="CrestSizeDto">
+  <xs:element name="RoosterColorType" nillable="true" type="tns:RoosterColorType" />
+  <xs:simpleType name="CrestSizeType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Small" />
       <xs:enumeration value="Medium" />
       <xs:enumeration value="Big" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="CrestSizeDto" nillable="true" type="tns:CrestSizeDto" />
+  <xs:element name="CrestSizeType" nillable="true" type="tns:CrestSizeType" />
   <xs:complexType name="ArrayOfRoosterDto">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="RoosterDto" nillable="true" type="tns:RoosterDto" />
@@ -78,8 +78,8 @@
   <xs:complexType name="RoosterDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="Brickness" type="xs:int" />
-      <xs:element minOccurs="0" name="ColorDto" type="tns:RoosterColorDto" />
-      <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeDto" />
+      <xs:element minOccurs="0" name="Color" type="tns:RoosterColorType" />
+      <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeType" />
       <xs:element minOccurs="0" name="Health" type="xs:double" />
       <xs:element minOccurs="0" name="Height" type="xs:int" />
       <xs:element minOccurs="0" name="Luck" type="xs:int" />

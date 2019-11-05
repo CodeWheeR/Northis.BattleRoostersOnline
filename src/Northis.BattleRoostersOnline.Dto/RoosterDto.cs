@@ -4,17 +4,17 @@ using System.Runtime.Serialization;
 namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Класс-контракт данных, инкапсулирующий в себе характеристики петуха.
+	/// Представляет характеристики петуха.
 	/// </summary>
 	[DataContract]
 	public class RoosterDto
 	{
 		#region Properties		
 		/// <summary>
-		/// Gets the token.
+		/// Возвращает токен.
 		/// </summary>
 		/// <value>
-		/// The token.
+		/// Токен.
 		/// </value>
 		[DataMember]
 		public string Token
@@ -82,7 +82,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Цвет петуха.
 		/// </value>
 		[DataMember]
-		public RoosterColorDto ColorDto
+		public RoosterColorType Color
 		{
 			get;
 			set;
@@ -108,7 +108,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Размер гребня.
 		/// </value>
 		[DataMember]
-		public CrestSizeDto Crest
+		public CrestSizeType Crest
 		{
 			get;
 			set;
@@ -179,25 +179,61 @@ namespace Northis.BattleRoostersOnline.Dto
 			set;
 		}
 
-		public int CompareTo(object obj)
+        #endregion
+
+		#region .ctor
+		/// <summary>
+		/// Инициализует новый объект класса <see cref="RoosterDto"/>.
+		/// </summary>
+		/// <param name="token">Токен.</param>
+		/// <param name="name">Имя.</param>
+		/// <param name="weight">Вес.</param>
+		/// <param name="height">Рост.</param>
+		/// <param name="brickness">Юркость.</param>
+		/// <param name="thickness">Толщина покрова.</param>
+		/// <param name="luck">Удача.</param>
+		/// <param name="health">Здоровье.</param>
+		/// <param name="crest">Гребень.</param>
+		/// <param name="color">Цвет.</param>
+		/// <param name="maxHealth">Максимальное здоровье.</param>
+		/// <param name="stamina">Выносливость.</param>
+		/// <param name="winStreak">Череда побед.</param>
+		public RoosterDto(string token, string name, double weight, int height, int brickness, int thickness, int luck, double health, CrestSizeType crest, RoosterColorType color, int maxHealth, int stamina, int winStreak)
 		{
-			throw new NotImplementedException();
+			Token = token;
+			Name = name;
+			Weight = weight;
+			Height = height;
+			Brickness = brickness;
+			Thickness = thickness;
+			Luck = luck;
+			Health = health;
+			MaxHealth = maxHealth;
+			Stamina = stamina;
+			WinStreak = winStreak;
+			Crest = crest;
+			Color = color;
+		}
+
+		public RoosterDto()
+		{
+
 		}
 		#endregion
 
-		#region Methods
-		#region Public
+        #region Public Methods
+
 		#region Overrided
-		/// <summary>
-		///  Определяет, равен ли заданный объект текущему объекту.
-		/// </summary>
-		/// <param name="obj">
-		///  Объект, который требуется сравнить с текущим объектом.
-		/// </param>
-		/// <returns>
-		///  Значение <see langword="true" />, если указанный объект равен текущему объекту; в противном случае — значение <see langword="false" />.
-		/// </returns>
-		public override bool Equals(object obj)
+        /// <summary>
+        ///  Определяет, равен ли заданный объект текущему объекту.
+        /// </summary>
+        /// <param name="obj">
+        ///  Объект, который требуется сравнить с текущим объектом.
+        /// </param>
+        /// <returns>
+        ///  Значение <see langword="true" />, если указанный объект равен текущему объекту; в противном случае — значение <see langword="false" />.
+        /// </returns>
+        public override bool Equals(object obj)
 		{
 			if (obj is RoosterDto)
 			{
@@ -214,7 +250,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public bool Equals(RoosterDto obj)
 		{ 
 			return Brickness == obj.Brickness &&
-				   ColorDto == obj.ColorDto &&
+				   Color == obj.Color &&
 				   Crest == obj.Crest &&
 				   Health == obj.Health &&
 				   Height == obj.Height &&
@@ -226,7 +262,7 @@ namespace Northis.BattleRoostersOnline.Dto
 				   Weight == obj.Weight;
 		}
 		#endregion
-		#endregion
+
 		#endregion
 	}
 

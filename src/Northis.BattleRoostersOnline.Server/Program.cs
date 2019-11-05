@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Configuration;
 using System.ServiceModel;
-using System.ServiceModel.Activation.Configuration;
 using System.ServiceModel.Description;
-using System.Threading;
+using AutoMapper;
 using NLog;
-
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Implements;
+using Unity;
+using Unity.Wcf;
+using AutoMapper;
+using AutoMapper.Mappers;
+using Northis.BattleRoostersOnline.Dto;
+using Northis.BattleRoostersOnline.Service.Models;
+using Unity.Lifetime;
 
 namespace Northis.BattleRoostersOnline.Server
 {
@@ -46,17 +51,32 @@ namespace Northis.BattleRoostersOnline.Server
 			}
 
 			var baseAddress = new Uri(address);
+			var container = new UnityContainer();
+			var config = new MapperConfiguration(cfg => cfg.CreateMap<RoosterModel, RoosterDto>().IgnoreAllSourcePropertiesWithAnInaccessibleSetter());
+			var mapper = config.CreateMapper();
 
-			var selfHost = new ServiceHost(typeof(GameServicesProvider), baseAddress);
+			container.RegisterInstance(mapper);
+			container.RegisterType<IDataStorageService, DataStorageService>(new ContainerControlledLifetimeManager());
+
+			container.RegisterType<IEditService, EditService>(new ContainerControlledLifetimeManager());
+			container.RegisterType<IBattleService, BattleService>(new ContainerControlledLifetimeManager());
+			container.RegisterType<IAuthenticateService, AuthenticateService>(new ContainerControlledLifetimeManager());
+
+			var selfHost = new UnityServiceHost(container, typeof(GameServicesProvider), baseAddress);
 
 			try
 			{
-				DataStorageService.InitContainer();
-
+				
 				var authBinding = new WSDualHttpBinding(WSDualHttpSecurityMode.None)
 				{
 					OpenTimeout = new TimeSpan(0, 0, 0, 5),
 					SendTimeout = new TimeSpan(0, 0, 0, 5),
+				};
+
+				var editBinding = new WSHttpBinding(SecurityMode.None)
+				{
+					OpenTimeout = new TimeSpan(0, 0, 0, 5),
+					SendTimeout = new TimeSpan(0, 0, 0, 5)
 				};
 
 				var battleBinding = new WSDualHttpBinding(WSDualHttpSecurityMode.None)
@@ -65,7 +85,7 @@ namespace Northis.BattleRoostersOnline.Server
 				};
 
 				selfHost.AddServiceEndpoint(typeof(IAuthenticateService), authBinding, "AuthenticationService");
-				selfHost.AddServiceEndpoint(typeof(IEditService), new WSHttpBinding(SecurityMode.None), "EditService");
+				selfHost.AddServiceEndpoint(typeof(IEditService), editBinding, "EditService");
 				selfHost.AddServiceEndpoint(typeof(IBattleService), battleBinding, "BattleService");
 
 				var smb = new ServiceMetadataBehavior();
@@ -98,7 +118,6 @@ namespace Northis.BattleRoostersOnline.Server
 			else
 				logger.Fatal(e.ExceptionObject);
 
-			Console.WriteLine( $"[FATAL] Возникло необработанное исключение {e.ExceptionObject.GetType()}. Проверьте логи...");
 			Console.ReadLine();
 			Environment.Exit(1);
 		}

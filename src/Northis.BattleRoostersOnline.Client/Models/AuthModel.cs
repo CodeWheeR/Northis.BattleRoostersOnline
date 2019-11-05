@@ -3,7 +3,7 @@
 namespace Northis.BattleRoostersOnline.Client.Models
 {
 	/// <summary>
-	/// Модель пользовательских данных для авторизации
+	/// Представляет модель пользовательских данных для авторизации.
 	/// </summary>
 	/// <seealso cref="Catel.Data.ValidatableModelBase" />
 	internal class AuthModel : ValidatableModelBase
@@ -19,13 +19,24 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		public static readonly PropertyData PasswordProperty = RegisterProperty(nameof(Password), typeof(string));
 		#endregion
 
-		#region Public Methods
+		#region Public Property		
+		/// <summary>
+		/// Возвращает или задает пароль.
+		/// </summary>
+		/// <value>
+		/// Пароль.
+		/// </value>
 		public string Password
 		{
 			get => GetValue<string>(PasswordProperty);
 			set => SetValue(PasswordProperty, value);
 		}
-
+		/// <summary>
+		/// Возвращает или задает логин.
+		/// </summary>
+		/// <value>
+		/// Логин.
+		/// </value>
 		public string Login
 		{
 			get => GetValue<string>(LoginProperty);

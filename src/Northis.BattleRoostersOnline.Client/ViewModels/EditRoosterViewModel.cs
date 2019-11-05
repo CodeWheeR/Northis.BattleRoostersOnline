@@ -7,11 +7,11 @@ using Northis.BattleRoostersOnline.Client.Models;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
-	/// <summary>
-	/// Обеспечивает взаимодействие модели RoosterModel и представления EditRooster.
-	/// </summary>
-	/// <seealso cref="Catel.MVVM.ViewModelBase" />
-	internal class EditRoosterViewModel : ViewModelBase
+    /// <summary>
+    /// Класс, инкапсулирующий в себе модель-представление "Редактирование".
+    /// </summary>
+    /// <seealso cref="Catel.MVVM.ViewModelBase" />
+    internal class EditRoosterViewModel : ViewModelBase
 	{
 		#region Fields
 		#region Static
@@ -75,10 +75,11 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			CrestsArray = Enum.GetValues(typeof(CrestSize));
 			EditRoosterViewModelLogger.Info("Открыто окно редактирования петуха.");
 		}
-		#endregion
+        #endregion
 
-		#region Properties
-		private Logger EditRoosterViewModelLogger
+        #region Properties
+
+        private Logger EditRoosterViewModelLogger
 		{
 			get;
 		} = LogManager.GetLogger("EditRoosterViewModelLogger");
@@ -248,14 +249,15 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get => GetValue<double>(WeightProperty);
 			set => SetValue(WeightProperty, value);
 		}
-		#endregion
+        #endregion
 
-		/// <summary>
-		/// Validates the field values of this object. Override this method to enable
-		/// validation of field values.
-		/// </summary>
-		/// <param name="validationResults">The validation results, add additional results to this list.</param>
-		protected override void ValidateFields(List<IFieldValidationResult> validationResults)
+        #region Protected Methods
+        #region Overrided
+        /// <summary>
+        /// Осуществляет проверку значений, поступающих для инициализации полей.
+        /// </summary>
+        /// <param name="validationResults">Результаты проверки полей.</param>
+        protected override void ValidateFields(List<IFieldValidationResult> validationResults)
 		{
 			if (string.IsNullOrWhiteSpace(Name))
 			{
@@ -298,5 +300,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				EditRoosterViewModelLogger.Info($"Значение Толщины покрова должно быть от 0 до {RoosterModel.MaxThickness}.");
 			}
 		}
-	}
+        #endregion
+        #endregion
+    }
 }

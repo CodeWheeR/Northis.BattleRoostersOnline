@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
 using Catel.MVVM.Converters;
-using Northis.BattleRoostersOnline.Client.Extensions;
 
 namespace Northis.BattleRoostersOnline.Client.Converters
 {
@@ -12,6 +10,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 	/// <seealso cref="Catel.MVVM.Converters.IValueConverter" />
 	public class MaxDoubleValue : IValueConverter
 	{
+		#region Public Methods
 		/// <summary>
 		/// Конвертирует значение Enum, помеченного аттрибутом Display, в путь к картинке.
 		/// </summary>
@@ -20,8 +19,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>
 		/// <returns>Строковый путь к изображению.</returns>
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => $"(0.0 - {(int)value}.0)";
-
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => $"(2.0 - {(int)value}.0)";
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>
@@ -32,5 +30,6 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+		#endregion
 	}
 }
