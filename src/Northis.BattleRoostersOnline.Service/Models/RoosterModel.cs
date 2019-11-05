@@ -372,7 +372,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <summary>
 		/// Возвращает или устанавливает урон петуха.
 		/// </summary>
-		public double Damage
+		private double Damage
 		{
 			get
 			{
@@ -390,7 +390,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <summary>
 		/// Возвращает вычисленную силу удара петуха.
 		/// </summary>
-		public double Hit
+		private double Hit
 		{
 			get
 			{
@@ -416,27 +416,27 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		#endregion
 
 		#region Public Methods		
-		/// <summary>
-		/// Конвертирует объект RoosterModel в объект RoosterDto.
-		/// </summary>
-		/// <returns>RoosterDto.</returns>
-		public RoosterDto ToRoosterDto() =>
-			new RoosterDto
-			{
-				Height = Height,
-				Color = Color,
-				Health = Health,
-				Stamina = Stamina,
-				Brickness = Brickness,
-				Crest = Crest,
-				Weight = Weight,
-				WinStreak = WinStreak,
-				Luck = Luck,
-				Name = Name,
-				Thickness = Thickness,
-				MaxHealth = MaxHealth,
-				Token = Token
-			};
+		///// <summary>
+		///// Конвертирует объект RoosterModel в объект RoosterDto.
+		///// </summary>
+		///// <returns>RoosterDto.</returns>
+		//public RoosterDto ToRoosterDto() =>
+		//	new RoosterDto
+		//	{
+		//		Height = Height,
+		//		Color = Color,
+		//		Health = Health,
+		//		Stamina = Stamina,
+		//		Brickness = Brickness,
+		//		Crest = Crest,
+		//		Weight = Weight,
+		//		WinStreak = WinStreak,
+		//		Luck = Luck,
+		//		Name = Name,
+		//		Thickness = Thickness,
+		//		MaxHealth = MaxHealth,
+		//		Token = Token
+		//	};
 
 		/// <summary>
 		/// Принимает удар от другого петуха.

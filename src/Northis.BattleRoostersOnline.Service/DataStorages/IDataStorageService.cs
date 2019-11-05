@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using AutoMapper;
 using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Models;
 
@@ -43,7 +43,7 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// Игровые сессии.
 		/// </value>
 		Dictionary<string, Session> Sessions{ get; }
-        #endregion
+		#endregion
 
         #region Public Methods
         /// <summary>
