@@ -397,11 +397,8 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		{
 			get
 			{
-				//Базовое значение урона от 1 до 4 (до 5 для Черного тяжеловеса)  
 				var dmg = Weight / _minWeight;
-				//Усиление от 0 до 25%
 				dmg *= (double) Height / _minHeight / 10 + 1;
-				//Усиление от 0 до 50%
 				dmg *= (double) CalcEnumIndex(Crest) / 4 + 1;
 
 				return Math.Round(dmg, 2) + WinStreak;
