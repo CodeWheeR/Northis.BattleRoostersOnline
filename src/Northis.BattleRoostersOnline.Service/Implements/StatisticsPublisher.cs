@@ -56,25 +56,14 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					foreach (var usersRoosters in roosters)
 					{
 						var scoresSum = usersRoosters.Item2.Sum((x) => x.WinStreak);
-						userStats.Add(new UsersStatisticsDto()
-						{
-							UserName = usersRoosters.Item1,
-							UserScore = scoresSum,
-							IsOnline = loggedUsers.Contains(usersRoosters.Item1)
-						});
-						
+						userStats.Add(new UsersStatisticsDto(loggedUsers.Contains(usersRoosters.Item1), usersRoosters.Item1, scoresSum));
 					}
 
 					foreach (var usersRoosters in roosters)
 					{
 						foreach (var rooster in usersRoosters.Item2)
 						{
-							stats.Add(new StatisticsDto()
-							{
-								UserName = usersRoosters.Item1,
-								RoosterName = rooster.Name,
-								WinStreak = rooster.WinStreak
-							});
+							stats.Add(new StatisticsDto(usersRoosters.Item1, rooster.Name,rooster.WinStreak));
 						}
 					}
 					

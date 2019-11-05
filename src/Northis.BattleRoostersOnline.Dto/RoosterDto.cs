@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Класс-контракт данных. Инкапсулирует в себе характеристики петуха.
+	/// Представляет характеристики петуха.
 	/// </summary>
 	[DataContract]
 	public class RoosterDto
@@ -20,7 +20,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public string Token
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -33,7 +32,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public double Weight
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -46,7 +44,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Height
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -59,7 +56,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public double Health
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -72,7 +68,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Stamina
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -82,10 +77,9 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Цвет петуха.
 		/// </value>
 		[DataMember]
-		public RoosterColor Color
+		public RoosterColorType ColorType
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -98,7 +92,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Brickness
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -108,10 +101,9 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Размер гребня.
 		/// </value>
 		[DataMember]
-		public CrestSize Crest
+		public CrestSizeType Crest
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -124,7 +116,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Thickness
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -137,7 +128,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Luck
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -150,7 +140,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public string Name
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -163,7 +152,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int WinStreak
 		{
 			get;
-			set;
 		}
 
 		/// <summary>
@@ -176,25 +164,46 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int MaxHealth
 		{
 			get;
-			set;
 		}
 
         #endregion
 
+		/// <summary>
+		/// Инициализует новый объект класса <see cref="RoosterDto"/>.
+		/// </summary>
+		/// <param name="token">Токен.</param>
+		/// <param name="name">Имя.</param>
+		/// <param name="weight">Вес.</param>
+		/// <param name="height">Рост.</param>
+		/// <param name="brickness">Юркость.</param>
+		/// <param name="thickness">Толщина покрова.</param>
+		/// <param name="luck">Удача.</param>
+		/// <param name="health">Здоровье.</param>
+		/// <param name="crest">Гребень.</param>
+		/// <param name="colorType">Цвет.</param>
+		/// <param name="maxHealth">Максимальное здоровье.</param>
+		/// <param name="stamina">Выносливость.</param>
+		/// <param name="winStreak">Череда побед.</param>
+		public RoosterDto(string token, string name, double weight, int height, int brickness, int thickness, int luck, double health, CrestSizeType crest, RoosterColorType colorType, int maxHealth, int stamina, int winStreak)
+		{
+			Token = token;
+			Name = name;
+			Weight = weight;
+			Height = height;
+			Brickness = brickness;
+			Thickness = thickness;
+			Luck = luck;
+			Health = health;
+			MaxHealth = maxHealth;
+			Stamina = stamina;
+			WinStreak = winStreak;
+			Crest = crest;
+			ColorType = colorType;
+		}
+
         #region Public Methods
 
-        /// <summary>
-        /// Не реализованный метод сравнения.
-        /// </summary>
-        /// <param name="obj">Объект сравнения.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public int CompareTo(object obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        #region Overrided
+		#region Overrided
         /// <summary>
         ///  Определяет, равен ли заданный объект текущему объекту.
         /// </summary>
@@ -221,7 +230,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public bool Equals(RoosterDto obj)
 		{ 
 			return Brickness == obj.Brickness &&
-				   Color == obj.Color &&
+				   ColorType == obj.ColorType &&
 				   Crest == obj.Crest &&
 				   Health == obj.Health &&
 				   Height == obj.Height &&

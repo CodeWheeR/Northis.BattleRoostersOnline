@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Northis.BattleRoostersOnline.Dto;
 
 namespace Northis.BattleRoostersOnline.Service.Models
 {
 	/// <summary>
-	/// Класс-контракт данных пользовательских петухов. Предназначен для сериализации петухов пользователя в XML-документ.
+	/// Предназначен для сериализации петухов пользователя в XML-документ.
 	/// </summary>
 	[DataContract]
 	public class UserRoosters
@@ -49,10 +48,11 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Roosters = roosters;
 		}
         /// <summary>
-        /// Инициализирует новый экземпляр <see cref="UserRoosters"/> класса.
+        /// Инициализует пустой объект класса для корректной работы сериализатора.
         /// </summary>
         public UserRoosters()
 		{
+
 		}
 		#endregion
 	}

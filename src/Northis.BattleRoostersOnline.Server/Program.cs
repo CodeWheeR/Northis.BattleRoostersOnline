@@ -65,13 +65,19 @@ namespace Northis.BattleRoostersOnline.Server
 					SendTimeout = new TimeSpan(0, 0, 0, 5),
 				};
 
+				var editBinding = new WSHttpBinding(SecurityMode.None)
+				{
+					OpenTimeout = new TimeSpan(0, 0, 0, 5),
+					SendTimeout = new TimeSpan(0, 0, 0, 5)
+				};
+
 				var battleBinding = new WSDualHttpBinding(WSDualHttpSecurityMode.None)
 				{
 					SendTimeout = new TimeSpan(0, 0, 0, 1)
 				};
 
 				selfHost.AddServiceEndpoint(typeof(IAuthenticateService), authBinding, "AuthenticationService");
-				selfHost.AddServiceEndpoint(typeof(IEditService), new WSHttpBinding(SecurityMode.None), "EditService");
+				selfHost.AddServiceEndpoint(typeof(IEditService), editBinding, "EditService");
 				selfHost.AddServiceEndpoint(typeof(IBattleService), battleBinding, "BattleService");
 
 				var smb = new ServiceMetadataBehavior();

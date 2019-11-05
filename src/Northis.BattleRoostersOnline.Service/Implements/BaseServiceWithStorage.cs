@@ -5,7 +5,7 @@ using Northis.BattleRoostersOnline.Service.DataStorages;
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
 	/// <summary>
-	/// Инкапсулирует в себе свойство хранилища основных данных типа
+	/// Представляет доступ к хранилищу  основных данных программы.
 	/// ServiceStorage.
 	/// </summary>
 	public abstract class BaseServiceWithStorage : BaseService

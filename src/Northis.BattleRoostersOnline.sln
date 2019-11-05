@@ -14,7 +14,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northis.BattleRoostersOnlin
 		{51A9CBE9-121F-40B3-9454-4684FE0B2D75} = {51A9CBE9-121F-40B3-9454-4684FE0B2D75}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northis.BattleRoostersOnline.Service.Tests", "Northis.BattleRoostersOnline.Service.Tests\Northis.BattleRoostersOnline.Service.Tests.csproj", "{C361A8A7-6FD9-49FD-BBA5-D332C3C3E4E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northis.BattleRoostersOnline.Service.Tests", "Tests\Northis.BattleRoostersOnline.Service.Tests\Northis.BattleRoostersOnline.Service.Tests.csproj", "{C361A8A7-6FD9-49FD-BBA5-D332C3C3E4E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EC0B22FC-63E6-478A-9FF7-C9E22D7080EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C361A8A7-6FD9-49FD-BBA5-D332C3C3E4E0} = {EC0B22FC-63E6-478A-9FF7-C9E22D7080EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {279D6EBD-1D61-4A03-8637-F3864A751356}

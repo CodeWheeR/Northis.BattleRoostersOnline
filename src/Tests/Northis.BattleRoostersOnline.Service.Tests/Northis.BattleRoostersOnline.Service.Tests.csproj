@@ -93,11 +93,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Northis.BattleRoostersOnline.Dto\Northis.BattleRoostersOnline.Dto.csproj">
+    <ProjectReference Include="..\..\Northis.BattleRoostersOnline.Dto\Northis.BattleRoostersOnline.Dto.csproj">
       <Project>{56B3FA9D-2EC9-4703-9000-9E9F0DD88FAC}</Project>
       <Name>Northis.BattleRoostersOnline.Dto</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Northis.BattleRoostersOnline.Service\Northis.BattleRoostersOnline.Service.csproj">
+    <ProjectReference Include="..\..\Northis.BattleRoostersOnline.Service\Northis.BattleRoostersOnline.Service.csproj">
       <Project>{51A9CBE9-121F-40B3-9454-4684FE0B2D75}</Project>
       <Name>Northis.BattleRoostersOnline.Service</Name>
     </ProjectReference>

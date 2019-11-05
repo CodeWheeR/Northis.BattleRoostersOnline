@@ -31,7 +31,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <summary>
 		/// Цвет петуха.
 		/// </summary>
-		private Dto.RoosterColor _color;
+		private Dto.RoosterColorType _colorType;
 		/// <summary>
 		/// Уклонеине петуха.
 		/// </summary>
@@ -55,11 +55,11 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <summary>
 		/// Словарь с делегатами цветовых модификаций петухов.
 		/// </summary>
-		private readonly Dictionary<Dto.RoosterColor, Action> ColorModifications;
+		private readonly Dictionary<Dto.RoosterColorType, Action> ColorModifications;
 		/// <summary>
 		/// Словарь с делегатами очистки цветовых модификаций петухов.
 		/// </summary>
-		private readonly Dictionary<Dto.RoosterColor, Action> ClearModifications;
+		private readonly Dictionary<Dto.RoosterColorType, Action> ClearModifications;
 
 		#region Limiters		
 		/// <summary>
@@ -134,10 +134,10 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			MaxHealth = 100;
 			Stamina = 100;
 
-			ColorModifications = new Dictionary<Dto.RoosterColor, Action>
+			ColorModifications = new Dictionary<Dto.RoosterColorType, Action>
 			{
 				{
-					Dto.RoosterColor.Red, () =>
+					Dto.RoosterColorType.Red, () =>
 					{
 						ChangeMaxLimit(nameof(Health), 0, ref _maxHealth, 120);
 						MaxHealth = _maxHealth;
@@ -145,39 +145,39 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					}
 				},
 				{
-					Dto.RoosterColor.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, 50)
+					Dto.RoosterColorType.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, 50)
 				},
 				{
-					Dto.RoosterColor.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10)
+					Dto.RoosterColorType.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10)
 				},
 				{
-					Dto.RoosterColor.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, 50)
+					Dto.RoosterColorType.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, 50)
 				},
 				{
-					Dto.RoosterColor.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50)
+					Dto.RoosterColorType.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50)
 				}
 			};
 
-			ClearModifications = new Dictionary<Dto.RoosterColor, Action>
+			ClearModifications = new Dictionary<Dto.RoosterColorType, Action>
 			{
 				{
-					Dto.RoosterColor.Red, () =>
+					Dto.RoosterColorType.Red, () =>
 					{
 						ChangeMaxLimit(nameof(Health), 0, ref _maxHealth, DefaultMaxHealth);
 						MaxHealth = DefaultMaxHealth;
 					}
 				},
 				{
-					Dto.RoosterColor.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness)
+					Dto.RoosterColorType.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness)
 				},
 				{
-					Dto.RoosterColor.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
+					Dto.RoosterColorType.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
 				},
 				{
-					Dto.RoosterColor.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness)
+					Dto.RoosterColorType.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness)
 				},
 				{
-					Dto.RoosterColor.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
+					Dto.RoosterColorType.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
 				}
 			};
 		}
@@ -195,7 +195,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Brickness = rooster.Brickness;
 			Luck = rooster.Luck;
 			Thickness = rooster.Thickness;
-			Color = rooster.Color;
+			ColorType = rooster.ColorType;
 			Crest = rooster.Crest;
 			Height = rooster.Height;
 			Weight = rooster.Weight;
@@ -213,7 +213,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Brickness = rooster.Brickness;
 			Luck = rooster.Luck;
 			Thickness = rooster.Thickness;
-			Color = rooster.Color;
+			ColorType = rooster.ColorType;
 			Crest = rooster.Crest;
 			Height = rooster.Height;
 			Weight = rooster.Weight;
@@ -331,12 +331,12 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <value>
 		/// Окрас петуха.
 		/// </value>
-		public Dto.RoosterColor Color
+		public RoosterColorType ColorType
 		{
-			get => _color;
+			get => _colorType;
 			set
 			{
-				_color = value;
+				_colorType = value;
 				OnColorChange();
 			}
 		}
@@ -359,7 +359,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <value>
 		/// Броня петуха.
 		/// </value>
-		public Dto.CrestSize Crest
+		public CrestSizeType Crest
 		{
 			get;
 			set;
@@ -442,21 +442,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// </summary>
 		/// <returns>RoosterDto.</returns>
 		public RoosterDto ToRoosterDto() =>
-			new RoosterDto
-			{
-				Height = Height,
-				Color = Color,
-				Health = Health,
-				Stamina = Stamina,
-				Brickness = Brickness,
-				Crest = Crest,
-				Weight = Weight,
-				WinStreak = WinStreak,
-				Luck = Luck,
-				Name = Name,
-				Thickness = Thickness,
-				MaxHealth = MaxHealth
-			};
+			new RoosterDto(Token, Name, Weight, Height, Brickness, Thickness, Luck, Health, Crest, ColorType, MaxHealth, Stamina, WinStreak);
 
 		/// <summary>
 		/// Принимает удар от другого петуха.
@@ -485,7 +471,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			{
 				Health = Health,
 				Stamina = Stamina,
-				Color = Color,
+				ColorType = ColorType,
 				Crest = Crest,
 				Brickness = Brickness,
 				Weight = Weight,
@@ -525,7 +511,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		private void OnColorChange()
 		{
 			ClearColorModifications();
-			ColorModifications[Color]
+			ColorModifications[ColorType]
 				.Invoke();
 		}
 
@@ -536,7 +522,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		{
 			foreach (var clearModification in ClearModifications)
 			{
-				if (clearModification.Key != Color)
+				if (clearModification.Key != ColorType)
 				{
 					clearModification.Value();
 				}

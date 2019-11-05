@@ -4,7 +4,7 @@ using Northis.BattleRoostersOnline.Dto;
 namespace Northis.BattleRoostersOnline.Service.Contracts
 {
     /// <summary>
-    /// Контракт Callbacks сервиса боев. Оповещает клиентов о состоянии боя.
+    /// Оповещает клиентов о состоянии боя.
     /// </summary>
     public interface IBattleServiceCallback
 	{

@@ -17,7 +17,7 @@ using Northis.BattleRoostersOnline.Service.Models;
 namespace Northis.BattleRoostersOnline.Service.DataStorages
 {
 	/// <summary>
-	/// Инкапсулируюет в себе данные о пользователях, петухах, авторизированных пользователях, игровых сессиях.
+	/// Хранит данные о пользователях, петухах, игровых сессиях.
 	/// </summary>
 	[Serializable]
 	public class DataStorageService : BaseService, IDataStorageService

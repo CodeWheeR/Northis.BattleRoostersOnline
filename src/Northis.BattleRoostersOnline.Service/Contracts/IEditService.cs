@@ -7,7 +7,7 @@ using Northis.BattleRoostersOnline.Service.Models;
 namespace Northis.BattleRoostersOnline.Service.Contracts
 {
 	/// <summary>
-	/// Контракт сервиса редактирования. Отвечает за редактирование петухов.
+	/// Отвечает за редактирование петухов.
 	/// </summary>
 	[ServiceContract]
 	public interface IEditService

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Northis.BattleRoostersOnline.Dto
 {
     /// <summary>
-    /// Класс-контракт данных. Инкапсулирует в себе статистику пользователя.
+    /// Представляет статистику пользователя.
     /// </summary>
     [DataContract]
 	public class UsersStatisticsDto
@@ -24,7 +24,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public bool IsOnline
 		{
 			get;
-			set;
 		}
         /// <summary>
         /// Возвращает или устанавливает значение имени пользователя.
@@ -36,7 +35,6 @@ namespace Northis.BattleRoostersOnline.Dto
 		public string UserName
 		{
 			get;
-			set;
 		}
         /// <summary>
         /// Возвращает или устанавливает значение счёта пользователя.
@@ -48,8 +46,14 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int UserScore
 		{
 			get;
-			set;
 		}
         #endregion
+
+		public UsersStatisticsDto(bool isOnline, string userName, int userScore)
+		{
+			IsOnline = isOnline;
+			UserName = userName;
+			UserScore = userScore;
+		}
     }
 }

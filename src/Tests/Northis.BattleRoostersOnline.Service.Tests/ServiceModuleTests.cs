@@ -20,17 +20,17 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		/// <summary>
 		/// Сервис редактирования.
 		/// </summary>
-		protected EditService Editor = new EditService();
+		protected EditService Editor;
 		/// <summary>
-		/// Сеовис аунтефикации.
+		/// Сервис аутентификации.
 		/// </summary>
-		protected AuthenticateService AuthenticateService = new AuthenticateService();
+		protected AuthenticateService AuthenticateService;
 		/// <summary>
 		/// Сервис проведения битвы.
 		/// </summary>
-		protected BattleService BattleService = new BattleService();
+		protected BattleService BattleService;
 		/// <summary>
-		/// Callback аунтефикации.
+		/// Callback аутентификации.
 		/// </summary>
 		protected Mock<IAuthenticateServiceCallback> CallbackAuth = new Mock<IAuthenticateServiceCallback>();
 		/// <summary>
@@ -49,41 +49,22 @@ namespace Northis.BattleRoostersOnline.Service.Tests
         /// <exception cref="NullReferenceException">Хранилище данных не инициализированно.</exception>
         protected IDataStorageService Storage
 		{
-			get
-			{
-				if (ServiceLocator.IsLocationProviderSet)
-				{
-					return ServiceLocator.Current.GetInstance<IDataStorageService>();
-				}
-
-				throw new NullReferenceException("StorageService is null");
-			}
+			get;
+			set;
 		}
 
 		/// <summary>
 		/// Устанавливает тестовое окружение.
 		/// </summary>
 		[SetUp]
-		protected void SetupServiceLocator()
+		protected void Setup()
 		{
-			if (ServiceLocator.IsLocationProviderSet == false)
-			{
-				UnityContainer container = new UnityContainer();
+			Storage = new DataStorageService();
+			BaseServiceWithStorage.SetStorage(Storage);
+			AuthenticateService = new AuthenticateService();
+			Editor = new EditService();
+			BattleService = new BattleService();
 
-				container.RegisterType<IDataStorageService, DataStorageService>();
-				container.RegisterInstance(new DataStorageService());
-
-				UnityServiceLocator locator = new UnityServiceLocator(container);
-				ServiceLocator.SetLocatorProvider(() => locator);
-			}
-			else
-			{
-				var storage = ServiceLocator.Current.GetInstance<IDataStorageService>();
-				storage.LoggedUsers.Clear();
-				storage.RoostersData.Clear();
-				storage.Sessions.Clear();
-				storage.UserData.Clear();
-			}
 		}
 		#endregion
 	}

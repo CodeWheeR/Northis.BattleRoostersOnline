@@ -6,7 +6,7 @@ using Northis.BattleRoostersOnline.Dto;
 namespace Northis.BattleRoostersOnline.Service.Contracts
 {
     /// <summary>
-    /// Контракт Callbacks сервиса аунтефикации. Оповещает пользователей о состоянии аунтефикации.
+    /// Оповещает пользователей о состоянии аунтефикации.
     /// </summary>
     public interface IAuthenticateServiceCallback
 	{

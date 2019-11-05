@@ -87,8 +87,6 @@
     <Compile Include="Events\GlobalStatisticsEventArgs.cs" />
     <Compile Include="Implements\BaseService.cs" />
     <Compile Include="Implements\StatisticsPublisher.cs" />
-    <Compile Include="Models\CrestSize.cs" />
-    <Compile Include="Models\RoosterColor.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Events\MatchFindedEventArgs.cs" />
     <Compile Include="Implements\AuthenticateService.cs" />

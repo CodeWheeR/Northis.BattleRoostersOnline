@@ -6,7 +6,7 @@ using Northis.BattleRoostersOnline.Dto;
 namespace Northis.BattleRoostersOnline.Service.Contracts
 {
 	/// <summary>
-	/// Контракт сервиса аунтефикации. Обеспечивает авторизацию пользователя.
+	/// Обеспечивает авторизацию пользователя.
 	/// </summary>
 	[ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IAuthenticateServiceCallback))]
 	public interface IAuthenticateService

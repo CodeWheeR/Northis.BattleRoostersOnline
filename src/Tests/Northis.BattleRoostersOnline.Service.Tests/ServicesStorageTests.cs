@@ -8,8 +8,6 @@ using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Models;
 using Northis.BattleRoostersOnline.Service.Tests;
 using NUnit.Framework;
-using CrestSize = Northis.BattleRoostersOnline.Dto.CrestSize;
-using RoosterColor = Northis.BattleRoostersOnline.Dto.RoosterColor;
 
 namespace Northis.BattleRoostersOnline.Service.Tests
 {
@@ -39,8 +37,8 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						Thickness = 10,
 						Luck = 10,
 						Name = "CoCoCo",
-						Crest = CrestSize.Small,
-						Color = RoosterColor.Black,
+						Crest = CrestSizeType.Small,
+						ColorType = RoosterColorType.Black,
 						MaxHealth = 100,
 						Token = "asdasd123",
 						WinStreak = 1
@@ -57,8 +55,8 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						Thickness = 30,
 						Luck = 30,
 						Name = "CoCaCo",
-						Crest = CrestSize.Big,
-						Color = RoosterColor.Red,
+						Crest = CrestSizeType.Big,
+						ColorType = RoosterColorType.Red,
 						MaxHealth = 120,
 						Token = "asdasd1234",
 						WinStreak = 10
@@ -83,7 +81,6 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[Test]
 		public async Task SaveAndLoadUsers()
 		{
-			var backupUsersCount = Storage.UserData.Count;
 			var users = new Dictionary<string, string>()
 			{
 				{

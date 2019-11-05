@@ -14,6 +14,12 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 	[TestFixture]
 	public class EditServiceTests : ServiceModuleTests
 	{
+		[OneTimeSetUp]
+		public void SetUp()
+		{
+			base.Setup();
+	}
+
 		#region Test Methods
 		/// <summary>
 		/// Асинхронно проверяет корректность метода добавления нового петуха пользователя.
@@ -23,7 +29,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		{
 			string token = await AuthenticateService.RegisterAsync("Login1", "Password", CallbackAuth.Object);
 
-			await Editor.AddAsync(token, new RoosterEditDto());
+			await Editor.AddAsync(token, new RoosterEditDto("asdshka", 0, 0, 0, 0, 0, CrestSizeType.Small, RoosterColorType.Black));
 
 			Assert.AreEqual(1, Storage.RoostersData.Count);
 		}
@@ -33,7 +39,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[Test]
 		public void AddTest2()
 		{
-			Assert.DoesNotThrowAsync( () => Editor.AddAsync("SomeToken", new RoosterEditDto()));
+			Assert.DoesNotThrowAsync( () => Editor.AddAsync("SomeToken", new RoosterEditDto("", 0, 0, 0, 0, 0, CrestSizeType.Small, RoosterColorType.Black)));
 		}
 		
 		/// <summary>
@@ -54,64 +60,43 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		{ 
 			Assert.DoesNotThrowAsync(() => Editor.GetUserRoostersAsync("NotFindToken"));
 		}
-		/// <summary>
-		/// Асинхронно проверяет работу метода редактирования с недопустимыми параметрами.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		[TestCase("NotFoundToken")]
-		[TestCase("NotFoundToken")]
-		[TestCase("NotFoundToken")]
-		public async Task EditTest1(string token)
-		{
-			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterModel>()
-			{
-				{
-					"some", new RoosterModel()
-				}
-			});
 
-			//Assert.DoesNotThrowAsync(() => editor.EditAsync(token, "some", new RoosterModel().ToRoosterDto()));
-		}
 		/// <summary>
 		/// Асинхронно проверяет корректность редактирования нужного петуха.
 		/// </summary>
+		[Test]
 		public async Task EditTest2()
 		{
-			RoosterEditDto editedRooster = new RoosterEditDto()
-			{
-				Name = "asdshka",
-				Height = 50
-			};
-			RoosterEditDto rooster1 = new RoosterEditDto()
-			{
-				Name = "asdshka",
-				Height = 20
-			};
-			RoosterEditDto rooster2 = new RoosterEditDto();
-			RoosterEditDto rooster3 = new RoosterEditDto();
-			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterModel>
+			var token = await AuthenticateService.RegisterAsync("NewUser", "asdasd123", CallbackAuth.Object);
+
+			RoosterEditDto editedRooster = new RoosterEditDto("asdshka", 0, 40, 0, 0, 0, CrestSizeType.Small, RoosterColorType.Black);
+			RoosterEditDto rooster1 = new RoosterEditDto("asdshka", 0, 40, 0, 0, 0, CrestSizeType.Small, RoosterColorType.Black);
+			RoosterEditDto rooster2 = new RoosterEditDto("", 0, 0, 0, 0, 0, CrestSizeType.Small, RoosterColorType.Black);
+			RoosterEditDto rooster3 = new RoosterEditDto("", 0, 0, 0, 0, 0, CrestSizeType.Small, RoosterColorType.Black);
+			Storage.RoostersData.Add("NewUser", new Dictionary<string, RoosterModel>
 			{
 				{ "Rooster1", new RoosterModel(rooster1)},
 				{ "Rooster2", new RoosterModel(rooster2)},
 				{ "Rooster3", new RoosterModel(rooster3)}
 			});
 
-			await Editor.EditAsync("FoundToken","Rooster2" , editedRooster);
+			
+			await Editor.EditAsync(token,"Rooster2" , editedRooster);
 
-			Assert.IsTrue(editedRooster.Equals(Storage.RoostersData["FoundToken"]["Rooster2"]));
+			var editCheckRooster = new RoosterModel(editedRooster);
+
+			Assert.AreEqual(editCheckRooster.Height, Storage.RoostersData["NewUser"]["Rooster2"].Height);
 		}
 		/// <summary>
 		/// Асинхронно проверяет работу метода редактирования с недопустимыми параметрами.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		[TestCase("NotFoundToken")]
-		[TestCase("NotFoundToken")]
-		[TestCase("NotFoundToken")]
 		public async Task RemoveTest1(string token)
 		{
 			RoosterModel rooster = new RoosterModel();
 
-			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterModel>
+			Storage.RoostersData.Add(token, new Dictionary<string, RoosterModel>
 			{
 				{"Rooster1", rooster}
 			});

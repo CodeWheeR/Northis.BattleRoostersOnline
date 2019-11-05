@@ -28,7 +28,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
         /// </summary>
         public AuthenticateService()
 		{
-			SetStorage(new DataStorageService());
+
 		}
 		#endregion
 
@@ -201,7 +201,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <returns>
 		/// Статус аунтефикации.
 		/// </returns>
-		public AuthenticateStatus GetLoginStatus() => AuthenticateStatus.OK;
+		public AuthenticateStatus GetLoginStatus() => AuthenticateStatus.Ok;
 
 		/// <summary>
 		/// Зашифровывает исходную строку.

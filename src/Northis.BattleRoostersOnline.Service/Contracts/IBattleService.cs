@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Northis.BattleRoostersOnline.Service.Contracts
 {
 	/// <summary>
-	/// Контракт сервиса проведения боя. Отвечает за проведение битвы петухов.
+	/// Отвечает за проведение битвы петухов.
 	/// </summary>
 	[ServiceContract(CallbackContract = typeof(IBattleServiceCallback), SessionMode = SessionMode.Required)]
 	public interface IBattleService

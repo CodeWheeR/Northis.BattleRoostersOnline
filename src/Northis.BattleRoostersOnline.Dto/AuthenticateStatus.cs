@@ -8,14 +8,29 @@ namespace Northis.BattleRoostersOnline.Dto
 	[DataContract]
 	public enum AuthenticateStatus
 	{
+		/// <summary>
+		/// Авторизация успешна.
+		/// </summary>
 		[EnumMember]
-		OK,
+		Ok,
+		/// <summary>
+		/// Неправильный логин или пароль.
+		/// </summary>
 		[EnumMember]
 		WrongLoginOrPassword,
+		/// <summary>
+		/// Данный пользователь уже зарегистрирован.
+		/// </summary>
 		[EnumMember]
 		AlreadyRegistered,
+		/// <summary>
+		/// Данный пользователь уже в системе.
+		/// </summary>
 		[EnumMember]
 		AlreadyLoggedIn,
+		/// <summary>
+		/// Неверный формат введенных логина или пароля.
+		/// </summary>
 		[EnumMember]
 		WrongDataFormat
 	}
