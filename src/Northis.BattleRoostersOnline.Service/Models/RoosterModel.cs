@@ -148,13 +148,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					Dto.RoosterColor.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, 50)
 				},
 				{
-					Dto.RoosterColor.White, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10)
+					Dto.RoosterColor.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10)
 				},
 				{
 					Dto.RoosterColor.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, 50)
 				},
 				{
-					Dto.RoosterColor.Black, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50)
+					Dto.RoosterColor.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50)
 				}
 			};
 
@@ -171,13 +171,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					Dto.RoosterColor.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness)
 				},
 				{
-					Dto.RoosterColor.Black, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
+					Dto.RoosterColor.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
 				},
 				{
 					Dto.RoosterColor.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness)
 				},
 				{
-					Dto.RoosterColor.White, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
+					Dto.RoosterColor.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
 				}
 			};
 		}
