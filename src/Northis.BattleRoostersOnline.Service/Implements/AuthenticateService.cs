@@ -26,9 +26,9 @@ namespace Northis.BattleRoostersOnline.Service.Implements
         /// <summary>
         /// Инициализирует новый экземпляр <see cref="AuthenticateService"/> класса.
         /// </summary>
-        public AuthenticateService()
+        public AuthenticateService(IDataStorageService storage) : base(storage)
 		{
-
+			StatisticsPublisher.GetInstance(StorageService);
 		}
 		#endregion
 

@@ -21,7 +21,17 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	{
 		#region Fields
 		private Logger _logger = LogManager.GetCurrentClassLogger();
-        #endregion
+		#endregion
+
+		#region ctor
+		/// <summary>
+		/// Инициализирует новый экземпляр <see cref="EditService"/> класса.
+		/// </summary>
+		public EditService(IDataStorageService storage) : base(storage)
+		{
+
+		}
+		#endregion
 
         #region Public Methods
         /// <summary>
@@ -92,9 +102,8 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				{
 					if (StorageService.RoostersData.ContainsKey(login))
 					{
-						//return 
-							var val = StorageService.RoostersData[login].Values.Select(x => ((DataStorageService) StorageService).Mapper.Map<RoosterModel, RoosterDto>(x));
-							return val;
+						var val = StorageService.RoostersData[login].Values.Select(x =>StorageService.Mapper.Map<RoosterModel, RoosterDto>(x));
+						return val;
 					}
 
 					return new List<RoosterDto>();

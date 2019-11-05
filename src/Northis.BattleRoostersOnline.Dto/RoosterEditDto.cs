@@ -11,6 +11,7 @@ namespace Northis.BattleRoostersOnline.Dto
 	/// <summary>
 	/// Представляет редактируемые характеристики петуха.
 	/// </summary>
+	[DataContract]
 	public class RoosterEditDto
 	{
 		#region Properties		
@@ -25,6 +26,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public double Weight
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -37,6 +39,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Height
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -46,9 +49,10 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Цвет петуха.
 		/// </value>
 		[DataMember]
-		public RoosterColorType ColorType
+		public RoosterColorType Color
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -61,6 +65,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Brickness
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -73,6 +78,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public CrestSizeType Crest
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -85,6 +91,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Thickness
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -97,6 +104,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Luck
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -109,6 +117,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public string Name
 		{
 			get;
+			set;
 		}
 		#endregion
 
@@ -123,8 +132,8 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// <param name="thickness">Толщина покрова.</param>
 		/// <param name="luck">Удача.</param>
 		/// <param name="crest">Гребень.</param>
-		/// <param name="colorType">Цвет.</param>
-		public RoosterEditDto(string name, double weight, int height, int brickness, int thickness, int luck, CrestSizeType crest, RoosterColorType colorType)
+		/// <param name="color">Цвет.</param>
+		public RoosterEditDto(string name, double weight, int height, int brickness, int thickness, int luck, CrestSizeType crest, RoosterColorType color)
 		{
 			Name = name;
 			Weight = weight;
@@ -133,7 +142,12 @@ namespace Northis.BattleRoostersOnline.Dto
 			Thickness = thickness;
 			Luck = luck;
 			Crest = crest;
-			ColorType = colorType;
+			Color = color;
+		}
+
+		public RoosterEditDto()
+		{
+
 		}
 		#endregion
 
@@ -166,7 +180,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public bool Equals(RoosterEditDto obj)
 		{
 			return Brickness == obj.Brickness &&
-				   ColorType == obj.ColorType &&
+				   Color == obj.Color &&
 				   Crest == obj.Crest &&
 				   Height == obj.Height &&
 				   Luck == obj.Luck &&

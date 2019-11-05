@@ -16,7 +16,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
         /// <summary>
         /// Контракт операции. Отвечает за редактирование выбранного петуха конкретного пользователя.
         /// </summary>
-        /// <param name="token">Идентификатор.</param>
+        /// <param name="token">Токен.</param>
         /// <param name="sourceRooster">Изменяемый петух.</param>
         /// <param name="editRooster">Редактированный петух.</param>
         [OperationContract]

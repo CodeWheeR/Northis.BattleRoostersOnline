@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
+using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Models;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
@@ -19,7 +20,17 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	{
         #region Fields
         private Logger _logger = LogManager.GetCurrentClassLogger();
-        #endregion
+		#endregion
+
+		#region ctor
+		/// <summary>
+		/// Инициализирует новый экземпляр <see cref="BattleService"/> класса.
+		/// </summary>
+		public BattleService(IDataStorageService storage) : base(storage)
+		{
+
+		}
+		#endregion
 
         #region Public Methods
         /// <summary>
@@ -72,7 +83,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					else
 					{
 						var matchToken = await GenerateTokenAsync(StorageService.Sessions.ContainsKey);
-						session = new Session(matchToken);
+						session = new Session(matchToken, StorageService);
 						session.RegisterFighter(token, StorageService.RoostersData[login][roosterToken], callback);
 						StorageService.Sessions.Add(matchToken, session);
 					}

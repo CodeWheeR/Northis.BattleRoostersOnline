@@ -17,6 +17,12 @@ namespace Northis.BattleRoostersOnline.Service.Tests
     [TestFixture]
 	public class ServicesStorageTests : ServiceModuleTests
 	{
+		[OneTimeSetUp]
+		public void SetUp()
+		{
+			Setup();
+		}
+
 		/// <summary>
 		/// Асинхронно проверяет количество петухов после загрузки.
 		/// </summary>
@@ -38,7 +44,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						Luck = 10,
 						Name = "CoCoCo",
 						Crest = CrestSizeType.Small,
-						ColorType = RoosterColorType.Black,
+						Color = RoosterColorType.Black,
 						MaxHealth = 100,
 						Token = "asdasd123",
 						WinStreak = 1
@@ -56,7 +62,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						Luck = 30,
 						Name = "CoCaCo",
 						Crest = CrestSizeType.Big,
-						ColorType = RoosterColorType.Red,
+						Color = RoosterColorType.Red,
 						MaxHealth = 120,
 						Token = "asdasd1234",
 						WinStreak = 10

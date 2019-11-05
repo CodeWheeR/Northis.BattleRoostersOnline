@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
+using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Models;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
@@ -28,6 +29,16 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		private List<StatisticsDto> _cachedStatistics = new List<StatisticsDto>();
 		private List<UsersStatisticsDto> _cachedUsersStatistics = new List<UsersStatisticsDto>();
 		private Logger _logger = LogManager.GetCurrentClassLogger();
+		#endregion
+
+		#region ctor
+		/// <summary>
+		/// Инициализирует новый экземпляр <see cref="StatisticsPublisher"/> класса.
+		/// </summary>
+		public StatisticsPublisher(IDataStorageService storage) : base(storage)
+		{
+
+		}
 		#endregion
 
 		#region Public Methods		
@@ -133,11 +144,11 @@ namespace Northis.BattleRoostersOnline.Service.Implements
         /// <summary>
         /// Асинхронно возвращает объект класса <see cref="StatisticsPublisher"/>.
         /// </summary>
-        public static async Task<StatisticsPublisher> GetInstanceAsync()
+        public static async Task<StatisticsPublisher> GetInstanceAsync(IDataStorageService storage = null)
 		{
 			if (_instance == null)
 			{
-				_instance = new StatisticsPublisher();
+				_instance = new StatisticsPublisher(storage);
 				await _instance.UpdateStatistics();
 			}
 
@@ -147,11 +158,11 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <summary>
 		/// Возращает объект класса <see cref="StatisticsPublisher"/>.
 		/// </summary>
-		public static StatisticsPublisher GetInstance()
+		public static StatisticsPublisher GetInstance(IDataStorageService storage = null)
 		{
 			if (_instance == null)
 			{
-				_instance = new StatisticsPublisher();
+				_instance = new StatisticsPublisher(storage);
 			}
 
 			return _instance;

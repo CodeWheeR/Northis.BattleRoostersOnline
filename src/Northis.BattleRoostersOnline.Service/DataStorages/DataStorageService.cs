@@ -21,7 +21,7 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 	/// Хранит данные о пользователях, петухах, игровых сессиях.
 	/// </summary>
 	[Serializable]
-	public class DataStorageService : BaseService, IDataStorageService
+	public class DataStorageService : BaseService, IDataStorageService, IRoosterStorageService, IMapperService
 	{
 		#region Fields
 		/// <summary>

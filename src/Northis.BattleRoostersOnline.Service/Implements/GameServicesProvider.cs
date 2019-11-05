@@ -48,8 +48,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
         #endregion
 
         #region Public Methods
-
-        /// <summary>
+		/// <summary>
         /// Асинхронно добавляет петуха.
         /// </summary>
         /// <param name="token">Токен.</param>

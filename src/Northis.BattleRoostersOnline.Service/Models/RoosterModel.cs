@@ -31,7 +31,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <summary>
 		/// Цвет петуха.
 		/// </summary>
-		private Dto.RoosterColorType _colorType;
+		private Dto.RoosterColorType _color;
 		/// <summary>
 		/// Уклонеине петуха.
 		/// </summary>
@@ -195,7 +195,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Brickness = rooster.Brickness;
 			Luck = rooster.Luck;
 			Thickness = rooster.Thickness;
-			ColorType = rooster.ColorType;
+			Color = rooster.Color;
 			Crest = rooster.Crest;
 			Height = rooster.Height;
 			Weight = rooster.Weight;
@@ -213,7 +213,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Brickness = rooster.Brickness;
 			Luck = rooster.Luck;
 			Thickness = rooster.Thickness;
-			ColorType = rooster.ColorType;
+			Color = rooster.Color;
 			Crest = rooster.Crest;
 			Height = rooster.Height;
 			Weight = rooster.Weight;
@@ -331,12 +331,12 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <value>
 		/// Окрас петуха.
 		/// </value>
-		public RoosterColorType ColorType
+		public RoosterColorType Color
 		{
-			get => _colorType;
+			get => _color;
 			set
 			{
-				_colorType = value;
+				_color = value;
 				OnColorChange();
 			}
 		}
@@ -442,7 +442,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// </summary>
 		/// <returns>RoosterDto.</returns>
 		public RoosterDto ToRoosterDto() =>
-			new RoosterDto(Token, Name, Weight, Height, Brickness, Thickness, Luck, Health, Crest, ColorType, MaxHealth, Stamina, WinStreak);
+			new RoosterDto(Token, Name, Weight, Height, Brickness, Thickness, Luck, Health, Crest, Color, MaxHealth, Stamina, WinStreak);
 
 		/// <summary>
 		/// Принимает удар от другого петуха.
@@ -471,7 +471,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			{
 				Health = Health,
 				Stamina = Stamina,
-				ColorType = ColorType,
+				Color = Color,
 				Crest = Crest,
 				Brickness = Brickness,
 				Weight = Weight,
@@ -479,7 +479,9 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				Luck = Luck,
 				Thickness = Thickness,
 				Name = Name,
-				WinStreak = WinStreak
+				WinStreak = WinStreak,
+				Token = Token,
+				MaxHealth = MaxHealth
 			};
 		#endregion
 
@@ -511,7 +513,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		private void OnColorChange()
 		{
 			ClearColorModifications();
-			ColorModifications[ColorType]
+			ColorModifications[Color]
 				.Invoke();
 		}
 
@@ -522,7 +524,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		{
 			foreach (var clearModification in ClearModifications)
 			{
-				if (clearModification.Key != ColorType)
+				if (clearModification.Key != Color)
 				{
 					clearModification.Value();
 				}

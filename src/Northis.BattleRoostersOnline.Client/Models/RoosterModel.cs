@@ -597,7 +597,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			}
 		}
 
-		private RoosterColor ColorParse(GameServer.RoosterColor color)
+		private RoosterColor ColorParse(RoosterColorType color)
 		{
 			if (Enum.TryParse(color.ToString(), out RoosterColor outColor))
 			{
@@ -607,9 +607,9 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			throw new ArgumentException();
 		}
 
-		private GameServer.RoosterColor ColorDtoParse(RoosterColor color)
+		private RoosterColorType ColorDtoParse(RoosterColor color)
 		{
-			if (Enum.TryParse(color.ToString(), out GameServer.RoosterColor outColor))
+			if (Enum.TryParse(color.ToString(), out RoosterColorType outColor))
 			{
 				return outColor;
 			}
@@ -617,7 +617,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			throw new ArgumentException();
 		}
 
-		private CrestSize SizeParse(GameServer.CrestSize size)
+		private CrestSize SizeParse(CrestSizeType size)
 		{
 			if (Enum.TryParse(size.ToString(), out CrestSize outSize))
 			{
@@ -627,9 +627,9 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			throw new ArgumentException();
 		}
 
-		private GameServer.CrestSize SizeDtoParse(CrestSize size)
+		private CrestSizeType SizeDtoParse(CrestSize size)
 		{
-			if (Enum.TryParse(size.ToString(), out GameServer.CrestSize outSize))
+			if (Enum.TryParse(size.ToString(), out CrestSizeType outSize))
 			{
 				return outSize;
 			}

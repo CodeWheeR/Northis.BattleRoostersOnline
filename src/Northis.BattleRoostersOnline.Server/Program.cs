@@ -13,6 +13,7 @@ using AutoMapper;
 using AutoMapper.Mappers;
 using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Models;
+using Unity.Lifetime;
 
 namespace Northis.BattleRoostersOnline.Server
 {
@@ -50,22 +51,16 @@ namespace Northis.BattleRoostersOnline.Server
 			}
 
 			var baseAddress = new Uri(address);
-
 			var container = new UnityContainer();
-
 			var config = new MapperConfiguration(cfg => cfg.CreateMap<RoosterModel, RoosterDto>().IgnoreAllSourcePropertiesWithAnInaccessibleSetter());
-
 			var mapper = config.CreateMapper();
 
-			BaseServiceWithStorage.SetStorage(new DataStorageService(mapper));
+			container.RegisterInstance(mapper);
+			container.RegisterType<IDataStorageService, DataStorageService>(new ContainerControlledLifetimeManager());
 
-			container.RegisterType<IEditService, EditService>();
-			container.RegisterType<IBattleService, BattleService>();
-			container.RegisterType<IAuthenticateService, AuthenticateService>();
-			
-
-			
-
+			container.RegisterType<IEditService, EditService>(new ContainerControlledLifetimeManager());
+			container.RegisterType<IBattleService, BattleService>(new ContainerControlledLifetimeManager());
+			container.RegisterType<IAuthenticateService, AuthenticateService>(new ContainerControlledLifetimeManager());
 
 			var selfHost = new UnityServiceHost(container, typeof(GameServicesProvider), baseAddress);
 

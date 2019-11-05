@@ -19,23 +19,17 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// Хранилище данных.
 		/// </value>
 		/// <exception cref="NullReferenceException">Хранилище не инициализированно экземпляром класса.</exception>
-		public static IDataStorageService StorageService
+		public IDataStorageService StorageService
 		{
 			get;
 			set;
 		}
 		#endregion
 
-		#region Public Methods
-		/// <summary>
-		/// Устанавливает хранилище данных.
-		/// </summary>
-		/// <param name="service">Хранилище данных.</param>
-		public static void SetStorage(IDataStorageService service)
+		public BaseServiceWithStorage(IDataStorageService storage)
 		{
-			StorageService = service;
+			StorageService = storage;
 		}
-		#endregion
 
 		#region Protected Methods
 		/// <summary>

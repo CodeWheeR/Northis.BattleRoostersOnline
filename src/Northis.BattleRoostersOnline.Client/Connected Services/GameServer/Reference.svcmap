@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a69adb83-05cd-469e-a306-d6fa81c391c7" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="82465e6e-beda-41bb-b540-b48514ec07a5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://10.88.99.167:8080/Northis.BattleRoostersOnline" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://10.88.99.75:8080/Northis.BattleRoostersOnline" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="GameServicesProvider.wsdl" MetadataType="Wsdl" ID="d57ab2d9-b3a6-4fcb-bbf6-abd02da4ff9e" SourceId="1" SourceUrl="http://10.88.99.167:8080/Northis.BattleRoostersOnline?wsdl" />
-    <MetadataFile FileName="Northis.disco" MetadataType="Disco" ID="06ad5f8b-2615-46ff-b509-f503b39f121b" SourceId="1" SourceUrl="http://10.88.99.167:8080/Northis.BattleRoostersOnline?disco" />
-    <MetadataFile FileName="Northis.xsd" MetadataType="Schema" ID="97ee6a42-9d73-4df9-9367-fdc444958fe9" SourceId="1" SourceUrl="http://10.88.99.167:8080/Northis.BattleRoostersOnline?xsd=xsd1" />
-    <MetadataFile FileName="Northis1.xsd" MetadataType="Schema" ID="ccbd68fc-cb10-4d97-9a36-caf14ac824b7" SourceId="1" SourceUrl="http://10.88.99.167:8080/Northis.BattleRoostersOnline?xsd=xsd2" />
-    <MetadataFile FileName="Northis2.xsd" MetadataType="Schema" ID="3be0fbfe-c197-4359-b3dc-6d0b4cb13498" SourceId="1" SourceUrl="http://10.88.99.167:8080/Northis.BattleRoostersOnline?xsd=xsd0" />
+    <MetadataFile FileName="Northis.xsd" MetadataType="Schema" ID="ad0526da-3cf7-4778-b821-696b00d4476e" SourceId="1" SourceUrl="http://10.88.99.75:8080/Northis.BattleRoostersOnline?xsd=xsd0" />
+    <MetadataFile FileName="Northis1.xsd" MetadataType="Schema" ID="dbc91908-5fbc-480a-a74e-e9c00bbe34a5" SourceId="1" SourceUrl="http://10.88.99.75:8080/Northis.BattleRoostersOnline?xsd=xsd1" />
+    <MetadataFile FileName="Northis2.xsd" MetadataType="Schema" ID="7cdfeaf1-f4a4-4607-8ffc-a0c29a8720c2" SourceId="1" SourceUrl="http://10.88.99.75:8080/Northis.BattleRoostersOnline?xsd=xsd2" />
+    <MetadataFile FileName="GameServicesProvider.wsdl" MetadataType="Wsdl" ID="e4158ef2-4343-4b83-ae39-cc3021bea504" SourceId="1" SourceUrl="http://10.88.99.75:8080/Northis.BattleRoostersOnline?wsdl" />
+    <MetadataFile FileName="Northis.disco" MetadataType="Disco" ID="2097a58c-5303-4968-b8fb-cbfb76d4d6d6" SourceId="1" SourceUrl="http://10.88.99.75:8080/Northis.BattleRoostersOnline?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

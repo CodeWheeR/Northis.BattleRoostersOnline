@@ -323,7 +323,8 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// Инициализирует новый экземпляр <see cref="Session" /> класса.
 		/// </summary>
 		/// <param name="token">Токен.</param>
-		public Session(string token)
+		/// <param name="storage">Объект хранилища данных.</param>
+		public Session(string token, IDataStorageService storage) : base(storage)
 		{
 			Token = token;
 			_logger.Info($"Инициализована новая сессия {token}");
@@ -344,7 +345,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				FirstFighterLogin = StorageService.LoggedUsers[token];
 				FirstUser = new UserData(callback)
 				{
-					Rooster = fighter,
+					Rooster = (RoosterModel)fighter.Clone(),
 					Token = token,
 					IsReady = false
 				};
@@ -363,7 +364,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				IsReady = true;
 				SecondUser = new UserData(callback)
 				{
-					Rooster = fighter,
+					Rooster = (RoosterModel)fighter.Clone(),
 					Token = token,
 					IsReady = false
 				};
@@ -373,11 +374,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				SendReadySignAsync();
 				ConnectionMonitor();
 			}
-
-			//if (callback is ICommunicationObject co)
-			//{
-			//	co.Closing += (x,y) => CheckForDeserting(token);
-			//}
 		}
 
 		/// <summary>
@@ -698,10 +694,10 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		private void SendRoosterStatus()
 		{
 			;
-			FirstUser.GetRoosterStatusAsync(FirstUser.Rooster != null ? ((DataStorageService)StorageService).Mapper.Map<RoosterModel, RoosterDto>(FirstUser.Rooster) : null,
-											SecondUser.Rooster != null ? ((DataStorageService)StorageService).Mapper.Map<RoosterModel, RoosterDto>(SecondUser.Rooster) : null);
-			SecondUser.GetRoosterStatusAsync(SecondUser.Rooster != null ? ((DataStorageService)StorageService).Mapper.Map<RoosterModel, RoosterDto>(SecondUser.Rooster) : null,
-											 FirstUser.Rooster != null ? ((DataStorageService)StorageService).Mapper.Map<RoosterModel, RoosterDto>(FirstUser.Rooster) : null);
+			FirstUser.GetRoosterStatusAsync(FirstUser.Rooster != null ? StorageService.Mapper.Map<RoosterModel, RoosterDto>(FirstUser.Rooster) : null,
+											SecondUser.Rooster != null ? StorageService.Mapper.Map<RoosterModel, RoosterDto>(SecondUser.Rooster) : null);
+			SecondUser.GetRoosterStatusAsync(SecondUser.Rooster != null ? StorageService.Mapper.Map<RoosterModel, RoosterDto>(SecondUser.Rooster) : null,
+											 FirstUser.Rooster != null ? StorageService.Mapper.Map<RoosterModel, RoosterDto>(FirstUser.Rooster) : null);
 		}
 
 		/// <summary>

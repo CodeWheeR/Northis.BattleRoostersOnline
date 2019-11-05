@@ -87,6 +87,9 @@
     <Compile Include="Contracts\IAuthenticateServiceCallback.cs" />
     <Compile Include="DataStorages\IDataStorageService.cs" />
     <Compile Include="DataStorages\DataStorageService.cs" />
+    <Compile Include="DataStorages\IMapperService.cs" />
+    <Compile Include="DataStorages\IRoosterStorageService.cs" />
+    <Compile Include="DataStorages\IUserDataStorageService.cs" />
     <Compile Include="Events\GlobalStatisticsEventArgs.cs" />
     <Compile Include="Implements\BaseService.cs" />
     <Compile Include="Implements\StatisticsPublisher.cs" />

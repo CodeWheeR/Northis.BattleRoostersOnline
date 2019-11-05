@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
@@ -27,6 +28,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			_rand = new Random();
 			var tokenGeneratorSymbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 			var answer = "";
+
 			do
 			{
 				answer = "";

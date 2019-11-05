@@ -24,6 +24,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public bool IsOnline
 		{
 			get;
+			set;
 		}
         /// <summary>
         /// Возвращает или устанавливает значение имени пользователя.
@@ -35,6 +36,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public string UserName
 		{
 			get;
+			set;
 		}
         /// <summary>
         /// Возвращает или устанавливает значение счёта пользователя.
@@ -46,6 +48,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int UserScore
 		{
 			get;
+			set;
 		}
         #endregion
 
@@ -54,6 +57,11 @@ namespace Northis.BattleRoostersOnline.Dto
 			IsOnline = isOnline;
 			UserName = userName;
 			UserScore = userScore;
+		}
+
+		public UsersStatisticsDto()
+		{
+
 		}
     }
 }

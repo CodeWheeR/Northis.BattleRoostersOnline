@@ -20,6 +20,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public string Token
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -32,6 +33,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public double Weight
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -44,6 +46,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Height
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -56,6 +59,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public double Health
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -68,6 +72,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Stamina
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -77,9 +82,10 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Цвет петуха.
 		/// </value>
 		[DataMember]
-		public RoosterColorType ColorType
+		public RoosterColorType Color
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -92,6 +98,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Brickness
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -104,6 +111,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public CrestSizeType Crest
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -116,6 +124,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Thickness
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -128,6 +137,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int Luck
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -140,6 +150,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public string Name
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -152,6 +163,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int WinStreak
 		{
 			get;
+			set;
 		}
 
 		/// <summary>
@@ -164,10 +176,12 @@ namespace Northis.BattleRoostersOnline.Dto
 		public int MaxHealth
 		{
 			get;
+			set;
 		}
 
         #endregion
 
+		#region .ctor
 		/// <summary>
 		/// Инициализует новый объект класса <see cref="RoosterDto"/>.
 		/// </summary>
@@ -180,11 +194,11 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// <param name="luck">Удача.</param>
 		/// <param name="health">Здоровье.</param>
 		/// <param name="crest">Гребень.</param>
-		/// <param name="colorType">Цвет.</param>
+		/// <param name="color">Цвет.</param>
 		/// <param name="maxHealth">Максимальное здоровье.</param>
 		/// <param name="stamina">Выносливость.</param>
 		/// <param name="winStreak">Череда побед.</param>
-		public RoosterDto(string token, string name, double weight, int height, int brickness, int thickness, int luck, double health, CrestSizeType crest, RoosterColorType colorType, int maxHealth, int stamina, int winStreak)
+		public RoosterDto(string token, string name, double weight, int height, int brickness, int thickness, int luck, double health, CrestSizeType crest, RoosterColorType color, int maxHealth, int stamina, int winStreak)
 		{
 			Token = token;
 			Name = name;
@@ -198,8 +212,14 @@ namespace Northis.BattleRoostersOnline.Dto
 			Stamina = stamina;
 			WinStreak = winStreak;
 			Crest = crest;
-			ColorType = colorType;
+			Color = color;
 		}
+
+		public RoosterDto()
+		{
+
+		}
+		#endregion
 
         #region Public Methods
 
@@ -230,7 +250,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public bool Equals(RoosterDto obj)
 		{ 
 			return Brickness == obj.Brickness &&
-				   ColorType == obj.ColorType &&
+				   Color == obj.Color &&
 				   Crest == obj.Crest &&
 				   Health == obj.Health &&
 				   Height == obj.Height &&
@@ -242,6 +262,7 @@ namespace Northis.BattleRoostersOnline.Dto
 				   Weight == obj.Weight;
 		}
 		#endregion
+
 		#endregion
 	}
 

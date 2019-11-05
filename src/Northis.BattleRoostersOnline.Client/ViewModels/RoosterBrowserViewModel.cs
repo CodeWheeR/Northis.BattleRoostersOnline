@@ -309,7 +309,18 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			_roosterBrowserViewModel.Info("Старт добавления нового петуха.");
 			if (await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(rooster) == true)
 			{
-				if (await _editServiceClient.AddAsync(token, rooster.ToRoosterDto()))
+				bool addRes = false;
+				try
+				{
+					addRes = await _editServiceClient.AddAsync(token, rooster.ToRoosterDto());
+				}
+
+				catch (Exception e)
+				{
+					_roosterBrowserViewModel.Error(e);
+				}
+				
+				if (addRes)
 				{
 					UpdateRoostersAsync();
 					_roosterBrowserViewModel.Info("Новый петух добавлен в список петухов пользователя.");

@@ -60,11 +60,9 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		protected void Setup()
 		{
 			Storage = new DataStorageService();
-			BaseServiceWithStorage.SetStorage(Storage);
-			AuthenticateService = new AuthenticateService();
-			Editor = new EditService();
-			BattleService = new BattleService();
-
+			AuthenticateService = new AuthenticateService(Storage);
+			Editor = new EditService(Storage);
+			BattleService = new BattleService(Storage);
 		}
 		#endregion
 	}
