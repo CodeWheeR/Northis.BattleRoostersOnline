@@ -13,7 +13,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 	{
 		#region Public Methods
 		/// <summary>
-		/// Конвертирует значение Enum, помеченного аттрибутом Display, в путь к картинке.
+		/// Конвертирует значение Bool в состояние окна.
 		/// </summary>
 		/// <param name="value">Значение перечисления RoosterColor.</param>
 		/// <param name="targetType">Целевой тип конвертации.</param>

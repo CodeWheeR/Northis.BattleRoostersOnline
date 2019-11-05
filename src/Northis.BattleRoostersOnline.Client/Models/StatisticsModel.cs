@@ -4,7 +4,7 @@ using Northis.BattleRoostersOnline.Client.GameServer;
 namespace Northis.BattleRoostersOnline.Client.Models
 {
 	/// <summary>
-	/// Инкапсулирует игровую статистику.
+	/// Представляет игровую статистику.
 	/// </summary>
 	class StatisticsModel
 	{

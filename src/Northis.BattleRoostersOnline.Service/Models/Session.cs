@@ -55,7 +55,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 
 		#region Inner
 		/// <summary>
-		/// Инкапсулирует пользовательские данные.
+		/// Представляет пользовательские данные.
 		/// </summary>
 		private class UserData
 		{

@@ -118,7 +118,6 @@ namespace Northis.BattleRoostersOnline.Server
 			else
 				logger.Fatal(e.ExceptionObject);
 
-			Console.WriteLine( $"[FATAL] Возникло необработанное исключение {e.ExceptionObject.GetType()}. Проверьте логи...");
 			Console.ReadLine();
 			Environment.Exit(1);
 		}

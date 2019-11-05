@@ -12,14 +12,14 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 	[ServiceContract]
 	public interface IEditService
 	{
-        #region Operation Contracts
-        /// <summary>
-        /// Контракт операции. Отвечает за редактирование выбранного петуха конкретного пользователя.
-        /// </summary>
-        /// <param name="token">Токен.</param>
-        /// <param name="sourceRooster">Изменяемый петух.</param>
-        /// <param name="editRooster">Редактированный петух.</param>
-        [OperationContract]
+		#region Operation Contracts
+		/// <summary>
+		/// Контракт операции. Отвечает за редактирование выбранного петуха конкретного пользователя.
+		/// </summary>
+		/// <param name="token">Токен.</param>
+		/// <param name="sourceRoosterToken">Изменяемый петух.</param>
+		/// <param name="editRooster">Редактированный петух.</param>
+		[OperationContract]
 		Task<bool> EditAsync(string token, string sourceRoosterToken, RoosterEditDto editRooster);
 
 		/// <summary>
@@ -35,7 +35,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		/// Контракт операции. Отвечает за удаление петуха.
 		/// </summary>
 		/// <param name="token">Токен.</param>
-		/// <param name="rooster">Удаляемый петух.</param>
+		/// <param name="deleteRoosterToken">Удаляемый петух.</param>
 		/// <returns>Task.</returns>
 		[OperationContract]
 		Task<bool> RemoveAsync(string token, string deleteRoosterToken);

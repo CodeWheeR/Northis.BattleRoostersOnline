@@ -35,6 +35,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <summary>
 		/// Инициализирует новый экземпляр <see cref="StatisticsPublisher"/> класса.
 		/// </summary>
+		/// <param name="storage">Объект хранилища. </param>
 		public StatisticsPublisher(IDataStorageService storage) : base(storage)
 		{
 

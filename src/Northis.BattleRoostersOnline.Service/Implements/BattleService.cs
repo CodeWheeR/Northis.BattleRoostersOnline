@@ -26,6 +26,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <summary>
 		/// Инициализирует новый экземпляр <see cref="BattleService"/> класса.
 		/// </summary>
+		/// <param name="storage">Объект хранилища. </param>
 		public BattleService(IDataStorageService storage) : base(storage)
 		{
 

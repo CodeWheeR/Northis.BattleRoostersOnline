@@ -26,6 +26,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
         /// <summary>
         /// Инициализирует новый экземпляр <see cref="AuthenticateService"/> класса.
         /// </summary>
+        /// <param name="storage">Объект хранилища. </param>
         public AuthenticateService(IDataStorageService storage) : base(storage)
 		{
 			StatisticsPublisher.GetInstance(StorageService);
@@ -208,9 +209,9 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </summary>
 		/// <param name="sourceString">Исходная строка.</param>
 		/// <returns>Зашифрованная строка.</returns>
-		private async Task<string> EncryptAsync(string sourceString)
+		private Task<string> EncryptAsync(string sourceString)
 		{
-			return await Task.Run<string>(() =>
+			return Task.Run<string>(() =>
 			{
 				var result = "";
 				for (var i = 0; i < sourceString.Length; i++)
