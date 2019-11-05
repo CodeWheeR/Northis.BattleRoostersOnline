@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Класс-контракт данных, инкапсулирующий в себе характеристики петуха для редактирования.
+	/// Класс-контракт данных. Инкапсулирует в себе характеристики петуха для редактирования.
 	/// </summary>
 	public class RoosterEditDto
 	{
@@ -117,12 +117,15 @@ namespace Northis.BattleRoostersOnline.Dto
 			get;
 			set;
 		}
-		#endregion
+        #endregion
 
-		#region Methods
-		#region Public
+        #region Public Methods
 
-		public RoosterDto ToRoosterDto()
+        /// <summary>
+        /// Конвертирует объект класса RoosterEditDto в RoosterDto.
+        /// </summary>
+        /// <returns></returns>
+        public RoosterDto ToRoosterDto()
 		{
 			return new RoosterDto
 			{
@@ -172,7 +175,6 @@ namespace Northis.BattleRoostersOnline.Dto
 				   Thickness == obj.Thickness &&
 				   Weight == obj.Weight;
 		}
-		#endregion
 		#endregion
 		#endregion
 	}

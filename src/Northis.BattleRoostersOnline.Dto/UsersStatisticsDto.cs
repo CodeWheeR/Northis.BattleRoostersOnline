@@ -7,35 +7,49 @@ using System.Threading.Tasks;
 
 namespace Northis.BattleRoostersOnline.Dto
 {
-	[DataContract]
+    /// <summary>
+    /// Класс-контракт данных. Инкапсулирует в себе статистику пользователя.
+    /// </summary>
+    [DataContract]
 	public class UsersStatisticsDto
 	{
-		/// <summary>
-		/// Возвращает или устанавливает значение находится ли пользователь в онлайне.
-		/// </summary>
-		[DataMember]
+        #region Properties
+        /// <summary>
+        /// Возвращает или устанавливает значение "Находится ли пользователь в онлайне?"..
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> Если пользователь онлайн; иначе, <c>false</c>.
+        /// </value>
+        [DataMember]
 		public bool IsOnline
 		{
 			get;
 			set;
 		}
-		/// <summary>
-		/// Возвращает или устанавливает значение имени пользователя.
-		/// </summary>
-		[DataMember]
+        /// <summary>
+        /// Возвращает или устанавливает значение имени пользователя.
+        /// </summary>
+        /// <value>
+        /// Имя пользователя.
+        /// </value>
+        [DataMember]
 		public string UserName
 		{
 			get;
 			set;
 		}
-		/// <summary>
-		/// Возвращает или устанавливает значение количества побед пользователя.
-		/// </summary>
-		[DataMember]
+        /// <summary>
+        /// Возвращает или устанавливает значение счёта пользователя.
+        /// </summary>
+        /// <value>
+        /// Счёт пользователя.
+        /// </value>
+        [DataMember]
 		public int UserScore
 		{
 			get;
 			set;
 		}
-	}
+        #endregion
+    }
 }

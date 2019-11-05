@@ -13,7 +13,11 @@ using Northis.BattleRoostersOnline.Client.GameServer;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
-	internal class AuthViewModel : ViewModelBase
+    /// <summary>
+    /// Класс, инкапсулирующий в себе модель-представление "Аунтефикация".
+    /// </summary>
+    /// <seealso cref="ViewModelBase" />
+    internal class AuthViewModel : ViewModelBase
 	{
 		#region Fields
 		#region Static		

@@ -12,7 +12,7 @@ using Unity.ServiceLocation;
 namespace Northis.BattleRoostersOnline.Service.Tests
 {
 	/// <summary>
-	/// Настраивает тестовое окружение и содержит реализации сервисов и Callback-ов к ним.
+	/// Настраивает тестовое окружение и содержит реализации сервисов и Callbacks к ним.
 	/// </summary>
 	public class ServiceModuleTests
 	{
@@ -37,11 +37,17 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		/// Callback битв.
 		/// </summary>
 		protected Mock<IBattleServiceCallback> callbackBattle = new Mock<IBattleServiceCallback>();
-		#endregion
+        #endregion
 
-		#region Properties
-
-		protected IDataStorageService Storage
+        #region Properties        
+        /// <summary>
+        /// Получает хранилище игровых данных.
+        /// </summary>
+        /// <value>
+        /// Хранилище игровых данных.
+        /// </value>
+        /// <exception cref="NullReferenceException">Хранилище данных не инициализированно.</exception>
+        protected IDataStorageService Storage
 		{
 			get
 			{
@@ -54,7 +60,6 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			}
 		}
 
-		#region Protected
 		/// <summary>
 		/// Устанавливает тестовое окружение.
 		/// </summary>
@@ -80,7 +85,6 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 				storage.UserData.Clear();
 			}
 		}
-		#endregion
 		#endregion
 	}
 }

@@ -5,7 +5,7 @@ using Northis.BattleRoostersOnline.Dto;
 namespace Northis.BattleRoostersOnline.Service.Models
 {
 	/// <summary>
-	/// Класс-контракт данных, предназначенный для сериализации петухов пользователя в XML-документ.
+	/// Класс-контракт данных пользовательских петухов. Предназначен для сериализации петухов пользователя в XML-документ.
 	/// </summary>
 	[DataContract]
 	public class UserRoosters
@@ -48,8 +48,10 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Login = login;
 			Roosters = roosters;
 		}
-
-		public UserRoosters()
+        /// <summary>
+        /// Инициализирует новый экземпляр <see cref="UserRoosters"/> класса.
+        /// </summary>
+        public UserRoosters()
 		{
 		}
 		#endregion

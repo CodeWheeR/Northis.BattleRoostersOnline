@@ -1,7 +1,7 @@
 ﻿namespace Northis.BattleRoostersOnline.Service.Models
 {
 	/// <summary>
-	/// Размер гребня. Повышает урон
+	/// Инкапсулирует виды гребня петуха.
 	/// </summary>
 	public enum CrestSize
 	{

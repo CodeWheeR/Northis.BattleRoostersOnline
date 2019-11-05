@@ -17,18 +17,16 @@ using Northis.BattleRoostersOnline.Service.Models;
 namespace Northis.BattleRoostersOnline.Service.DataStorages
 {
 	/// <summary>
-	/// Класс, инкапсулирующий в себе данные о пользователях, петухах, авторизированных пользователях, игровых сессиях.
+	/// Инкапсулируюет в себе данные о пользователях, петухах, авторизированных пользователях, игровых сессиях.
 	/// </summary>
 	[Serializable]
 	public class DataStorageService : BaseService, IDataStorageService
 	{
 		#region Fields
 		/// <summary>
-		/// Бинарный сериализатор
+		/// Бинарный сериализатор.
 		/// </summary>
 		private readonly BinaryFormatter _formatter = new BinaryFormatter();
-		
-
 		private object _RoostersFileLocker = new object();
 		private object _UsersFileLocker = new object();
 		#endregion
@@ -72,7 +70,7 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		}
 
 		/// <summary>
-		/// Возвращает или задает данные об авторизированных пользователях.
+		/// Возвращает или задает авторизированных пользователей.
 		/// </summary>
 		/// <value>
 		/// Авторизированные пользователи.
@@ -92,13 +90,13 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		{
 			get;
 		}
-		#endregion
+        #endregion
 
-		#region Private Methods
-
-		
-
-		private void InitContent()
+        #region Private Methods
+        /// <summary>
+        /// Инициализирует данные о петухах и клиентах.
+        /// </summary>
+        private void InitContent()
 		{
 			LoadUserData();
 			LoadRoosters();
@@ -230,7 +228,5 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 			}
 		}
 		#endregion
-
-
 	}
 }

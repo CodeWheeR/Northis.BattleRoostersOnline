@@ -11,7 +11,7 @@ using Northis.BattleRoostersOnline.Service.Models;
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
 	/// <summary>
-	/// Singleton-класс, отвечающий за обновление и отправку клиентам глобальной статистики.
+	/// Отвечает за обновление и отправку клиентам глобальной статистики.
 	/// </summary>
 	/// <seealso cref="BaseServiceWithStorage" />
 	class StatisticsPublisher : BaseServiceWithStorage
@@ -27,13 +27,12 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </summary>
 		private List<StatisticsDto> _cachedStatistics = new List<StatisticsDto>();
 		private List<UsersStatisticsDto> _cachedUsersStatistics = new List<UsersStatisticsDto>();
-
 		private Logger _logger = LogManager.GetCurrentClassLogger();
 		#endregion
 
 		#region Public Methods		
 		/// <summary>
-		/// Запускает процесс обновления статистики.
+		/// Асинхронно запускает процесс обновления статистики.
 		/// </summary>
 		public async Task UpdateStatistics()
 		{
@@ -101,16 +100,16 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		}
 
 		/// <summary>
-		/// Возвращает текущую статистику.
+		/// Возвращает игровую статистику.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>Игровая статистика.</returns>
 		public List<StatisticsDto> GetGlobalStatistics() => _cachedStatistics;
 
 		/// <summary>
 		/// Выполняет подписку пользователя на обновление статистики.
 		/// </summary>
-		/// <param name="token">The token.</param>
-		/// <param name="callback">The callback.</param>
+		/// <param name="token">Токен.</param>
+		/// <param name="callback">Метод оповещения пользователя.</param>
 		public void Subscribe(string token, IAuthenticateServiceCallback callback)
 		{
 			try
@@ -135,16 +134,17 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <summary>
 		/// Выполняет отписку пользователя от обновлений.
 		/// </summary>
-		/// <param name="token">The token.</param>
+		/// <param name="token">Токен.</param>
 		public void Unsubscribe(string token)
 		{
 			_subscribers.Remove(token);
 		}
 
-		/// <summary>
-		/// Асинхронно возвращает объект класса <see cref="StatisticsPublisher"/>.
-		/// </summary>
-		public static async Task<StatisticsPublisher> GetInstanceAsync()
+        #region Static
+        /// <summary>
+        /// Асинхронно возвращает объект класса <see cref="StatisticsPublisher"/>.
+        /// </summary>
+        public static async Task<StatisticsPublisher> GetInstanceAsync()
 		{
 			if (_instance == null)
 			{
@@ -167,14 +167,14 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 			return _instance;
 		}
+        #endregion
+        #endregion
 
-		#endregion
-
-		#region Private Methods
-		/// <summary>
-		/// Выполняется при изменении статистики.
-		/// </summary>
-		private async void OnStatisticsChanged()
+        #region Private Methods
+        /// <summary>
+        /// Асинхронно обрабатывает изменение статистики.
+        /// </summary>
+        private async void OnStatisticsChanged()
 		{
 			try
 			{
@@ -191,7 +191,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		}
 
 		/// <summary>
-		/// Выполняет отправку статистики пользователю с указанным токеном.
+		/// Асинхронно выполняет отправку статистики пользователю с указанным токеном.
 		/// </summary>
 		/// <param name="receiverToken">Токен получателя.</param>
 		private async Task SendStatistics(string receiverToken)

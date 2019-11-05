@@ -9,15 +9,19 @@ using Northis.BattleRoostersOnline.Service.Models;
 
 namespace Northis.BattleRoostersOnline.Service.DataStorages
 {
-	public interface IDataStorageService
+    /// <summary>
+    /// Предоставляет контракт сервиса хранения данных.
+    /// </summary>
+    public interface IDataStorageService
 	{
-		/// <summary>
-		/// Возвращает или задает данные пользователя.
-		/// </summary>
-		/// <value>
-		/// Данные пользователя.
-		/// </value>
-		Dictionary<string, string> UserData{ get; }
+        #region Properties
+        /// <summary>
+        /// Возвращает или задает данные пользователя.
+        /// </summary>
+        /// <value>
+        /// Данные пользователя.
+        /// </value>
+        Dictionary<string, string> UserData{ get; }
 		/// <summary>
 		/// Возвращает или задает данные петухов.
 		/// </summary>
@@ -39,10 +43,13 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// Игровые сессии.
 		/// </value>
 		Dictionary<string, Session> Sessions{ get; }
-		/// <summary>
-		/// Асинхронно сохраняет петухов.
-		/// </summary>
-		Task SaveRoostersAsync();
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Асинхронно сохраняет петухов.
+        /// </summary>
+        Task SaveRoostersAsync();
 		/// <summary>
 		/// Загружает петухов.
 		/// </summary>
@@ -55,6 +62,6 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// Загружает данные пользователей.
 		/// </summary>
 		void LoadUserData();
-
-	}
+        #endregion
+    }
 }

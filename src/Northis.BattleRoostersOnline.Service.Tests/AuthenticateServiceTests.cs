@@ -10,31 +10,36 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 	[TestFixture]
 	public class AuthenticateServiceTests : ServiceModuleTests
 	{
-		#region Test Methods
-		#region Public
+        #region Test Methods
 
-		/// <summary>
-		/// Проверят возвращаемый токен.
-		/// </summary>
-		[TestCase("NewUser", "password")]
+        /// <summary>
+        /// Проверят возвращаемый токен.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
+        [TestCase("NewUser", "password")]
 		public void LogIn(string login, string password)
 		{
 			Assert.IsNotNull(AuthenticateService.LogInAsync(login, password));
 		}
-		/// <summary>
-		/// Проверяет реакцию сервиса на неверный логин и пароль.
-		/// </summary>
-		[TestCase("NewUser", "password")]
+        /// <summary>
+        /// Асинхронно проверяет реакцию сервиса на неверный логин и пароль.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль</param>
+        [TestCase("NewUser", "password")]
 		public async Task WrongLogInData(string login, string password)
 		{
 			string result =  await AuthenticateService.LogInAsync(login, password, CallbackAuth.Object);
 
 			Assert.AreEqual(AuthenticateStatus.WrongLoginOrPassword.ToString(), result);
 		}
-		/// <summary>
-		/// Проверяет реакцию сервиса на вход уже авторизированного пользователя.
-		/// </summary>
-		[TestCase("NewUser","password")]
+        /// <summary>
+        /// Асинхронно проверяет реакцию сервиса на вход уже авторизированного пользователя.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
+        [TestCase("NewUser","password")]
 		public async Task AlreadyLoggedIn(string login, string password)
 		{
 			await AuthenticateService.RegisterAsync(login, password, CallbackAuth.Object);
@@ -42,30 +47,36 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 
 			Assert.AreEqual(AuthenticateStatus.AlreadyLoggedIn.ToString(), result);
 		}
-		/// <summary>
-		/// Проверяет регистрацию нового пользователя.
-		/// </summary>
-		[TestCase("NewUser", "password")]
+        /// <summary>
+        /// Асинхронно проверяет регистрацию нового пользователя.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
+        [TestCase("NewUser", "password")]
 		public async Task CorrectAuthorize(string login, string password)
 		{
 			string result = await AuthenticateService.RegisterAsync(login, password, CallbackAuth.Object);
 
 			Assert.IsNotNull(result);
 		}
-		/// <summary>
-		/// Проверяет регистрацию нового пользователя.
-		/// </summary>
-		[TestCase("NewUser", "password")]
+        /// <summary>
+        /// Асинхронно проверяет регистрацию нового пользователя.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
+        [TestCase("NewUser", "password")]
 		public async Task Register(string login, string password)
 		{
 			string result = await AuthenticateService.RegisterAsync(login, password, CallbackAuth.Object);
 
 			Assert.IsNotNull(result);
 		}
-		/// <summary>
-		/// Проверяет поведение сервиса при регистрации уже зарегистрированного пользователя.
-		/// </summary>
-		[TestCase("NewUser", "password")]
+        /// <summary>
+        /// Асинхронно проверяет поведение сервиса при регистрации уже зарегистрированного пользователя.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
+        [TestCase("NewUser", "password")]
 		public async Task AlreadyRegistered(string login, string password)
 		{
 			string result;
@@ -74,12 +85,12 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 
 			Assert.AreEqual(result, AuthenticateStatus.AlreadyRegistered.ToString());
 		}
-		/// <summary>
-		/// Проверяет поведение сервиса при регистрации с недопустимыми комбинациями логина и пароля.
-		/// </summary>
-		/// <param name="login">Логин.</param>
-		/// <param name="password">Пароль.</param>
-		[TestCase("soso", "password")]
+        /// <summary>
+        /// Асинхронно проверяет поведение сервиса при регистрации с недопустимыми комбинациями логина и пароля.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
+        [TestCase("soso", "password")]
 		[TestCase(null, "password")]
 		[TestCase("sosssso", "pas")]
 		[TestCase("sssaaoso", null)]
@@ -90,10 +101,12 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 
 			Assert.AreEqual(result, AuthenticateStatus.WrongDataFormat.ToString());
 		}
-		/// <summary>
-		/// Проверяет корректность выхода пользователя из учетной записи.
-		/// </summary>
-		[TestCase("NewUser", "password")]
+        /// <summary>
+        /// Асинхронно проверяет корректность выхода пользователя из учетной записи.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
+        [TestCase("NewUser", "password")]
 		public async Task LogOut(string login, string password)
 		{
 			string token = await AuthenticateService.RegisterAsync(login, password, CallbackAuth.Object);
@@ -102,17 +115,17 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 
 			Assert.AreEqual(logOutStatus, true);
 		}
-		/// <summary>
-		/// Проверяет попытку выхода неавторизированного пользователя.
-		/// </summary>
-		[TestCase("SomeKey")]
+        /// <summary>
+        /// Асинхронно проверяет попытку выхода неавторизированного пользователя.
+        /// </summary>
+        /// <param name="token">Токен.</param>
+        [TestCase("SomeKey")]
 		public async Task LogOutNotAuthorized(string token)
 		{
 			bool logOutStatus = await AuthenticateService.LogOutAsync(token);
 
 			Assert.AreEqual(logOutStatus, false);
 		}
-		#endregion
 		#endregion
 	}
 }

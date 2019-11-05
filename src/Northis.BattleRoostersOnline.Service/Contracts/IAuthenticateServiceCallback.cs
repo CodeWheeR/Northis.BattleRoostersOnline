@@ -5,15 +5,17 @@ using Northis.BattleRoostersOnline.Dto;
 
 namespace Northis.BattleRoostersOnline.Service.Contracts
 {
-	/// <summary>
-	/// Контракт сервиса, ответственного за оповещения.
-	/// </summary>
-	public interface IAuthenticateServiceCallback
+    /// <summary>
+    /// Контракт Callbacks сервиса аунтефикации. Оповещает пользователей о состоянии аунтефикации.
+    /// </summary>
+    public interface IAuthenticateServiceCallback
 	{
-		/// <summary>
-		/// Контракт операции, ответственной за оповещение о начале матча.
-		/// </summary>
-		[OperationContract(IsOneWay = true)]
+        #region Operation Contracts
+        /// <summary>
+        /// Контракт операции. Оповещает о начале матча.
+        /// </summary>
+        [OperationContract(IsOneWay = true)]
 		void GetNewGlobalStatistics(List<StatisticsDto> statistics, List<UsersStatisticsDto> usersStatistics);
-	}
+        #endregion
+    }
 }

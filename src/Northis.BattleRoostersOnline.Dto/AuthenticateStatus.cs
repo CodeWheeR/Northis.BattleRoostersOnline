@@ -3,7 +3,7 @@
 namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Перечисление-контракт данных, передающее пользователю статус аунтефикации.
+	/// Перечисление-контракт данных. Передает пользователю статус аунтефикации.
 	/// </summary>
 	[DataContract]
 	public enum AuthenticateStatus

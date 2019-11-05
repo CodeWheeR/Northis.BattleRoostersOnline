@@ -4,7 +4,11 @@ using Northis.BattleRoostersOnline.Client.Models;
 
 namespace Northis.BattleRoostersOnline.Client.Validators
 {
-	internal class RoosterModelValidator : ValidatorBase<RoosterModel>
+    /// <summary>
+    /// Класс, предоставляющий проверку вводимых пользователем значений.
+    /// </summary>
+    /// <seealso cref="ValidatorBase{Northis.BattleRoostersOnline.Client.Models.RoosterModel}" />
+    internal class RoosterModelValidator : ValidatorBase<RoosterModel>
 	{
 		#region Protected Methods
 		/// <summary>
