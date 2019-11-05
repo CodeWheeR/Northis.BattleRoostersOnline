@@ -80,6 +80,7 @@
       <xs:element minOccurs="0" name="Brickness" type="xs:int" />
       <xs:element minOccurs="0" name="Color" type="tns:RoosterColorType" />
       <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeType" />
+      <xs:element minOccurs="0" name="Damage" type="xs:int" />
       <xs:element minOccurs="0" name="Health" type="xs:double" />
       <xs:element minOccurs="0" name="Height" type="xs:int" />
       <xs:element minOccurs="0" name="Luck" type="xs:int" />

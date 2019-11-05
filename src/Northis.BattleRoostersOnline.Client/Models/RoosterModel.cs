@@ -10,7 +10,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 	/// Предоставляет модель петуха.
 	/// </summary>
 	/// <seealso cref="ValidatableModelBase" />
-	internal class RoosterModel : ValidatableModelBase, ICloneable
+	internal class RoosterModel : ValidatableModelBase
 	{
 		#region Fields
 		#region Limiters
@@ -90,6 +90,10 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		/// </summary>
 		public static readonly PropertyData WinStreakProperty = RegisterProperty(nameof(WinStreak), typeof(int));
 		/// <summary>
+		/// Зарегистрированное свойство "Урон" петуха.
+		/// </summary>
+		public static readonly PropertyData DamageProperty = RegisterProperty(nameof(Damage), typeof(double));
+		/// <summary>
 		/// Зарегистрированное свойство "Максимальное здоровье" петуха.
 		/// </summary>
 		public static readonly PropertyData MaxHealthProperty = RegisterProperty(nameof(MaxHealth), typeof(int));
@@ -121,6 +125,86 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			Health = 100;
 			MaxHealth = 100;
 			Stamina = 100;
+
+			ColorModifications = new Dictionary<RoosterColor, Action>
+			{
+				{
+					RoosterColor.Red, () =>
+					{
+						ChangeMaxLimit(nameof(Health), 0, ref _maxHealth, 120);
+						MaxHealth = _maxHealth;
+						Health = _maxHealth;
+					}
+				},
+				{
+					RoosterColor.Blue, () =>
+					{
+						ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, 50);
+						MaxBrickness = _maxBrickness;
+					}
+				},
+				{
+					RoosterColor.Black, () =>
+					{
+						ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10);
+						MaxWeight = _maxWeight;
+					}
+				},
+				{
+					RoosterColor.Brown, () =>
+					{
+						ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, 50);
+						MaxThickness = _maxThickness;
+					}
+				},
+				{
+					RoosterColor.White, () =>
+					{
+						ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50);
+						MaxLuck = _maxLuck;
+					}
+				}
+			};
+
+			ClearModifications = new Dictionary<RoosterColor, Action>
+			{
+				{
+					RoosterColor.Red, () =>
+					{
+						ChangeMaxLimit(nameof(Health), 0, ref _maxHealth, DefaultMaxHealth);
+						MaxHealth = DefaultMaxHealth;
+					}
+				},
+				{
+					RoosterColor.Blue, () =>
+					{
+						ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness);
+						MaxBrickness = DefaultMaxBrickness;
+					}
+				},
+				{
+					RoosterColor.White, () =>
+					{
+						ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck);
+						MaxLuck = DefaultMaxLuck;
+					}
+				},
+				{
+					RoosterColor.Brown, () =>
+					{
+						ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness);
+						MaxThickness = DefaultMaxThickness;
+					}
+				},
+				{
+					RoosterColor.Black, () =>
+					{
+						ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight);
+						MaxWeight = DefaultMaxWeight;
+					}
+				}
+			};
+
 			Color = RoosterColor.Black;
 			Height = _minHeight;
 		}
@@ -146,6 +230,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				WinStreak = rooster.WinStreak;
 				Health = rooster.Health;
 				MaxHealth = rooster.MaxHealth;
+				Damage = rooster.Damage;
 			}
 		}
 		#endregion
@@ -262,6 +347,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			set
 			{
 				SetValue(ColorProperty, value);
+				OnColorChange();
 			}
 		}
 		/// <summary>
@@ -336,6 +422,14 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(MaxLuckProperty);
 			set => SetValue(MaxLuckProperty, value);
 		}
+		/// <summary>
+		/// Возвращает или устанавливает урон петуха.
+		/// </summary>
+		public double Damage
+		{
+			get => GetValue<double>(DamageProperty);
+			set => SetValue(DamageProperty, value);
+		}
 		#endregion
 
 		#region Public Methods
@@ -356,41 +450,61 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				Thickness = Thickness
 			};
 
-		/// <summary>
-		/// Создает новый объект, являющийся копией текущего экземпляра.
-		/// </summary>
-		/// <returns>Новый объект, являющийся копией этого экземпляра.</returns>
-		public object Clone() =>
-			new RoosterModel
-			{
-				Health = Health,
-				Stamina = Stamina,
-				Color = Color,
-				Crest = Crest,
-				Brickness = Brickness,
-				Weight = Weight,
-				Height = Height,
-				Luck = Luck,
-				Thickness = Thickness,
-				Name = Name,
-				WinStreak = WinStreak,
-				Token = Token
-			};
 		#endregion
 
 		#region Private Methods
-
-		private T Clamp<T>(T value, T min, T max) where T : IComparable => value.CompareTo(min) < 0 ? min : value.CompareTo(max) > 0 ? max : value;
 		/// <summary>
-		/// Вычисляет порядковый индекс значения перечисления.
+		/// Выполняет ограничение значения минимальным и максимальным уровнем.
 		/// </summary>
-		/// <param name="first">The first.</param>
+		/// <param name="value">Само значение.</param>
+		/// <param name="min">Возможный минимум.</param>
+		/// <param name="max">Возможный максимум.</param>
 		/// <returns></returns>
-		private int CalcEnumIndex(Enum first)
+		private T Clamp<T>(T value, T min, T max) where T : IComparable => value.CompareTo(min) < 0 ? min : value.CompareTo(max) > 0 ? max : value;
+
+		/// <summary>
+		/// Выполняет смену модификаций при изменении цвета.
+		/// </summary>
+		private void OnColorChange()
 		{
-			var names = Enum.GetNames(first.GetType())
-							.ToList();
-			return names.IndexOf(first.ToString());
+			ClearColorModifications();
+			ColorModifications[Color]
+				.Invoke();
+		}
+		/// <summary>
+		/// Выполняет очистку всех модификаций.
+		/// </summary>
+		private void ClearColorModifications()
+		{
+			foreach (var clearModification in ClearModifications)
+			{
+				if (clearModification.Key != Color)
+				{
+					clearModification.Value();
+				}
+			}
+		}
+		/// <summary>
+		/// Выполняет смену максимального порога значения.
+		/// </summary>
+		/// <param name="propertyName">Name of the property.</param>
+		/// <param name="minValue">The minimum value.</param>
+		/// <param name="maxValue">The maximum value.</param>
+		/// <param name="newValue">The new value.</param>
+		private void ChangeMaxLimit(string propertyName, int minValue, ref int maxValue, int newValue)
+		{
+			var property = GetType()
+						   .GetProperties()
+						   .First(x => x.Name == propertyName);
+			maxValue = newValue;
+			if (property.PropertyType == typeof(double))
+			{
+				property.SetValue(this, Clamp((double)property.GetValue(this), minValue, maxValue));
+			}
+			else if (property.PropertyType == typeof(int))
+			{
+				property.SetValue(this, Clamp((int)property.GetValue(this), minValue, maxValue));
+			}
 		}
 
 		private RoosterColor ColorParse(RoosterColorType color)

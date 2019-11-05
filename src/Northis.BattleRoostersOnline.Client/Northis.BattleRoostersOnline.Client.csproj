@@ -140,10 +140,8 @@
     <Compile Include="Converters\EnumValueToStringPath.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Models\AuthModel.cs" />
-    <Compile Include="Models\RoosterSettings.cs" />
     <Compile Include="Models\StatisticsModel.cs" />
     <Compile Include="Models\UserStatistic.cs" />
-    <Compile Include="Validators\RoosterModelValidator.cs" />
     <Compile Include="ViewModels\AuthViewModel.cs" />
     <Compile Include="ViewModels\EditRoosterViewModel.cs" />
     <Compile Include="ViewModels\FightViewModel.cs" />

@@ -397,6 +397,9 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         private Northis.BattleRoostersOnline.Client.GameServer.CrestSizeType CrestField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int DamageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private double HealthField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -471,6 +474,19 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
                 if ((this.CrestField.Equals(value) != true)) {
                     this.CrestField = value;
                     this.RaisePropertyChanged("Crest");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Damage {
+            get {
+                return this.DamageField;
+            }
+            set {
+                if ((this.DamageField.Equals(value) != true)) {
+                    this.DamageField = value;
+                    this.RaisePropertyChanged("Damage");
                 }
             }
         }

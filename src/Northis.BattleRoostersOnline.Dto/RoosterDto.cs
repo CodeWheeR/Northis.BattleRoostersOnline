@@ -179,7 +179,20 @@ namespace Northis.BattleRoostersOnline.Dto
 			set;
 		}
 
-        #endregion
+		/// <summary>
+		/// Возвращает или задает силу удара петуха.
+		/// </summary>
+		/// <value>
+		/// Сила удара.
+		/// </value>
+		[DataMember]
+		public int Damage
+		{
+			get;
+			set;
+		}
+
+		#endregion
 
 		#region .ctor
 		/// <summary>
