@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
+using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Events;
 using Northis.BattleRoostersOnline.Service.Implements;
 
@@ -696,10 +697,11 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// </summary>
 		private void SendRoosterStatus()
 		{
-			FirstUser.GetRoosterStatusAsync(FirstUser.Rooster != null ? FirstUser.Rooster.ToRoosterDto() : null,
-											SecondUser.Rooster != null ? SecondUser.Rooster.ToRoosterDto() : null);
-			SecondUser.GetRoosterStatusAsync(SecondUser.Rooster != null ? SecondUser.Rooster.ToRoosterDto() : null,
-											 FirstUser.Rooster != null ? FirstUser.Rooster.ToRoosterDto() : null);
+			;
+			FirstUser.GetRoosterStatusAsync(FirstUser.Rooster != null ? ((DataStorageService)StorageService).Mapper.Map<RoosterModel, RoosterDto>(FirstUser.Rooster) : null,
+											SecondUser.Rooster != null ? ((DataStorageService)StorageService).Mapper.Map<RoosterModel, RoosterDto>(SecondUser.Rooster) : null);
+			SecondUser.GetRoosterStatusAsync(SecondUser.Rooster != null ? ((DataStorageService)StorageService).Mapper.Map<RoosterModel, RoosterDto>(SecondUser.Rooster) : null,
+											 FirstUser.Rooster != null ? ((DataStorageService)StorageService).Mapper.Map<RoosterModel, RoosterDto>(FirstUser.Rooster) : null);
 		}
 
 		/// <summary>

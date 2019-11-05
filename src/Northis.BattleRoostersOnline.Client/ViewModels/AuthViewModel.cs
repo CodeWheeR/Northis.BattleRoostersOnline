@@ -8,8 +8,8 @@ using Catel.Data;
 using Catel.MVVM;
 using Catel.Services;
 using NLog;
-using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.GameServer;
+using Northis.BattleRoostersOnline.Client.Models;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {

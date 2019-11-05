@@ -41,8 +41,8 @@
   <xs:complexType name="RoosterEditDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="Brickness" type="xs:int" />
-      <xs:element minOccurs="0" name="ColorDto" type="tns:RoosterColorDto" />
-      <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeDto" />
+      <xs:element minOccurs="0" name="Color" type="tns:RoosterColor" />
+      <xs:element minOccurs="0" name="Crest" type="tns:CrestSize" />
       <xs:element minOccurs="0" name="Height" type="xs:int" />
       <xs:element minOccurs="0" name="Luck" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
@@ -51,7 +51,7 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RoosterEditDto" nillable="true" type="tns:RoosterEditDto" />
-  <xs:simpleType name="RoosterColorDto">
+  <xs:simpleType name="RoosterColor">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Black" />
       <xs:enumeration value="Brown" />
@@ -60,15 +60,15 @@
       <xs:enumeration value="White" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="RoosterColorDto" nillable="true" type="tns:RoosterColorDto" />
-  <xs:simpleType name="CrestSizeDto">
+  <xs:element name="RoosterColor" nillable="true" type="tns:RoosterColor" />
+  <xs:simpleType name="CrestSize">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Small" />
       <xs:enumeration value="Medium" />
       <xs:enumeration value="Big" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="CrestSizeDto" nillable="true" type="tns:CrestSizeDto" />
+  <xs:element name="CrestSize" nillable="true" type="tns:CrestSize" />
   <xs:complexType name="ArrayOfRoosterDto">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="RoosterDto" nillable="true" type="tns:RoosterDto" />
@@ -78,8 +78,8 @@
   <xs:complexType name="RoosterDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="Brickness" type="xs:int" />
-      <xs:element minOccurs="0" name="ColorDto" type="tns:RoosterColorDto" />
-      <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeDto" />
+      <xs:element minOccurs="0" name="Color" type="tns:RoosterColor" />
+      <xs:element minOccurs="0" name="Crest" type="tns:CrestSize" />
       <xs:element minOccurs="0" name="Health" type="xs:double" />
       <xs:element minOccurs="0" name="Height" type="xs:int" />
       <xs:element minOccurs="0" name="Luck" type="xs:int" />

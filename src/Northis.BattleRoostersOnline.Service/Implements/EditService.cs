@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
+using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Models;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
@@ -92,7 +93,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					if (StorageService.RoostersData.ContainsKey(login))
 					{
 						//return 
-							var val = StorageService.RoostersData[login].Values.Select(x => x.ToRoosterDto());
+							var val = StorageService.RoostersData[login].Values.Select(x => ((DataStorageService) StorageService).Mapper.Map<RoosterModel, RoosterDto>(x));
 							return val;
 					}
 

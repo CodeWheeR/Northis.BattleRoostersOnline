@@ -2,12 +2,17 @@
 using System.Configuration;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using AutoMapper;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Implements;
 using Unity;
 using Unity.Wcf;
+using AutoMapper;
+using AutoMapper.Mappers;
+using Northis.BattleRoostersOnline.Dto;
+using Northis.BattleRoostersOnline.Service.Models;
 
 namespace Northis.BattleRoostersOnline.Server
 {
@@ -48,10 +53,18 @@ namespace Northis.BattleRoostersOnline.Server
 
 			var container = new UnityContainer();
 
-			container.RegisterType<IDataStorageService, DataStorageService>();
+			var config = new MapperConfiguration(cfg => cfg.CreateMap<RoosterModel, RoosterDto>().IgnoreAllSourcePropertiesWithAnInaccessibleSetter());
+
+			var mapper = config.CreateMapper();
+
+			BaseServiceWithStorage.SetStorage(new DataStorageService(mapper));
+
 			container.RegisterType<IEditService, EditService>();
 			container.RegisterType<IBattleService, BattleService>();
 			container.RegisterType<IAuthenticateService, AuthenticateService>();
+			
+
+			
 
 
 			var selfHost = new UnityServiceHost(container, typeof(GameServicesProvider), baseAddress);

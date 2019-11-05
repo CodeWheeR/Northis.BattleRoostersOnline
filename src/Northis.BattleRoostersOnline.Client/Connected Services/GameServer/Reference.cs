@@ -200,10 +200,10 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         private int BricknessField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Northis.BattleRoostersOnline.Client.GameServer.RoosterColorDto ColorDtoField;
+        private Northis.BattleRoostersOnline.Client.GameServer.RoosterColor ColorField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Northis.BattleRoostersOnline.Client.GameServer.CrestSizeDto CrestField;
+        private Northis.BattleRoostersOnline.Client.GameServer.CrestSize CrestField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int HeightField;
@@ -244,20 +244,20 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Northis.BattleRoostersOnline.Client.GameServer.RoosterColorDto ColorDto {
+        public Northis.BattleRoostersOnline.Client.GameServer.RoosterColor Color {
             get {
-                return this.ColorDtoField;
+                return this.ColorField;
             }
             set {
-                if ((this.ColorDtoField.Equals(value) != true)) {
-                    this.ColorDtoField = value;
-                    this.RaisePropertyChanged("ColorDto");
+                if ((this.ColorField.Equals(value) != true)) {
+                    this.ColorField = value;
+                    this.RaisePropertyChanged("Color");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Northis.BattleRoostersOnline.Client.GameServer.CrestSizeDto Crest {
+        public Northis.BattleRoostersOnline.Client.GameServer.CrestSize Crest {
             get {
                 return this.CrestField;
             }
@@ -345,8 +345,8 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RoosterColorDto", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
-    public enum RoosterColorDto : int {
+    [System.Runtime.Serialization.DataContractAttribute(Name="RoosterColor", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
+    public enum RoosterColor : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Black = 0,
@@ -365,8 +365,8 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CrestSizeDto", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
-    public enum CrestSizeDto : int {
+    [System.Runtime.Serialization.DataContractAttribute(Name="CrestSize", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
+    public enum CrestSize : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Small = 0,
@@ -391,10 +391,10 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         private int BricknessField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Northis.BattleRoostersOnline.Client.GameServer.RoosterColorDto ColorDtoField;
+        private Northis.BattleRoostersOnline.Client.GameServer.RoosterColor ColorField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Northis.BattleRoostersOnline.Client.GameServer.CrestSizeDto CrestField;
+        private Northis.BattleRoostersOnline.Client.GameServer.CrestSize CrestField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private double HealthField;
@@ -450,20 +450,20 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Northis.BattleRoostersOnline.Client.GameServer.RoosterColorDto ColorDto {
+        public Northis.BattleRoostersOnline.Client.GameServer.RoosterColor Color {
             get {
-                return this.ColorDtoField;
+                return this.ColorField;
             }
             set {
-                if ((this.ColorDtoField.Equals(value) != true)) {
-                    this.ColorDtoField = value;
-                    this.RaisePropertyChanged("ColorDto");
+                if ((this.ColorField.Equals(value) != true)) {
+                    this.ColorField = value;
+                    this.RaisePropertyChanged("Color");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Northis.BattleRoostersOnline.Client.GameServer.CrestSizeDto Crest {
+        public Northis.BattleRoostersOnline.Client.GameServer.CrestSize Crest {
             get {
                 return this.CrestField;
             }
