@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Класс-контракт данных, инкапсулирующий в себе характеристики петуха для редактирования.
+	/// Представляет редактируемые характеристики петуха.
 	/// </summary>
+	[DataContract]
 	public class RoosterEditDto
 	{
 		#region Properties		
@@ -47,7 +49,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Цвет петуха.
 		/// </value>
 		[DataMember]
-		public RoosterColorDto ColorDto
+		public RoosterColorType Color
 		{
 			get;
 			set;
@@ -73,7 +75,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Размер гребня.
 		/// </value>
 		[DataMember]
-		public CrestSizeDto Crest
+		public CrestSizeType Crest
 		{
 			get;
 			set;
@@ -119,23 +121,37 @@ namespace Northis.BattleRoostersOnline.Dto
 		}
 		#endregion
 
-		#region Methods
-		#region Public
-
-		public RoosterDto ToRoosterDto()
+		#region .ctor
+		/// <summary>
+		/// Инициализует новый объект класса <see cref="RoosterEditDto"/>.
+		/// </summary>
+		/// <param name="name">Имя.</param>
+		/// <param name="weight">Вес.</param>
+		/// <param name="height">Рост.</param>
+		/// <param name="brickness">Юркость.</param>
+		/// <param name="thickness">Толщина покрова.</param>
+		/// <param name="luck">Удача.</param>
+		/// <param name="crest">Гребень.</param>
+		/// <param name="color">Цвет.</param>
+		public RoosterEditDto(string name, double weight, int height, int brickness, int thickness, int luck, CrestSizeType crest, RoosterColorType color)
 		{
-			return new RoosterDto
-			{
-				Weight = Weight,
-				Height = Height,
-				Brickness = Brickness,
-				Thickness = Thickness,
-				Luck = Luck,
-				Crest = Crest,
-				ColorDto = ColorDto,
-				Name = Name
-			};
+			Name = name;
+			Weight = weight;
+			Height = height;
+			Brickness = brickness;
+			Thickness = thickness;
+			Luck = luck;
+			Crest = crest;
+			Color = color;
 		}
+
+		public RoosterEditDto()
+		{
+
+		}
+		#endregion
+
+		#region Public Methods
 
 		#region Overrided
 		/// <summary>
@@ -164,7 +180,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public bool Equals(RoosterEditDto obj)
 		{
 			return Brickness == obj.Brickness &&
-				   ColorDto == obj.ColorDto &&
+				   Color == obj.Color &&
 				   Crest == obj.Crest &&
 				   Height == obj.Height &&
 				   Luck == obj.Luck &&
@@ -172,7 +188,6 @@ namespace Northis.BattleRoostersOnline.Dto
 				   Thickness == obj.Thickness &&
 				   Weight == obj.Weight;
 		}
-		#endregion
 		#endregion
 		#endregion
 	}

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
+using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Models;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
@@ -17,23 +18,39 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 	public class BattleService : BaseServiceWithStorage, IBattleService
 	{
-		private Logger _logger = LogManager.GetCurrentClassLogger();
+        #region Fields
+        private Logger _logger = LogManager.GetCurrentClassLogger();
+		#endregion
 
-		#region Public Methods
+		#region ctor
 		/// <summary>
-		/// Производит поиск матча.
+		/// Инициализирует новый экземпляр <see cref="BattleService"/> класса.
 		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="rooster">Петух.</param>
-		/// <returns>Task.</returns>
+		/// <param name="storage">Объект хранилища. </param>
+		public BattleService(IDataStorageService storage) : base(storage)
+		{
 
-		public void FindMatchAsync(string token, string roosterToken)
+		}
+		#endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Производит поиск матча.
+        /// </summary>
+        /// <param name="token">Токен.</param>
+        /// <param name="rooster">Петух.</param>
+        public void FindMatchAsync(string token, string roosterToken)
 		{
 			var callback = OperationContext.Current.GetCallbackChannel<IBattleServiceCallback>();
 			FindMatchAsync(token, roosterToken, callback);
 		}
-
-		public async void FindMatchAsync(string token, string roosterToken, IBattleServiceCallback callback)
+        /// <summary>
+        /// Асинхронно производит поиск матча.
+        /// </summary>
+        /// <param name="token">Токен.</param>
+        /// <param name="roosterToken">Токен петуха.</param>
+        /// <param name="callback">Метод оповещения пользователя.</param>
+        public async void FindMatchAsync(string token, string roosterToken, IBattleServiceCallback callback)
 		{
 			if (!StorageService.LoggedUsers.ContainsKey(token))
 			{
@@ -67,7 +84,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					else
 					{
 						var matchToken = await GenerateTokenAsync(StorageService.Sessions.ContainsKey);
-						session = new Session(matchToken);
+						session = new Session(matchToken, StorageService);
 						session.RegisterFighter(token, StorageService.RoostersData[login][roosterToken], callback);
 						StorageService.Sessions.Add(matchToken, session);
 					}
@@ -120,12 +137,10 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		}
 
 		/// <summary>
-		/// Начинает поединк петухов.
+		/// Асинхронно начинает поединк петухов.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
-		/// <returns>Task.</returns>
-
 		public async void StartBattleAsync(string token, string matchToken)
 		{
 			try
@@ -151,12 +166,10 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 
 		/// <summary>
-		/// Производит сдачу боя.
+		/// Асинхронно производит сдачу боя.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
-		/// <returns>Task.</returns>
-
 		public async void GiveUpAsync(string token, string matchToken)
 		{
 			try

@@ -18,12 +18,16 @@ using LogManager = Catel.Logging.LogManager;
 
 namespace Northis.BattleRoostersOnline.Client
 {
-	/// <summary>
-	/// Логика взаимодействия для App.xaml
-	/// </summary>
-	public partial class App : Application
+    /// <summary>
+    /// Обеспечивает логику взаимодействия с App.xaml.
+    /// </summary>
+    public partial class App : Application
 	{
-		public App()
+        #region .ctor
+        /// <summary>
+        /// Инициализирует новый экземпляр <see cref="App"/> класса.
+        /// </summary>
+        public App()
 		{
 			AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
@@ -49,11 +53,14 @@ namespace Northis.BattleRoostersOnline.Client
 			});
 			StartApp(uiVisualizerService);
 		}
+        #endregion
 
-
-
-
-		private async void StartApp(IUIVisualizerService uiVisualizerService)
+        #region Private Methods        
+        /// <summary>
+        /// Запускает приложение.
+        /// </summary>
+        /// <param name="uiVisualizerService">Сервис визуализации.</param>
+        private async void StartApp(IUIVisualizerService uiVisualizerService)
 		{
 			try
 			{
@@ -64,12 +71,17 @@ namespace Northis.BattleRoostersOnline.Client
 				throw;
 			}
 		}
-
-		private void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+        /// <summary>
+        /// Обрабатывает необработанные исключения.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e"><see cref="UnhandledExceptionEventArgs"/> Экземпляр, содержащий информацию о событии.</param>
+        private void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
 		{
 			var logger = NLog.LogManager.GetCurrentClassLogger();
 			logger.Fatal(e);
 			MessageBox.Show("Возникло необработанное исключение. Проверьте Log 'Fatal'");
 		}
-	}
+        #endregion
+    }
 }

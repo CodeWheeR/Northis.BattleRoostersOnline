@@ -13,11 +13,11 @@ using Northis.BattleRoostersOnline.Client.GameServer;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
-	/// <summary>
-	/// Обеспечивает взаимодействие представления ... и модели RoosterModel
-	/// </summary>
-	/// <seealso cref="Catel.MVVM.ViewModelBase" />
-	internal class FightViewModel : ViewModelBase
+    /// <summary>
+    /// Класс, инкапсулирующий в себе модель-представление "Бой".
+    /// </summary>
+    /// <seealso cref="Catel.MVVM.ViewModelBase" />
+    internal class FightViewModel : ViewModelBase
 	{
 		#region Fields
 		private BattleServiceClient _battleServiceClient;
@@ -113,7 +113,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		}
 
 		/// <summary>
-		/// Возвращает или задает содерджимое боевого чата
+		/// Возвращает или задает содерджимое боевого чата.
 		/// </summary>
 		public string BattleLog
 		{
@@ -161,7 +161,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// Возвращает или задает значения токена матча.
 		/// </summary>
 		/// <value>
-		/// The match token.
+		/// Токен матча.
 		/// </value>
 		public string MatchToken
 		{
@@ -222,14 +222,16 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get => GetValue<RoosterModel>(SecondFighterProperty);
 			set => SetValue(SecondFighterProperty, value);
 		}
-		#endregion
+        #endregion
 
-		/// <summary>
-		/// Called when the view model is about to be closed.
-		/// <para />
-		/// This method also raises the <see cref="E:Catel.MVVM.ViewModelBase.ClosingAsync" /> event.
-		/// </summary>
-		protected override async Task OnClosingAsync()
+        #region Protected Methods
+        #region Overrided
+        /// <summary>
+        /// Вызывается в момент закрытия формы.
+        /// <para />
+        /// Этот метод также вызывает <see cref="E:Catel.MVVM.ViewModelBase.ClosingAsync" /> событие.
+        /// </summary>
+        protected override async Task OnClosingAsync()
 		{
 			if (!BattleEnded)
 			{
@@ -245,12 +247,14 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 			await base.OnClosingAsync();
 		}
+        #endregion
+        #endregion
 
-		#region Private Methods		
-		/// <summary>
-		/// Запускает битву петухов.
-		/// </summary>
-		private async Task StartFightAsync()
+        #region Private Methods		
+        /// <summary>
+        /// Запускает битву петухов.
+        /// </summary>
+        private async Task StartFightAsync()
 		{
 			BattleStarted = true;
 			_battleServiceClient.StartBattleAsync(_userToken, MatchToken);

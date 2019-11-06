@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using CommonServiceLocator;
 using Unity;
 using Unity.ServiceLocation;
@@ -17,21 +18,16 @@ using Northis.BattleRoostersOnline.Service.Models;
 namespace Northis.BattleRoostersOnline.Service.DataStorages
 {
 	/// <summary>
-	/// Класс, инкапсулирующий в себе данные о пользователях, петухах, авторизированных пользователях, игровых сессиях.
+	/// Хранит данные о пользователях, петухах, игровых сессиях.
 	/// </summary>
 	[Serializable]
-	public class DataStorageService : BaseService, IDataStorageService
+	public class DataStorageService : BaseService, IDataStorageService, IRoosterStorageService, IMapperService
 	{
 		#region Fields
 		/// <summary>
-		/// Бинарный сериализатор
+		/// Бинарный сериализатор.
 		/// </summary>
 		private readonly BinaryFormatter _formatter = new BinaryFormatter();
-		/// <summary>
-		/// Токен отмены операции мониторинга подключений.
-		/// </summary>
-		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
-
 		private object _RoostersFileLocker = new object();
 		private object _UsersFileLocker = new object();
 		#endregion
@@ -40,10 +36,14 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// <summary>
 		/// Инициализирует новый экземпляр <see cref="DataStorageService" /> класса.
 		/// </summary>
-		public DataStorageService()
+		public DataStorageService(IMapper mapper = null)
 		{
+			if (mapper != null)
+			{
+				Mapper = mapper;
+			}
 			UserData = new Dictionary<string, string>();
-			RoostersData = new Dictionary<string, Dictionary<string, RoosterDto>>();
+			RoostersData = new Dictionary<string, Dictionary<string, RoosterModel>>();
 			LoggedUsers = new Dictionary<string, string>();
 			Sessions = new Dictionary<string, Session>();
 			Task.Run(() => InitContent());
@@ -63,19 +63,25 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 			private set;
 		}
 
+		public IMapper Mapper
+		{
+			get;
+			private set;
+		}
+
 		/// <summary>
 		/// Возвращает или задает данные петухов.
 		/// </summary>
 		/// <value>
 		/// Данные петухов.
 		/// </value>
-		public Dictionary<string, Dictionary<string,RoosterDto>> RoostersData
+		public Dictionary<string, Dictionary<string,RoosterModel>> RoostersData
 		{
 			get;
 		}
 
 		/// <summary>
-		/// Возвращает или задает данные об авторизированных пользователях.
+		/// Возвращает или задает авторизированных пользователей.
 		/// </summary>
 		/// <value>
 		/// Авторизированные пользователи.
@@ -95,33 +101,16 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		{
 			get;
 		}
-		#endregion
+        #endregion
 
-		#region Private Methods
-
-		private async Task MonitorConnections()
-		{
-			var token = _connectionMonitorTokenSource.Token;
-
-			await Task.Run(async () =>
-			{
-				while (!token.IsCancellationRequested)
-				{
-					StatisticsPublisher.GetInstance()
-									   .UpdateStatistics();
-					await Task.Delay(10000, token);
-				}
-			}, token);
-		}
-
-		private void InitContent()
+        #region Private Methods
+        /// <summary>
+        /// Инициализирует данные о петухах и клиентах.
+        /// </summary>
+        private void InitContent()
 		{
 			LoadUserData();
 			LoadRoosters();
-
-			#pragma warning disable 4014
-			MonitorConnections();
-			#pragma warning restore 4014
 		}
 		#endregion
 
@@ -192,7 +181,7 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 
 					foreach (var roosters in userRoosters)
 					{
-						RoostersData.Add(roosters.Login, new Dictionary<string, RoosterDto>());
+						RoostersData.Add(roosters.Login, new Dictionary<string, RoosterModel>());
 						foreach (var rooster in roosters.Roosters)
 						{
 							if (!string.IsNullOrWhiteSpace(rooster.Token))
@@ -250,19 +239,5 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 			}
 		}
 		#endregion
-
-		public static void InitContainer()
-		{
-			if (!ServiceLocator.IsLocationProviderSet)
-			{
-				var container = new UnityContainer();
-				container.RegisterType<IDataStorageService, DataStorageService>();
-				container.RegisterInstance(new DataStorageService());
-
-				var locator = new UnityServiceLocator(container);
-				ServiceLocator.SetLocatorProvider(() => locator);
-			}
-		}
-
 	}
 }

@@ -10,7 +10,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 	/// Предоставляет модель петуха.
 	/// </summary>
 	/// <seealso cref="ValidatableModelBase" />
-	internal class RoosterModel : ValidatableModelBase, ICloneable
+	internal class RoosterModel : ValidatableModelBase
 	{
 		#region Fields
 		#region Limiters
@@ -89,10 +89,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		/// Зарегистрированное свойство "Количество побед" петуха.
 		/// </summary>
 		public static readonly PropertyData WinStreakProperty = RegisterProperty(nameof(WinStreak), typeof(int));
-		/// <summary>
-		/// Зарегистрированное свойство "Сила удара" петуха.
-		/// </summary>
-		public static readonly PropertyData HitProperty = RegisterProperty(nameof(Hit), typeof(double));
 		/// <summary>
 		/// Зарегистрированное свойство "Урон" петуха.
 		/// </summary>
@@ -226,7 +222,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				Brickness = rooster.Brickness;
 				Luck = rooster.Luck;
 				Thickness = rooster.Thickness;
-				Color = ColorParse(rooster.ColorDto);
+				Color = ColorParse(rooster.Color);
 				Crest = SizeParse(rooster.Crest);
 				Height = rooster.Height;
 				Weight = rooster.Weight;
@@ -234,6 +230,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				WinStreak = rooster.WinStreak;
 				Health = rooster.Health;
 				MaxHealth = rooster.MaxHealth;
+				Damage = rooster.Damage;
 			}
 		}
 		#endregion
@@ -250,13 +247,17 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<string>(NameProperty);
 			set => SetValue(NameProperty, value);
 		}
-
+		/// <summary>
+		/// Возвращает или устанавливает токен.
+		/// </summary>
+		/// <value>
+		/// Токен.
+		/// </value>
 		public string Token
 		{
 			get;
 			set;
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает количество побед петуха.
 		/// </summary>
@@ -268,7 +269,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(WinStreakProperty);
 			set => SetValue(WinStreakProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает вес петуха.
 		/// </summary>
@@ -278,7 +278,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			set
 			{
 				SetValue(WeightProperty, value);
-				UpdateDamage();
 			}
 		}
 		/// <summary>
@@ -289,7 +288,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(MaxWeightProperty);
 			set => SetValue(MaxWeightProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает высоту петуха.
 		/// </summary>
@@ -302,10 +300,8 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			set
 			{
 				SetValue(HeightProperty, value);
-				UpdateDamage();
 			}
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает здоровье петуха.
 		/// </summary>
@@ -317,7 +313,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<double>(HealthProperty);
 			set => SetValue(HealthProperty, Clamp(value, 0, _maxHealth));
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает максимальное здоровье петуха.
 		/// </summary>
@@ -329,7 +324,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(MaxHealthProperty);
 			set => SetValue(MaxHealthProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает выносливость петуха.
 		/// </summary>
@@ -341,7 +335,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(StaminaProperty);
 			set => SetValue(StaminaProperty, Clamp(value, 0, _maxStamina));
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает окрас петуха.
 		/// </summary>
@@ -355,10 +348,8 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			{
 				SetValue(ColorProperty, value);
 				OnColorChange();
-				UpdateDamage();
 			}
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает юркость петуха.
 		/// </summary>
@@ -379,7 +370,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(MaxBricknessProperty);
 			set => SetValue(MaxBricknessProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает броню петуха.
 		/// </summary>
@@ -392,10 +382,8 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			set
 			{
 				SetValue(CrestProperty, value);
-				UpdateDamage();
 			}
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает плотность петуха.
 		/// </summary>
@@ -415,7 +403,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(MaxThicknessProperty);
 			set => SetValue(MaxThicknessProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает удачу петуха.
 		/// </summary>
@@ -435,51 +422,13 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<int>(MaxLuckProperty);
 			set => SetValue(MaxLuckProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает урон петуха.
 		/// </summary>
 		public double Damage
 		{
-			get
-			{
-				//Базовое значение урона от 1 до 4 (до 5 для Черного тяжеловеса)  
-				var dmg = Weight / _minWeight;
-				//Усиление от 0 до 25%
-				dmg *= (double) Height / _minHeight / 10 + 1;
-				//Усиление от 0 до 50%
-				dmg *= (double) CalcEnumIndex(Crest) / 4 + 1;
-
-				return Math.Round(dmg, 2) + WinStreak;
-			}
+			get => GetValue<double>(DamageProperty);
 			set => SetValue(DamageProperty, value);
-		}
-
-		/// <summary>
-		/// Возвращает вычисленную силу удара петуха.
-		/// </summary>
-		public double Hit
-		{
-			get
-			{
-				var totalDamage = 0.0;
-				var luck = _luckMeter.Next(0, 100);
-				if (luck <= Luck)
-				{
-					totalDamage += 2 * Damage;
-				}
-				else
-				{
-					totalDamage = Damage;
-				}
-
-				if (Stamina == 0)
-				{
-					totalDamage /= 2;
-				}
-
-				return totalDamage;
-			}
 		}
 		#endregion
 
@@ -492,7 +441,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			new RoosterEditDto()
 			{
 				Height = Height,
-				ColorDto = ColorDtoParse(Color),
+				Color = ColorDtoParse(Color),
 				Brickness = Brickness,
 				Crest = SizeDtoParse(Crest),
 				Weight = Weight,
@@ -501,49 +450,9 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				Thickness = Thickness
 			};
 
-		/// <summary>
-		/// Принимает удар от другого петуха.
-		/// </summary>
-		/// <param name="sender">Ударивший петух.</param>
-		public void TakeHit(RoosterModel sender)
-		{
-			if (_bricknessMeter.Next(0, 100) >= Brickness || Stamina == 0)
-			{
-				Health -= sender.Hit * (1 - (double) Thickness / 100);
-				Health = Math.Round(Health, 2);
-			}
-
-			Stamina -= 5;
-		}
-
-		/// <summary>
-		/// Создает новый объект, являющийся копией текущего экземпляра.
-		/// </summary>
-		/// <returns>Новый объект, являющийся копией этого экземпляра.</returns>
-		public object Clone() =>
-			new RoosterModel
-			{
-				Health = Health,
-				Stamina = Stamina,
-				Color = Color,
-				Crest = Crest,
-				Brickness = Brickness,
-				Weight = Weight,
-				Height = Height,
-				Luck = Luck,
-				Thickness = Thickness,
-				Name = Name,
-				WinStreak = WinStreak,
-				Token = Token
-			};
 		#endregion
 
 		#region Private Methods
-		/// <summary>
-		/// Выполняет повторное вычисление урона.
-		/// </summary>
-		private void UpdateDamage() => SetValue(DamageProperty, Damage);
-
 		/// <summary>
 		/// Выполняет ограничение значения минимальным и максимальным уровнем.
 		/// </summary>
@@ -554,18 +463,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		private T Clamp<T>(T value, T min, T max) where T : IComparable => value.CompareTo(min) < 0 ? min : value.CompareTo(max) > 0 ? max : value;
 
 		/// <summary>
-		/// Вычисляет порядковый индекс значения перечисления.
-		/// </summary>
-		/// <param name="first">The first.</param>
-		/// <returns></returns>
-		private int CalcEnumIndex(Enum first)
-		{
-			var names = Enum.GetNames(first.GetType())
-							.ToList();
-			return names.IndexOf(first.ToString());
-		}
-
-		/// <summary>
 		/// Выполняет смену модификаций при изменении цвета.
 		/// </summary>
 		private void OnColorChange()
@@ -574,7 +471,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			ColorModifications[Color]
 				.Invoke();
 		}
-
 		/// <summary>
 		/// Выполняет очистку всех модификаций.
 		/// </summary>
@@ -588,7 +484,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				}
 			}
 		}
-
 		/// <summary>
 		/// Выполняет смену максимального порога значения.
 		/// </summary>
@@ -604,7 +499,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			maxValue = newValue;
 			if (property.PropertyType == typeof(double))
 			{
-				property.SetValue(this, Clamp((double) property.GetValue(this), minValue, maxValue));
+				property.SetValue(this, Clamp((double)property.GetValue(this), minValue, maxValue));
 			}
 			else if (property.PropertyType == typeof(int))
 			{
@@ -612,7 +507,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			}
 		}
 
-		private RoosterColor ColorParse(RoosterColorDto color)
+		private RoosterColor ColorParse(RoosterColorType color)
 		{
 			if (Enum.TryParse(color.ToString(), out RoosterColor outColor))
 			{
@@ -622,9 +517,9 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			throw new ArgumentException();
 		}
 
-		private RoosterColorDto ColorDtoParse(RoosterColor color)
+		private RoosterColorType ColorDtoParse(RoosterColor color)
 		{
-			if (Enum.TryParse(color.ToString(), out RoosterColorDto outColor))
+			if (Enum.TryParse(color.ToString(), out RoosterColorType outColor))
 			{
 				return outColor;
 			}
@@ -632,7 +527,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			throw new ArgumentException();
 		}
 
-		private CrestSize SizeParse(CrestSizeDto size)
+		private CrestSize SizeParse(CrestSizeType size)
 		{
 			if (Enum.TryParse(size.ToString(), out CrestSize outSize))
 			{
@@ -642,9 +537,9 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			throw new ArgumentException();
 		}
 
-		private CrestSizeDto SizeDtoParse(CrestSize size)
+		private CrestSizeType SizeDtoParse(CrestSize size)
 		{
-			if (Enum.TryParse(size.ToString(), out CrestSizeDto outSize))
+			if (Enum.TryParse(size.ToString(), out CrestSizeType outSize))
 			{
 				return outSize;
 			}

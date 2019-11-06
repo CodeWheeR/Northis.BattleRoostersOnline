@@ -137,7 +137,6 @@
     </Compile>
     <Compile Include="Converters\MaxDoubleValueToTextLimiter.cs" />
     <Compile Include="Converters\MaxValueToTextLimiter.cs" />
-    <Compile Include="Converters\ColorToDescriptionConverter.cs" />
     <Compile Include="Converters\BooleanToWindowState.cs" />
     <Compile Include="Converters\EnumValueToDescription.cs" />
     <Compile Include="Converters\HealthValueToBool.cs" />
@@ -145,11 +144,8 @@
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Models\AuthenticationStatusClient.cs" />
     <Compile Include="Models\AuthModel.cs" />
-    <Compile Include="Models\RoosterSettings.cs" />
     <Compile Include="Models\StatisticsModel.cs" />
     <Compile Include="Models\UserStatistic.cs" />
-    <Compile Include="Services\RoosterKeepService.cs" />
-    <Compile Include="Validators\RoosterModelValidator.cs" />
     <Compile Include="ViewModels\AuthViewModel.cs" />
     <Compile Include="ViewModels\EditRoosterViewModel.cs" />
     <Compile Include="ViewModels\FightViewModel.cs" />
@@ -158,7 +154,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\IRoosterKeepService.cs" />
     <Compile Include="Views\AuthView.xaml.cs">
       <DependentUpon>AuthView.xaml</DependentUpon>
     </Compile>

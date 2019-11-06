@@ -35,7 +35,6 @@ namespace Northis.BattleRoostersOnline.Client.Extensions
 
 			return enumElement.ToString();
 		}
-
 		/// <summary>
 		/// Возвращает значение ресурса с заданным в Display атрибуте Enum'a ключом.
 		/// </summary>

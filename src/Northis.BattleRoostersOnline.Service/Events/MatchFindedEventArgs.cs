@@ -3,7 +3,7 @@
 namespace Northis.BattleRoostersOnline.Service.Events
 {
 	/// <summary>
-	/// Хранит информацию о событии поиска матча.
+	/// Хранит информацию процесса поиска матча.
 	/// </summary>
 	/// <seealso cref="System.EventArgs" />
 	internal class MatchFindedEventArgs : EventArgs

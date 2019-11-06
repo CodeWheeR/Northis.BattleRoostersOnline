@@ -1,37 +1,37 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Northis.BattleRoostersOnline.Client.Properties;
+﻿using System.Runtime.Serialization;
 
-namespace Northis.BattleRoostersOnline.Client.Models
+namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Представляет окрасы петуха, от которых зависят применяемые модификации.
+	/// Представляет возможный цвет петуха.
 	/// </summary>
-	internal enum RoosterColor
+	[DataContract]
+	public enum RoosterColorType
 	{
 		/// <summary>
 		/// Петух получает +20 к максимальной удаче.
 		/// </summary>
-		[Display(Name = "Black", ResourceType = typeof(Resources))]
+		[EnumMember]
 		Black,
 		/// <summary>
 		/// Петух получает +20 к максимальной толщине покрова.
 		/// </summary>
-		[Display(Name = "Brown", ResourceType = typeof(Resources))]
+		[EnumMember]
 		Brown,
 		/// <summary>
 		/// Петух получает +20 к максимальной юркости.
 		/// </summary>
-		[Display(Name = "Blue", ResourceType = typeof(Resources))]
+		[EnumMember]
 		Blue,
 		/// <summary>
 		/// Петух получает +20 к максимальному здоровью.
 		/// </summary>
-		[Display(Name = "Red", ResourceType = typeof(Resources))]
+		[EnumMember]
 		Red,
 		/// <summary>
 		/// Петух получает +2 к максимальному весу.
 		/// </summary>
-		[Display(Name = "White", ResourceType = typeof(Resources))]
+		[EnumMember]
 		White
 	}
 }

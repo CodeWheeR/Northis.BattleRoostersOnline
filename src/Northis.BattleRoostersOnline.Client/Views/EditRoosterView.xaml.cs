@@ -1,10 +1,18 @@
 ﻿namespace Northis.BattleRoostersOnline.Client.Views
 {
-	public partial class EditRoosterView
+    /// <summary>
+    /// Обеспечивает логику взаимодействия с EditRoosterView.xaml.
+    /// </summary>
+    public partial class EditRoosterView
 	{
-		public EditRoosterView()
+        #region .ctor
+        /// <summary>
+        /// Инициализирует новый экземпляр <see cref="EditRoosterView"/> класса.
+        /// </summary>
+        public EditRoosterView()
 		{
 			InitializeComponent();
 		}
-	}
+        #endregion
+    }
 }
