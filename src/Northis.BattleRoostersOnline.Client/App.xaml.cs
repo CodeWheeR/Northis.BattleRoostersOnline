@@ -45,12 +45,6 @@ namespace Northis.BattleRoostersOnline.Client
 
 			var uiVisualizerService = serviceLocator.ResolveType<IUIVisualizerService>();
 			uiVisualizerService.Register<RoosterBrowserViewModel, RoosterBrowserWindow>();
-			var exceptionService = serviceLocator.ResolveType<IExceptionService>();
-			exceptionService.Register<JsonReaderException>(async exception =>
-			{
-				var messageService = serviceLocator.ResolveType<IMessageService>();
-				await messageService.ShowAsync("Ошибка чтения файла сохранения. Мои соболезнования...", "Ошибка!", MessageButton.OK, MessageImage.Error);
-			});
 			StartApp(uiVisualizerService);
 		}
         #endregion
