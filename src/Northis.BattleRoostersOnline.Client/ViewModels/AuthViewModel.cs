@@ -10,17 +10,23 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using AutoMapper;
 using Catel.Data;
+using Catel.IoC;
 using Catel.MVVM;
 using Catel.Services;
 using NLog;
 using Northis.BattleRoostersOnline.Client.Extensions;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.GameServer;
-using AuthenticateStatus = Northis.BattleRoostersOnline.Client.GameServer.AuthenticateStatus;
+using Northis.BattleRoostersOnline.Client.Models;
+using AuthenticateStatus = Northis.BattleRoostersOnline.Client.Models.AuthenticateStatus;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
-	internal class AuthViewModel : ViewModelBase
+    /// <summary>
+    /// Класс, инкапсулирующий в себе модель-представление "Аунтефикация".
+    /// </summary>
+    /// <seealso cref="ViewModelBase" />
+    internal class AuthViewModel : ViewModelBase
 	{
 		#region Fields
 		#region Static		
@@ -29,7 +35,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// </summary>
 		public static readonly PropertyData AuthModelProperty = RegisterProperty(nameof(AuthModel), typeof(AuthModel));
 		/// <summary>
-		/// Зарегистрированное свойство "Логин"
+		/// Зарегистрированное свойство "Логин".
 		/// </summary>
 		public static readonly PropertyData LoginProperty = RegisterProperty(nameof(Login), typeof(string));
 		#endregion
@@ -38,30 +44,16 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 		private IUIVisualizerService _uiVisualizerService;
 
-		//private readonly Dictionary<AuthenticateStatus, string> _authMessages = new Dictionary<AuthenticateStatus, string>
-		//{
-		//	{
-		//		AuthenticateStatus.AlreadyLoggedIn, "Данный пользователь уже находится в системе"
-		//	},
-		//	{
-		//		AuthenticateStatus.AlreadyRegistered, "Данный пользователь уже зарегистрирован"
-		//	},
-		//	{
-		//		AuthenticateStatus.WrongDataFormat, "Логин и пароль должны быть не короче 5 символов"
-		//	},
-		//	{
-		//		AuthenticateStatus.WrongLoginOrPassword, "Неправильный логин или пароль"
-		//	}
-		//};
+		private Logger _logger = LogManager.GetLogger("AuthViewModelLogger");
 
-		private Logger _authViewModelLogger = LogManager.GetLogger("AuthViewModelLogger");
+		private IMessageService _messageService;
 		#endregion
 
 		#region .ctor		
 		/// <summary>
-		/// Инициализует новый объект класса <see cref="AuthViewModel" />.
+		/// Инициализует новый объект <see cref="AuthViewModel" /> класса.
 		/// </summary>
-		/// <param name="uiVisualizerService">The UI visualizer service.</param>
+		/// <param name="uiVisualizerService">Сервис визуализации.</param>
 		/// <param name="authService">Объект подключения к серверу по каналу авторизации.</param>
 		public AuthViewModel(IUIVisualizerService uiVisualizerService, AuthenticateServiceClient authService)
 		{
@@ -69,7 +61,9 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			_uiVisualizerService = uiVisualizerService;
 			AuthCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.LogInAsync, passwordBox));
 			RegCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.RegisterAsync, passwordBox));
-			_authViewModelLogger.Info("Открыто окно авторизации.");
+			_logger.Info("Открыто окно авторизации.");
+			_messageService = this.GetServiceLocator()
+								  .ResolveType<IMessageService>();
 		}
 		#endregion
 
@@ -83,7 +77,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get => GetValue<AuthModel>(AuthModelProperty);
 			set => SetValue(AuthModelProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает или устанавливает логин пользователя.
 		/// </summary>
@@ -93,7 +86,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get => GetValue<string>(LoginProperty);
 			set => SetValue(LoginProperty, value);
 		}
-
 		/// <summary>
 		/// Возвращает команду для авторизации.
 		/// </summary>
@@ -101,7 +93,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		{
 			get;
 		}
-
 		/// <summary>
 		/// Возвращает команду для регистрации.
 		/// </summary>
@@ -115,15 +106,15 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// <summary>
 		/// Выполняет переданный способ аутентификации на сервере.
 		/// </summary>
-		/// <param name="authMethod">The authentication method.</param>
-		/// <param name="passwordBox">The password box.</param>
+		/// <param name="authMethod">Метод аунтефикации.</param>
+		/// <param name="passwordBox">Хранилище и обработчик паролей.</param>
 		private async Task AuthenticateAsync(Func<string, string, Task<string>> authMethod, PasswordBox passwordBox)
 		{
 			var password = passwordBox.Password;
 			if (string.IsNullOrWhiteSpace(Login) || string.IsNullOrWhiteSpace(password))
 			{
-				_authViewModelLogger.Warn("Поля логина и пароля не могут быть пустыми.");
-				MessageBox.Show("Поля логина и пароля не могут быть пустыми");
+				_logger.Warn("Поля логина и пароля не могут быть пустыми.");
+				await _messageService.ShowAsync("Поля логина и пароля не могут быть пустыми","Предупреждение");
 				return;
 			}
 
@@ -134,12 +125,11 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			}
 			catch (Exception e)
 			{
-				_authViewModelLogger.Error("Неполадки с интернет-соединением!");
-				MessageBox.Show(e.ToString());
+				_logger.Error(e);
+				await _messageService.ShowErrorAsync(e.ToString());
 			}
 
-			//var token = await authMethod(Login, password);
-			AuthenticateStatus result;
+			GameServer.AuthenticateStatus result;
 
 			if (!Enum.TryParse(token, out result))
 			{
@@ -150,12 +140,12 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			{
 				var config = new MapperConfiguration(cfg =>
 				{
-					cfg.CreateMap<AuthenticateStatus, AuthenticateStatusClient>();
+					cfg.CreateMap<GameServer.AuthenticateStatus, AuthenticateStatus>();
 				});
 
 				IMapper mapper = config.CreateMapper();
 
-				MessageBox.Show(mapper.Map<AuthenticateStatus, AuthenticateStatusClient>(result).GetDisplayFromResource());
+				await _messageService.ShowAsync(mapper.Map<GameServer.AuthenticateStatus, AuthenticateStatus>(result).GetDisplayFromResource());
 			}
 		}
 		#endregion

@@ -12,7 +12,7 @@ namespace Northis.BattleRoostersOnline.Dto
 	public enum AuthenticateStatus
 	{
 		[EnumMember, Display(Name = "Успешная аунтефикация")]
-		OK,
+		Ok,
 		[EnumMember, Display(Name = "Неправильный логин или пароль")]
 		WrongLoginOrPassword,
 		[EnumMember, Display(Name = "Данный пользователь уже зарегистрирован")]

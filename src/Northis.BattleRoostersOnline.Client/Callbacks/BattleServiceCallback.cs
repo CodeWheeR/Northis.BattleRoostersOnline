@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using Catel.IoC;
+using Catel.Services;
 using NLog;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.ViewModels;
@@ -18,7 +20,14 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 
 		private Logger _battleServiceCallbackLogger = LogManager.GetLogger("BattleServiceCallback");
 
+		private readonly IMessageService _messageService;
 		#endregion
+
+		public BattleServiceCallback()
+		{
+			var container = this.GetServiceLocator();
+			_messageService = container.ResolveType<IMessageService>();
+		}
 
 		#region Public Methods		
 		/// <summary>
@@ -76,19 +85,19 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		{
 			if (token == "User was not found")
 			{
-				MessageBox.Show("Попытка поиска матча не авторизованным пользователем");
+				_messageService.ShowAsync("Попытка поиска матча не авторизованным пользователем", "Предупреждение");
 				_battleServiceCallbackLogger.Error("Попытка поиска матча не авторизованным пользователем.");
 				return;
 			}
 			if (token == "Rooster was not found")
 			{
-				MessageBox.Show("Попытка поиска матча не авторизованным петухом");
-				_battleServiceCallbackLogger.Error("Попытка поиска матча не авторизованным петухом.");
+				_messageService.ShowAsync("Попытка поиска матча не авторизованным петухом", "Предупреждение");
+				_battleServiceCallbackLogger.Error("Попытка поиска матча не авторизованным петухом.", "Предупреждение");
 				return;
 			}
 			if (token == "SameLogin")
 			{
-				MessageBox.Show("Попытка начать бой друг с другом");
+				_messageService.ShowAsync("Попытка начать бой друг с другом");
 				_battleServiceCallbackLogger.Error("Попытка начать бой друг с другом");
 				return;
 			}

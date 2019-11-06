@@ -31,15 +31,6 @@ namespace Northis.BattleRoostersOnline.Client.Views
 			if (!string.IsNullOrWhiteSpace(descriptor.DisplayName))
 				e.Column.Header = descriptor.DisplayName;
 		}
-        /// <summary>
-        /// Обрабатывает событие добавления нового элемента в DataGrid.
-        /// </summary>
-        /// <param name="sender">Источник события.</param>
-        /// <param name="e"><see cref="AddingNewItemEventArgs"/> Экземпляр, содержащий информацию о событии.</param>
-        private void DataGrid_OnAddingNewItem(object sender, AddingNewItemEventArgs e)
-		{
-			MessageBox.Show("Asdasd");
-		}
-        #endregion
+		#endregion
     }
 }

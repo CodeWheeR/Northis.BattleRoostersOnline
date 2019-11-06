@@ -142,7 +142,7 @@
     <Compile Include="Converters\HealthValueToBool.cs" />
     <Compile Include="Converters\EnumValueToStringPath.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
-    <Compile Include="Models\AuthenticationStatusClient.cs" />
+    <Compile Include="Models\AuthenticationStatus.cs" />
     <Compile Include="Models\AuthModel.cs" />
     <Compile Include="Models\StatisticsModel.cs" />
     <Compile Include="Models\UserStatistic.cs" />

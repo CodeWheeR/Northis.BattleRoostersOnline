@@ -80,7 +80,8 @@ namespace Northis.BattleRoostersOnline.Client
 		{
 			var logger = NLog.LogManager.GetCurrentClassLogger();
 			logger.Fatal(e);
-			MessageBox.Show("Возникло необработанное исключение. Проверьте Log 'Fatal'");
+			var messageService = this.GetServiceLocator().ResolveType<IMessageService>();
+			messageService.ShowAsync("Возникло необработанное исключение. Проверьте Log 'Fatal'", "Ошибка!", MessageButton.OK, MessageImage.Error);
 		}
         #endregion
     }
