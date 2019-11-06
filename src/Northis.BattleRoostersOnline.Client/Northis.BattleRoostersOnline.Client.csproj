@@ -53,6 +53,9 @@
     <ApplicationIcon>Rooster.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Catel.Core, Version=5.11.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Catel.Core.5.11.2\lib\net47\Catel.Core.dll</HintPath>
     </Reference>
@@ -140,6 +143,7 @@
     <Compile Include="Converters\HealthValueToBool.cs" />
     <Compile Include="Converters\EnumValueToStringPath.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="Models\AuthenticationStatusClient.cs" />
     <Compile Include="Models\AuthModel.cs" />
     <Compile Include="Models\RoosterSettings.cs" />
     <Compile Include="Models\StatisticsModel.cs" />

@@ -226,4 +226,196 @@
   <data name="RoostersLeaderBoard" xml:space="preserve">
     <value>Топ петухов</value>
   </data>
+  <data name="StrErrorAuthorizationNotSuccess" xml:space="preserve">
+    <value>Авторизация не пройдена!</value>
+  </data>
+  <data name="StrErrorFightAgainstYourself" xml:space="preserve">
+    <value>Попытка начать бой друг с другом</value>
+  </data>
+  <data name="StrErrorInternetConnectionProblem" xml:space="preserve">
+    <value>Неполадки с интернет-соединением!</value>
+  </data>
+  <data name="StrErrorNotLoginedRoosterFind" xml:space="preserve">
+    <value>Попытка поиска матча не авторизованным петухом.</value>
+  </data>
+  <data name="StrErrorNotLoginedUserFind" xml:space="preserve">
+    <value>Попытка поиска матча не авторизованным пользователем.</value>
+  </data>
+  <data name="StrErrorUnhandledException" xml:space="preserve">
+    <value>[FATAL] Возникло необработанное исключение {e.ExceptionObject.GetType()}. Проверьте логи...</value>
+  </data>
+  <data name="StrInfoBricknessValue" xml:space="preserve">
+    <value>Значение Юркости должно быть от 0 до {RoosterModel.MaxBrickness}.</value>
+  </data>
+  <data name="StrInfoCancelFindingBattle" xml:space="preserve">
+    <value>Отмена поиска битвы.</value>
+  </data>
+  <data name="StrInfoCancelFindMatch" xml:space="preserve">
+    <value>Отмена поиска матча.</value>
+  </data>
+  <data name="StrInfoEditWindowOpenForSelectedRooster" xml:space="preserve">
+    <value>Открыто окно редактирования петуха с имененм {SelectedRooster.Name}.</value>
+  </data>
+  <data name="StrInfoEndBattleInTheSession" xml:space="preserve">
+    <value>В сессии {Token} закончилось сражение</value>
+  </data>
+  <data name="StrInfoFightCompleted" xml:space="preserve">
+    <value>Битва была проведена.</value>
+  </data>
+  <data name="StrInfoFightEnded" xml:space="preserve">
+    <value>Получено сообщение: Бой окончен.</value>
+  </data>
+  <data name="StrInfoFightWindowOpened" xml:space="preserve">
+    <value>Открыто окно боя</value>
+  </data>
+  <data name="StrInfoFightWindowOpening" xml:space="preserve">
+    <value>Открытие окна битвы петухов.</value>
+  </data>
+  <data name="StrInfoFindingEnemyCanceled" xml:space="preserve">
+    <value>Поиск соперника в сессии {Token} был отменен пользователем {token}</value>
+  </data>
+  <data name="StrInfoFindingMatchWasEndingByUser" xml:space="preserve">
+    <value>Поиск матча был отменен пользователем {token}, сессия {session.Token} закрыта</value>
+  </data>
+  <data name="StrInfoFirstFighterEnteredInSession" xml:space="preserve">
+    <value>В сессию {Token} добавился первый боец {token}</value>
+  </data>
+  <data name="StrInfoHeightValue" xml:space="preserve">
+    <value>Значение Роста должно быть от 20 до 50.</value>
+  </data>
+  <data name="StrInfoLeaveUser" xml:space="preserve">
+    <value>Выход пользователя из сети.</value>
+  </data>
+  <data name="StrInfoLuckValue" xml:space="preserve">
+    <value>Значение Удачи должно быть от 0 до {RoosterModel.MaxLuck}.</value>
+  </data>
+  <data name="StrInfoMainWindowAppOpened" xml:space="preserve">
+    <value>Открыто главное окно приложения.</value>
+  </data>
+  <data name="StrInfoNeedName" xml:space="preserve">
+    <value>Поле Имя необходимо указать.</value>
+  </data>
+  <data name="StrInfoNewRoosterAdded" xml:space="preserve">
+    <value>Новый петух добавлен в список петухов пользователя.</value>
+  </data>
+  <data name="StrInfoNewSessionInitialized" xml:space="preserve">
+    <value>Инициализована новая сессия {token}</value>
+  </data>
+  <data name="StrInfoOpeningAuthorizationWindow" xml:space="preserve">
+    <value>Открытие окна авторизации пользователя.</value>
+  </data>
+  <data name="StrInfoPrepareToFight" xml:space="preserve">
+    <value>Получено сообщение: Матч найден. Когда будете готовы, нажмите кнопку \"Начать бой\".</value>
+  </data>
+  <data name="StrInfoReciveMessage" xml:space="preserve">
+    <value>Получено сообщение: {message}.</value>
+  </data>
+  <data name="StrInfoRoosterDeleted" xml:space="preserve">
+    <value>Петух был удален.</value>
+  </data>
+  <data name="StrInfoRoosterNotAdded" xml:space="preserve">
+    <value>Ошибка при добавлении петуха</value>
+  </data>
+  <data name="StrInfoRoostersWasUpdated" xml:space="preserve">
+    <value>Список петухов был обновлен.</value>
+  </data>
+  <data name="StrInfoSecondFighterEnteredInSession" xml:space="preserve">
+    <value>В сессию {Token} добавился второй боец {token}</value>
+  </data>
+  <data name="StrInfoSelectedRoostersNameUpdate" xml:space="preserve">
+    <value>Обновлено имя текущего выделенного петуха</value>
+  </data>
+  <data name="StrInfoSoLongName" xml:space="preserve">
+    <value>Длина имени петуха должна быть не больше 15 символов.</value>
+  </data>
+  <data name="StrInfoStartBattleInTheSession" xml:space="preserve">
+    <value>В сессии {Token} началось сражение</value>
+  </data>
+  <data name="StrInfoStartDeletingRooster" xml:space="preserve">
+    <value>Запуск удаления петуха {SelectedRooster.Name}.</value>
+  </data>
+  <data name="StrInfoStartFighting" xml:space="preserve">
+    <value>Начало боя: .</value>
+  </data>
+  <data name="StrInfoStartFindingBattle" xml:space="preserve">
+    <value>Начало поиска битвы.</value>
+  </data>
+  <data name="StrInfoStartRoosterAdding" xml:space="preserve">
+    <value>Старт добавления нового петуха.</value>
+  </data>
+  <data name="StrInfoStartRoostersFight" xml:space="preserve">
+    <value>Старт битвы петухов.</value>
+  </data>
+  <data name="StrInfoStartStatisticUpdate" xml:space="preserve">
+    <value>Начало обновления статистики...</value>
+  </data>
+  <data name="StrInfoStatisticUpdated" xml:space="preserve">
+    <value>Статистика обновлена.</value>
+  </data>
+  <data name="StrInfoStatusUpdated" xml:space="preserve">
+    <value>Статус готовности петухов к сражению обновлен.</value>
+  </data>
+  <data name="StrInfoStopBattleDueToDesertion" xml:space="preserve">
+    <value>Вызвана остановка сессии {Token} по причине дезертирства</value>
+  </data>
+  <data name="StrInfoSuccessRegitstration" xml:space="preserve">
+    <value>Регистрация пользователя {login} прошла успешно</value>
+  </data>
+  <data name="StrInfoTheBattleWasSurrendered" xml:space="preserve">
+    <value>Произошла сдача боя.</value>
+  </data>
+  <data name="StrInfoThicknessValue" xml:space="preserve">
+    <value>Значение Толщины покрова должно быть от 0 до {RoosterModel.MaxThickness}.</value>
+  </data>
+  <data name="StrInfoTryLoginNotRegistredUser" xml:space="preserve">
+    <value>Попытка авторизации незарегистрированным пользователем {login}</value>
+  </data>
+  <data name="StrInfoTryRegisterAlreadyRegistredUser" xml:space="preserve">
+    <value>Попытка регистрации уже зарегистрированным пользователем {login}</value>
+  </data>
+  <data name="StrInfoUserDeserted" xml:space="preserve">
+    <value>Пользователь {(login == "" ? token : login)} дезертировал</value>
+  </data>
+  <data name="StrInfoUserLogined" xml:space="preserve">
+    <value>Пользователь {login} вошел в сеть с токеном {token}</value>
+  </data>
+  <data name="StrInfoUserLogOut" xml:space="preserve">
+    <value>Пользователь {login} вышел из сети</value>
+  </data>
+  <data name="StrInfoWeightValue" xml:space="preserve">
+    <value>Значение Веса должно быть от 0.0 до {RoosterModel.MaxWeight}.0.</value>
+  </data>
+  <data name="StrWarnDeleteRoosterFailed" xml:space="preserve">
+    <value>Удаление петуха {SelectedRooster.Token} пользователя {token} неуспешно</value>
+  </data>
+  <data name="StrWarnStringsCannotBeEmpty" xml:space="preserve">
+    <value>Поля логина и пароля не могут быть пустыми.</value>
+  </data>
+  <data name="StrWarnTryDisconnectNotAuthorizedUser" xml:space="preserve">
+    <value>Попытка дисконекта от неавторизованного пользователя {token}</value>
+  </data>
+  <data name="StrWarnTryFindMatchByNotAuthorizedUser" xml:space="preserve">
+    <value>Попытка поиска матча не авторизованным пользователем {token}</value>
+  </data>
+  <data name="StrWarnTryFindMatchNotCreatedRooster" xml:space="preserve">
+    <value>Попытка поиска матча не созданным петухом {roosterToken}</value>
+  </data>
+  <data name="StrWarnTryToEnterInSessionWithSameLogins" xml:space="preserve">
+    <value>Попытка добавиться в сессию противниками с одинаковыми логинами {FirstFighterLogin}</value>
+  </data>
+  <data name="StrAlreadyRegistered" xml:space="preserve">
+    <value>Данный пользователь уже находится в системе</value>
+  </data>
+  <data name="StrAlreadyLoggedIn" xml:space="preserve">
+    <value>Данный пользователь уже находится в системе</value>
+  </data>
+  <data name="StrOK" xml:space="preserve">
+    <value>Успешная аунтефикация</value>
+  </data>
+  <data name="StrWrongDataFormat" xml:space="preserve">
+    <value>Логин и пароль должны быть не короче 5 символов</value>
+  </data>
+  <data name="StrWrongLoginOrPassword" xml:space="preserve">
+    <value>Неправильный логин или пароль</value>
+  </data>
 </root>

@@ -2,12 +2,16 @@
 using System.IO;
 using System.Security;
 using System.Windows;
+using AutoMapper;
 using Catel.ExceptionHandling;
 using Catel.IoC;
 using Catel.Logging;
 using Catel.Services;
 using Newtonsoft.Json;
 using NLog;
+using Northis.BattleRoostersOnline.Client.Extensions;
+using Northis.BattleRoostersOnline.Client.GameServer;
+using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.ViewModels;
 using Northis.BattleRoostersOnline.Client.Views;
 using LogManager = Catel.Logging.LogManager;
@@ -26,6 +30,15 @@ namespace Northis.BattleRoostersOnline.Client
 			LogManager.AddDebugListener();
 
 			var serviceLocator = this.GetServiceLocator();
+
+			var config = new MapperConfiguration(cfg =>
+			{
+				cfg.CreateMap<RoosterModel, RoosterEditDto>();
+			});
+
+			serviceLocator.RegisterInstance(config.CreateMapper());
+
+
 			var uiVisualizerService = serviceLocator.ResolveType<IUIVisualizerService>();
 			uiVisualizerService.Register<RoosterBrowserViewModel, RoosterBrowserWindow>();
 			var exceptionService = serviceLocator.ResolveType<IExceptionService>();

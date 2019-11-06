@@ -4,14 +4,19 @@ using System.Configuration;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using System.Windows.Input;
 using System.Windows.Markup;
+using AutoMapper;
 using Catel.Data;
 using Catel.MVVM;
 using Catel.Services;
 using NLog;
+using Northis.BattleRoostersOnline.Client.Extensions;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.GameServer;
+using AuthenticateStatus = Northis.BattleRoostersOnline.Client.GameServer.AuthenticateStatus;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
@@ -33,21 +38,21 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 		private IUIVisualizerService _uiVisualizerService;
 
-		private readonly Dictionary<AuthenticateStatus, string> _authMessages = new Dictionary<AuthenticateStatus, string>
-		{
-			{
-				AuthenticateStatus.AlreadyLoggedIn, "Данный пользователь уже находится в системе"
-			},
-			{
-				AuthenticateStatus.AlreadyRegistered, "Данный пользователь уже зарегистрирован"
-			},
-			{
-				AuthenticateStatus.WrongDataFormat, "Логин и пароль должны быть не короче 5 символов"
-			},
-			{
-				AuthenticateStatus.WrongLoginOrPassword, "Неправильный логин или пароль"
-			}
-		};
+		//private readonly Dictionary<AuthenticateStatus, string> _authMessages = new Dictionary<AuthenticateStatus, string>
+		//{
+		//	{
+		//		AuthenticateStatus.AlreadyLoggedIn, "Данный пользователь уже находится в системе"
+		//	},
+		//	{
+		//		AuthenticateStatus.AlreadyRegistered, "Данный пользователь уже зарегистрирован"
+		//	},
+		//	{
+		//		AuthenticateStatus.WrongDataFormat, "Логин и пароль должны быть не короче 5 символов"
+		//	},
+		//	{
+		//		AuthenticateStatus.WrongLoginOrPassword, "Неправильный логин или пароль"
+		//	}
+		//};
 
 		private Logger _authViewModelLogger = LogManager.GetLogger("AuthViewModelLogger");
 		#endregion
@@ -134,7 +139,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			}
 
 			//var token = await authMethod(Login, password);
-
 			AuthenticateStatus result;
 
 			if (!Enum.TryParse(token, out result))
@@ -144,14 +148,14 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			}
 			else
 			{
-				if (_authMessages.ContainsKey(result))
+				var config = new MapperConfiguration(cfg =>
 				{
-					MessageBox.Show(_authMessages[result]);
-				}
-				else
-				{
-					MessageBox.Show(token);
-				}
+					cfg.CreateMap<AuthenticateStatus, AuthenticateStatusClient>();
+				});
+
+				IMapper mapper = config.CreateMapper();
+
+				MessageBox.Show(mapper.Map<AuthenticateStatus, AuthenticateStatusClient>(result).GetDisplayFromResource());
 			}
 		}
 		#endregion

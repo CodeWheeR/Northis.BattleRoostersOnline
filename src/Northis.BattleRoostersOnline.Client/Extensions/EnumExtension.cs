@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using System.Resources;
+using Catel.Collections;
 
 namespace Northis.BattleRoostersOnline.Client.Extensions
 {
@@ -44,10 +46,12 @@ namespace Northis.BattleRoostersOnline.Client.Extensions
 			var type = enumElement.GetType();
 
 			var memInfo = type.GetMember(enumElement.ToString());
+
+			var members = type.GetMembers();
+
 			if (memInfo.Length > 0)
 			{
-				var attrs = memInfo[0]
-					.GetCustomAttributes(typeof(DisplayAttribute), false);
+				var attrs = memInfo[0].GetCustomAttributes(typeof(DisplayAttribute), false);
 				if (attrs.Length > 0)
 				{
 					var attribute = (DisplayAttribute) attrs[0];
@@ -57,6 +61,30 @@ namespace Northis.BattleRoostersOnline.Client.Extensions
 
 			return enumElement.ToString();
 		}
+
+
+		public static string GetDisplayName(this Enum enumElement)
+		{
+			var type = enumElement.GetType();
+
+			var memInfo = type.GetMember(enumElement.ToString());
+
+			var members = type.GetMembers();
+
+			if (memInfo.Length > 0)
+			{
+				var attrs = memInfo[0]
+					.GetCustomAttributes(typeof(DisplayAttribute), false);
+				if (attrs.Length > 0)
+				{
+					var attribute = (DisplayAttribute) attrs[0];
+					return attribute.Name;
+				}
+
+			}
+			return enumElement.ToString();
+		}
+
 		#endregion
 
 		#region Private Methods

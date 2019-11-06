@@ -1,4 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 
 namespace Northis.BattleRoostersOnline.Dto
 {
@@ -8,15 +11,15 @@ namespace Northis.BattleRoostersOnline.Dto
 	[DataContract]
 	public enum AuthenticateStatus
 	{
-		[EnumMember]
+		[EnumMember, Display(Name = "Успешная аунтефикация")]
 		OK,
-		[EnumMember]
+		[EnumMember, Display(Name = "Неправильный логин или пароль")]
 		WrongLoginOrPassword,
-		[EnumMember]
+		[EnumMember, Display(Name = "Данный пользователь уже зарегистрирован")]
 		AlreadyRegistered,
-		[EnumMember]
+		[EnumMember, Display(Name = "Данный пользователь уже находится в системе")]
 		AlreadyLoggedIn,
-		[EnumMember]
+		[EnumMember, Display(Name = "Логин и пароль должны быть не короче 5 символов")]
 		WrongDataFormat
 	}
 }

@@ -5,6 +5,7 @@ using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using AutoMapper;
 using Catel;
 using Catel.Data;
 using Catel.ExceptionHandling;
@@ -24,6 +25,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 	internal class RoosterBrowserViewModel : ViewModelBase
 	{
 		#region Fields
+		private IMapper _mapper;
 		/// <summary>
 		/// Сервис визуализации окон приложения.
 		/// </summary>
@@ -155,8 +157,9 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// </summary>
 		/// <param name="roosterKeepService">Сервис сохранения и загрузки петухов.</param>
 		/// <param name="uiVisualizerService">Сервис визуализации окон приложения.</param>
-		public RoosterBrowserViewModel(IUIVisualizerService uiVisualizerService, IExceptionService exceptionService)
+		public RoosterBrowserViewModel(IUIVisualizerService uiVisualizerService, IExceptionService exceptionService, IMapper mapper)
 		{
+			_mapper = mapper;
 			_authenticateServiceClient = new AuthenticateServiceClient(new InstanceContext(new Callbacks.AuthenticationServiceCallback(this)));
 			var container = this.GetServiceLocator();
 			container.RegisterType<AuthenticateServiceClient>();
@@ -264,7 +267,8 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			_roosterBrowserViewModel.Info($"Открыто окно редактирования петуха с имененм {SelectedRooster.Name}.");
 			if (await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(SelectedRooster) == true)
 			{
-				await _editServiceClient.EditAsync(token, SelectedRooster.Token, SelectedRooster.ToRoosterDto());
+				
+				await _editServiceClient.EditAsync(token, SelectedRooster.Token, _mapper.Map<RoosterModel, RoosterEditDto>(SelectedRooster));
 				UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
 			}
 		}
@@ -295,7 +299,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			_roosterBrowserViewModel.Info("Старт добавления нового петуха.");
 			if (await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(rooster) == true)
 			{
-				if (await _editServiceClient.AddAsync(token, rooster.ToRoosterDto()))
+				if (await _editServiceClient.AddAsync(token, _mapper.Map<RoosterModel, RoosterEditDto>(rooster)))
 				{
 					UpdateRoostersAsync();
 					_roosterBrowserViewModel.Info("Новый петух добавлен в список петухов пользователя.");
