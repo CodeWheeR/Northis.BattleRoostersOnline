@@ -51,7 +51,9 @@ namespace Northis.BattleRoostersOnline.Service.Models
     
 		private object _desertLocker = new object();
 
-		private string FirstFighterLogin;
+		private string _firstFighterLogin;
+
+		private string _secondFighterLogin;
 		#endregion
 
 		#region Inner
@@ -343,7 +345,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		{
 			if (FirstUser == null)
 			{
-				FirstFighterLogin = StorageService.LoggedUsers[token];
+				_firstFighterLogin = StorageService.LoggedUsers[token];
 				FirstUser = new UserData(callback)
 				{
 					Rooster = (RoosterModel)fighter.Clone(),
@@ -356,9 +358,9 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			}
 			else if (SecondUser == null)
 			{
-				if (StorageService.LoggedUsers[token] == FirstFighterLogin)
+				if (StorageService.LoggedUsers[token] == _firstFighterLogin)
 				{
-					_logger.Warn($"Попытка добавиться в сессию противниками с одинаковыми логинами {FirstFighterLogin}");
+					_logger.Warn($"Попытка добавиться в сессию противниками с одинаковыми логинами {_firstFighterLogin}");
 					callback.FindedMatch(BattleStatus.SameLogins.ToString());
 					return;
 				}
@@ -369,6 +371,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					Token = token,
 					IsReady = false
 				};
+				_secondFighterLogin = StorageService.LoggedUsers[SecondUser.Token];
 				SecondUser.SubscribeOnClosing((x, y) => CheckForDeserting(token));
 				_logger.Info($"В сессию {Token} добавился второй боец {token}");
 				Subscribe(SecondUser);
@@ -458,24 +461,24 @@ namespace Northis.BattleRoostersOnline.Service.Models
 								   await Task.Delay(300, token);
 							   }
 
-							   if (FirstUser.Rooster.Health == 0 && SecondUser.Rooster.Health == 0)
+							   if (FirstUser.Rooster.Health == 0)
 							   {
-								   Task.WaitAll(SetWinstreak(FirstUser, 0), SetWinstreak(SecondUser, 0));
-							   }
-							   else if (FirstUser.Rooster.Health == 0)
-							   {
-								   Task.WaitAll(SetWinstreak(FirstUser, 0), SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1));
+								   Task.WaitAll( SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1));
 							   }
 							   else
 							   {
-								   Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1), SetWinstreak(SecondUser, 0));
+								   Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1));
 							   }
 
 							   lock (StorageService.Sessions)
 							   {
 								   StorageService.Sessions.Remove(Token);
 							   }
+
+							   //StorageService.RoostersData[_firstFighterLogin][FirstUser.Rooster.Token].WinStreak = FirstUser.Rooster.WinStreak;
+							   //StorageService.RoostersData[_secondFighterLogin][SecondUser.Rooster.Token].WinStreak = SecondUser.Rooster.WinStreak;
 							   StorageService.SaveRoostersAsync();
+
 							   SendEndSign();
 						   },
 						   token));
@@ -615,7 +618,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 						try
 						{
 							autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
-							Task.WaitAll(SetWinstreak(deserter, 0), SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
+							Task.WaitAll(SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
 							SendEndSign();
 							autoWinner.UnsubscribeOnClosing((x, y) => CheckForDeserting(autoWinner.Token));
 

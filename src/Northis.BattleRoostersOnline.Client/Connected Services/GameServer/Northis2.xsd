@@ -1,106 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:simpleType name="AuthenticateStatus">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Ok" />
-      <xs:enumeration value="WrongLoginOrPassword" />
-      <xs:enumeration value="AlreadyRegistered" />
-      <xs:enumeration value="AlreadyLoggedIn" />
-      <xs:enumeration value="WrongDataFormat" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="AuthenticateStatus" nillable="true" type="tns:AuthenticateStatus" />
-  <xs:complexType name="ArrayOfStatisticsDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="StatisticsDto" nillable="true" type="tns:StatisticsDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfStatisticsDto" nillable="true" type="tns:ArrayOfStatisticsDto" />
-  <xs:complexType name="StatisticsDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="RoosterName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="WinStreak" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="StatisticsDto" nillable="true" type="tns:StatisticsDto" />
-  <xs:complexType name="ArrayOfUsersStatisticsDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="UsersStatisticsDto" nillable="true" type="tns:UsersStatisticsDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfUsersStatisticsDto" nillable="true" type="tns:ArrayOfUsersStatisticsDto" />
-  <xs:complexType name="UsersStatisticsDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="IsOnline" type="xs:boolean" />
-      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UserScore" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="UsersStatisticsDto" nillable="true" type="tns:UsersStatisticsDto" />
-  <xs:complexType name="RoosterEditDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Brickness" type="xs:int" />
-      <xs:element minOccurs="0" name="Color" type="tns:RoosterColorType" />
-      <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeType" />
-      <xs:element minOccurs="0" name="Height" type="xs:int" />
-      <xs:element minOccurs="0" name="Luck" type="xs:int" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Thickness" type="xs:int" />
-      <xs:element minOccurs="0" name="Weight" type="xs:double" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="RoosterEditDto" nillable="true" type="tns:RoosterEditDto" />
-  <xs:simpleType name="RoosterColorType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Black" />
-      <xs:enumeration value="Brown" />
-      <xs:enumeration value="Blue" />
-      <xs:enumeration value="Red" />
-      <xs:enumeration value="White" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="RoosterColorType" nillable="true" type="tns:RoosterColorType" />
-  <xs:simpleType name="CrestSizeType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Small" />
-      <xs:enumeration value="Medium" />
-      <xs:enumeration value="Big" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="CrestSizeType" nillable="true" type="tns:CrestSizeType" />
-  <xs:complexType name="ArrayOfRoosterDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="RoosterDto" nillable="true" type="tns:RoosterDto" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfRoosterDto" nillable="true" type="tns:ArrayOfRoosterDto" />
-  <xs:complexType name="RoosterDto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Brickness" type="xs:int" />
-      <xs:element minOccurs="0" name="Color" type="tns:RoosterColorType" />
-      <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeType" />
-      <xs:element minOccurs="0" name="Damage" type="xs:int" />
-      <xs:element minOccurs="0" name="Health" type="xs:double" />
-      <xs:element minOccurs="0" name="Height" type="xs:int" />
-      <xs:element minOccurs="0" name="Luck" type="xs:int" />
-      <xs:element minOccurs="0" name="MaxHealth" type="xs:int" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Stamina" type="xs:int" />
-      <xs:element minOccurs="0" name="Thickness" type="xs:int" />
-      <xs:element minOccurs="0" name="Token" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Weight" type="xs:double" />
-      <xs:element minOccurs="0" name="WinStreak" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="RoosterDto" nillable="true" type="tns:RoosterDto" />
-  <xs:simpleType name="BattleStatus">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="UserWasNotFound" />
-      <xs:enumeration value="RoosterWasNotFound" />
-      <xs:enumeration value="SameLogins" />
-      <xs:enumeration value="Ok" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="BattleStatus" nillable="true" type="tns:BattleStatus" />
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.88.99.167:8080/Northis.BattleRoostersOnline?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" />
+  <xs:element name="LogIn">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="login" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogInResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LogInResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Register">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="login" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RegisterResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogOut">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogOutResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LogOutResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLoginStatus">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLoginStatusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="GetLoginStatusResult" type="q1:AuthenticateStatus" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNewGlobalStatistics">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="statistics" nillable="true" type="q2:ArrayOfStatisticsDto" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="usersStatistics" nillable="true" type="q3:ArrayOfUsersStatisticsDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMessageFromServer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Edit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sourceRoosterToken" nillable="true" type="xs:string" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="editRooster" nillable="true" type="q4:RoosterEditDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EditResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Add">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="rooster" nillable="true" type="q5:RoosterEditDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Remove">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="deleteRoosterToken" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RemoveResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserRoosters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserRoostersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="GetUserRoostersResult" nillable="true" type="q6:ArrayOfRoosterDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FindMatchAsync">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="rooster" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelFinding">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelFindingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CancelFindingResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StartBattleAsync">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="matchToken" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GiveUpAsync">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="matchToken" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBattleStatus">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBattleStatusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="GetBattleStatusResult" type="q7:BattleStatus" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRoosterStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="yourRooster" nillable="true" type="q8:RoosterDto" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="enemyRooster" nillable="true" type="q9:RoosterDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBattleMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStartSign">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FindedMatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEndSign">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

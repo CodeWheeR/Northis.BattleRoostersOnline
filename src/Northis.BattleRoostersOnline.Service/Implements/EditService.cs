@@ -54,6 +54,8 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				return false;
 			}
 
+			bool addingResult = true;
+
 			try
 			{
 				await Task.Run(() =>
@@ -64,6 +66,11 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 						{
 							StorageService.RoostersData.Add(login, new Dictionary<string, RoosterModel>());
 						}
+					}
+					else if (StorageService.RoostersData[login].Count > 2)
+					{
+						addingResult = false;
+						return;
 					}
 					lock (StorageService.RoostersData)
 					{
@@ -84,7 +91,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			StatisticsPublisher.GetInstance()
 							   .UpdateStatistics();
 
-			return true;
+			return addingResult;
 		}
 		/// <summary>
 		/// Асинхронно получает петухов пользователя.
