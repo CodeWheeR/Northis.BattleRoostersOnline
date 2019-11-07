@@ -9,7 +9,7 @@ using Northis.BattleRoostersOnline.Client.Properties;
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
     /// <summary>
-    /// Класс, инкапсулирующий в себе модель-представление "Редактирование".
+    /// Обеспечивает взаимодействие механизмов редактирования с представлением EditView.
     /// </summary>
     /// <seealso cref="Catel.MVVM.ViewModelBase" />
     internal class EditRoosterViewModel : ViewModelBase

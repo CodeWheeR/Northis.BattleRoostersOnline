@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Catel.IoC;
+using Catel.Services;
 using NLog;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.ViewModels;
@@ -51,6 +53,13 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 				_roosterBrowserViewModel.UserStatistics[i] = new UserStatistic(usersStatistics[i]);
 			}
 			_authServiceCallbackLogger.Info(Resources.StrInfoStatisticUpdated);
+		}
+
+		public void GetMessageFromServer(string message)
+		{
+			this.GetServiceLocator()
+				.ResolveType<IMessageService>()
+				.ShowAsync(message, "Предупреждение");
 		}
 		#endregion
 	}

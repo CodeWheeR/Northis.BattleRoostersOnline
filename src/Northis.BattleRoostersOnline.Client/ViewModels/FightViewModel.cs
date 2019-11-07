@@ -15,7 +15,7 @@ using Northis.BattleRoostersOnline.Client.Properties;
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
     /// <summary>
-    /// Класс, инкапсулирующий в себе модель-представление "Бой".
+    /// Обеспечивает взаимодействие механизмов боя с представлением FightView.
     /// </summary>
     /// <seealso cref="Catel.MVVM.ViewModelBase" />
     internal class FightViewModel : ViewModelBase

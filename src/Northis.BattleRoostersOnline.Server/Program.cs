@@ -28,7 +28,16 @@ namespace Northis.BattleRoostersOnline.Server
 		/// <param name="args">Аргументы.</param>
 		private static void Main(string[] args)
 		{
+			UnityServiceHost selfHost = null;
+
 			AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
+			AppDomain.CurrentDomain.ProcessExit += (x, y) =>
+			{
+				if (selfHost != null)
+				{
+					StatisticsPublisher.GetInstance().SendMessageToSubscibers("ServerClosed");
+				}
+			};
 
 			string address = "";
 
@@ -62,7 +71,7 @@ namespace Northis.BattleRoostersOnline.Server
 			container.RegisterType<IBattleService, BattleService>(new ContainerControlledLifetimeManager());
 			container.RegisterType<IAuthenticateService, AuthenticateService>(new ContainerControlledLifetimeManager());
 
-			var selfHost = new UnityServiceHost(container, typeof(GameServicesProvider), baseAddress);
+			selfHost = new UnityServiceHost(container, typeof(GameServicesProvider), baseAddress);
 
 			try
 			{

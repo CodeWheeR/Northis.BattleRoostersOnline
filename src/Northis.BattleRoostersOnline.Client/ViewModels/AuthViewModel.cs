@@ -22,7 +22,7 @@ using Northis.BattleRoostersOnline.Client.Properties;
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
     /// <summary>
-    /// Представляет модель-представление "Аунтефикация".
+    /// Представляет модель-представление "Аутентификация".
     /// </summary>
     /// <seealso cref="ViewModelBase" />
     internal class AuthViewModel : ViewModelBase

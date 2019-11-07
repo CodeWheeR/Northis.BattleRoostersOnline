@@ -16,6 +16,11 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
         /// </summary>
         [OperationContract(IsOneWay = true)]
 		void GetNewGlobalStatistics(List<StatisticsDto> statistics, List<UsersStatisticsDto> usersStatistics);
-        #endregion
-    }
+		/// <summary>
+		/// Контракт операции. Оповещает о начале матча.
+		/// </summary>
+		[OperationContract(IsOneWay = true)]
+		void GetMessageFromServer(string message);
+		#endregion
+	}
 }

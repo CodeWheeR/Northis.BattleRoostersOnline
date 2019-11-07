@@ -67,6 +67,9 @@
   <wsdl:message name="IAuthenticateService_GetNewGlobalStatistics_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GetNewGlobalStatistics" />
   </wsdl:message>
+  <wsdl:message name="IAuthenticateService_GetMessageFromServer_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GetMessageFromServer" />
+  </wsdl:message>
   <wsdl:message name="IEditService_Edit_InputMessage">
     <wsdl:part name="parameters" element="tns:Edit" />
   </wsdl:message>
@@ -146,6 +149,9 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetNewGlobalStatistics">
       <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticateService/GetNewGlobalStatistics" message="tns:IAuthenticateService_GetNewGlobalStatistics_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetMessageFromServer">
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticateService/GetMessageFromServer" message="tns:IAuthenticateService_GetMessageFromServer_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IEditService">
@@ -241,6 +247,12 @@
     </wsdl:operation>
     <wsdl:operation name="GetNewGlobalStatistics">
       <soap12:operation soapAction="http://tempuri.org/IAuthenticateService/GetNewGlobalStatistics" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessageFromServer">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticateService/GetMessageFromServer" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

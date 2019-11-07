@@ -9,6 +9,7 @@ using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.ViewModels;
 using Northis.BattleRoostersOnline.Client.GameServer;
 using Northis.BattleRoostersOnline.Client.Properties;
+using BattleStatus = Northis.BattleRoostersOnline.Client.Models.BattleStatus;
 
 namespace Northis.BattleRoostersOnline.Client.Callbacks
 {
@@ -20,19 +21,12 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 	{
 		#region Fields
 		private readonly FightViewModel _fightVm;
-
-		private Logger _battleServiceCallbackLogger = LogManager.GetLogger("BattleServiceCallback");
-
-		private readonly IMessageService _messageService;
-
-		private readonly IMapper _mapper;
+		private Logger _battleServiceCallbackLogger = LogManager.GetLogger("FightServiceCallback");
 		#endregion
 
 		public BattleServiceCallback()
 		{
-			var container = this.GetServiceLocator();
-			_messageService = container.ResolveType<IMessageService>();
-			_mapper = container.ResolveType<IMapper>();
+			
 		}
 
 		#region Public Methods		
@@ -91,12 +85,14 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		/// <param name="token">The token.</param>
 		public void FindedMatch(string token)
 		{
+			var container = this.GetServiceLocator();
+			var messageService = container.ResolveType<IMessageService>();
+			var mapper = container.ResolveType<IMapper>();
 
-			if (!Enum.TryParse(token, out GameServer.BattleStatus serverResult))
+			if (Enum.TryParse(token, out GameServer.BattleStatus serverResult))
 			{
-
-				var result = _mapper.Map<GameServer.BattleStatus, Models.BattleStatus>(serverResult);
-				_messageService.ShowAsync(result.GetDisplayFromResource(), "Предупреждение");
+				var result = mapper.Map<GameServer.BattleStatus, Models.BattleStatus>(serverResult);
+				messageService.ShowAsync(result.GetDisplayFromResource(), "Предупреждение");
 				_battleServiceCallbackLogger.Error(result.GetDisplayFromResource());
 				return;
 			}

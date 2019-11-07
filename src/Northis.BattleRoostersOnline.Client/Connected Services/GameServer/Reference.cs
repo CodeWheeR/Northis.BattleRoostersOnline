@@ -682,6 +682,9 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAuthenticateService/GetNewGlobalStatistics")]
         void GetNewGlobalStatistics(Northis.BattleRoostersOnline.Client.GameServer.StatisticsDto[] statistics, Northis.BattleRoostersOnline.Client.GameServer.UsersStatisticsDto[] usersStatistics);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAuthenticateService/GetMessageFromServer")]
+        void GetMessageFromServer(string message);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

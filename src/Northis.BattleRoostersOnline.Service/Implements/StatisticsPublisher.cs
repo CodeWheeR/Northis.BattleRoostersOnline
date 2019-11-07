@@ -15,7 +15,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	/// Отвечает за обновление и отправку клиентам глобальной статистики.
 	/// </summary>
 	/// <seealso cref="BaseServiceWithStorage" />
-	class StatisticsPublisher : BaseServiceWithStorage
+	public class StatisticsPublisher : BaseServiceWithStorage
 	{
 		#region Fields
 		private static StatisticsPublisher _instance;
@@ -227,6 +227,15 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				}
 			});
 		}
+
+		public void SendMessageToSubscibers(string message)
+		{
+			foreach (var sub in _subscribers)
+			{
+				sub.Value.GetMessageFromServer(message);
+			}
+		}
+
 		/// <summary>
 		/// Выполняет отписку пользователя от оповещений.
 		/// </summary>
