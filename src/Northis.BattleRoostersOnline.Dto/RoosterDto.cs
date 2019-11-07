@@ -186,7 +186,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// Сила удара.
 		/// </value>
 		[DataMember]
-		public int Damage
+		public double Damage
 		{
 			get;
 			set;

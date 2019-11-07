@@ -92,7 +92,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="rooster" nillable="true" type="q5:RoosterEditDto" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" minOccurs="0" name="rooster" nillable="true" type="q5:RoosterCreateDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -313,7 +313,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				bool addRes = false;
 				try
 				{
-					addRes = await _editServiceClient.AddAsync(token, _mapper.Map<RoosterModel, RoosterEditDto>(rooster));
+					addRes = await _editServiceClient.AddAsync(token, _mapper.Map<RoosterModel, RoosterCreateDto>(rooster));
 				}
 
 				catch (Exception e)

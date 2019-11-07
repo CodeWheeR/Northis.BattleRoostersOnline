@@ -38,7 +38,7 @@ namespace Northis.BattleRoostersOnline.Client
 
 			var config = new MapperConfiguration(cfg =>
 			{
-				cfg.CreateMap<RoosterModel, RoosterEditDto>();
+				cfg.CreateMap<RoosterModel, RoosterCreateDto>();
 				cfg.CreateMap<GameServer.AuthenticateStatus, Models.AuthenticateStatus>();
 				cfg.CreateMap<GameServer.BattleStatus, Models.BattleStatus>();
 			});

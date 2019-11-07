@@ -61,6 +61,8 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// </summary>
 		private readonly Dictionary<Dto.RoosterColorType, Action> ClearModifications;
 
+		private Random _rand = new Random();
+
 		#region Limiters		
 		/// <summary>
 		/// Минимальный вес петуха.
@@ -226,16 +228,48 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				Name = rooster.Name;
 			}
 		}
-        #endregion
 
-        #region Properties		        
-        /// <summary>
-        /// Возвращает или устанавливает токен.
-        /// </summary>
-        /// <value>
-        /// Токен.
-        /// </value>
-        public string Token
+		/// <summary>
+		/// Инициализирует новый объект <see cref="RoosterModel" /> класса.
+		/// </summary>
+		/// <param name="rooster">Петух.</param>
+		public RoosterModel(RoosterCreateDto rooster)
+			: this()
+		{
+			Color = rooster.Color;
+			Brickness = _rand.Next(0,_maxBrickness);
+			Luck = _rand.Next(0, _maxLuck);
+			Thickness = _rand.Next(0, _maxThickness);
+			var crestValues = Enum.GetNames(typeof(CrestSizeType));
+			if (Enum.TryParse(crestValues[_rand.Next(0, crestValues.Length - 1)], out CrestSizeType crest))
+			{
+				Crest = crest;
+			}
+			else
+			{
+				Crest = CrestSizeType.Small;
+			}
+			Height = _rand.Next(20, 50);
+			Weight = Math.Round(_rand.NextDouble()  * (_maxWeight - 2) + 2, 2);
+			if (rooster.Name.Length > 15)
+			{
+				Name = rooster.Name.Substring(0, 15);
+			}
+			else
+			{
+				Name = rooster.Name;
+			}
+		}
+		#endregion
+
+		#region Properties		        
+		/// <summary>
+		/// Возвращает или устанавливает токен.
+		/// </summary>
+		/// <value>
+		/// Токен.
+		/// </value>
+		public string Token
 		{
 			get;
 			set;
