@@ -51,7 +51,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// Зарегистрированное свойство петухи.
 		/// </summary>
 		public static readonly PropertyData RoostersProperty = RegisterProperty(nameof(Roosters), typeof(IEnumerable<RoosterModel>));
-		public static readonly PropertyData SelectedIndexProperty = RegisterProperty(nameof(SelectedIndex), typeof(int));
 		public static readonly PropertyData StatisticsProperty = RegisterProperty(nameof(Statistics), typeof(StatisticsModel[]));
 		public static readonly PropertyData LoggenInProperty = RegisterProperty(nameof(ShowWindow), typeof(bool));
 		public static readonly PropertyData UserStatiscticsProperty = RegisterProperty(nameof(UserStatistics), typeof(UserStatistic[]));
@@ -70,18 +69,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get => GetValue<bool>(LoggenInProperty);
 			set => SetValue(LoggenInProperty, value);
 		}
-        /// <summary>
-        /// Возвращает или задает выбранный индекс.
-        /// </summary>
-        /// <value>
-        /// Выбранный индекс.
-        /// </value>
-        public int SelectedIndex
-		{
-			get => GetValue<int>(SelectedIndexProperty);
-			set => SetValue(SelectedIndexProperty, value);
-		}
-        /// <summary>
+		/// <summary>
         /// Возвращает или задает статистику.
         /// </summary>
         /// <value>
@@ -191,7 +179,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			EditRoosterCommand = new TaskCommand(EditRoosterAsync, () => SelectedRooster != null);
 			DeleteRoosterCommand = new TaskCommand(DeleteRoosterAsync, () => SelectedRooster != null);
 			AddRoosterCommand = new TaskCommand(AddRoosterAsync, () => Roosters.Count() < 3);
-			FightCommand = new TaskCommand(StartRoostersFightAsync, () => SelectedRooster != null && ShowWindow == true);
+			FightCommand = new TaskCommand(StartRoostersFightAsync, () => SelectedRooster != null && ShowWindow);
 			
 		}
         #endregion
@@ -219,6 +207,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			Argument.IsNotNull(nameof(_exceptionService), _exceptionService);
 
 			UpdateRoostersAsync();
+
 
 
 			await base.InitializeAsync();
@@ -278,6 +267,8 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 				((ObservableCollection<RoosterModel>) Roosters).Add(newRooster);
 			}
+
+			AddRoosterCommand.CanExecute(true);
 		}
 
 		/// <summary>
@@ -338,7 +329,10 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				else
 				{
 					_logger.Info(Resources.StrInfoRoosterNotAdded);
-					await _messageService.ShowAsync("Ошибка при добавлении петуха");
+					if (Roosters.Count() == 3)
+						await _messageService.ShowAsync("Добавление безуспешно. Превышено максимальное количество доступных петухов. ");
+					else
+						await _messageService.ShowAsync("Ошибка при добавлении петуха");
 				}
 
 			}

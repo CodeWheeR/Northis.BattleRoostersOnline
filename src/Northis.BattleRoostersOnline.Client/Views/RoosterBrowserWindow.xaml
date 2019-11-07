@@ -47,7 +47,7 @@
 				<ListBox
 					BorderBrush="{x:Null}"
 					ItemsSource="{Binding Roosters}"
-					SelectedIndex="{Binding SelectedIndex}"
+					SelectedIndex="{Binding SelectedRoosterIndex, Mode=TwoWay}"
 					SelectedItem="{Binding SelectedRooster}">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
