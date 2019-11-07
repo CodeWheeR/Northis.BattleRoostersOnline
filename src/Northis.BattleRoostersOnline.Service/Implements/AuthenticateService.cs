@@ -11,7 +11,7 @@ using Northis.BattleRoostersOnline.Service.DataStorages;
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
 	/// <summary>
-	/// Предоставляет сервис аунтефикации.
+	/// Предоставляет сервис аутентификации.
 	/// </summary>
 	/// <seealso cref="BaseServiceWithStorage" />
 	/// <seealso cref="Northis.BattleRoostersOnline.Service.Contracts.IAuthenticateService" />
@@ -200,7 +200,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// Возвращает статус авторизации пользователя.
 		/// </summary>
 		/// <returns>
-		/// Статус аунтефикации.
+		/// Статус аутентификации.
 		/// </returns>
 		public AuthenticateStatus GetLoginStatus() => AuthenticateStatus.Ok;
 

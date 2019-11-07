@@ -142,8 +142,9 @@
     <Compile Include="Converters\HealthValueToBool.cs" />
     <Compile Include="Converters\EnumValueToStringPath.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
-    <Compile Include="Models\AuthenticationStatus.cs" />
+    <Compile Include="Models\AuthenticateStatus.cs" />
     <Compile Include="Models\AuthModel.cs" />
+    <Compile Include="Models\BattleStatus.cs" />
     <Compile Include="Models\StatisticsModel.cs" />
     <Compile Include="Models\UserStatistic.cs" />
     <Compile Include="ViewModels\AuthViewModel.cs" />
@@ -196,6 +197,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Connected Services\GameServer\Northis.BattleRoostersOnline.Client.GameServer.AuthenticateStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GameServer\Northis.BattleRoostersOnline.Client.GameServer.BattleStatus.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServer\Northis.BattleRoostersOnline.Client.GameServer.RoosterDto.datasource">

@@ -18,7 +18,6 @@ using Northis.BattleRoostersOnline.Client.Extensions;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.GameServer;
 using Northis.BattleRoostersOnline.Client.Models;
-using AuthenticateStatus = Northis.BattleRoostersOnline.Client.Models.AuthenticateStatus;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
@@ -47,6 +46,8 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		private Logger _logger = LogManager.GetLogger("AuthViewModelLogger");
 
 		private IMessageService _messageService;
+
+		private IMapper _mapper;
 		#endregion
 
 		#region .ctor		
@@ -62,8 +63,9 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			AuthCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.LogInAsync, passwordBox));
 			RegCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.RegisterAsync, passwordBox));
 			_logger.Info("Открыто окно авторизации.");
-			_messageService = this.GetServiceLocator()
-								  .ResolveType<IMessageService>();
+			var container = this.GetServiceLocator();
+			_messageService =container.ResolveType<IMessageService>();
+			_mapper = container.ResolveType<IMapper>();
 		}
 		#endregion
 
@@ -106,7 +108,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// <summary>
 		/// Выполняет переданный способ аутентификации на сервере.
 		/// </summary>
-		/// <param name="authMethod">Метод аунтефикации.</param>
+		/// <param name="authMethod">Метод аутентификации.</param>
 		/// <param name="passwordBox">Хранилище и обработчик паролей.</param>
 		private async Task AuthenticateAsync(Func<string, string, Task<string>> authMethod, PasswordBox passwordBox)
 		{
@@ -129,23 +131,14 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				await _messageService.ShowErrorAsync(e.ToString());
 			}
 
-			GameServer.AuthenticateStatus result;
-
-			if (!Enum.TryParse(token, out result))
+			if (!Enum.TryParse(token, out GameServer.AuthenticateStatus result))
 			{
 				Application.Current.Resources.Add("UserToken", token);
 				await this.SaveAndCloseViewModelAsync();
 			}
 			else
 			{
-				var config = new MapperConfiguration(cfg =>
-				{
-					cfg.CreateMap<GameServer.AuthenticateStatus, AuthenticateStatus>();
-				});
-
-				IMapper mapper = config.CreateMapper();
-
-				await _messageService.ShowAsync(mapper.Map<GameServer.AuthenticateStatus, AuthenticateStatus>(result).GetDisplayFromResource());
+				await _messageService.ShowAsync(_mapper.Map<GameServer.AuthenticateStatus, Models.AuthenticateStatus>(result).GetDisplayFromResource());
 			}
 		}
 		#endregion

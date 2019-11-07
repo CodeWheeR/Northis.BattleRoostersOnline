@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows;
+using AutoMapper;
 using Catel.IoC;
 using Catel.Services;
 using NLog;
+using Northis.BattleRoostersOnline.Client.Extensions;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.ViewModels;
 using Northis.BattleRoostersOnline.Client.GameServer;
+using Northis.BattleRoostersOnline.Client.Properties;
 
 namespace Northis.BattleRoostersOnline.Client.Callbacks
 {
@@ -21,12 +24,15 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		private Logger _battleServiceCallbackLogger = LogManager.GetLogger("BattleServiceCallback");
 
 		private readonly IMessageService _messageService;
+
+		private readonly IMapper _mapper;
 		#endregion
 
 		public BattleServiceCallback()
 		{
 			var container = this.GetServiceLocator();
 			_messageService = container.ResolveType<IMessageService>();
+			_mapper = container.ResolveType<IMapper>();
 		}
 
 		#region Public Methods		
@@ -83,24 +89,15 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		/// <param name="token">The token.</param>
 		public void FindedMatch(string token)
 		{
-			if (token == "User was not found")
+
+			if (!Enum.TryParse(token, out GameServer.BattleStatus serverResult))
 			{
-				_messageService.ShowAsync("Попытка поиска матча не авторизованным пользователем", "Предупреждение");
-				_battleServiceCallbackLogger.Error("Попытка поиска матча не авторизованным пользователем.");
+				var result = _mapper.Map<GameServer.BattleStatus, Models.BattleStatus>(serverResult);
+				_messageService.ShowAsync(result.GetDisplayFromResource(), "Предупреждение");
+				_battleServiceCallbackLogger.Error(result.GetDisplayFromResource());
 				return;
 			}
-			if (token == "Rooster was not found")
-			{
-				_messageService.ShowAsync("Попытка поиска матча не авторизованным петухом", "Предупреждение");
-				_battleServiceCallbackLogger.Error("Попытка поиска матча не авторизованным петухом.", "Предупреждение");
-				return;
-			}
-			if (token == "SameLogin")
-			{
-				_messageService.ShowAsync("Попытка начать бой друг с другом");
-				_battleServiceCallbackLogger.Error("Попытка начать бой друг с другом");
-				return;
-			}
+			
 			_fightVm.BattleEnded = false;
 			_fightVm.IsFinding = false;
 			_fightVm.MatchToken = token;

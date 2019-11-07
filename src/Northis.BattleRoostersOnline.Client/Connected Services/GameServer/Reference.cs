@@ -631,6 +631,23 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         }
     }
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BattleStatus", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
+    public enum BattleStatus : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UserWasNotFound = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        RoosterWasNotFound = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SameLogins = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Ok = 3,
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServer.IAuthenticateService", CallbackContract=typeof(Northis.BattleRoostersOnline.Client.GameServer.IAuthenticateServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IAuthenticateService {
@@ -844,6 +861,12 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, IsTerminating=true, Action="http://tempuri.org/IBattleService/GiveUpAsync")]
         System.Threading.Tasks.Task GiveUpAsyncAsync(string token, string matchToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GetBattleStatus", ReplyAction="http://tempuri.org/IBattleService/GetBattleStatusResponse")]
+        Northis.BattleRoostersOnline.Client.GameServer.BattleStatus GetBattleStatus();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBattleService/GetBattleStatus", ReplyAction="http://tempuri.org/IBattleService/GetBattleStatusResponse")]
+        System.Threading.Tasks.Task<Northis.BattleRoostersOnline.Client.GameServer.BattleStatus> GetBattleStatusAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -923,6 +946,14 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         
         public System.Threading.Tasks.Task GiveUpAsyncAsync(string token, string matchToken) {
             return base.Channel.GiveUpAsyncAsync(token, matchToken);
+        }
+        
+        public Northis.BattleRoostersOnline.Client.GameServer.BattleStatus GetBattleStatus() {
+            return base.Channel.GetBattleStatus();
+        }
+        
+        public System.Threading.Tasks.Task<Northis.BattleRoostersOnline.Client.GameServer.BattleStatus> GetBattleStatusAsync() {
+            return base.Channel.GetBattleStatusAsync();
         }
     }
 }

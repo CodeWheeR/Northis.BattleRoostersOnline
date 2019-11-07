@@ -358,7 +358,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				if (StorageService.LoggedUsers[token] == FirstFighterLogin)
 				{
 					_logger.Warn($"Попытка добавиться в сессию противниками с одинаковыми логинами {FirstFighterLogin}");
-					callback.FindedMatch("SameLogins");
+					callback.FindedMatch(BattleStatus.SameLogins.ToString());
 					return;
 				}
 				IsReady = true;

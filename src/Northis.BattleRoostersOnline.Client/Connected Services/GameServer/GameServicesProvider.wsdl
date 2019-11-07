@@ -106,6 +106,12 @@
   <wsdl:message name="IBattleService_GiveUpAsync_InputMessage">
     <wsdl:part name="parameters" element="tns:GiveUpAsync" />
   </wsdl:message>
+  <wsdl:message name="IBattleService_GetBattleStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBattleStatus" />
+  </wsdl:message>
+  <wsdl:message name="IBattleService_GetBattleStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBattleStatusResponse" />
+  </wsdl:message>
   <wsdl:message name="IBattleService_GetRoosterStatus_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GetRoosterStatus" />
   </wsdl:message>
@@ -173,6 +179,10 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="true" name="GiveUpAsync">
       <wsdl:input wsaw:Action="http://tempuri.org/IBattleService/GiveUpAsync" message="tns:IBattleService_GiveUpAsync_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetBattleStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBattleService/GetBattleStatus" message="tns:IBattleService_GetBattleStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBattleService/GetBattleStatusResponse" message="tns:IBattleService_GetBattleStatus_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetRoosterStatus">
       <wsdl:output wsaw:Action="http://tempuri.org/IBattleService/GetRoosterStatus" message="tns:IBattleService_GetRoosterStatus_OutputCallbackMessage" />
@@ -305,6 +315,15 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetBattleStatus">
+      <soap12:operation soapAction="http://tempuri.org/IBattleService/GetBattleStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetRoosterStatus">
       <soap12:operation soapAction="http://tempuri.org/IBattleService/GetRoosterStatus" style="document" />

@@ -265,7 +265,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// Запускает битву петухов.
 		/// </summary>
 		private async Task FindMatchAsync()
-		{
+		{ 
 			_battleServiceClient = new BattleServiceClient(new InstanceContext(new BattleServiceCallback(this)));
 			ShowDeadFirst = false;
 			ShowDeadSecond = false;

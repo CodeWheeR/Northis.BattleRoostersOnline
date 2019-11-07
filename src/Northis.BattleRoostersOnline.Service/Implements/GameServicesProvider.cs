@@ -23,7 +23,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </summary>
 		private readonly IEditService _editService;
 		/// <summary>
-		/// Сервис аунтефикации.
+		/// Сервис аутентификации.
 		/// </summary>
 		private readonly IAuthenticateService _authenticateService;
 		/// <summary>
@@ -36,7 +36,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <summary>
 		/// Инициализирует новый экземпляр <see cref="GameServicesProvider"/> класса.
 		/// </summary>
-		/// <param name="authenticateService">Сервис аунтефикации.</param>
+		/// <param name="authenticateService">Сервис аутентификации.</param>
 		/// <param name="battleService">Сервис битвы.</param>
 		/// <param name="editService">Сервис редактирования.</param>
 		public GameServicesProvider(IEditService editService, IAuthenticateService authenticateService, IBattleService battleService, IDataStorageService dataStorage)
@@ -108,7 +108,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// Возвращает статус авторизации пользователя.
 		/// </summary>
 		/// <returns>
-		/// Статус аунтефикации.
+		/// Статус аутентификации.
 		/// </returns>
 		public AuthenticateStatus GetLoginStatus() => _authenticateService.GetLoginStatus();
         /// <summary>
@@ -137,6 +137,11 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <param name="token">Токен.</param>
 		/// <param name="matchToken">Токен матча.</param>
 		public void GiveUpAsync(string token, string matchToken) => _battleService.GiveUpAsync(token, matchToken);
+
+		/// <summary>
+		/// Возвращает статус боя.
+		/// </summary>
+		public BattleStatus GetBattleStatus() => _battleService.GetBattleStatus();
 		#endregion
 	}
 }

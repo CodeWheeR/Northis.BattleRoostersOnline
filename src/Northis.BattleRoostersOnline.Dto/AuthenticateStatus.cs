@@ -6,20 +6,20 @@ using System.Runtime.Serialization;
 namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Перечисление-контракт данных, передающее пользователю статус аунтефикации.
+	/// Перечисление-контракт данных, передающее пользователю статус аутентификации.
 	/// </summary>
 	[DataContract]
 	public enum AuthenticateStatus
 	{
-		[EnumMember, Display(Name = "Успешная аунтефикация")]
+		[EnumMember]
 		Ok,
-		[EnumMember, Display(Name = "Неправильный логин или пароль")]
+		[EnumMember]
 		WrongLoginOrPassword,
-		[EnumMember, Display(Name = "Данный пользователь уже зарегистрирован")]
+		[EnumMember]
 		AlreadyRegistered,
-		[EnumMember, Display(Name = "Данный пользователь уже находится в системе")]
+		[EnumMember]
 		AlreadyLoggedIn,
-		[EnumMember, Display(Name = "Логин и пароль должны быть не короче 5 символов")]
+		[EnumMember]
 		WrongDataFormat
 	}
 }

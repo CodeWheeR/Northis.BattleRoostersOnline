@@ -94,4 +94,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RoosterDto" nillable="true" type="tns:RoosterDto" />
+  <xs:simpleType name="BattleStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UserWasNotFound" />
+      <xs:enumeration value="RoosterWasNotFound" />
+      <xs:enumeration value="SameLogins" />
+      <xs:enumeration value="Ok" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BattleStatus" nillable="true" type="tns:BattleStatus" />
 </xs:schema>

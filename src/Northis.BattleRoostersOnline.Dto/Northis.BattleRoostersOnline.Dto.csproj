@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticateStatus.cs" />
+    <Compile Include="BattleStatus.cs" />
     <Compile Include="CrestSizeType.cs" />
     <Compile Include="RoosterDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

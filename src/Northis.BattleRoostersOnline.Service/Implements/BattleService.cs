@@ -54,7 +54,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		{
 			if (!StorageService.LoggedUsers.ContainsKey(token))
 			{
-				Task.Run(() => callback.FindedMatch("User was not found"));
+				Task.Run(() => callback.FindedMatch(BattleStatus.UserWasNotFound.ToString()));
 				_logger.Warn($"Попытка поиска матча не авторизованным пользователем {token}");
 				return;
 			}
@@ -63,7 +63,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			if (!StorageService.RoostersData.ContainsKey(login) || !StorageService.RoostersData[login]
 									.ContainsKey(roosterToken))
 			{
-				Task.Run(() => callback.FindedMatch("Rooster was not found"));
+				Task.Run(() => callback.FindedMatch(BattleStatus.RoosterWasNotFound.ToString()));
 				_logger.Warn($"Попытка поиска матча не созданным петухом {roosterToken}");
 				return;
 			}
@@ -190,6 +190,8 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				throw;
 			}
 		}
+
+		public BattleStatus GetBattleStatus() => BattleStatus.Ok;
 		#endregion
 	}
 }

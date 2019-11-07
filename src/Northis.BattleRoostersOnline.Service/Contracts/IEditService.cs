@@ -14,7 +14,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 	{
 		#region Operation Contracts
 		/// <summary>
-		/// Контракт операции. Отвечает за редактирование выбранного петуха конкретного пользователя.
+		/// Отвечает за редактирование выбранного петуха конкретного пользователя.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="sourceRoosterToken">Изменяемый петух.</param>
@@ -23,7 +23,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		Task<bool> EditAsync(string token, string sourceRoosterToken, RoosterEditDto editRooster);
 
 		/// <summary>
-		/// Контракт операции. Отвечает за добавление петуха.
+		/// Отвечает за добавление петуха.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="rooster">Петух.</param>
@@ -32,7 +32,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		Task<bool> AddAsync(string token, RoosterEditDto rooster);
 
 		/// <summary>
-		/// Контракт операции. Отвечает за удаление петуха.
+		/// Отвечает за удаление петуха.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="deleteRoosterToken">Удаляемый петух.</param>
@@ -41,7 +41,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		Task<bool> RemoveAsync(string token, string deleteRoosterToken);
 
 		/// <summary>
-		/// Контракт операции. Отвечает за возврат петухов пользователя.
+		/// Отвечает за возврат петухов пользователя.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <returns>Коллекцию петухов.</returns>
