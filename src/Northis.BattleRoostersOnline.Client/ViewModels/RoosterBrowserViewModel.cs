@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -189,7 +190,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			Roosters = new ObservableCollection<RoosterModel>();
 			EditRoosterCommand = new TaskCommand(EditRoosterAsync, () => SelectedRooster != null);
 			DeleteRoosterCommand = new TaskCommand(DeleteRoosterAsync, () => SelectedRooster != null);
-			AddRoosterCommand = new TaskCommand(AddRoosterAsync);
+			AddRoosterCommand = new TaskCommand(AddRoosterAsync, () => Roosters.Count() < 3);
 			FightCommand = new TaskCommand(StartRoostersFightAsync, () => SelectedRooster != null && ShowWindow == true);
 			
 		}

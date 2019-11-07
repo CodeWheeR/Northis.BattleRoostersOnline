@@ -232,7 +232,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		{
 			foreach (var sub in _subscribers)
 			{
-				sub.Value.GetMessageFromServer(message);
+				sub.Value.GetServerStopMessage(message);
 			}
 		}
 

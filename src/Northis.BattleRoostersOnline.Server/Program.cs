@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using AutoMapper;
@@ -12,6 +13,7 @@ using Unity.Wcf;
 using AutoMapper;
 using AutoMapper.Mappers;
 using GameServer.Properties;
+using NLog.Targets;
 using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Models;
 using Unity.Lifetime;
@@ -34,13 +36,6 @@ namespace Northis.BattleRoostersOnline.Server
 			UnityServiceHost selfHost = null;
 
 			AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
-			AppDomain.CurrentDomain.ProcessExit += (x, y) =>
-			{
-				if (selfHost != null)
-				{
-					StatisticsPublisher.GetInstance().SendMessageToSubscibers("ServerClosed");
-				}
-			};
 
 			string address = "";
 
@@ -109,7 +104,12 @@ namespace Northis.BattleRoostersOnline.Server
 				//Console.WriteLine("The service is ready.");
 				//Console.WriteLine("Press <Enter> to terminate the service.");
 
-				Console.ReadLine();
+				while (Console.ReadKey() != new ConsoleKeyInfo((char) 13, ConsoleKey.Enter, false, false, false))
+				{
+
+				}
+
+				StatisticsPublisher.GetInstance().SendMessageToSubscibers("Сервер закрыт");
 				selfHost.Close();
 			}
 			catch (CommunicationException ce)
@@ -117,8 +117,6 @@ namespace Northis.BattleRoostersOnline.Server
 				logger.Error(Resources.StrFrmErrorCommunicationException, ce.Message);
 				selfHost.Abort();
 			}
-
-			Console.ReadLine();
 		}
 		/// <summary>
 		/// Действие при обработке Unhandled Exception.

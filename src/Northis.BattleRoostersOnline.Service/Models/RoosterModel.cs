@@ -401,9 +401,11 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				dmg *= (double) Height / _minHeight / 10 + 1;
 				dmg *= (double) CalcEnumIndex(Crest) / 4 + 1;
 
-				return Math.Round(dmg, 2) + WinStreak;
+				return Math.Round(dmg, 2) + WinStreakFunc(WinStreak);
 			}
 		}
+
+		private double WinStreakFunc(int winStreak) => (Math.Pow(winStreak + 1, 1.0/3.0) - 1) * 1.92;
 
 		/// <summary>
 		/// Возвращает вычисленную силу удара петуха.

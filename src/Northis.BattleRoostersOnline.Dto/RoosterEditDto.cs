@@ -148,7 +148,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		public RoosterEditDto()
 		{
 
-		}
+		} 
 		#endregion
 
 		#region Public Methods

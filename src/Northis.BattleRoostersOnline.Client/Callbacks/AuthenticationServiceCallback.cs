@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Windows;
 using Catel.IoC;
 using Catel.Services;
 using NLog;
@@ -55,11 +56,12 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 			_authServiceCallbackLogger.Info(Resources.StrInfoStatisticUpdated);
 		}
 
-		public void GetMessageFromServer(string message)
+		public async void GetServerStopMessage(string message)
 		{
-			this.GetServiceLocator()
+			await this.GetServiceLocator()
 				.ResolveType<IMessageService>()
 				.ShowAsync(message, "Предупреждение");
+			Application.Current.Shutdown(0);
 		}
 		#endregion
 	}

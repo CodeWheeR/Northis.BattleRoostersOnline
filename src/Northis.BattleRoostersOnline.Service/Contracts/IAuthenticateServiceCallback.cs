@@ -20,7 +20,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		/// Контракт операции. Оповещает о начале матча.
 		/// </summary>
 		[OperationContract(IsOneWay = true)]
-		void GetMessageFromServer(string message);
+		void GetServerStopMessage(string message);
 		#endregion
 	}
 }
