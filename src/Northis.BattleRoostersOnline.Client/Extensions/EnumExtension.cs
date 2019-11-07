@@ -61,7 +61,11 @@ namespace Northis.BattleRoostersOnline.Client.Extensions
 			return enumElement.ToString();
 		}
 
-
+		/// <summary>
+		/// Возвращает отображаемое имя элемента перечисления.
+		/// </summary>
+		/// <param name="enumElement">Элемент перечисления.</param>
+		/// <returns>Имя элемента перечисления, хранящееся в атрибуте Display.</returns>
 		public static string GetDisplayName(this Enum enumElement)
 		{
 			var type = enumElement.GetType();
@@ -86,7 +90,13 @@ namespace Northis.BattleRoostersOnline.Client.Extensions
 
 		#endregion
 
-		#region Private Methods
+		#region Private Methods		
+		/// <summary>
+		/// Возвращает значение ресурса по переданному ключу.
+		/// </summary>
+		/// <param name="resourceKey">Ключ.</param>
+		/// <param name="resourceType">Тип ресурса.</param>
+		/// <returns>Если запись по ключу имеется - значение, иначе сам ключ.</returns>
 		private static string GetValueFromResources(string resourceKey, Type resourceType)
 		{
 			var resourceManager = new ResourceManager(resourceType);

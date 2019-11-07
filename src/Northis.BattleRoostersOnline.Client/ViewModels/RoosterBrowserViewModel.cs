@@ -15,6 +15,7 @@ using Catel.Services;
 using NLog;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.GameServer;
+using Northis.BattleRoostersOnline.Client.Properties;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
@@ -201,7 +202,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
         /// </summary>
         protected override async Task InitializeAsync()
 		{
-			_logger.Info("Открытие окна авторизации пользователя.");
+			_logger.Info(Resources.StrInfoOpeningAuthorizationWindow);
 
 			await _uiVisualizerService.ShowDialogAsync<AuthViewModel>();
 
@@ -209,7 +210,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 			if (token == null)
 			{
-				_logger.Error("Авторизация не пройдена!");
+				_logger.Error(Resources.StrErrorAuthorizationNotSuccess);
 				Application.Current.Shutdown();
 			}
 
@@ -223,7 +224,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 			ShowWindow = true;
 
-			_logger.Info("Открыто главное окно приложения.");
+			_logger.Info(Resources.StrInfoMainWindowAppOpened);
 		}
 
 		/// <summary>
@@ -234,7 +235,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		protected override async Task OnClosingAsync()
 		{
 			await _authenticateServiceClient.LogOutAsync(token);
-			_logger.Info("Выход пользователя из сети.");
+			_logger.Info(Resources.StrInfoLeaveUser);
 			await base.OnClosingAsync();
 		}
         #endregion
@@ -247,7 +248,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
         private async void UpdateRoostersAsync()
 		{
 			UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
-			_logger.Info("Список петухов был обновлен.");
+			_logger.Info(Resources.StrInfoRoostersWasUpdated);
 		}
 
 		/// <summary>
@@ -260,7 +261,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 			if (SelectedRooster != null)
 			{
-				_logger.Info("Обновлено имя текущего выделенного петуха");
+				_logger.Info(Resources.StrInfoSelectedRoostersNameUpdate);
 				selectedRoosterToken = SelectedRooster.Token;
 			}
 
@@ -284,7 +285,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// <returns>Окно редактирования.</returns>
 		private async Task EditRoosterAsync()
 		{
-			_logger.Info($"Открыто окно редактирования петуха с имененм {SelectedRooster.Name}.");
+			_logger.Info(Resources.StrFmtInfoEditWindowOpenForSelectedRooster, SelectedRooster.Name);
 			if (await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(SelectedRooster) == true)
 			{
 
@@ -304,7 +305,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				_logger.Warn($"Удаление петуха {SelectedRooster.Token} пользователя {token} неуспешно");
 				await _messageService.ShowAsync("Ошибка при удалении. Проверьте лог Warn");
 			}
-			_logger.Info($"Петух был удален.");
+			_logger.Info(Resources.StrInfoRoosterDeleted);
 			UpdateRoostersAsync();
 		}
 
@@ -314,7 +315,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		private async Task AddRoosterAsync()
 		{
 			var rooster = new RoosterModel();
-			_logger.Info("Старт добавления нового петуха.");
+			_logger.Info(Resources.StrInfoStartRoosterAdding);
 			if (await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(rooster) == true)
 			{
 				bool addRes = false;
@@ -331,11 +332,11 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				if (addRes)
 				{
 					UpdateRoostersAsync();
-					_logger.Info("Новый петух добавлен в список петухов пользователя.");
+					_logger.Info(Resources.StrInfoNewRoosterAdded);
 				}
 				else
 				{
-					_logger.Info("Ошибка при добавлении петуха");
+					_logger.Info(Resources.StrInfoRoosterNotAdded);
 					await _messageService.ShowAsync("Ошибка при добавлении петуха");
 				}
 
@@ -348,11 +349,11 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		private async Task StartRoostersFightAsync()
 		{
 			ShowWindow = false;
-			_logger.Info("Открытие окна битвы петухов.");
+			_logger.Info(Resources.StrInfoFightWindowOpened);
 			await _uiVisualizerService.ShowDialogAsync<FightViewModel>(SelectedRooster);
 			ShowWindow = true;
 			UpdateRoostersAsync();
-			_logger.Info("Битва была проведена.");
+			_logger.Info(Resources.StrInfoFightCompleted);
 		}
 		#endregion
 	}

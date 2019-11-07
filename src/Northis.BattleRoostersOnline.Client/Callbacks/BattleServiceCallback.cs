@@ -6,6 +6,7 @@ using NLog;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.ViewModels;
 using Northis.BattleRoostersOnline.Client.GameServer;
+using Northis.BattleRoostersOnline.Client.Properties;
 
 namespace Northis.BattleRoostersOnline.Client.Callbacks
 {
@@ -54,7 +55,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 				_fightVm.SecondFighter = null;
 			}
 
-			_battleServiceCallbackLogger.Info("Статус готовности петухов к сражению обновлен.");
+			_battleServiceCallbackLogger.Info(Resources.StrInfoStatusUpdated);
 		}
 
 		/// <summary>
@@ -64,7 +65,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		public void GetBattleMessage(string message)
 		{
 			_fightVm.BattleLog += message + Environment.NewLine;
-			_battleServiceCallbackLogger.Info($"Получено сообщение: {message}.");
+			_battleServiceCallbackLogger.Info(Resources.StrInfoReciveMessage, message);
 		}
 
 		/// <summary>
@@ -74,7 +75,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		{
 			_fightVm.BattleStarted = true;
 			_fightVm.BattleLog += "Бой начался" + Environment.NewLine;
-			_battleServiceCallbackLogger.Info($"Начало боя: .");
+			_battleServiceCallbackLogger.Info(Resources.StrInfoStartFighting);
 		}
 
 		/// <summary>
@@ -86,26 +87,26 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 			if (token == "User was not found")
 			{
 				_messageService.ShowAsync("Попытка поиска матча не авторизованным пользователем", "Предупреждение");
-				_battleServiceCallbackLogger.Error("Попытка поиска матча не авторизованным пользователем.");
+				_battleServiceCallbackLogger.Error(Resources.StrErrorNotLoginedUserFind);
 				return;
 			}
 			if (token == "Rooster was not found")
 			{
 				_messageService.ShowAsync("Попытка поиска матча не авторизованным петухом", "Предупреждение");
-				_battleServiceCallbackLogger.Error("Попытка поиска матча не авторизованным петухом.", "Предупреждение");
+				_battleServiceCallbackLogger.Error(Resources.StrErrorNotLoginedRoosterFind, "Предупреждение");
 				return;
 			}
 			if (token == "SameLogin")
 			{
 				_messageService.ShowAsync("Попытка начать бой друг с другом");
-				_battleServiceCallbackLogger.Error("Попытка начать бой друг с другом");
+				_battleServiceCallbackLogger.Error(Resources.StrErrorFightAgainstYourself);
 				return;
 			}
 			_fightVm.BattleEnded = false;
 			_fightVm.IsFinding = false;
 			_fightVm.MatchToken = token;
 			_fightVm.BattleLog += "Матч найден. Когда будете готовы, нажмите кнопку \"Начать бой\"" + Environment.NewLine;
-			_battleServiceCallbackLogger.Info("Получено сообщение: Матч найден. Когда будете готовы, нажмите кнопку \"Начать бой\".");
+			_battleServiceCallbackLogger.Info(Resources.StrInfoPrepareToFight);
 		}
 
 		/// <summary>
@@ -115,7 +116,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		{
 			_fightVm.BattleEnded = true;
 			_fightVm.BattleLog += "Бой окончен" + Environment.NewLine;
-			_battleServiceCallbackLogger.Info("Получено сообщение: Бой окончен.");
+			_battleServiceCallbackLogger.Info(Resources.StrInfoFightEnded);
 		}
 		#endregion
 	}

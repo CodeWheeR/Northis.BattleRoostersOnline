@@ -10,6 +10,7 @@ using NLog;
 using Northis.BattleRoostersOnline.Client.Callbacks;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.GameServer;
+using Northis.BattleRoostersOnline.Client.Properties;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
@@ -83,7 +84,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			CancelFindingCommand = new TaskCommand(CancelFindingAsync, () => IsFinding && string.IsNullOrWhiteSpace(MatchToken));
 			StartFightCommand = new TaskCommand(StartFightAsync, () => !string.IsNullOrWhiteSpace(MatchToken) && !BattleStarted && !BattleEnded);
 			_userToken = (string) Application.Current.Resources["UserToken"];
-			_logger.Info("Открыто окно боя");
+			_logger.Info(Resources.StrInfoFightWindowOpened);
 		}
 		#endregion
 
@@ -236,13 +237,13 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			if (!BattleEnded)
 			{
 				_battleServiceClient.GiveUpAsync(_userToken, MatchToken);
-				_logger.Info("Произошла сдача боя.");
+				_logger.Info(Resources.StrInfoTheBattleWasSurrendered);
 
 			}
 			else if (IsFinding)
 			{
 				_battleServiceClient.CancelFindingAsync(_userToken);
-				_logger.Info("Отмена поиска матча.");
+				_logger.Info(Resources.StrInfoCancelFindMatch);
 			}
 
 			await base.OnClosingAsync();
@@ -258,7 +259,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		{
 			BattleStarted = true;
 			_battleServiceClient.StartBattleAsync(_userToken, MatchToken);
-			_logger.Info("Старт битвы петухов.");
+			_logger.Info(Resources.StrInfoStartRoostersFight);
 		}
 
 		/// <summary>
@@ -271,7 +272,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			ShowDeadSecond = false;
 			IsFinding = true;
 			_battleServiceClient.FindMatchAsync(_userToken, FirstFighter.Token);
-			_logger.Info("Начало поиска битвы.");
+			_logger.Info(Resources.StrInfoStartFindingBattle);
 		}
 
 		/// <summary>
@@ -282,7 +283,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			IsFinding = false;
 			await _battleServiceClient.CancelFindingAsync(_userToken);
 			_battleServiceClient = null;
-			_logger.Info("Отмена поиска битвы.");
+			_logger.Info(Resources.StrInfoCancelFindingBattle);
 		}
 		#endregion
 	}
