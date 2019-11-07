@@ -6,7 +6,7 @@ using Catel.MVVM.Converters;
 namespace Northis.BattleRoostersOnline.Client.Converters
 {
 	/// <summary>
-	/// Конвертирует значение перечисления RoosterColor в путь к изображениям петухов.
+	/// Конвертирует значение bool в состояние окна.
 	/// </summary>
 	/// <seealso cref="Catel.MVVM.Converters.IValueConverter" />
 	public class BooleanToWindowState : IValueConverter
@@ -15,7 +15,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <summary>
 		/// Конвертирует значение Bool в состояние окна.
 		/// </summary>
-		/// <param name="value">Значение перечисления RoosterColor.</param>
+		/// <param name="value">bool-значение.</param>
 		/// <param name="targetType">Целевой тип конвертации.</param>
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>
@@ -24,7 +24,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>
-		/// <param name="value">Значение перечисления RoosterColor.</param>
+		/// <param name="value">Значение.</param>
 		/// <param name="targetType">Целевой тип конвертации.</param>
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>

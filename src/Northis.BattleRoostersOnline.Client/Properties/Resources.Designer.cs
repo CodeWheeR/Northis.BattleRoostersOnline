@@ -369,11 +369,29 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Ошибка!.
+        /// </summary>
+        public static string StrError {
+            get {
+                return ResourceManager.GetString("StrError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Авторизация не пройдена!.
         /// </summary>
         public static string StrErrorAuthorizationNotSuccess {
             get {
                 return ResourceManager.GetString("StrErrorAuthorizationNotSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Возникло необработанное исключение. Проверьте Log &apos;Fatal&apos;.
+        /// </summary>
+        public static string StrErrorFatalError {
+            get {
+                return ResourceManager.GetString("StrErrorFatalError", resourceCulture);
             }
         }
         
@@ -441,74 +459,11 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на В сессии {0} закончилось сражение.
-        /// </summary>
-        public static string StrFmtInfoEndBattleInTheSession {
-            get {
-                return ResourceManager.GetString("StrFmtInfoEndBattleInTheSession", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Поиск соперника в сессии {0} был отменен пользователем {1}.
-        /// </summary>
-        public static string StrFmtInfoFindingEnemyCanceled {
-            get {
-                return ResourceManager.GetString("StrFmtInfoFindingEnemyCanceled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Поиск матча был отменен пользователем {0}, сессия {1} закрыта.
-        /// </summary>
-        public static string StrFmtInfoFindingMatchWasEndingByUser {
-            get {
-                return ResourceManager.GetString("StrFmtInfoFindingMatchWasEndingByUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на В сессию {0} добавился первый боец {1}.
-        /// </summary>
-        public static string StrFmtInfoFirstFighterEnteredInSession {
-            get {
-                return ResourceManager.GetString("StrFmtInfoFirstFighterEnteredInSession", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Значение Удачи должно быть от 0 до {0}..
         /// </summary>
         public static string StrFmtInfoLuckValue {
             get {
                 return ResourceManager.GetString("StrFmtInfoLuckValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Инициализована новая сессия {0}.
-        /// </summary>
-        public static string StrFmtInfoNewSessionInitialized {
-            get {
-                return ResourceManager.GetString("StrFmtInfoNewSessionInitialized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на В сессию {0} добавился второй боец {1}.
-        /// </summary>
-        public static string StrFmtInfoSecondFighterEnteredInSession {
-            get {
-                return ResourceManager.GetString("StrFmtInfoSecondFighterEnteredInSession", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на В сессии {0} началось сражение.
-        /// </summary>
-        public static string StrFmtInfoStartBattleInTheSession {
-            get {
-                return ResourceManager.GetString("StrFmtInfoStartBattleInTheSession", resourceCulture);
             }
         }
         
@@ -522,24 +477,6 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Вызвана остановка сессии {0} по причине дезертирства.
-        /// </summary>
-        public static string StrFmtInfoStopBattleDueToDesertion {
-            get {
-                return ResourceManager.GetString("StrFmtInfoStopBattleDueToDesertion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Регистрация пользователя {0} прошла успешно.
-        /// </summary>
-        public static string StrFmtInfoSuccessRegitstration {
-            get {
-                return ResourceManager.GetString("StrFmtInfoSuccessRegitstration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Значение Толщины покрова должно быть от 0 до {0}..
         /// </summary>
         public static string StrFmtInfoThicknessValue {
@@ -549,101 +486,11 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка авторизации незарегистрированным пользователем {0}.
-        /// </summary>
-        public static string StrFmtInfoTryLoginNotRegistredUser {
-            get {
-                return ResourceManager.GetString("StrFmtInfoTryLoginNotRegistredUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка регистрации уже зарегистрированным пользователем {0}.
-        /// </summary>
-        public static string StrFmtInfoTryRegisterAlreadyRegistredUser {
-            get {
-                return ResourceManager.GetString("StrFmtInfoTryRegisterAlreadyRegistredUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Пользователь {(login == &quot;&quot; ? token : login)} дезертировал.
-        /// </summary>
-        public static string StrFmtInfoUserDeserted {
-            get {
-                return ResourceManager.GetString("StrFmtInfoUserDeserted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Пользователь {0} вошел в сеть с токеном {1}.
-        /// </summary>
-        public static string StrFmtInfoUserLogined {
-            get {
-                return ResourceManager.GetString("StrFmtInfoUserLogined", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Пользователь {0} вышел из сети.
-        /// </summary>
-        public static string StrFmtInfoUserLogOut {
-            get {
-                return ResourceManager.GetString("StrFmtInfoUserLogOut", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Значение Веса должно быть от 0.0 до {0}.0..
         /// </summary>
         public static string StrFmtInfoWeightValue {
             get {
                 return ResourceManager.GetString("StrFmtInfoWeightValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Удаление петуха {0} пользователя {1} неуспешно.
-        /// </summary>
-        public static string StrFmtWarnDeleteRoosterFailed {
-            get {
-                return ResourceManager.GetString("StrFmtWarnDeleteRoosterFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка дисконекта от неавторизованного пользователя {0}.
-        /// </summary>
-        public static string StrFmtWarnTryDisconnectNotAuthorizedUser {
-            get {
-                return ResourceManager.GetString("StrFmtWarnTryDisconnectNotAuthorizedUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка поиска матча не авторизованным пользователем {0}.
-        /// </summary>
-        public static string StrFmtWarnTryFindMatchByNotAuthorizedUser {
-            get {
-                return ResourceManager.GetString("StrFmtWarnTryFindMatchByNotAuthorizedUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка поиска матча не созданным петухом {0}.
-        /// </summary>
-        public static string StrFmtWarnTryFindMatchNotCreatedRooster {
-            get {
-                return ResourceManager.GetString("StrFmtWarnTryFindMatchNotCreatedRooster", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка добавиться в сессию противниками с одинаковыми логинами {0}.
-        /// </summary>
-        public static string StrFmtWarnTryToEnterInSessionWithSameLogins {
-            get {
-                return ResourceManager.GetString("StrFmtWarnTryToEnterInSessionWithSameLogins", resourceCulture);
             }
         }
         

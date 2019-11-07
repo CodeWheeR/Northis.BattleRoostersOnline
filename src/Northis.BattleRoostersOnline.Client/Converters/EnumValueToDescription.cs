@@ -6,7 +6,7 @@ using Northis.BattleRoostersOnline.Client.Extensions;
 namespace Northis.BattleRoostersOnline.Client.Converters
 {
 	/// <summary>
-	/// Конвертирует значение перечисления RoosterColor в путь к изображениям петухов.
+	/// Конвертирует значение Enum, помеченного аттрибутом Display, в путь к картинке.
 	/// </summary>
 	/// <seealso cref="Catel.MVVM.Converters.IValueConverter" />
 	public class EnumValueToDescription : IValueConverter
@@ -15,7 +15,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <summary>
 		/// Конвертирует значение Enum, помеченного аттрибутом Display, в путь к картинке.
 		/// </summary>
-		/// <param name="value">Значение перечисления RoosterColor.</param>
+		/// <param name="value">Значение перечисления.</param>
 		/// <param name="targetType">Целевой тип конвертации.</param>
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>
@@ -24,7 +24,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>
-		/// <param name="value">Значение перечисления RoosterColor.</param>
+		/// <param name="value">Значение перечисления.</param>
 		/// <param name="targetType">Целевой тип конвертации.</param>
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>

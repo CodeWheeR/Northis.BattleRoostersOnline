@@ -10,6 +10,7 @@ using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Events;
 using Northis.BattleRoostersOnline.Service.Implements;
+using Northis.BattleRoostersOnline.Service.Properties;
 
 namespace Northis.BattleRoostersOnline.Service.Models
 {
@@ -327,7 +328,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		public Session(string token, IDataStorageService storage) : base(storage)
 		{
 			Token = token;
-			_logger.Info($"Инициализована новая сессия {token}");
+			_logger.Info(Resources.StrFmtInfoNewSessionInitialized, token);
 		}
 		#endregion
 
@@ -409,7 +410,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		public void SendEndSign()
 		{
 			IsEnded = true;
-			_logger.Info($"В сессии {Token} закончилось сражение");
+			_logger.Info(Resources.StrFmtInfoEndBattleInTheSession, Token);
 			BattleEnded?.Invoke(this, EventArgs.Empty);
 			StatisticsPublisher.GetInstance()
 							   .UpdateStatistics();
@@ -421,7 +422,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <param name="needCheck">Необходимость проверки на дезертирство. <c>true</c> [need check].</param>
 		public void StopSession(bool needCheck = false)
 		{
-			_logger.Info($"Вызвана остановка сессии {Token} по причине дезертирства");
+			_logger.Info(Resources.StrFmtInfoStopBattleDueToDesertion, Token);
 			_battleTokenSource.Cancel();
 			_connectionMonitorTokenSource.Cancel();
 			if (needCheck)

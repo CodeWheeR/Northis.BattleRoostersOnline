@@ -5,16 +5,16 @@ using Catel.MVVM.Converters;
 namespace Northis.BattleRoostersOnline.Client.Converters
 {
 	/// <summary>
-	/// Конвертирует значение перечисления RoosterColor в путь к изображениям петухов.
+	/// Конвертирует вещественное значение в текстовое описание ограничения.
 	/// </summary>
 	/// <seealso cref="Catel.MVVM.Converters.IValueConverter" />
-	public class MaxDoubleValue : IValueConverter
+	public class MaxDoubleValueToTextLimiter : IValueConverter
 	{
 		#region Public Methods
 		/// <summary>
-		/// Конвертирует значение Enum, помеченного аттрибутом Display, в путь к картинке.
+		/// Конвертирует вещественное значение в текстовое описание ограничения.
 		/// </summary>
-		/// <param name="value">Значение перечисления RoosterColor.</param>
+		/// <param name="value">Вещественный ограничитель.</param>
 		/// <param name="targetType">Целевой тип конвертации.</param>
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>
@@ -23,7 +23,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>
-		/// <param name="value">Значение перечисления RoosterColor.</param>
+		/// <param name="value">Вещественный ограничитель.</param>
 		/// <param name="targetType">Целевой тип конвертации.</param>
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>

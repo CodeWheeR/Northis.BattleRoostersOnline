@@ -256,9 +256,6 @@
   <data name="StrFmtInfoEditWindowOpenForSelectedRooster" xml:space="preserve">
     <value>Открыто окно редактирования петуха с имененм {0}.</value>
   </data>
-  <data name="StrFmtInfoEndBattleInTheSession" xml:space="preserve">
-    <value>В сессии {0} закончилось сражение</value>
-  </data>
   <data name="StrInfoFightCompleted" xml:space="preserve">
     <value>Битва была проведена.</value>
   </data>
@@ -270,15 +267,6 @@
   </data>
   <data name="StrInfoFightWindowOpening" xml:space="preserve">
     <value>Открытие окна битвы петухов.</value>
-  </data>
-  <data name="StrFmtInfoFindingEnemyCanceled" xml:space="preserve">
-    <value>Поиск соперника в сессии {0} был отменен пользователем {1}</value>
-  </data>
-  <data name="StrFmtInfoFindingMatchWasEndingByUser" xml:space="preserve">
-    <value>Поиск матча был отменен пользователем {0}, сессия {1} закрыта</value>
-  </data>
-  <data name="StrFmtInfoFirstFighterEnteredInSession" xml:space="preserve">
-    <value>В сессию {0} добавился первый боец {1}</value>
   </data>
   <data name="StrInfoHeightValue" xml:space="preserve">
     <value>Значение Роста должно быть от 20 до 50.</value>
@@ -298,9 +286,6 @@
   <data name="StrInfoNewRoosterAdded" xml:space="preserve">
     <value>Новый петух добавлен в список петухов пользователя.</value>
   </data>
-  <data name="StrFmtInfoNewSessionInitialized" xml:space="preserve">
-    <value>Инициализована новая сессия {0}</value>
-  </data>
   <data name="StrInfoOpeningAuthorizationWindow" xml:space="preserve">
     <value>Открытие окна авторизации пользователя.</value>
   </data>
@@ -319,17 +304,11 @@
   <data name="StrInfoRoostersWasUpdated" xml:space="preserve">
     <value>Список петухов был обновлен.</value>
   </data>
-  <data name="StrFmtInfoSecondFighterEnteredInSession" xml:space="preserve">
-    <value>В сессию {0} добавился второй боец {1}</value>
-  </data>
   <data name="StrInfoSelectedRoostersNameUpdate" xml:space="preserve">
     <value>Обновлено имя текущего выделенного петуха</value>
   </data>
   <data name="StrInfoSoLongName" xml:space="preserve">
     <value>Длина имени петуха должна быть не больше 15 символов.</value>
-  </data>
-  <data name="StrFmtInfoStartBattleInTheSession" xml:space="preserve">
-    <value>В сессии {0} началось сражение</value>
   </data>
   <data name="StrFmtInfoStartDeletingRooster" xml:space="preserve">
     <value>Запуск удаления петуха {0}.</value>
@@ -355,53 +334,17 @@
   <data name="StrInfoStatusUpdated" xml:space="preserve">
     <value>Статус готовности петухов к сражению обновлен.</value>
   </data>
-  <data name="StrFmtInfoStopBattleDueToDesertion" xml:space="preserve">
-    <value>Вызвана остановка сессии {0} по причине дезертирства</value>
-  </data>
-  <data name="StrFmtInfoSuccessRegitstration" xml:space="preserve">
-    <value>Регистрация пользователя {0} прошла успешно</value>
-  </data>
   <data name="StrInfoTheBattleWasSurrendered" xml:space="preserve">
     <value>Произошла сдача боя.</value>
   </data>
   <data name="StrFmtInfoThicknessValue" xml:space="preserve">
     <value>Значение Толщины покрова должно быть от 0 до {0}.</value>
   </data>
-  <data name="StrFmtInfoTryLoginNotRegistredUser" xml:space="preserve">
-    <value>Попытка авторизации незарегистрированным пользователем {0}</value>
-  </data>
-  <data name="StrFmtInfoTryRegisterAlreadyRegistredUser" xml:space="preserve">
-    <value>Попытка регистрации уже зарегистрированным пользователем {0}</value>
-  </data>
-  <data name="StrFmtInfoUserDeserted" xml:space="preserve">
-    <value>Пользователь {(login == "" ? token : login)} дезертировал</value>
-  </data>
-  <data name="StrFmtInfoUserLogined" xml:space="preserve">
-    <value>Пользователь {0} вошел в сеть с токеном {1}</value>
-  </data>
-  <data name="StrFmtInfoUserLogOut" xml:space="preserve">
-    <value>Пользователь {0} вышел из сети</value>
-  </data>
   <data name="StrFmtInfoWeightValue" xml:space="preserve">
     <value>Значение Веса должно быть от 0.0 до {0}.0.</value>
   </data>
-  <data name="StrFmtWarnDeleteRoosterFailed" xml:space="preserve">
-    <value>Удаление петуха {0} пользователя {1} неуспешно</value>
-  </data>
   <data name="StrWarnStringsCannotBeEmpty" xml:space="preserve">
     <value>Поля логина и пароля не могут быть пустыми.</value>
-  </data>
-  <data name="StrFmtWarnTryDisconnectNotAuthorizedUser" xml:space="preserve">
-    <value>Попытка дисконекта от неавторизованного пользователя {0}</value>
-  </data>
-  <data name="StrFmtWarnTryFindMatchByNotAuthorizedUser" xml:space="preserve">
-    <value>Попытка поиска матча не авторизованным пользователем {0}</value>
-  </data>
-  <data name="StrFmtWarnTryFindMatchNotCreatedRooster" xml:space="preserve">
-    <value>Попытка поиска матча не созданным петухом {0}</value>
-  </data>
-  <data name="StrFmtWarnTryToEnterInSessionWithSameLogins" xml:space="preserve">
-    <value>Попытка добавиться в сессию противниками с одинаковыми логинами {0}</value>
   </data>
   <data name="StrAlreadyRegistered" xml:space="preserve">
     <value>Данный пользователь уже находится в системе</value>
@@ -417,5 +360,11 @@
   </data>
   <data name="StrWrongLoginOrPassword" xml:space="preserve">
     <value>Неправильный логин или пароль</value>
+  </data>
+  <data name="StrError" xml:space="preserve">
+    <value>Ошибка!</value>
+  </data>
+  <data name="StrErrorFatalError" xml:space="preserve">
+    <value>Возникло необработанное исключение. Проверьте Log 'Fatal'</value>
   </data>
 </root>
