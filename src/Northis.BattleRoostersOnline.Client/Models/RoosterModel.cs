@@ -432,26 +432,6 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		}
 		#endregion
 
-		#region Public Methods
-		/// <summary>
-		/// Выполняет преобразование объекта к типу RoosterDto.
-		/// </summary>
-		/// <returns></returns>
-		public RoosterEditDto ToRoosterDto() =>
-			new RoosterEditDto()
-			{
-				Height = Height,
-				Color = ColorDtoParse(Color),
-				Brickness = Brickness,
-				Crest = SizeDtoParse(Crest),
-				Weight = Weight,
-				Luck = Luck,
-				Name = Name,
-				Thickness = Thickness
-			};
-
-		#endregion
-
 		#region Private Methods
 		/// <summary>
 		/// Выполняет ограничение значения минимальным и максимальным уровнем.

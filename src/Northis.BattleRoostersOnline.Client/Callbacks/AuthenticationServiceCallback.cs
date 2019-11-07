@@ -1,7 +1,9 @@
-﻿using NLog;
+﻿using System.ComponentModel.DataAnnotations;
+using NLog;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.ViewModels;
 using Northis.BattleRoostersOnline.Client.GameServer;
+using Northis.BattleRoostersOnline.Client.Properties;
 
 namespace Northis.BattleRoostersOnline.Client.Callbacks
 {
@@ -36,7 +38,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		/// <param name="usersStatistics">Статистика пользователя.</param>
 		public void GetNewGlobalStatistics(StatisticsDto[] statistics, UsersStatisticsDto[] usersStatistics)
 		{
-			_authServiceCallbackLogger.Info("Начало обновления статистики...");
+			_authServiceCallbackLogger.Info(Resources.StrInfoStartStatisticUpdate);
 			_roosterBrowserViewModel.Statistics = new StatisticsModel[statistics.Length];
 			_roosterBrowserViewModel.UserStatistics = new UserStatistic[usersStatistics.Length];
 			for (int i = 0; i < statistics.Length; i++)
@@ -48,7 +50,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 			{
 				_roosterBrowserViewModel.UserStatistics[i] = new UserStatistic(usersStatistics[i]);
 			}
-			_authServiceCallbackLogger.Info("Статистика обновлена.");
+			_authServiceCallbackLogger.Info(Resources.StrInfoStatisticUpdated);
 		}
 		#endregion
 	}

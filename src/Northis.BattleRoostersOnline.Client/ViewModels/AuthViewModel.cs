@@ -17,12 +17,12 @@ using NLog;
 using Northis.BattleRoostersOnline.Client.Extensions;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.GameServer;
-using Northis.BattleRoostersOnline.Client.Models;
+using Northis.BattleRoostersOnline.Client.Properties;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
     /// <summary>
-    /// Класс, инкапсулирующий в себе модель-представление "Аунтефикация".
+    /// Представляет модель-представление "Аунтефикация".
     /// </summary>
     /// <seealso cref="ViewModelBase" />
     internal class AuthViewModel : ViewModelBase
@@ -62,7 +62,9 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			_uiVisualizerService = uiVisualizerService;
 			AuthCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.LogInAsync, passwordBox));
 			RegCommand = new TaskCommand<PasswordBox>(passwordBox => AuthenticateAsync(_authenticateServiceClient.RegisterAsync, passwordBox));
-			_logger.Info("Открыто окно авторизации.");
+
+			_logger.Info(Resources.StrInfoOpeningAuthorizationWindow);
+
 			var container = this.GetServiceLocator();
 			_messageService =container.ResolveType<IMessageService>();
 			_mapper = container.ResolveType<IMapper>();
@@ -108,6 +110,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// <summary>
 		/// Выполняет переданный способ аутентификации на сервере.
 		/// </summary>
+
 		/// <param name="authMethod">Метод аутентификации.</param>
 		/// <param name="passwordBox">Хранилище и обработчик паролей.</param>
 		private async Task AuthenticateAsync(Func<string, string, Task<string>> authMethod, PasswordBox passwordBox)
@@ -115,7 +118,8 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			var password = passwordBox.Password;
 			if (string.IsNullOrWhiteSpace(Login) || string.IsNullOrWhiteSpace(password))
 			{
-				_logger.Warn("Поля логина и пароля не могут быть пустыми.");
+
+				_logger.Warn(Resources.StrWarnStringsCannotBeEmpty);
 				await _messageService.ShowAsync("Поля логина и пароля не могут быть пустыми","Предупреждение");
 				return;
 			}
@@ -131,6 +135,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				await _messageService.ShowErrorAsync(e.ToString());
 			}
 
+
 			if (!Enum.TryParse(token, out GameServer.AuthenticateStatus result))
 			{
 				Application.Current.Resources.Add("UserToken", token);
@@ -138,6 +143,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			}
 			else
 			{
+				
 				await _messageService.ShowAsync(_mapper.Map<GameServer.AuthenticateStatus, Models.AuthenticateStatus>(result).GetDisplayFromResource());
 			}
 		}

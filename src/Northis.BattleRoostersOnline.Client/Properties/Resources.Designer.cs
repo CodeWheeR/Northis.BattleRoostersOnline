@@ -423,11 +423,227 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Значение Юркости должно быть от 0 до {RoosterModel.MaxBrickness}..
+        ///   Ищет локализованную строку, похожую на Значение Юркости должно быть от 0 до {0}..
         /// </summary>
-        public static string StrInfoBricknessValue {
+        public static string StrFmtInfoBricknessValue {
             get {
-                return ResourceManager.GetString("StrInfoBricknessValue", resourceCulture);
+                return ResourceManager.GetString("StrFmtInfoBricknessValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Открыто окно редактирования петуха с имененм {0}..
+        /// </summary>
+        public static string StrFmtInfoEditWindowOpenForSelectedRooster {
+            get {
+                return ResourceManager.GetString("StrFmtInfoEditWindowOpenForSelectedRooster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на В сессии {0} закончилось сражение.
+        /// </summary>
+        public static string StrFmtInfoEndBattleInTheSession {
+            get {
+                return ResourceManager.GetString("StrFmtInfoEndBattleInTheSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Поиск соперника в сессии {0} был отменен пользователем {1}.
+        /// </summary>
+        public static string StrFmtInfoFindingEnemyCanceled {
+            get {
+                return ResourceManager.GetString("StrFmtInfoFindingEnemyCanceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Поиск матча был отменен пользователем {0}, сессия {1} закрыта.
+        /// </summary>
+        public static string StrFmtInfoFindingMatchWasEndingByUser {
+            get {
+                return ResourceManager.GetString("StrFmtInfoFindingMatchWasEndingByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на В сессию {0} добавился первый боец {1}.
+        /// </summary>
+        public static string StrFmtInfoFirstFighterEnteredInSession {
+            get {
+                return ResourceManager.GetString("StrFmtInfoFirstFighterEnteredInSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Значение Удачи должно быть от 0 до {0}..
+        /// </summary>
+        public static string StrFmtInfoLuckValue {
+            get {
+                return ResourceManager.GetString("StrFmtInfoLuckValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Инициализована новая сессия {0}.
+        /// </summary>
+        public static string StrFmtInfoNewSessionInitialized {
+            get {
+                return ResourceManager.GetString("StrFmtInfoNewSessionInitialized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на В сессию {0} добавился второй боец {1}.
+        /// </summary>
+        public static string StrFmtInfoSecondFighterEnteredInSession {
+            get {
+                return ResourceManager.GetString("StrFmtInfoSecondFighterEnteredInSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на В сессии {0} началось сражение.
+        /// </summary>
+        public static string StrFmtInfoStartBattleInTheSession {
+            get {
+                return ResourceManager.GetString("StrFmtInfoStartBattleInTheSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Запуск удаления петуха {0}..
+        /// </summary>
+        public static string StrFmtInfoStartDeletingRooster {
+            get {
+                return ResourceManager.GetString("StrFmtInfoStartDeletingRooster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Вызвана остановка сессии {0} по причине дезертирства.
+        /// </summary>
+        public static string StrFmtInfoStopBattleDueToDesertion {
+            get {
+                return ResourceManager.GetString("StrFmtInfoStopBattleDueToDesertion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Регистрация пользователя {0} прошла успешно.
+        /// </summary>
+        public static string StrFmtInfoSuccessRegitstration {
+            get {
+                return ResourceManager.GetString("StrFmtInfoSuccessRegitstration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Значение Толщины покрова должно быть от 0 до {0}..
+        /// </summary>
+        public static string StrFmtInfoThicknessValue {
+            get {
+                return ResourceManager.GetString("StrFmtInfoThicknessValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Попытка авторизации незарегистрированным пользователем {0}.
+        /// </summary>
+        public static string StrFmtInfoTryLoginNotRegistredUser {
+            get {
+                return ResourceManager.GetString("StrFmtInfoTryLoginNotRegistredUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Попытка регистрации уже зарегистрированным пользователем {0}.
+        /// </summary>
+        public static string StrFmtInfoTryRegisterAlreadyRegistredUser {
+            get {
+                return ResourceManager.GetString("StrFmtInfoTryRegisterAlreadyRegistredUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пользователь {(login == &quot;&quot; ? token : login)} дезертировал.
+        /// </summary>
+        public static string StrFmtInfoUserDeserted {
+            get {
+                return ResourceManager.GetString("StrFmtInfoUserDeserted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пользователь {0} вошел в сеть с токеном {1}.
+        /// </summary>
+        public static string StrFmtInfoUserLogined {
+            get {
+                return ResourceManager.GetString("StrFmtInfoUserLogined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пользователь {0} вышел из сети.
+        /// </summary>
+        public static string StrFmtInfoUserLogOut {
+            get {
+                return ResourceManager.GetString("StrFmtInfoUserLogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Значение Веса должно быть от 0.0 до {0}.0..
+        /// </summary>
+        public static string StrFmtInfoWeightValue {
+            get {
+                return ResourceManager.GetString("StrFmtInfoWeightValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Удаление петуха {0} пользователя {1} неуспешно.
+        /// </summary>
+        public static string StrFmtWarnDeleteRoosterFailed {
+            get {
+                return ResourceManager.GetString("StrFmtWarnDeleteRoosterFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Попытка дисконекта от неавторизованного пользователя {0}.
+        /// </summary>
+        public static string StrFmtWarnTryDisconnectNotAuthorizedUser {
+            get {
+                return ResourceManager.GetString("StrFmtWarnTryDisconnectNotAuthorizedUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Попытка поиска матча не авторизованным пользователем {0}.
+        /// </summary>
+        public static string StrFmtWarnTryFindMatchByNotAuthorizedUser {
+            get {
+                return ResourceManager.GetString("StrFmtWarnTryFindMatchByNotAuthorizedUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Попытка поиска матча не созданным петухом {0}.
+        /// </summary>
+        public static string StrFmtWarnTryFindMatchNotCreatedRooster {
+            get {
+                return ResourceManager.GetString("StrFmtWarnTryFindMatchNotCreatedRooster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Попытка добавиться в сессию противниками с одинаковыми логинами {0}.
+        /// </summary>
+        public static string StrFmtWarnTryToEnterInSessionWithSameLogins {
+            get {
+                return ResourceManager.GetString("StrFmtWarnTryToEnterInSessionWithSameLogins", resourceCulture);
             }
         }
         
@@ -446,24 +662,6 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         public static string StrInfoCancelFindMatch {
             get {
                 return ResourceManager.GetString("StrInfoCancelFindMatch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Открыто окно редактирования петуха с имененм {SelectedRooster.Name}..
-        /// </summary>
-        public static string StrInfoEditWindowOpenForSelectedRooster {
-            get {
-                return ResourceManager.GetString("StrInfoEditWindowOpenForSelectedRooster", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на В сессии {Token} закончилось сражение.
-        /// </summary>
-        public static string StrInfoEndBattleInTheSession {
-            get {
-                return ResourceManager.GetString("StrInfoEndBattleInTheSession", resourceCulture);
             }
         }
         
@@ -504,33 +702,6 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Поиск соперника в сессии {Token} был отменен пользователем {token}.
-        /// </summary>
-        public static string StrInfoFindingEnemyCanceled {
-            get {
-                return ResourceManager.GetString("StrInfoFindingEnemyCanceled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Поиск матча был отменен пользователем {token}, сессия {session.Token} закрыта.
-        /// </summary>
-        public static string StrInfoFindingMatchWasEndingByUser {
-            get {
-                return ResourceManager.GetString("StrInfoFindingMatchWasEndingByUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на В сессию {Token} добавился первый боец {token}.
-        /// </summary>
-        public static string StrInfoFirstFighterEnteredInSession {
-            get {
-                return ResourceManager.GetString("StrInfoFirstFighterEnteredInSession", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Значение Роста должно быть от 20 до 50..
         /// </summary>
         public static string StrInfoHeightValue {
@@ -545,15 +716,6 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         public static string StrInfoLeaveUser {
             get {
                 return ResourceManager.GetString("StrInfoLeaveUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Значение Удачи должно быть от 0 до {RoosterModel.MaxLuck}..
-        /// </summary>
-        public static string StrInfoLuckValue {
-            get {
-                return ResourceManager.GetString("StrInfoLuckValue", resourceCulture);
             }
         }
         
@@ -585,15 +747,6 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Инициализована новая сессия {token}.
-        /// </summary>
-        public static string StrInfoNewSessionInitialized {
-            get {
-                return ResourceManager.GetString("StrInfoNewSessionInitialized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Открытие окна авторизации пользователя..
         /// </summary>
         public static string StrInfoOpeningAuthorizationWindow {
@@ -612,7 +765,7 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Получено сообщение: {message}..
+        ///   Ищет локализованную строку, похожую на Получено сообщение: {0}..
         /// </summary>
         public static string StrInfoReciveMessage {
             get {
@@ -648,15 +801,6 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на В сессию {Token} добавился второй боец {token}.
-        /// </summary>
-        public static string StrInfoSecondFighterEnteredInSession {
-            get {
-                return ResourceManager.GetString("StrInfoSecondFighterEnteredInSession", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Обновлено имя текущего выделенного петуха.
         /// </summary>
         public static string StrInfoSelectedRoostersNameUpdate {
@@ -671,24 +815,6 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         public static string StrInfoSoLongName {
             get {
                 return ResourceManager.GetString("StrInfoSoLongName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на В сессии {Token} началось сражение.
-        /// </summary>
-        public static string StrInfoStartBattleInTheSession {
-            get {
-                return ResourceManager.GetString("StrInfoStartBattleInTheSession", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Запуск удаления петуха {SelectedRooster.Name}..
-        /// </summary>
-        public static string StrInfoStartDeletingRooster {
-            get {
-                return ResourceManager.GetString("StrInfoStartDeletingRooster", resourceCulture);
             }
         }
         
@@ -756,92 +882,11 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Вызвана остановка сессии {Token} по причине дезертирства.
-        /// </summary>
-        public static string StrInfoStopBattleDueToDesertion {
-            get {
-                return ResourceManager.GetString("StrInfoStopBattleDueToDesertion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Регистрация пользователя {login} прошла успешно.
-        /// </summary>
-        public static string StrInfoSuccessRegitstration {
-            get {
-                return ResourceManager.GetString("StrInfoSuccessRegitstration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Произошла сдача боя..
         /// </summary>
         public static string StrInfoTheBattleWasSurrendered {
             get {
                 return ResourceManager.GetString("StrInfoTheBattleWasSurrendered", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Значение Толщины покрова должно быть от 0 до {RoosterModel.MaxThickness}..
-        /// </summary>
-        public static string StrInfoThicknessValue {
-            get {
-                return ResourceManager.GetString("StrInfoThicknessValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка авторизации незарегистрированным пользователем {login}.
-        /// </summary>
-        public static string StrInfoTryLoginNotRegistredUser {
-            get {
-                return ResourceManager.GetString("StrInfoTryLoginNotRegistredUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка регистрации уже зарегистрированным пользователем {login}.
-        /// </summary>
-        public static string StrInfoTryRegisterAlreadyRegistredUser {
-            get {
-                return ResourceManager.GetString("StrInfoTryRegisterAlreadyRegistredUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Пользователь {(login == &quot;&quot; ? token : login)} дезертировал.
-        /// </summary>
-        public static string StrInfoUserDeserted {
-            get {
-                return ResourceManager.GetString("StrInfoUserDeserted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Пользователь {login} вошел в сеть с токеном {token}.
-        /// </summary>
-        public static string StrInfoUserLogined {
-            get {
-                return ResourceManager.GetString("StrInfoUserLogined", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Пользователь {login} вышел из сети.
-        /// </summary>
-        public static string StrInfoUserLogOut {
-            get {
-                return ResourceManager.GetString("StrInfoUserLogOut", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Значение Веса должно быть от 0.0 до {RoosterModel.MaxWeight}.0..
-        /// </summary>
-        public static string StrInfoWeightValue {
-            get {
-                return ResourceManager.GetString("StrInfoWeightValue", resourceCulture);
             }
         }
         
@@ -855,56 +900,11 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Удаление петуха {SelectedRooster.Token} пользователя {token} неуспешно.
-        /// </summary>
-        public static string StrWarnDeleteRoosterFailed {
-            get {
-                return ResourceManager.GetString("StrWarnDeleteRoosterFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Поля логина и пароля не могут быть пустыми..
         /// </summary>
         public static string StrWarnStringsCannotBeEmpty {
             get {
                 return ResourceManager.GetString("StrWarnStringsCannotBeEmpty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка дисконекта от неавторизованного пользователя {token}.
-        /// </summary>
-        public static string StrWarnTryDisconnectNotAuthorizedUser {
-            get {
-                return ResourceManager.GetString("StrWarnTryDisconnectNotAuthorizedUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка поиска матча не авторизованным пользователем {token}.
-        /// </summary>
-        public static string StrWarnTryFindMatchByNotAuthorizedUser {
-            get {
-                return ResourceManager.GetString("StrWarnTryFindMatchByNotAuthorizedUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка поиска матча не созданным петухом {roosterToken}.
-        /// </summary>
-        public static string StrWarnTryFindMatchNotCreatedRooster {
-            get {
-                return ResourceManager.GetString("StrWarnTryFindMatchNotCreatedRooster", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Попытка добавиться в сессию противниками с одинаковыми логинами {FirstFighterLogin}.
-        /// </summary>
-        public static string StrWarnTryToEnterInSessionWithSameLogins {
-            get {
-                return ResourceManager.GetString("StrWarnTryToEnterInSessionWithSameLogins", resourceCulture);
             }
         }
         
