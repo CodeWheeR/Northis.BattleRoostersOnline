@@ -7,6 +7,7 @@ using Northis.BattleRoostersOnline.Dto;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
+using Northis.BattleRoostersOnline.Service.Properties;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
@@ -104,7 +105,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				}
 			});
 
-			_logger.Info($"Пользователь {login} вошел в сеть с токеном {token}");
+			_logger.Info(Resources.StrFmtInfoUserLogined, login, token);
 
 			StatisticsPublisher.GetInstance().Subscribe(token, callback);
 			StatisticsPublisher.GetInstance()
@@ -134,13 +135,13 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		{
 			if (string.IsNullOrWhiteSpace(login) || login.Length < 5  || string.IsNullOrWhiteSpace(password) || password.Length < 5 || login.Contains(" "))
 			{
-				_logger.Info($"Попытка авторизации незарегистрированным пользователем {login}");
+				_logger.Info(Resources.StrFmtInfoTryLoginNotRegistredUser,login);
 				return AuthenticateStatus.WrongDataFormat.ToString();
 			}
 
 			if (StorageService.UserData.ContainsKey(login))
 			{
-				_logger.Info($"Попытка регистрации уже зарегистрированным пользователем {login}");
+				_logger.Info(Resources.StrFmtInfoTryRegisterAlreadyRegistredUser, login);
 				return AuthenticateStatus.AlreadyRegistered.ToString();
 			}
 
@@ -154,7 +155,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				}
 			});
 
-			_logger.Info($"Регистрация пользователя {login} прошла успешно");
+			_logger.Info(Resources.StrFmtInfoSuccessRegitstration, login);
 #pragma warning disable 4014
 			StorageService.SaveUserDataAsync();
 #pragma warning restore 4014
@@ -172,7 +173,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		{
 			if (!StorageService.LoggedUsers.ContainsKey(token))
 			{
-				_logger.Warn($"Попытка дисконекта от неавторизованного пользователя {token}");
+				_logger.Warn(Resources.StrFmtWarnTryDisconnectNotAuthorizedUser, token);
 				return false;
 			}
 
@@ -186,7 +187,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				}
 			});
 
-			_logger.Info($"Пользователь {login} вышел из сети");
+			_logger.Info(Resources.StrFmtInfoUserLogOut, login);
 
 			await Task.Run(() => StatisticsPublisher.GetInstance().Unsubscribe(token));
 			StatisticsPublisher.GetInstance()

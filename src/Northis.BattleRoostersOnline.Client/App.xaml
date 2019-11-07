@@ -10,6 +10,6 @@
 		<converters:EnumValueToDescription x:Key="EnumValueToDescription" />
 		<converters:BooleanToWindowState x:Key="BooleanToWindowState"/>
 		<converters:MaxValueToTextLimiter x:Key="MaxValueToTextLimiter" />
-		<converters:MaxDoubleValue x:Key="MaxDoubleValueToTextLimiter"></converters:MaxDoubleValue>
+		<converters:MaxDoubleValueToTextLimiter x:Key="MaxDoubleValueToTextLimiter"></converters:MaxDoubleValueToTextLimiter>
 	</Application.Resources>
 </Application>

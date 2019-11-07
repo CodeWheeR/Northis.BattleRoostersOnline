@@ -6,16 +6,16 @@ using Northis.BattleRoostersOnline.Client.Models;
 namespace Northis.BattleRoostersOnline.Client.Converters
 {
 	/// <summary>
-	/// Конвертирует значение перечисления RoosterColor в путь к изображениям петухов.
+	/// Конвертирует значение здоровья в bool значение жив/мертв.
 	/// </summary>
 	/// <seealso cref="Catel.MVVM.Converters.IValueConverter" />
 	public class HeathValueToBool : IValueConverter
 	{
 		#region Public Methods
 		/// <summary>
-		/// Конвертирует значение перечисления в путь к картинке.
+		/// Конвертирует значение здоровья в bool значение жив/мертв.
 		/// </summary>
-		/// <param name="value">Значение перечисления RoosterColor.</param>
+		/// <param name="value">Значение здоровья.</param>
 		/// <param name="targetType">Целевой тип конвертации.</param>
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>
@@ -29,7 +29,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>
-		/// <param name="value">Значение перечисления RoosterColor.</param>
+		/// <param name="value">Значение здоровья.</param>
 		/// <param name="targetType">Целевой тип конвертации.</param>
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>

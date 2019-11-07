@@ -7,6 +7,7 @@ using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Models;
+using Northis.BattleRoostersOnline.Service.Properties;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
@@ -55,7 +56,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			if (!StorageService.LoggedUsers.ContainsKey(token))
 			{
 				Task.Run(() => callback.FindedMatch(BattleStatus.UserWasNotFound.ToString()));
-				_logger.Warn($"Попытка поиска матча не авторизованным пользователем {token}");
+				_logger.Warn(Resources.StrFmtWarnTryFindMatchByNotAuthorizedUser, token);
 				return;
 			}
 			var login = await GetLoginAsync(token);
@@ -64,7 +65,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 									.ContainsKey(roosterToken))
 			{
 				Task.Run(() => callback.FindedMatch(BattleStatus.RoosterWasNotFound.ToString()));
-				_logger.Warn($"Попытка поиска матча не созданным петухом {roosterToken}");
+				_logger.Warn(Resources.StrFmtWarnTryFindMatchNotCreatedRooster, roosterToken);
 				return;
 			}
 
@@ -119,7 +120,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 						if (session != null)
 						{
 							StorageService.Sessions.Remove(session.Token);
-							_logger.Info($"Поиск матча был отменен пользователем {token}, сессия {session.Token} закрыта");
+							_logger.Info(Resources.StrFmtInfoFindingMatchWasEndingByUser, token, session.Token);
 							return true;
 						}
 
@@ -182,7 +183,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					session.StopSession(true);
 				});
 				var login = await GetLoginAsync(token);
-				_logger.Info($"Пользователь {(login == "" ? token : login)} дезертировал");
+				_logger.Info(Resources.StrFmtInfoUserDeserted, (login == string.Empty ? token : login));
 			}
 			catch (Exception e)
 			{
