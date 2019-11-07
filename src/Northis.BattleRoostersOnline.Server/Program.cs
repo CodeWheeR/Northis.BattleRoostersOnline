@@ -11,6 +11,7 @@ using Unity;
 using Unity.Wcf;
 using AutoMapper;
 using AutoMapper.Mappers;
+using GameServer.Properties;
 using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Models;
 using Unity.Lifetime;
@@ -28,6 +29,8 @@ namespace Northis.BattleRoostersOnline.Server
 		/// <param name="args">Аргументы.</param>
 		private static void Main(string[] args)
 		{
+			Logger logger = LogManager.GetLogger("ServerLogger");
+
 			UnityServiceHost selfHost = null;
 
 			AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
@@ -47,14 +50,14 @@ namespace Northis.BattleRoostersOnline.Server
 			}
 			catch (ConfigurationErrorsException)
 			{
-				Console.WriteLine("IP-адрес по ключу baseAddress в разделе AppSettings файла конфигураций не найден. Завершаю работу...");
+				logger.Error(Resources.StrErrorIPAddressNotFound);
 				Console.ReadKey();
 				return;
 			}
 
 			if (address == "")
 			{
-				Console.WriteLine("IP-адрес по ключу baseAddress в разделе AppSettings файла конфигураций не найден. Завершаю работу...");
+				logger.Error(Resources.StrErrorIPAddressNotFound);
 				Console.ReadKey();
 				return;
 			}
@@ -101,14 +104,17 @@ namespace Northis.BattleRoostersOnline.Server
 				smb.HttpGetEnabled = true;
 				selfHost.Description.Behaviors.Add(smb);
 				selfHost.Open();
-				Console.WriteLine("The service is ready.");
-				Console.WriteLine("Press <Enter> to terminate the service.");
+				logger.Info(Resources.StrInfoServiceReady);
+
+				//Console.WriteLine("The service is ready.");
+				//Console.WriteLine("Press <Enter> to terminate the service.");
+
 				Console.ReadLine();
 				selfHost.Close();
 			}
 			catch (CommunicationException ce)
 			{
-				Console.WriteLine("An exception occurred: {0}", ce.Message);
+				logger.Error(Resources.StrFrmErrorCommunicationException, ce.Message);
 				selfHost.Abort();
 			}
 

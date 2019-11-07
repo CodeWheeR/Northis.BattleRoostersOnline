@@ -8,8 +8,8 @@
 		<converters:EnumValueToStringPath x:Key="EnumValueToStringPath" />
 		<converters:HeathValueToBool x:Key="HealthToBoolConverter" />
 		<converters:EnumValueToDescription x:Key="EnumValueToDescription" />
-		<converters:BooleanToWindowState x:Key="BooleanToWindowState"/>
+		<converters:BooleanToWindowState x:Key="BooleanToWindowState" />
 		<converters:MaxValueToTextLimiter x:Key="MaxValueToTextLimiter" />
-		<converters:MaxDoubleValueToTextLimiter x:Key="MaxDoubleValueToTextLimiter"></converters:MaxDoubleValueToTextLimiter>
+		<converters:MaxDoubleValueToTextLimiter x:Key="MaxDoubleValueToTextLimiter" />
 	</Application.Resources>
 </Application>

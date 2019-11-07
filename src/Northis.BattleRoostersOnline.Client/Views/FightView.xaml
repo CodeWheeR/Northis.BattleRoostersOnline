@@ -6,8 +6,8 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:local="clr-namespace:Northis.BattleRoostersOnline.Client.Views"
-	xmlns:res="clr-namespace:Northis.BattleRoostersOnline.Client.Properties"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:res="clr-namespace:Northis.BattleRoostersOnline.Client.Properties"
 	xmlns:userControls="clr-namespace:Northis.BattleRoostersOnline.Client.UserControls"
 	xmlns:viewModels="clr-namespace:Northis.BattleRoostersOnline.Client.ViewModels"
 	Title="{x:Static res:Resources.FightWindow}"
@@ -18,7 +18,10 @@
 	MaxWidth="800"
 	MaxHeight="600"
 	d:DataContext="{d:DesignInstance viewModels:FightViewModel}"
-	mc:Ignorable="d" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+	ResizeMode="NoResize"
+	ShowInTaskbar="False"
+	WindowStartupLocation="CenterOwner"
+	mc:Ignorable="d">
 	<catel:Window.Resources />
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -27,19 +30,20 @@
 		<Label
 			Height="35"
 			Margin="10,10,10,0"
+			VerticalAlignment="Top"
 			HorizontalContentAlignment="Center"
 			VerticalContentAlignment="Center"
 			Content="{x:Static res:Resources.FightWindow}"
 			FontSize="18"
-			FontWeight="Bold" VerticalAlignment="Top" />
+			FontWeight="Bold" />
 
 		<Button
-			Content="{x:Static res:Resources.FindMatch}"
-			HorizontalAlignment="Center"
-			Margin="0,0,150,10"
-			VerticalAlignment="Bottom"
 			Width="120"
-			Command="{Binding FindMatchCommand}" />
+			Margin="0,0,150,10"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Bottom"
+			Command="{Binding FindMatchCommand}"
+			Content="{x:Static res:Resources.FindMatch}" />
 
 		<Border
 			Margin="10,50,10,35"
@@ -72,8 +76,8 @@
 						FontSize="18"
 						FontWeight="Bold" />
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Text="{x:Static res:Resources.WinStreak}" Margin="0" />
-						<TextBlock Text="{Binding FirstFighter.WinStreak}" Margin="0" />
+						<TextBlock Margin="0" Text="{x:Static res:Resources.WinStreak}" />
+						<TextBlock Margin="0" Text="{Binding FirstFighter.WinStreak}" />
 					</StackPanel>
 					<Border
 						HorizontalAlignment="Left"
@@ -138,8 +142,8 @@
 						FontSize="18"
 						FontWeight="Bold" />
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Text="{x:Static res:Resources.WinStreak}" Margin="0" />
-						<TextBlock Text="{Binding SecondFighter.WinStreak}" Margin="0" />
+						<TextBlock Margin="0" Text="{x:Static res:Resources.WinStreak}" />
+						<TextBlock Margin="0" Text="{Binding SecondFighter.WinStreak}" />
 					</StackPanel>
 					<Border
 						HorizontalAlignment="Left"
@@ -182,24 +186,34 @@
 						ValueColor="Yellow"
 						ValueLevel="{Binding SecondFighter.Stamina}" />
 				</StackPanel>
-				<Button Grid.ColumnSpan="3"
-				        Content="{x:Static res:Resources.StartFight}"
-				        HorizontalAlignment="Center"
-				        Margin="0,0,0,156"
-				        VerticalAlignment="Bottom"
-				        Width="90"
-				        Command="{Binding StartFightCommand}" />
-				<TextBox HorizontalAlignment="Left" IsReadOnly="True" Height="137" Margin="10,335,0,0" TextWrapping="Wrap"
-				         Text="{Binding BattleLog}" VerticalAlignment="Top" Width="450" Grid.ColumnSpan="3" FontSize="14"
-				         TextChanged="TextBox_TextChanged" />
+				<Button
+					Grid.ColumnSpan="3"
+					Width="90"
+					Margin="0,0,0,156"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Bottom"
+					Command="{Binding StartFightCommand}"
+					Content="{x:Static res:Resources.StartFight}" />
+				<TextBox
+					Grid.ColumnSpan="3"
+					Width="450"
+					Height="137"
+					Margin="10,335,0,0"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					FontSize="14"
+					IsReadOnly="True"
+					Text="{Binding BattleLog}"
+					TextChanged="TextBox_TextChanged"
+					TextWrapping="Wrap" />
 			</Grid>
 		</Border>
 		<Button
-			Content="{x:Static res:Resources.CancelFinding}"
-			HorizontalAlignment="Center"
-			Margin="150,0,0,10"
-			VerticalAlignment="Bottom"
 			Width="120"
-			Command="{Binding CancelFindingCommand}" />
+			Margin="150,0,0,10"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Bottom"
+			Command="{Binding CancelFindingCommand}"
+			Content="{x:Static res:Resources.CancelFinding}" />
 	</Grid>
 </catel:Window>
