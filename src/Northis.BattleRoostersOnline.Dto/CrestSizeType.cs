@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Перечисление-контракт данных. Передает размер гребня петуха.
+	/// Определяет возможные размеры гребня петуха.
 	/// </summary>
 	[DataContract]
 	public enum CrestSizeType

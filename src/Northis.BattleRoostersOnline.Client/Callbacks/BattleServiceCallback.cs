@@ -24,16 +24,11 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		private Logger _battleServiceCallbackLogger = LogManager.GetLogger("FightServiceCallback");
 		#endregion
 
-		public BattleServiceCallback()
-		{
-			
-		}
-
 		#region Public Methods		
 		/// <summary>
 		/// Инициализует новый объект класса <see cref="BattleServiceCallback" />.
 		/// </summary>
-		/// <param name="fightvm">The fightvm.</param>
+		/// <param name="fightvm">Объект модели представления FightWindow.</param>
 		public BattleServiceCallback(FightViewModel fightvm) => _fightVm = fightvm;
 
 		/// <summary>
@@ -60,7 +55,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		/// <summary>
 		/// Получает игровое сообщение и выводит в игровую консоль.
 		/// </summary>
-		/// <param name="message">The message.</param>
+		/// <param name="message">Сообщение.</param>
 		public void GetBattleMessage(string message)
 		{
 			_fightVm.BattleLog += message + Environment.NewLine;
@@ -82,7 +77,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		/// <summary>
 		/// Получает токен найденного матча.
 		/// </summary>
-		/// <param name="token">The token.</param>
+		/// <param name="token">Токен.</param>
 		public void FindedMatch(string token)
 		{
 			var container = this.GetServiceLocator();

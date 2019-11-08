@@ -12,12 +12,12 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 	{
         #region Operation Contracts
         /// <summary>
-        /// Контракт операции. Оповещает о начале матча.
+        /// Оповещает о начале матча.
         /// </summary>
         [OperationContract(IsOneWay = true)]
 		void GetNewGlobalStatistics(List<StatisticsDto> statistics, List<UsersStatisticsDto> usersStatistics);
 		/// <summary>
-		/// Контракт операции. Оповещает о начале матча.
+		/// Оповещает об остановке сервера.
 		/// </summary>
 		[OperationContract(IsOneWay = true)]
 		void GetServerStopMessage(string message);

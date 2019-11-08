@@ -14,10 +14,13 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 	[TestFixture]
 	public class EditServiceTests : ServiceModuleTests
 	{
+		/// <summary>
+		/// Инициализует среду перед выполнением тестов.
+		/// </summary>
 		[OneTimeSetUp]
 		public void SetUp()
 		{
-			base.Setup();
+			Setup();
 	}
 
 		#region Test Methods
@@ -65,7 +68,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		/// Асинхронно проверяет корректность редактирования нужного петуха.
 		/// </summary>
 		[Test]
-		public async Task EditTest2()
+		public async Task EditTest()
 		{
 			var token = await AuthenticateService.RegisterAsync("NewUser", "asdasd123", CallbackAuth.Object);
 
@@ -92,7 +95,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		[TestCase("NotFoundToken")]
-		public async Task RemoveTest1(string token)
+		public async Task RemoveTest(string token)
 		{
 			RoosterModel rooster = new RoosterModel();
 
@@ -102,26 +105,6 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			});
 
 			Assert.DoesNotThrowAsync(() => Editor.RemoveAsync(token,rooster.Token));
-		}
-		/// <summary>
-		/// Асинхронно проверяет корректность удаления нужного петуха.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		public async Task RemoveTest2(string token)
-		{
-			RoosterModel rooster1 = new RoosterModel();
-			RoosterModel rooster2 = new RoosterModel();
-			RoosterModel rooster3 = new RoosterModel();
-			Storage.RoostersData.Add("FoundToken", new Dictionary<string, RoosterModel>
-			{
-				{ "Rooster1",rooster1},
-				{ "Rooster2",rooster2},
-				{ "Rooster3",rooster3}
-			});
-
-			await Editor.RemoveAsync(token, "Rooster1");
-
-			Assert.AreEqual(false,Storage.RoostersData["FoundToken"].ContainsKey("Rooster1"));
 		}
 
 		#endregion

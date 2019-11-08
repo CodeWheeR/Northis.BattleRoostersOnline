@@ -7,6 +7,9 @@ using Northis.BattleRoostersOnline.Service.Models;
 
 namespace Northis.BattleRoostersOnline.Service.DataStorages
 {
+	/// <summary>
+	/// Предоставляет доступ к механизмам хранения петухов.
+	/// </summary>
 	public interface IRoosterStorageService
 	{
 		/// <summary>

@@ -13,14 +13,6 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 	public interface IEditService
 	{
 		#region Operation Contracts
-		/// <summary>
-		/// Отвечает за редактирование выбранного петуха конкретного пользователя.
-		/// </summary>
-		/// <param name="token">Токен.</param>
-		/// <param name="sourceRoosterToken">Изменяемый петух.</param>
-		/// <param name="editRooster">Редактированный петух.</param>
-		//[OperationContract]
-		Task<bool> EditAsync(string token, string sourceRoosterToken, RoosterEditDto editRooster);
 
 		/// <summary>
 		/// Отвечает за добавление петуха.

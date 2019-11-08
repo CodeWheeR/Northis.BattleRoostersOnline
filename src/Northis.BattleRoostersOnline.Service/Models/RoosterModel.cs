@@ -425,7 +425,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		}
 
 		/// <summary>
-		/// Возвращает или устанавливает урон петуха.
+		/// Вычисляет урон петуха.
 		/// </summary>
 		public double Damage
 		{
@@ -439,7 +439,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			}
 		}
 
-		private double WinStreakFunc(int winStreak) => (Math.Pow(winStreak + 1, 1.0/3.0) - 1) * 1.92;
 
 		/// <summary>
 		/// Возвращает вычисленную силу удара петуха.
@@ -525,13 +524,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <param name="value">Значение.</param>
 		/// <param name="min">Минимум.</param>
 		/// <param name="max">Максимум.</param>
-		/// <returns>T.</returns>
+		/// <returns><see cref="T"/>.</returns>
 		private T Clamp<T>(T value, T min, T max) where T : IComparable => value.CompareTo(min) < 0 ? min : value.CompareTo(max) > 0 ? max : value;
 
 		/// <summary>
 		/// Вычисляет порядковый индекс значения перечисления.
 		/// </summary>
-		/// <param name="first">Обыъект перечисления.</param>
+		/// <param name="first">Объект перечисления.</param>
 		/// <returns>Индекс.</returns>
 		private int CalcEnumIndex(Enum first)
 		{
@@ -539,6 +538,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 							.ToList();
 			return names.IndexOf(first.ToString());
 		}
+
+		/// <summary>
+		/// Вычисляет коэффициент прибавки урона от череды побед.
+		/// </summary>
+		/// <param name="winStreak">Значение череды побед.</param>
+		/// <returns>Прибавку к урону.</returns>
+		private double WinStreakFunc(int winStreak) => (Math.Pow(winStreak + 1, 1.0 / 3.0) - 1) * 1.92;
 
 		/// <summary>
 		/// Выполняет смену модификаций при изменении цвета.

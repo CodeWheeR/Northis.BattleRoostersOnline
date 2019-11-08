@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Перечисление-контракт данных, передающее пользователю статус аутентификации.
+	/// Представляет возможные ответа сервиса аутентификации.
 	/// </summary>
 	[DataContract]
 	public enum AuthenticateStatus

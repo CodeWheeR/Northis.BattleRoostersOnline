@@ -22,14 +22,19 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		public IDataStorageService StorageService
 		{
 			get;
-			set;
 		}
 		#endregion
 
+		#region ctor		
+		/// <summary>
+		/// Инициализует новый объект класса <see cref="BaseServiceWithStorage"/> с заданным хранилищем.
+		/// </summary>
+		/// <param name="storage">The storage.</param>
 		public BaseServiceWithStorage(IDataStorageService storage)
 		{
 			StorageService = storage;
 		}
+		#endregion
 
 		#region Protected Methods
 		/// <summary>

@@ -28,6 +28,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
     internal class AuthViewModel : ViewModelBase
 	{
 		#region Fields
+
 		#region Static		
 		/// <summary>
 		/// Зарегистрированное свойство "Модель аутентификации".
@@ -110,7 +111,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// <summary>
 		/// Выполняет переданный способ аутентификации на сервере.
 		/// </summary>
-
 		/// <param name="authMethod">Метод аутентификации.</param>
 		/// <param name="passwordBox">Хранилище и обработчик паролей.</param>
 		private async Task AuthenticateAsync(Func<string, string, Task<string>> authMethod, PasswordBox passwordBox)

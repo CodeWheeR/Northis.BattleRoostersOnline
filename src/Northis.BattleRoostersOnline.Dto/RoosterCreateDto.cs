@@ -45,7 +45,7 @@ namespace Northis.BattleRoostersOnline.Dto
 
 		#region .ctor
 		/// <summary>
-		/// Инициализует новый объект класса <see cref="RoosterEditDto"/>.
+		/// Инициализует новый объект класса <see cref="RoosterCreateDto"/>.
 		/// </summary>
 		/// <param name="name">Имя.</param>
 		/// <param name="color">Цвет.</param>

@@ -55,14 +55,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
         /// <param name="rooster">Петух.</param>
         /// <returns>true, в случае успешного добавления, иначе - false.</returns>
         public Task<bool> AddAsync(string token, RoosterCreateDto rooster) =>  _editService.AddAsync(token, rooster);
-        /// <summary>
-        /// Асинхнронно редактирует петуха.
-        /// </summary>
-        /// <param name="token">Токен.</param>
-        /// <param name="sourceRooster">Исходный петух.</param>
-        /// <param name="editRooster">Редактированный петух.</param>
-        /// <returns>true, в случае успешного редактирования, иначе - false.</returns>
-        public Task<bool> EditAsync(string token, string sourceRooster, RoosterEditDto editRooster) => _editService.EditAsync(token, sourceRooster, editRooster);
 		/// <summary>
 		/// Асинхронно возвращает петухов пользователя.
 		/// </summary>

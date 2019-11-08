@@ -89,10 +89,10 @@ namespace Northis.BattleRoostersOnline.Dto
 		}
 
 		/// <summary>
-		/// Возвращает или задает уклонение петуха.
+		/// Возвращает или задает юркость петуха.
 		/// </summary>
 		/// <value>
-		/// Плотность петуха.
+		/// Юркость петуха.
 		/// </value>
 		[DataMember]
 		public int Brickness

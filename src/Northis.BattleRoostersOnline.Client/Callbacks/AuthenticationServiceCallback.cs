@@ -55,7 +55,10 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 			}
 			_authServiceCallbackLogger.Info(Resources.StrInfoStatisticUpdated);
 		}
-
+		/// <summary>
+		/// Выводит пользователю сообщение, посланное сервером перед завершением работы.
+		/// </summary>
+		/// <param name="message">Сообщение.</param>
 		public async void GetServerStopMessage(string message)
 		{
 			await this.GetServiceLocator()

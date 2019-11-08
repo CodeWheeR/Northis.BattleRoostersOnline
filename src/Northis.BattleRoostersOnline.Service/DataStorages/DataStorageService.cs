@@ -63,10 +63,15 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 			private set;
 		}
 
+		/// <summary>
+		/// Возвращает ссылку на объект AutoMapper.
+		/// </summary>
+		/// <value>
+		/// Объект AutoMapper.
+		/// </value>
 		public IMapper Mapper
 		{
 			get;
-			private set;
 		}
 
 		/// <summary>

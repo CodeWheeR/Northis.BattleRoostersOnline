@@ -21,7 +21,7 @@ using Unity.Lifetime;
 namespace Northis.BattleRoostersOnline.Server
 {
 	/// <summary>
-	/// Класс-хост, обеспечивающий размещение службы.
+	/// Обеспечивает механизмы размещения службы.
 	/// </summary>
 	internal class Program
 	{
@@ -108,7 +108,7 @@ namespace Northis.BattleRoostersOnline.Server
 
 				}
 
-				StatisticsPublisher.GetInstance().SendMessageToSubscibers("Сервер закрыт");
+				StatisticsPublisher.GetInstance().SendServerStopMessage("Сервер закрыт");
 				selfHost.Close();
 			}
 			catch (CommunicationException ce)
@@ -120,8 +120,8 @@ namespace Northis.BattleRoostersOnline.Server
 		/// <summary>
 		/// Действие при обработке Unhandled Exception.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">Отправитель.</param>
+		/// <param name="e">Событие.</param>
 		static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
 		{
 			var logger = LogManager.GetCurrentClassLogger();

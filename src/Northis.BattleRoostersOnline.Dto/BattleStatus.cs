@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Northis.BattleRoostersOnline.Dto
 {
+	/// <summary>
+	/// Предоставляет возможные ответы сервиса боя.
+	/// </summary>
 	[DataContract]
 	public enum BattleStatus
 	{

@@ -156,7 +156,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					co.Close();
 			}
             /// <summary>
-            /// Осуществляет подписку на завершение битвы.
+            /// Осуществляет подписку на событие завершение битвы.
             /// </summary>
             /// <param name="handler">Обработчик события.</param>
             public void SubscribeOnClosing(EventHandler handler)
@@ -167,7 +167,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				}
 			}
             /// <summary>
-            /// Осуществляет подписку от завершения битвы.
+            /// Осуществляет отписку от события завершения битвы.
             /// </summary>
             /// <param name="handler">Обработчик события.</param>
             public void UnsubscribeOnClosing(EventHandler handler)
@@ -475,8 +475,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 								   StorageService.Sessions.Remove(Token);
 							   }
 
-							   //StorageService.RoostersData[_firstFighterLogin][FirstUser.Rooster.Token].WinStreak = FirstUser.Rooster.WinStreak;
-							   //StorageService.RoostersData[_secondFighterLogin][SecondUser.Rooster.Token].WinStreak = SecondUser.Rooster.WinStreak;
 							   StorageService.SaveRoostersAsync();
 
 							   SendEndSign();
@@ -613,7 +611,9 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					lock (_desertLocker)
 					{
 						if (IsEnded)
+						{
 							return;
+						}
 
 						try
 						{
@@ -697,7 +697,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// </summary>
 		private void SendRoosterStatus()
 		{
-			;
 			FirstUser.GetRoosterStatusAsync(FirstUser.Rooster != null ? StorageService.Mapper.Map<RoosterModel, RoosterDto>(FirstUser.Rooster) : null,
 											SecondUser.Rooster != null ? StorageService.Mapper.Map<RoosterModel, RoosterDto>(SecondUser.Rooster) : null);
 			SecondUser.GetRoosterStatusAsync(SecondUser.Rooster != null ? StorageService.Mapper.Map<RoosterModel, RoosterDto>(SecondUser.Rooster) : null,

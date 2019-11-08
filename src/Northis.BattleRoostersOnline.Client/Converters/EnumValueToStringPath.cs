@@ -28,7 +28,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>
 		/// <returns></returns>
-		/// <exception cref="NotImplementedException"></exception>
+		/// <exception cref="NotImplementedException">Метод не имеет реализации.</exception>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
 		#endregion
 	}

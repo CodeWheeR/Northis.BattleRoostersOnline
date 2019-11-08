@@ -82,10 +82,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
         #endregion
 
         #region Properties
-
-
-		
-		
 		/// <summary>
 		/// Возвращает или устанавливает типы окраски петуха.
 		/// </summary>

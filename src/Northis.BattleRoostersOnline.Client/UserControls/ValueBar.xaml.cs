@@ -7,7 +7,7 @@ using System.Windows.Media;
 namespace Northis.BattleRoostersOnline.Client.UserControls
 {
 	/// <summary>
-	/// Логика взаимодействия для ValueBar.xaml
+	/// Логика взаимодействия для ValueBar.xaml.
 	/// </summary>
 	public partial class ValueBar : UserControl
 	{
@@ -49,11 +49,15 @@ namespace Northis.BattleRoostersOnline.Client.UserControls
 		#endregion
 		#endregion
 
-		#region Properties
+		#region .ctor		
+		/// <summary>
+		/// Инициализует новый экземпляр класса <see cref="ValueBar"/>.
+		/// </summary>
 		public ValueBar()
 		{
 			InitializeComponent();
 		}
+		#endregion
 
 		#region Properties		
 		/// <summary>
@@ -92,9 +96,9 @@ namespace Northis.BattleRoostersOnline.Client.UserControls
 			set => SetValue(MaxValueProperty, value);
 		}
 		#endregion
-		#endregion
 
 		#region Private Methods
+
 		#region Static
 		private static void OnTextSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{

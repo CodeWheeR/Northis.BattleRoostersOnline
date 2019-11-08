@@ -263,7 +263,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		}
 
 		/// <summary>
-		/// Запускает битву петухов.
+		/// Запускает поиск матча.
 		/// </summary>
 		private async Task FindMatchAsync()
 		{ 
@@ -276,7 +276,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		}
 
 		/// <summary>
-		/// Запускает битву петухов.
+		/// Запускает процедуру отмены поиска матча.
 		/// </summary>
 		private async Task CancelFindingAsync()
 		{

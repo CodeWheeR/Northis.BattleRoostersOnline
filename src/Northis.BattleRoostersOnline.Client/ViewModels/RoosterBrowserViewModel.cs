@@ -48,18 +48,36 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// </summary>
 		public static readonly PropertyData SelectedRoosterProperty = RegisterProperty(nameof(SelectedRooster), typeof(RoosterModel));
 		/// <summary>
-		/// Зарегистрированное свойство петухи.
+		/// Зарегистрированное свойство списка петухов.
 		/// </summary>
 		public static readonly PropertyData RoostersProperty = RegisterProperty(nameof(Roosters), typeof(IEnumerable<RoosterModel>));
+		/// <summary>
+		/// Зарегистрированное свойство статистики.
+		/// </summary>
 		public static readonly PropertyData StatisticsProperty = RegisterProperty(nameof(Statistics), typeof(StatisticsModel[]));
+		/// <summary>
+		/// Зарегистрированное свойство вхождения в сеть.
+		/// </summary>
 		public static readonly PropertyData LoggenInProperty = RegisterProperty(nameof(ShowWindow), typeof(bool));
+		/// <summary>
+		/// Зарегистрированное свойство статистики пользователя.
+		/// </summary>
 		public static readonly PropertyData UserStatiscticsProperty = RegisterProperty(nameof(UserStatistics), typeof(UserStatistic[]));
+		/// <summary>
+		/// Зарегистрированное свойство разрешения добавления нового петуха.
+		/// </summary>
 		public static readonly PropertyData IsAddButtonEnableProperty = RegisterProperty(nameof(IsAddButtonEnable), typeof(bool));
-		
-		#endregion
-        #endregion
 
-        #region Properties		        
+		#endregion
+		#endregion
+
+		#region Properties		  		
+		/// <summary>
+		/// Возвращает или устанавливает флаг разрешения на добавление нового петуха.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> если петухов меньше 3, иначе <c>false</c>.
+		/// </value>
 		public bool IsAddButtonEnable
 		{
 			get => GetValue<bool>(IsAddButtonEnableProperty);
@@ -67,10 +85,10 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		}
 		
 		/// <summary>
-        /// Возвращает или устанавливает значение [show window].
+        /// Возвращает или устанавливает значение пройдена ли авторизация.
         /// </summary>
         /// <value>
-        ///   <c>true</c> если [show window]; иначе, <c>false</c>.
+        ///   <c>true</c> если авторизация пройдена, иначе <c>false</c>.
         /// </value>
         public bool ShowWindow
 		{
@@ -100,7 +118,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			set => SetValue(UserStatiscticsProperty, value);
 		}
 		/// <summary>
-		/// Свойство, предоставляющее команду начала сражения петухов.
+		/// Предоставляет команду начала сражения петухов.
 		/// </summary>
 		/// <value>
 		/// Команда начала схватки петухов.
@@ -110,17 +128,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get;
 		}
 		/// <summary>
-		/// Свойство, предоставляющее команду редактирования выбранного петуха.
-		/// </summary>
-		/// <value>
-		/// Команда редактирования петуха.
-		/// </value>
-		public ICommand EditRoosterCommand
-		{
-			get;
-		}
-		/// <summary>
-		/// Свойство, предоставляющее команду удаления петуха.
+		/// Предоставляет команду удаления петуха.
 		/// </summary>
 		/// <value>
 		/// Команда удаления петуха.
@@ -184,7 +192,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			_exceptionService = exceptionService;
 			_messageService = container.ResolveType<IMessageService>();
 			Roosters = new ObservableCollection<RoosterModel>();
-			//EditRoosterCommand = new TaskCommand(EditRoosterAsync, () => SelectedRooster != null);
 			DeleteRoosterCommand = new TaskCommand(DeleteRoosterAsync, () => SelectedRooster != null);
 			AddRoosterCommand = new TaskCommand(AddRoosterAsync, () => IsAddButtonEnable == true);
 			FightCommand = new TaskCommand(StartRoostersFightAsync, () => SelectedRooster != null && ShowWindow);
@@ -211,15 +218,10 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				Application.Current.Shutdown();
 			}
 
-
 			Argument.IsNotNull(nameof(_exceptionService), _exceptionService);
-
 			UpdateRoostersAsync();
 
-
-
 			await base.InitializeAsync();
-
 			ShowWindow = true;
 
 			_logger.Info(Resources.StrInfoMainWindowAppOpened);

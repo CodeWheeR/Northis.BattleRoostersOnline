@@ -7,6 +7,9 @@ using AutoMapper;
 
 namespace Northis.BattleRoostersOnline.Service.DataStorages
 {
+	/// <summary>
+	/// Предоставляет доступ к объекту AutoMapper.
+	/// </summary>
 	public interface IMapperService
 	{
 		/// <summary>

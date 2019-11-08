@@ -50,18 +50,28 @@ namespace Northis.BattleRoostersOnline.Dto
 			get;
 			set;
 		}
-        #endregion
+		#endregion
 
+		#region ctor
+		/// <summary>
+		/// Инициализует новый объект класса <see cref="UsersStatisticsDto"/>.
+		/// </summary>
+		/// <param name="isOnline">Состояние пользователя.</param>
+		/// <param name="userName">Имя пользователя.</param>
+		/// <param name="userScore">Счет пользователя.</param>
 		public UsersStatisticsDto(bool isOnline, string userName, int userScore)
 		{
 			IsOnline = isOnline;
 			UserName = userName;
 			UserScore = userScore;
 		}
-
+		/// <summary>
+		/// Инициализует новый объект класса <see cref="UsersStatisticsDto"/>.
+		/// </summary>
 		public UsersStatisticsDto()
 		{
 
 		}
+		#endregion
     }
 }

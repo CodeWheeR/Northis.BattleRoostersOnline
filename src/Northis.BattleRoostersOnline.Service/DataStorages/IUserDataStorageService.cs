@@ -7,6 +7,9 @@ using Northis.BattleRoostersOnline.Service.Models;
 
 namespace Northis.BattleRoostersOnline.Service.DataStorages
 {
+	/// <summary>
+	/// Предоставляет доступ к механизмам хранения пользователей.
+	/// </summary>
 	public interface IUserDataStorageService
 	{
 		#region Properties
@@ -19,10 +22,10 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		Dictionary<string, string> UserData { get; }
 
 		/// <summary>
-		/// Возвращает или задает данные об авторизированных пользователях.
+		/// Возвращает или задает данные об авторизованных пользователях.
 		/// </summary>
 		/// <value>
-		/// Авторизированные пользователи.
+		/// Авторизованные пользователи.
 		/// </value>
 		Dictionary<string, string> LoggedUsers { get; }
 		/// <summary>

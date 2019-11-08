@@ -141,11 +141,23 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			_subscribers.Remove(token);
 		}
 
-        #region Static
-        /// <summary>
-        /// Асинхронно возвращает объект класса <see cref="StatisticsPublisher"/>.
-        /// </summary>
-        public static async Task<StatisticsPublisher> GetInstanceAsync(IDataStorageService storage = null)
+		/// <summary>
+		/// Выполняет рассылку сообщения о завершении работы сервера.
+		/// </summary>
+		/// <param name="message">Сообщение.</param>
+		public void SendServerStopMessage(string message)
+		{
+			foreach (var sub in _subscribers)
+			{
+				sub.Value.GetServerStopMessage(message);
+			}
+		}
+
+		#region Static
+		/// <summary>
+		/// Асинхронно возвращает объект класса <see cref="StatisticsPublisher"/>.
+		/// </summary>
+		public static async Task<StatisticsPublisher> GetInstanceAsync(IDataStorageService storage = null)
 		{
 			if (_instance == null)
 			{
@@ -157,7 +169,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		}
 
 		/// <summary>
-		/// Возращает объект класса <see cref="StatisticsPublisher"/>.
+		/// Возвращает объект класса <see cref="StatisticsPublisher"/>.
 		/// </summary>
 		public static StatisticsPublisher GetInstance(IDataStorageService storage = null)
 		{
@@ -228,13 +240,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			});
 		}
 
-		public void SendMessageToSubscibers(string message)
-		{
-			foreach (var sub in _subscribers)
-			{
-				sub.Value.GetServerStopMessage(message);
-			}
-		}
+
 
 		/// <summary>
 		/// Выполняет отписку пользователя от оповещений.

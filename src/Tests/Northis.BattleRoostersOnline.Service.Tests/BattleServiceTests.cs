@@ -35,7 +35,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 
 			while (token == "");
 
-			Assert.AreEqual(token, "User was not found");
+			Assert.AreEqual(BattleStatus.UserWasNotFound.ToString(), token);
 		}
 
 		/// <summary>
@@ -56,7 +56,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 
 			while (token == "");
 
-			Assert.AreEqual(token, "Rooster was not found");
+			Assert.AreEqual( BattleStatus.RoosterWasNotFound.ToString(), token);
 		}
 
 		/// <summary>
@@ -82,7 +82,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 
 			while (token == "") ;
 
-			Assert.AreEqual("SameLogins", token);
+			Assert.AreEqual(BattleStatus.SameLogins.ToString(), token);
 		}
 
 		/// <summary>
@@ -121,7 +121,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 
 			while (token == "") ;
 
-			Assert.IsTrue(token != "" && token != "User was not found" && token != "Rooster was not found");
+			Assert.IsTrue(token != "" && token != BattleStatus.UserWasNotFound.ToString() && token != BattleStatus.RoosterWasNotFound.ToString());
 		}
 		#endregion
 	}

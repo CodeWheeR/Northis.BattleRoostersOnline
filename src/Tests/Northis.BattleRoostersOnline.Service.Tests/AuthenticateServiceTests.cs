@@ -10,6 +10,9 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 	[TestFixture]
 	public class AuthenticateServiceTests : ServiceModuleTests
 	{
+		/// <summary>
+		/// Выполняет инициализацию перед тестом.
+		/// </summary>
 		[OneTimeSetUp]
 		public void SetUp()
 		{

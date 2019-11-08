@@ -317,7 +317,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		/// Возвращает или устанавливает максимальное здоровье петуха.
 		/// </summary>
 		/// <value>
-		/// The maximum health.
+		/// Максимальное здоровья.
 		/// </value>
 		public int MaxHealth
 		{
@@ -497,29 +497,9 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			throw new ArgumentException();
 		}
 
-		private RoosterColorType ColorDtoParse(RoosterColor color)
-		{
-			if (Enum.TryParse(color.ToString(), out RoosterColorType outColor))
-			{
-				return outColor;
-			}
-
-			throw new ArgumentException();
-		}
-
 		private CrestSize SizeParse(CrestSizeType size)
 		{
 			if (Enum.TryParse(size.ToString(), out CrestSize outSize))
-			{
-				return outSize;
-			}
-
-			throw new ArgumentException();
-		}
-
-		private CrestSizeType SizeDtoParse(CrestSize size)
-		{
-			if (Enum.TryParse(size.ToString(), out CrestSizeType outSize))
 			{
 				return outSize;
 			}

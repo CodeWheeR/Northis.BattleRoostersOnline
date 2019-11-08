@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Northis.BattleRoostersOnline.Service.Models
 {
 	/// <summary>
-	/// Предназначен для сериализации петухов пользователя в XML-документ.
+	/// Отвечает за хранения пользователей и петухов в XML-файле.
 	/// </summary>
 	[DataContract]
 	public class UserRoosters
@@ -39,7 +39,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый объект <see cref="UserRoosters" /> структуры.
+		/// Инициализирует новый объект <see cref="UserRoosters" /> класса.
 		/// </summary>
 		/// <param name="roosterDictionary">The rooster dictionary.</param>
 		public UserRoosters(string login, IEnumerable<RoosterModel> roosters)
@@ -47,10 +47,10 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Login = login;
 			Roosters = roosters;
 		}
-        /// <summary>
-        /// Инициализует пустой объект класса для корректной работы сериализатора.
-        /// </summary>
-        public UserRoosters()
+		/// <summary>
+		/// Инициализует новый объект  <see cref="UserRoosters" /> класса для корректной работы сериализатора.
+		/// </summary>
+		public UserRoosters()
 		{
 
 		}

@@ -17,6 +17,9 @@ namespace Northis.BattleRoostersOnline.Service.Tests
     [TestFixture]
 	public class ServicesStorageTests : ServiceModuleTests
 	{
+		/// <summary>
+		/// Устанавливает тестовое окружение.
+		/// </summary>
 		[OneTimeSetUp]
 		public void SetUp()
 		{
@@ -113,7 +116,6 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			await Storage.SaveUserDataAsync();
 
 			Storage.UserData.Clear();
-
 			Storage.LoadUserData();
 
 			Assert.IsTrue(Storage.UserData.SequenceEqual(users));

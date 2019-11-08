@@ -10,7 +10,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 	{
         #region Operation Contracts
         /// <summary>
-        /// Контракт операции. Отвечает за предоставление статуса петуха.
+        /// Получает состояние петухов.
         /// </summary>
         /// <param name="yourRooster">Ваш петух.</param>
         /// <param name="enemyRooster">Петух противника.</param>
@@ -18,27 +18,27 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		void GetRoosterStatus(RoosterDto yourRooster, RoosterDto enemyRooster);
 
 		/// <summary>
-		/// Контракт операции. Отвечает за предрставление информации о битве.
+		/// Получает сообщение с боевой сессии.
 		/// </summary>
 		/// <param name="message">Сообщение.</param>
 		[OperationContract(IsOneWay = true)]
 		void GetBattleMessage(string message);
 
 		/// <summary>
-		/// Контракт операции. Отвечает за предоставление информации о начале боя.
+		/// Получает сигнал начала боя.
 		/// </summary>
 		[OperationContract(IsOneWay = true)]
 		void GetStartSign();
 
 		/// <summary>
-		/// Контракт операции. Отвечает за оповещение о нахождении матча.
+		/// Получает информацию о подобранной сессии.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		[OperationContract(IsOneWay = true)]
 		void FindedMatch(string token);
 
 		/// <summary>
-		/// Контракт операции. Отвечает за оповещение об окончании матча.
+		/// Получает сигнал об окончании матча.
 		/// </summary>
 		[OperationContract(IsOneWay = true)]
 		void GetEndSign();

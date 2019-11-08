@@ -3,7 +3,7 @@
 namespace Northis.BattleRoostersOnline.Dto
 {
 	/// <summary>
-	/// Представляет возможный цвет петуха.
+	/// Представляет возможные окрасы петуха.
 	/// </summary>
 	[DataContract]
 	public enum RoosterColorType
