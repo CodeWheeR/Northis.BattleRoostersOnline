@@ -6,20 +6,21 @@ namespace Northis.BattleRoostersOnline.Client.Models
 	/// <summary>
 	/// Представляет статистику пользователя.
 	/// </summary>
-	class UserStatistic
+	internal class UserStatistic
 	{
 		#region Public Properties
 		/// <summary>
 		/// Возвращает или задает статус пользователя.
 		/// </summary>
 		/// <value>
-		///   <c>true</c> если пользователь онлайн; Иначе, <c>false</c>.
+		/// <c>true</c> если пользователь онлайн; Иначе, <c>false</c>.
 		/// </value>
 		[DisplayName("В сети")]
 		public bool IsOnline
 		{
 			get;
 		}
+
 		/// <summary>
 		/// Возвращает имя пользователя.
 		/// </summary>
@@ -31,6 +32,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		{
 			get;
 		}
+
 		/// <summary>
 		/// Возвращает количество побед пользователя.
 		/// </summary>
@@ -46,7 +48,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый объект <see cref="UserStatistic"/> класса.
+		/// Инициализирует новый объект <see cref="UserStatistic" /> класса.
 		/// </summary>
 		/// <param name="source">Источник.</param>
 		public UserStatistic(UsersStatisticsDto source)

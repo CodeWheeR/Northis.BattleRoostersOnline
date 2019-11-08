@@ -1,9 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Reflection;
 using System.Resources;
-using Catel.Collections;
 
 namespace Northis.BattleRoostersOnline.Client.Extensions
 {
@@ -28,7 +25,8 @@ namespace Northis.BattleRoostersOnline.Client.Extensions
 
 			if (memInfo.Length > 0)
 			{
-				var attrs = memInfo[0].GetCustomAttributes(typeof(DisplayAttribute), false);
+				var attrs = memInfo[0]
+					.GetCustomAttributes(typeof(DisplayAttribute), false);
 				if (attrs.Length > 0)
 				{
 					var attribute = (DisplayAttribute) attrs[0];

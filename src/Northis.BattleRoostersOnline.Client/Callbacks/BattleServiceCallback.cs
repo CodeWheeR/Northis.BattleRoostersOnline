@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Windows;
 using AutoMapper;
 using Catel.IoC;
 using Catel.Services;
 using NLog;
 using Northis.BattleRoostersOnline.Client.Extensions;
-using Northis.BattleRoostersOnline.Client.Models;
-using Northis.BattleRoostersOnline.Client.ViewModels;
 using Northis.BattleRoostersOnline.Client.GameServer;
+using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.Properties;
-using BattleStatus = Northis.BattleRoostersOnline.Client.Models.BattleStatus;
+using Northis.BattleRoostersOnline.Client.ViewModels;
+using BattleStatus = Northis.BattleRoostersOnline.Client.GameServer.BattleStatus;
 
 namespace Northis.BattleRoostersOnline.Client.Callbacks
 {
@@ -21,7 +20,7 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 	{
 		#region Fields
 		private readonly FightViewModel _fightVm;
-		private Logger _battleServiceCallbackLogger = LogManager.GetLogger("FightServiceCallback");
+		private readonly Logger _battleServiceCallbackLogger = LogManager.GetLogger("FightServiceCallback");
 		#endregion
 
 		#region Public Methods		
@@ -84,14 +83,14 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 			var messageService = container.ResolveType<IMessageService>();
 			var mapper = container.ResolveType<IMapper>();
 
-			if (Enum.TryParse(token, out GameServer.BattleStatus serverResult))
+			if (Enum.TryParse(token, out BattleStatus serverResult))
 			{
-				var result = mapper.Map<GameServer.BattleStatus, Models.BattleStatus>(serverResult);
+				var result = mapper.Map<BattleStatus, Models.BattleStatus>(serverResult);
 				messageService.ShowAsync(result.GetDisplayFromResource(), "Предупреждение");
 				_battleServiceCallbackLogger.Error(result.GetDisplayFromResource());
 				return;
 			}
-	
+
 			_fightVm.BattleEnded = false;
 			_fightVm.IsFinding = false;
 			_fightVm.MatchToken = token;

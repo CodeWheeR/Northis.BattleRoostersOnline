@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Windows;
+﻿using System.Windows;
 using Catel.IoC;
 using Catel.Services;
 using NLog;
-using Northis.BattleRoostersOnline.Client.Models;
-using Northis.BattleRoostersOnline.Client.ViewModels;
 using Northis.BattleRoostersOnline.Client.GameServer;
+using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.Properties;
+using Northis.BattleRoostersOnline.Client.ViewModels;
 
 namespace Northis.BattleRoostersOnline.Client.Callbacks
 {
@@ -14,23 +13,20 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 	/// Реализует контракт службы IAuthenticateServiceCallback.
 	/// </summary>
 	/// <seealso cref="Northis.BattleRoostersOnline.Client.GameServer.IAuthenticateServiceCallback" />
-	class AuthenticationServiceCallback : IAuthenticateServiceCallback
+	internal class AuthenticationServiceCallback : IAuthenticateServiceCallback
 	{
 		#region Fields
-		private RoosterBrowserViewModel _roosterBrowserViewModel;
+		private readonly RoosterBrowserViewModel _roosterBrowserViewModel;
 
-		private Logger _authServiceCallbackLogger = LogManager.GetLogger("AuthServiceCallback");
+		private readonly Logger _authServiceCallbackLogger = LogManager.GetLogger("AuthServiceCallback");
 		#endregion
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="AuthenticationServiceCallback"/> класса.
+		/// Инициализирует новый экземпляр <see cref="AuthenticationServiceCallback" /> класса.
 		/// </summary>
 		/// <param name="vm">Модель-представление.</param>
-		public AuthenticationServiceCallback(RoosterBrowserViewModel vm)
-		{
-			_roosterBrowserViewModel = vm;
-		}
+		public AuthenticationServiceCallback(RoosterBrowserViewModel vm) => _roosterBrowserViewModel = vm;
 		#endregion
 
 		#region Public Methods
@@ -44,17 +40,19 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 			_authServiceCallbackLogger.Info(Resources.StrInfoStartStatisticUpdate);
 			_roosterBrowserViewModel.Statistics = new StatisticsModel[statistics.Length];
 			_roosterBrowserViewModel.UserStatistics = new UserStatistic[usersStatistics.Length];
-			for (int i = 0; i < statistics.Length; i++)
+			for (var i = 0; i < statistics.Length; i++)
 			{
 				_roosterBrowserViewModel.Statistics[i] = new StatisticsModel(statistics[i]);
 			}
 
-			for (int i = 0; i < usersStatistics.Length; i++)
+			for (var i = 0; i < usersStatistics.Length; i++)
 			{
 				_roosterBrowserViewModel.UserStatistics[i] = new UserStatistic(usersStatistics[i]);
 			}
+
 			_authServiceCallbackLogger.Info(Resources.StrInfoStatisticUpdated);
 		}
+
 		/// <summary>
 		/// Выводит пользователю сообщение, посланное сервером перед завершением работы.
 		/// </summary>
@@ -62,8 +60,8 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		public async void GetServerStopMessage(string message)
 		{
 			await this.GetServiceLocator()
-				.ResolveType<IMessageService>()
-				.ShowAsync(message, "Предупреждение");
+					  .ResolveType<IMessageService>()
+					  .ShowAsync(message, "Предупреждение");
 			Application.Current.Shutdown(0);
 		}
 		#endregion

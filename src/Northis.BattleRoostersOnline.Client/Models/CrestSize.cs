@@ -23,6 +23,5 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		/// </summary>
 		[Display(Name = "HugeCrest", ResourceType = typeof(Resources))]
 		Big
-		
 	}
 }

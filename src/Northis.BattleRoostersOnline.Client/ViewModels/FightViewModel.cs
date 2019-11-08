@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.ServiceModel;
-using System.Threading;
+﻿using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -8,24 +6,24 @@ using Catel.Data;
 using Catel.MVVM;
 using NLog;
 using Northis.BattleRoostersOnline.Client.Callbacks;
-using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.GameServer;
+using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.Properties;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
-    /// <summary>
-    /// Обеспечивает взаимодействие механизмов боя с представлением FightView.
-    /// </summary>
-    /// <seealso cref="Catel.MVVM.ViewModelBase" />
-    internal class FightViewModel : ViewModelBase
+	/// <summary>
+	/// Обеспечивает взаимодействие механизмов боя с представлением FightView.
+	/// </summary>
+	/// <seealso cref="Catel.MVVM.ViewModelBase" />
+	internal class FightViewModel : ViewModelBase
 	{
 		#region Fields
 		private BattleServiceClient _battleServiceClient;
 
 		private readonly string _userToken;
 
-		private Logger _logger = LogManager.GetLogger("FightViewModelLogger");
+		private readonly Logger _logger = LogManager.GetLogger("FightViewModelLogger");
 
 		#region Static
 		/// <summary>
@@ -223,22 +221,21 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get => GetValue<RoosterModel>(SecondFighterProperty);
 			set => SetValue(SecondFighterProperty, value);
 		}
-        #endregion
+		#endregion
 
-        #region Protected Methods
-        #region Overrided
-        /// <summary>
-        /// Вызывается в момент закрытия формы.
-        /// <para />
-        /// Этот метод также вызывает <see cref="E:Catel.MVVM.ViewModelBase.ClosingAsync" /> событие.
-        /// </summary>
-        protected override async Task OnClosingAsync()
+		#region Protected Methods
+		#region Overrided
+		/// <summary>
+		/// Вызывается в момент закрытия формы.
+		/// <para />
+		/// Этот метод также вызывает <see cref="E:Catel.MVVM.ViewModelBase.ClosingAsync" /> событие.
+		/// </summary>
+		protected override async Task OnClosingAsync()
 		{
 			if (!BattleEnded)
 			{
 				_battleServiceClient.GiveUpAsync(_userToken, MatchToken);
 				_logger.Info(Resources.StrInfoTheBattleWasSurrendered);
-
 			}
 			else if (IsFinding)
 			{
@@ -248,14 +245,14 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 			await base.OnClosingAsync();
 		}
-        #endregion
-        #endregion
+		#endregion
+		#endregion
 
-        #region Private Methods		
-        /// <summary>
-        /// Запускает битву петухов.
-        /// </summary>
-        private async Task StartFightAsync()
+		#region Private Methods		
+		/// <summary>
+		/// Запускает битву петухов.
+		/// </summary>
+		private async Task StartFightAsync()
 		{
 			BattleStarted = true;
 			_battleServiceClient.StartBattleAsync(_userToken, MatchToken);
@@ -266,7 +263,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// Запускает поиск матча.
 		/// </summary>
 		private async Task FindMatchAsync()
-		{ 
+		{
 			_battleServiceClient = new BattleServiceClient(new InstanceContext(new BattleServiceCallback(this)));
 			ShowDeadFirst = false;
 			ShowDeadSecond = false;

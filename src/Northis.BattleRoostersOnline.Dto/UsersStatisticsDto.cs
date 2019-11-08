@@ -1,50 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace Northis.BattleRoostersOnline.Dto
 {
-    /// <summary>
-    /// Представляет статистику пользователя.
-    /// </summary>
-    [DataContract]
+	/// <summary>
+	/// Представляет статистику пользователя.
+	/// </summary>
+	[DataContract]
 	public class UsersStatisticsDto
 	{
-        #region Properties
-        /// <summary>
-        /// Возвращает или устанавливает значение "Находится ли пользователь в онлайне?"..
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> Если пользователь онлайн; иначе, <c>false</c>.
-        /// </value>
-        [DataMember]
+		#region Properties
+		/// <summary>
+		/// Возвращает или устанавливает значение "Находится ли пользователь в онлайне?"..
+		/// </summary>
+		/// <value>
+		/// <c>true</c> Если пользователь онлайн; иначе, <c>false</c>.
+		/// </value>
+		[DataMember]
 		public bool IsOnline
 		{
 			get;
 			set;
 		}
-        /// <summary>
-        /// Возвращает или устанавливает значение имени пользователя.
-        /// </summary>
-        /// <value>
-        /// Имя пользователя.
-        /// </value>
-        [DataMember]
+
+		/// <summary>
+		/// Возвращает или устанавливает значение имени пользователя.
+		/// </summary>
+		/// <value>
+		/// Имя пользователя.
+		/// </value>
+		[DataMember]
 		public string UserName
 		{
 			get;
 			set;
 		}
-        /// <summary>
-        /// Возвращает или устанавливает значение счёта пользователя.
-        /// </summary>
-        /// <value>
-        /// Счёт пользователя.
-        /// </value>
-        [DataMember]
+
+		/// <summary>
+		/// Возвращает или устанавливает значение счёта пользователя.
+		/// </summary>
+		/// <value>
+		/// Счёт пользователя.
+		/// </value>
+		[DataMember]
 		public int UserScore
 		{
 			get;
@@ -54,7 +51,7 @@ namespace Northis.BattleRoostersOnline.Dto
 
 		#region ctor
 		/// <summary>
-		/// Инициализует новый объект класса <see cref="UsersStatisticsDto"/>.
+		/// Инициализует новый объект класса <see cref="UsersStatisticsDto" />.
 		/// </summary>
 		/// <param name="isOnline">Состояние пользователя.</param>
 		/// <param name="userName">Имя пользователя.</param>
@@ -65,13 +62,13 @@ namespace Northis.BattleRoostersOnline.Dto
 			UserName = userName;
 			UserScore = userScore;
 		}
+
 		/// <summary>
-		/// Инициализует новый объект класса <see cref="UsersStatisticsDto"/>.
+		/// Инициализует новый объект класса <see cref="UsersStatisticsDto" />.
 		/// </summary>
 		public UsersStatisticsDto()
 		{
-
 		}
 		#endregion
-    }
+	}
 }

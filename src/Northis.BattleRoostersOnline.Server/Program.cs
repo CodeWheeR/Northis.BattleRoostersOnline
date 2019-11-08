@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Configuration;
-using System.Diagnostics;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using AutoMapper;
+using GameServer.Properties;
 using NLog;
+using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Implements;
-using Unity;
-using Unity.Wcf;
-using AutoMapper;
-using AutoMapper.Mappers;
-using GameServer.Properties;
-using NLog.Targets;
-using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Models;
+using Unity;
 using Unity.Lifetime;
+using Unity.Wcf;
 
 namespace Northis.BattleRoostersOnline.Server
 {
@@ -31,13 +27,13 @@ namespace Northis.BattleRoostersOnline.Server
 		/// <param name="args">Аргументы.</param>
 		private static void Main(string[] args)
 		{
-			Logger logger = LogManager.GetLogger("ServerLogger");
+			var logger = LogManager.GetLogger("ServerLogger");
 
 			UnityServiceHost selfHost = null;
 
 			AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
-			string address = "";
+			var address = "";
 
 			try
 			{
@@ -59,7 +55,8 @@ namespace Northis.BattleRoostersOnline.Server
 
 			var baseAddress = new Uri(address);
 			var container = new UnityContainer();
-			var config = new MapperConfiguration(cfg => cfg.CreateMap<RoosterModel, RoosterDto>().IgnoreAllSourcePropertiesWithAnInaccessibleSetter());
+			var config = new MapperConfiguration(cfg => cfg.CreateMap<RoosterModel, RoosterDto>()
+														   .IgnoreAllSourcePropertiesWithAnInaccessibleSetter());
 			var mapper = config.CreateMapper();
 
 			container.RegisterInstance(mapper);
@@ -75,11 +72,10 @@ namespace Northis.BattleRoostersOnline.Server
 
 			try
 			{
-				
 				var authBinding = new WSDualHttpBinding(WSDualHttpSecurityMode.None)
 				{
 					OpenTimeout = new TimeSpan(0, 0, 0, 5),
-					SendTimeout = new TimeSpan(0, 0, 0, 5),
+					SendTimeout = new TimeSpan(0, 0, 0, 5)
 				};
 
 				var editBinding = new WSHttpBinding(SecurityMode.None)
@@ -105,10 +101,10 @@ namespace Northis.BattleRoostersOnline.Server
 
 				while (Console.ReadLine() != "shutdown")
 				{
-
 				}
 
-				StatisticsPublisher.GetInstance().SendServerStopMessage("Сервер закрыт");
+				StatisticsPublisher.GetInstance()
+								   .SendServerStopMessage("Сервер закрыт");
 				selfHost.Close();
 			}
 			catch (CommunicationException ce)
@@ -117,18 +113,23 @@ namespace Northis.BattleRoostersOnline.Server
 				selfHost.Abort();
 			}
 		}
+
 		/// <summary>
 		/// Действие при обработке Unhandled Exception.
 		/// </summary>
 		/// <param name="sender">Отправитель.</param>
 		/// <param name="e">Событие.</param>
-		static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+		private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
 		{
 			var logger = LogManager.GetCurrentClassLogger();
 			if (e.ExceptionObject is Exception ex)
+			{
 				logger.Fatal(ex);
+			}
 			else
+			{
 				logger.Fatal(e.ExceptionObject);
+			}
 
 			Console.ReadLine();
 			Environment.Exit(1);

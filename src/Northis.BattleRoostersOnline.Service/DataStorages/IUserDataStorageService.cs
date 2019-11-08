@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Service.Models;
 
@@ -19,7 +16,10 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// <value>
 		/// Данные пользователя.
 		/// </value>
-		Dictionary<string, string> UserData { get; }
+		Dictionary<string, string> UserData
+		{
+			get;
+		}
 
 		/// <summary>
 		/// Возвращает или задает данные об авторизованных пользователях.
@@ -27,15 +27,21 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// <value>
 		/// Авторизованные пользователи.
 		/// </value>
-		Dictionary<string, string> LoggedUsers { get; }
+		Dictionary<string, string> LoggedUsers
+		{
+			get;
+		}
+
 		/// <summary>
 		/// Возвращает или задает данные об игровых сессиях.
 		/// </summary>
 		/// <value>
 		/// Игровые сессии.
 		/// </value>
-		Dictionary<string, Session> Sessions { get; }
-
+		Dictionary<string, Session> Sessions
+		{
+			get;
+		}
 		#endregion
 
 		#region Public Methods
@@ -43,6 +49,7 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// Асинхронно сохраняет данные пользователей.
 		/// </summary>
 		Task SaveUserDataAsync();
+
 		/// <summary>
 		/// Загружает данные пользователей.
 		/// </summary>

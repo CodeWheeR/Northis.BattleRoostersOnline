@@ -65,7 +65,8 @@
 				</StackPanel>
 				<StackPanel>
 					<TextBlock Text="{x:Static res:Resources.Weight}" />
-					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxWeight, Converter={StaticResource MaxDoubleValueToTextLimiter}}" />
+					<TextBlock Style="{StaticResource Description}"
+					           Text="{Binding RoosterModel.MaxWeight, Converter={StaticResource MaxDoubleValueToTextLimiter}}" />
 
 				</StackPanel>
 
@@ -76,17 +77,20 @@
 
 				<StackPanel>
 					<TextBlock Text="{x:Static res:Resources.Thickness}" />
-					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxThickness, Converter={StaticResource MaxValueToTextLimiter}}" />
+					<TextBlock Style="{StaticResource Description}"
+					           Text="{Binding RoosterModel.MaxThickness, Converter={StaticResource MaxValueToTextLimiter}}" />
 				</StackPanel>
 
 				<StackPanel>
 					<TextBlock Text="{x:Static res:Resources.Brickness}" />
-					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxBrickness, Converter={StaticResource MaxValueToTextLimiter}}" />
+					<TextBlock Style="{StaticResource Description}"
+					           Text="{Binding RoosterModel.MaxBrickness, Converter={StaticResource MaxValueToTextLimiter}}" />
 				</StackPanel>
 
 				<StackPanel>
 					<TextBlock Text="{x:Static res:Resources.Luck}" />
-					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxLuck, Converter={StaticResource MaxValueToTextLimiter}}" />
+					<TextBlock Style="{StaticResource Description}"
+					           Text="{Binding RoosterModel.MaxLuck, Converter={StaticResource MaxValueToTextLimiter}}" />
 				</StackPanel>
 				<StackPanel>
 					<TextBlock Text="{x:Static res:Resources.CrestSize}" />

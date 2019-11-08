@@ -2,7 +2,6 @@
 using System.ServiceModel;
 using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
-using Northis.BattleRoostersOnline.Service.Models;
 
 namespace Northis.BattleRoostersOnline.Service.Contracts
 {
@@ -13,7 +12,6 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 	public interface IEditService
 	{
 		#region Operation Contracts
-
 		/// <summary>
 		/// Отвечает за добавление петуха.
 		/// </summary>
@@ -39,6 +37,6 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		/// <returns>Коллекцию петухов.</returns>
 		[OperationContract]
 		Task<IEnumerable<RoosterDto>> GetUserRoostersAsync(string token);
-        #endregion
-    }
+		#endregion
+	}
 }

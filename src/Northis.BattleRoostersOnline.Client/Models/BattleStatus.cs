@@ -1,11 +1,4 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using Northis.BattleRoostersOnline.Client.Properties;
 
 namespace Northis.BattleRoostersOnline.Client.Models
@@ -13,7 +6,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 	/// <summary>
 	/// Определяет возможные ответы сервера на поиск матча.
 	/// </summary>
-	enum BattleStatus
+	internal enum BattleStatus
 	{
 		[Display(ResourceType = typeof(Resources), Name = "StrErrorNotLoginedUserFind")]
 		UserWasNotFound,

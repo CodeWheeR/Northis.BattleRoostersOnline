@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CommonServiceLocator;
-using Unity;
-using Unity.ServiceLocation;
-
-using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Implements;
 using Northis.BattleRoostersOnline.Service.Models;
 
@@ -28,10 +21,10 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// Бинарный сериализатор.
 		/// </summary>
 		private readonly BinaryFormatter _formatter = new BinaryFormatter();
-		private object _RoostersFileLocker = new object();
-		private object _UsersFileLocker = new object();
+		private readonly object _RoostersFileLocker = new object();
+		private readonly object _UsersFileLocker = new object();
 		#endregion
-		
+
 		#region .ctor
 		/// <summary>
 		/// Инициализирует новый экземпляр <see cref="DataStorageService" /> класса.
@@ -42,6 +35,7 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 			{
 				Mapper = mapper;
 			}
+
 			UserData = new Dictionary<string, string>();
 			RoostersData = new Dictionary<string, Dictionary<string, RoosterModel>>();
 			LoggedUsers = new Dictionary<string, string>();
@@ -49,7 +43,7 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 			Task.Run(() => InitContent());
 		}
 		#endregion
-		
+
 		#region Properties
 		/// <summary>
 		/// Возвращает или задает данные пользователя.
@@ -80,7 +74,7 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		/// <value>
 		/// Данные петухов.
 		/// </value>
-		public Dictionary<string, Dictionary<string,RoosterModel>> RoostersData
+		public Dictionary<string, Dictionary<string, RoosterModel>> RoostersData
 		{
 			get;
 		}
@@ -106,13 +100,13 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 		{
 			get;
 		}
-        #endregion
+		#endregion
 
-        #region Private Methods
-        /// <summary>
-        /// Инициализирует данные о петухах и клиентах.
-        /// </summary>
-        private void InitContent()
+		#region Private Methods
+		/// <summary>
+		/// Инициализирует данные о петухах и клиентах.
+		/// </summary>
+		private void InitContent()
 		{
 			LoadUserData();
 			LoadRoosters();
@@ -154,7 +148,6 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 			});
 		}
 
-
 		/// <summary>
 		/// Загружает петухов.
 		/// </summary>
@@ -191,18 +184,20 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 						{
 							if (!string.IsNullOrWhiteSpace(rooster.Token))
 							{
-								RoostersData[roosters.Login].Add(rooster.Token, rooster);
+								RoostersData[roosters.Login]
+									.Add(rooster.Token, rooster);
 							}
 							else
 							{
-								RoostersData[roosters.Login].Add(GenerateToken(RoostersData[roosters.Login].ContainsKey), rooster);
+								RoostersData[roosters.Login]
+									.Add(GenerateToken(RoostersData[roosters.Login]
+														   .ContainsKey),
+										 rooster);
 							}
 						}
 					}
 				}
-				
 			}
-
 		}
 
 		/// <summary>
@@ -238,7 +233,7 @@ namespace Northis.BattleRoostersOnline.Service.DataStorages
 				{
 					using (var fs = new FileStream("Resources\\users.dat", FileMode.Open))
 					{
-						UserData = (Dictionary<string, string>)_formatter.Deserialize(fs);
+						UserData = (Dictionary<string, string>) _formatter.Deserialize(fs);
 					}
 				}
 			}

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
 using System.Windows.Input;
-using System.Windows.Markup;
 using AutoMapper;
 using Catel.Data;
 using Catel.IoC;
@@ -15,20 +10,20 @@ using Catel.MVVM;
 using Catel.Services;
 using NLog;
 using Northis.BattleRoostersOnline.Client.Extensions;
-using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.GameServer;
+using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.Properties;
+using AuthenticateStatus = Northis.BattleRoostersOnline.Client.GameServer.AuthenticateStatus;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
-    /// <summary>
-    /// Представляет модель-представление "Аутентификация".
-    /// </summary>
-    /// <seealso cref="ViewModelBase" />
-    internal class AuthViewModel : ViewModelBase
+	/// <summary>
+	/// Представляет модель-представление "Аутентификация".
+	/// </summary>
+	/// <seealso cref="ViewModelBase" />
+	internal class AuthViewModel : ViewModelBase
 	{
 		#region Fields
-
 		#region Static		
 		/// <summary>
 		/// Зарегистрированное свойство "Модель аутентификации".
@@ -44,11 +39,11 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 		private IUIVisualizerService _uiVisualizerService;
 
-		private Logger _logger = LogManager.GetLogger("AuthViewModelLogger");
+		private readonly Logger _logger = LogManager.GetLogger("AuthViewModelLogger");
 
-		private IMessageService _messageService;
+		private readonly IMessageService _messageService;
 
-		private IMapper _mapper;
+		private readonly IMapper _mapper;
 		#endregion
 
 		#region .ctor		
@@ -67,7 +62,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			_logger.Info(Resources.StrInfoOpeningAuthorizationWindow);
 
 			var container = this.GetServiceLocator();
-			_messageService =container.ResolveType<IMessageService>();
+			_messageService = container.ResolveType<IMessageService>();
 			_mapper = container.ResolveType<IMapper>();
 		}
 		#endregion
@@ -82,6 +77,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get => GetValue<AuthModel>(AuthModelProperty);
 			set => SetValue(AuthModelProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает логин пользователя.
 		/// </summary>
@@ -91,6 +87,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get => GetValue<string>(LoginProperty);
 			set => SetValue(LoginProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает команду для авторизации.
 		/// </summary>
@@ -98,6 +95,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		{
 			get;
 		}
+
 		/// <summary>
 		/// Возвращает команду для регистрации.
 		/// </summary>
@@ -118,13 +116,12 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			var password = passwordBox.Password;
 			if (string.IsNullOrWhiteSpace(Login) || string.IsNullOrWhiteSpace(password))
 			{
-
 				_logger.Warn(Resources.StrWarnStringsCannotBeEmpty);
-				await _messageService.ShowAsync("Поля логина и пароля не могут быть пустыми","Предупреждение");
+				await _messageService.ShowAsync("Поля логина и пароля не могут быть пустыми", "Предупреждение");
 				return;
 			}
 
-			string token = "";
+			var token = "";
 			try
 			{
 				token = await authMethod(Login, password);
@@ -135,16 +132,15 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				await _messageService.ShowErrorAsync(e.ToString());
 			}
 
-
-			if (!Enum.TryParse(token, out GameServer.AuthenticateStatus result))
+			if (!Enum.TryParse(token, out AuthenticateStatus result))
 			{
 				Application.Current.Resources.Add("UserToken", token);
 				await this.SaveAndCloseViewModelAsync();
 			}
 			else
 			{
-				
-				await _messageService.ShowAsync(_mapper.Map<GameServer.AuthenticateStatus, Models.AuthenticateStatus>(result).GetDisplayFromResource());
+				await _messageService.ShowAsync(_mapper.Map<AuthenticateStatus, Models.AuthenticateStatus>(result)
+													   .GetDisplayFromResource());
 			}
 		}
 		#endregion

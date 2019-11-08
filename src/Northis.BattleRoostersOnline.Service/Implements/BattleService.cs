@@ -2,8 +2,8 @@
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Northis.BattleRoostersOnline.Dto;
 using NLog;
+using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Models;
@@ -16,42 +16,42 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	/// </summary>
 	/// <seealso cref="BaseServiceWithStorage" />
 	/// <seealso cref="Northis.BattleRoostersOnline.Service.Contracts.IBattleService" />
-
 	public class BattleService : BaseServiceWithStorage, IBattleService
 	{
-        #region Fields
-        private Logger _logger = LogManager.GetCurrentClassLogger();
+		#region Fields
+		private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 		#endregion
 
 		#region ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="BattleService"/> класса.
+		/// Инициализирует новый экземпляр <see cref="BattleService" /> класса.
 		/// </summary>
 		/// <param name="storage">Объект хранилища. </param>
-		public BattleService(IDataStorageService storage) : base(storage)
+		public BattleService(IDataStorageService storage)
+			: base(storage)
 		{
-
 		}
 		#endregion
 
-        #region Public Methods
-        /// <summary>
-        /// Производит поиск матча.
-        /// </summary>
-        /// <param name="token">Токен.</param>
-        /// <param name="rooster">Петух.</param>
-        public void FindMatchAsync(string token, string roosterToken)
+		#region Public Methods
+		/// <summary>
+		/// Производит поиск матча.
+		/// </summary>
+		/// <param name="token">Токен.</param>
+		/// <param name="rooster">Петух.</param>
+		public void FindMatchAsync(string token, string roosterToken)
 		{
 			var callback = OperationContext.Current.GetCallbackChannel<IBattleServiceCallback>();
 			FindMatchAsync(token, roosterToken, callback);
 		}
-        /// <summary>
-        /// Асинхронно производит поиск матча.
-        /// </summary>
-        /// <param name="token">Токен.</param>
-        /// <param name="roosterToken">Токен петуха.</param>
-        /// <param name="callback">Метод оповещения пользователя.</param>
-        public async void FindMatchAsync(string token, string roosterToken, IBattleServiceCallback callback)
+
+		/// <summary>
+		/// Асинхронно производит поиск матча.
+		/// </summary>
+		/// <param name="token">Токен.</param>
+		/// <param name="roosterToken">Токен петуха.</param>
+		/// <param name="callback">Метод оповещения пользователя.</param>
+		public async void FindMatchAsync(string token, string roosterToken, IBattleServiceCallback callback)
 		{
 			if (!StorageService.LoggedUsers.ContainsKey(token))
 			{
@@ -59,10 +59,12 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				_logger.Warn(Resources.StrFmtWarnTryFindMatchByNotAuthorizedUser, token);
 				return;
 			}
+
 			var login = await GetLoginAsync(token);
 
-			if (!StorageService.RoostersData.ContainsKey(login) || !StorageService.RoostersData[login]
-									.ContainsKey(roosterToken))
+			if (!StorageService.RoostersData.ContainsKey(login) ||
+				!StorageService.RoostersData[login]
+							   .ContainsKey(roosterToken))
 			{
 				Task.Run(() => callback.FindedMatch(BattleStatus.RoosterWasNotFound.ToString()));
 				_logger.Warn(Resources.StrFmtWarnTryFindMatchNotCreatedRooster, roosterToken);
@@ -96,7 +98,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				_logger.Error(e);
 				throw;
 			}
-
 		}
 
 		/// <summary>
@@ -110,7 +111,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		{
 			try
 			{
-				return await Task.Run<bool>(() =>
+				return await Task.Run(() =>
 				{
 					if (StorageService.Sessions.Count > 0)
 					{
@@ -126,6 +127,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 						return false;
 					}
+
 					return true;
 				});
 			}
@@ -134,7 +136,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				_logger.Error(e);
 				throw;
 			}
-			
 		}
 
 		/// <summary>
@@ -165,7 +166,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			}
 		}
 
-
 		/// <summary>
 		/// Асинхронно производит сдачу боя.
 		/// </summary>
@@ -183,7 +183,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					session.StopSession(true);
 				});
 				var login = await GetLoginAsync(token);
-				_logger.Info(Resources.StrFmtInfoUserDeserted, (login == string.Empty ? token : login));
+				_logger.Info(Resources.StrFmtInfoUserDeserted, login == string.Empty ? token : login);
 			}
 			catch (Exception e)
 			{

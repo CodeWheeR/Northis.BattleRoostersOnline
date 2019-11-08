@@ -6,7 +6,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 	/// <summary>
 	/// Представляет игровую статистику.
 	/// </summary>
-	class StatisticsModel
+	internal class StatisticsModel
 	{
 		#region Public Properties
 		/// <summary>
@@ -20,6 +20,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		{
 			get;
 		}
+
 		/// <summary>
 		/// Возвращает или задает имя петуха.
 		/// </summary>
@@ -31,6 +32,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		{
 			get;
 		}
+
 		/// <summary>
 		/// Возвращает или задает череду побед.
 		/// </summary>
@@ -46,7 +48,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 
 		#region .ctor
 		/// <summary>
-		/// Инициализирует объект <see cref="StatisticsModel"/> класса.
+		/// Инициализирует объект <see cref="StatisticsModel" /> класса.
 		/// </summary>
 		/// <param name="source">Источник.</param>
 		public StatisticsModel(StatisticsDto source = null)

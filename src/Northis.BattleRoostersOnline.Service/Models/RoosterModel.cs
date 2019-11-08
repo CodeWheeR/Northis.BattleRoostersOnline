@@ -31,7 +31,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <summary>
 		/// Цвет петуха.
 		/// </summary>
-		private Dto.RoosterColorType _color;
+		private RoosterColorType _color;
 		/// <summary>
 		/// Уклонеине петуха.
 		/// </summary>
@@ -55,13 +55,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <summary>
 		/// Словарь с делегатами цветовых модификаций петухов.
 		/// </summary>
-		private readonly Dictionary<Dto.RoosterColorType, Action> ColorModifications;
+		private readonly Dictionary<RoosterColorType, Action> ColorModifications;
 		/// <summary>
 		/// Словарь с делегатами очистки цветовых модификаций петухов.
 		/// </summary>
-		private readonly Dictionary<Dto.RoosterColorType, Action> ClearModifications;
+		private readonly Dictionary<RoosterColorType, Action> ClearModifications;
 
-		private Random _rand = new Random();
+		private readonly Random _rand = new Random();
 
 		#region Limiters		
 		/// <summary>
@@ -123,23 +123,23 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// Максимальная удачливость петуха по умолчанию.
 		/// </summary>
 		private const int DefaultMaxLuck = 30;
-        #endregion
-        #endregion
+		#endregion
+		#endregion
 
-        #region .ctor
-        /// <summary>
-        /// Инициализует новый объект <see cref="RoosterModel" /> класса.
-        /// </summary>
-        public RoosterModel()
+		#region .ctor
+		/// <summary>
+		/// Инициализует новый объект <see cref="RoosterModel" /> класса.
+		/// </summary>
+		public RoosterModel()
 		{
 			Health = 100;
 			MaxHealth = 100;
 			Stamina = 100;
 
-			ColorModifications = new Dictionary<Dto.RoosterColorType, Action>
+			ColorModifications = new Dictionary<RoosterColorType, Action>
 			{
 				{
-					Dto.RoosterColorType.Red, () =>
+					RoosterColorType.Red, () =>
 					{
 						ChangeMaxLimit(nameof(Health), 0, ref _maxHealth, 120);
 						MaxHealth = _maxHealth;
@@ -147,39 +147,39 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					}
 				},
 				{
-					Dto.RoosterColorType.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, 50)
+					RoosterColorType.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, 50)
 				},
 				{
-					Dto.RoosterColorType.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10)
+					RoosterColorType.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, 10)
 				},
 				{
-					Dto.RoosterColorType.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, 50)
+					RoosterColorType.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, 50)
 				},
 				{
-					Dto.RoosterColorType.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50)
+					RoosterColorType.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, 50)
 				}
 			};
 
-			ClearModifications = new Dictionary<Dto.RoosterColorType, Action>
+			ClearModifications = new Dictionary<RoosterColorType, Action>
 			{
 				{
-					Dto.RoosterColorType.Red, () =>
+					RoosterColorType.Red, () =>
 					{
 						ChangeMaxLimit(nameof(Health), 0, ref _maxHealth, DefaultMaxHealth);
 						MaxHealth = DefaultMaxHealth;
 					}
 				},
 				{
-					Dto.RoosterColorType.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness)
+					RoosterColorType.Blue, () => ChangeMaxLimit(nameof(Brickness), 0, ref _maxBrickness, DefaultMaxBrickness)
 				},
 				{
-					Dto.RoosterColorType.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
+					RoosterColorType.White, () => ChangeMaxLimit(nameof(Luck), 0, ref _maxLuck, DefaultMaxLuck)
 				},
 				{
-					Dto.RoosterColorType.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness)
+					RoosterColorType.Brown, () => ChangeMaxLimit(nameof(Thickness), 0, ref _maxThickness, DefaultMaxThickness)
 				},
 				{
-					Dto.RoosterColorType.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
+					RoosterColorType.Black, () => ChangeMaxLimit(nameof(Weight), _minWeight, ref _maxWeight, DefaultMaxWeight)
 				}
 			};
 		}
@@ -221,7 +221,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Weight = rooster.Weight;
 			if (rooster.Name.Length > 15)
 			{
-				Name = rooster.Name.Substring(0,15);
+				Name = rooster.Name.Substring(0, 15);
 			}
 			else
 			{
@@ -238,7 +238,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		{
 			_rand = new Random();
 			Color = rooster.Color;
-			Brickness = _rand.Next(0,_maxBrickness + 1);
+			Brickness = _rand.Next(0, _maxBrickness + 1);
 			Luck = _rand.Next(0, _maxLuck + 1);
 			Thickness = _rand.Next(0, _maxThickness + 1);
 			var crestValues = Enum.GetNames(typeof(CrestSizeType));
@@ -250,8 +250,9 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			{
 				Crest = CrestSizeType.Small;
 			}
+
 			Height = _rand.Next(20, 51);
-			Weight = Math.Round(_rand.NextDouble()  * (_maxWeight - 2) + 2, 2);
+			Weight = Math.Round(_rand.NextDouble() * (_maxWeight - 2) + 2, 2);
 			if (rooster.Name.Length > 15)
 			{
 				Name = rooster.Name.Substring(0, 15);
@@ -440,7 +441,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			}
 		}
 
-
 		/// <summary>
 		/// Возвращает вычисленную силу удара петуха.
 		/// </summary>
@@ -518,7 +518,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// <param name="value">Значение.</param>
 		/// <param name="min">Минимум.</param>
 		/// <param name="max">Максимум.</param>
-		/// <returns><see cref="T"/>.</returns>
+		/// <returns><see cref="T" />.</returns>
 		private T Clamp<T>(T value, T min, T max) where T : IComparable => value.CompareTo(min) < 0 ? min : value.CompareTo(max) > 0 ? max : value;
 
 		/// <summary>

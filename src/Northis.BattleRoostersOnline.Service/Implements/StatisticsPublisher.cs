@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Northis.BattleRoostersOnline.Dto;
 using NLog;
+using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Models;
@@ -28,17 +28,17 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </summary>
 		private List<StatisticsDto> _cachedStatistics = new List<StatisticsDto>();
 		private List<UsersStatisticsDto> _cachedUsersStatistics = new List<UsersStatisticsDto>();
-		private Logger _logger = LogManager.GetCurrentClassLogger();
+		private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 		#endregion
 
 		#region ctor
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="StatisticsPublisher"/> класса.
+		/// Инициализирует новый экземпляр <see cref="StatisticsPublisher" /> класса.
 		/// </summary>
 		/// <param name="storage">Объект хранилища. </param>
-		public StatisticsPublisher(IDataStorageService storage) : base(storage)
+		public StatisticsPublisher(IDataStorageService storage)
+			: base(storage)
 		{
-
 		}
 		#endregion
 
@@ -57,8 +57,10 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					List<(string, List<RoosterModel>)> roosters;
 					lock (StorageService.RoostersData)
 					{
-						roosters = StorageService.RoostersData.Select(x => (x.Key, x.Value.Values.ToList())).ToList();
+						roosters = StorageService.RoostersData.Select(x => (x.Key, x.Value.Values.ToList()))
+												 .ToList();
 					}
+
 					var loggedUsers = new List<string>();
 					lock (StorageService.LoggedUsers)
 					{
@@ -67,7 +69,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 					foreach (var usersRoosters in roosters)
 					{
-						var scoresSum = usersRoosters.Item2.Sum((x) => x.WinStreak);
+						var scoresSum = usersRoosters.Item2.Sum(x => x.WinStreak);
 						userStats.Add(new UsersStatisticsDto(loggedUsers.Contains(usersRoosters.Item1), usersRoosters.Item1, scoresSum));
 					}
 
@@ -75,10 +77,10 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					{
 						foreach (var rooster in usersRoosters.Item2)
 						{
-							stats.Add(new StatisticsDto(usersRoosters.Item1, rooster.Name,rooster.WinStreak));
+							stats.Add(new StatisticsDto(usersRoosters.Item1, rooster.Name, rooster.WinStreak));
 						}
 					}
-					
+
 					lock (_cachedStatistics)
 					{
 						_cachedStatistics = stats.OrderByDescending(x => x.WinStreak)
@@ -87,7 +89,8 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 					lock (_cachedUsersStatistics)
 					{
-						_cachedUsersStatistics = userStats.OrderByDescending(x => x.UserScore).ToList();
+						_cachedUsersStatistics = userStats.OrderByDescending(x => x.UserScore)
+														  .ToList();
 					}
 
 					OnStatisticsChanged();
@@ -96,7 +99,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			catch (Exception e)
 			{
 				_logger.Error(e);
-				throw; 
+				throw;
 			}
 		}
 
@@ -116,7 +119,9 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			try
 			{
 				if (callback is ICommunicationObject co)
+				{
 					co.Closing += (x, y) => ClearSubscription(token);
+				}
 
 				_subscribers.Add(token, callback);
 				Task.Run(() =>
@@ -129,7 +134,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				_logger.Error(e);
 				throw;
 			}
-			
 		}
 
 		/// <summary>
@@ -155,7 +159,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 		#region Static
 		/// <summary>
-		/// Асинхронно возвращает объект класса <see cref="StatisticsPublisher"/>.
+		/// Асинхронно возвращает объект класса <see cref="StatisticsPublisher" />.
 		/// </summary>
 		public static async Task<StatisticsPublisher> GetInstanceAsync(IDataStorageService storage = null)
 		{
@@ -169,7 +173,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		}
 
 		/// <summary>
-		/// Возвращает объект класса <see cref="StatisticsPublisher"/>.
+		/// Возвращает объект класса <see cref="StatisticsPublisher" />.
 		/// </summary>
 		public static StatisticsPublisher GetInstance(IDataStorageService storage = null)
 		{
@@ -180,14 +184,14 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 			return _instance;
 		}
-        #endregion
-        #endregion
+		#endregion
+		#endregion
 
-        #region Private Methods
-        /// <summary>
-        /// Асинхронно обрабатывает изменение статистики.
-        /// </summary>
-        private async void OnStatisticsChanged()
+		#region Private Methods
+		/// <summary>
+		/// Асинхронно обрабатывает изменение статистики.
+		/// </summary>
+		private async void OnStatisticsChanged()
 		{
 			try
 			{
@@ -215,7 +219,8 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				{
 					if (_subscribers.ContainsKey(receiverToken))
 					{
-						_subscribers[receiverToken].GetNewGlobalStatistics(_cachedStatistics, _cachedUsersStatistics);
+						_subscribers[receiverToken]
+							.GetNewGlobalStatistics(_cachedStatistics, _cachedUsersStatistics);
 					}
 				}
 				catch (Exception e)
@@ -239,8 +244,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				}
 			});
 		}
-
-
 
 		/// <summary>
 		/// Выполняет отписку пользователя от оповещений.

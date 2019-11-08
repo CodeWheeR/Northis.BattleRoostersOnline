@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Northis.BattleRoostersOnline.Dto
 {
@@ -191,12 +190,11 @@ namespace Northis.BattleRoostersOnline.Dto
 			get;
 			set;
 		}
-
 		#endregion
 
 		#region .ctor
 		/// <summary>
-		/// Инициализует новый объект класса <see cref="RoosterDto"/>.
+		/// Инициализует новый объект класса <see cref="RoosterDto" />.
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="name">Имя.</param>
@@ -211,7 +209,19 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// <param name="maxHealth">Максимальное здоровье.</param>
 		/// <param name="stamina">Выносливость.</param>
 		/// <param name="winStreak">Череда побед.</param>
-		public RoosterDto(string token, string name, double weight, int height, int brickness, int thickness, int luck, double health, CrestSizeType crest, RoosterColorType color, int maxHealth, int stamina, int winStreak)
+		public RoosterDto(string token,
+						  string name,
+						  double weight,
+						  int height,
+						  int brickness,
+						  int thickness,
+						  int luck,
+						  double health,
+						  CrestSizeType crest,
+						  RoosterColorType color,
+						  int maxHealth,
+						  int stamina,
+						  int winStreak)
 		{
 			Token = token;
 			Name = name;
@@ -230,28 +240,28 @@ namespace Northis.BattleRoostersOnline.Dto
 
 		public RoosterDto()
 		{
-
 		}
 		#endregion
 
-        #region Public Methods
-
+		#region Public Methods
 		#region Overrided
-        /// <summary>
-        ///  Определяет, равен ли заданный объект текущему объекту.
-        /// </summary>
-        /// <param name="obj">
-        ///  Объект, который требуется сравнить с текущим объектом.
-        /// </param>
-        /// <returns>
-        ///  Значение <see langword="true" />, если указанный объект равен текущему объекту; в противном случае — значение <see langword="false" />.
-        /// </returns>
-        public override bool Equals(object obj)
+		/// <summary>
+		/// Определяет, равен ли заданный объект текущему объекту.
+		/// </summary>
+		/// <param name="obj">
+		/// Объект, который требуется сравнить с текущим объектом.
+		/// </param>
+		/// <returns>
+		/// Значение <see langword="true" />, если указанный объект равен текущему объекту; в противном случае — значение
+		/// <see langword="false" />.
+		/// </returns>
+		public override bool Equals(object obj)
 		{
 			if (obj is RoosterDto)
 			{
 				return Equals(obj as RoosterDto);
 			}
+
 			return base.Equals(obj);
 		}
 
@@ -260,23 +270,19 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// </summary>
 		/// <param name="obj">Объект для сравнения.</param>
 		/// <returns>true - если равен; иначе - false.</returns>
-		public bool Equals(RoosterDto obj)
-		{ 
-			return Brickness == obj.Brickness &&
-				   Color == obj.Color &&
-				   Crest == obj.Crest &&
-				   Health == obj.Health &&
-				   Height == obj.Height &&
-				   Luck == obj.Luck &&
-				   MaxHealth == obj.MaxHealth &&
-				   Name == obj.Name &&
-				   Stamina == obj.Stamina &&
-				   Thickness == obj.Thickness &&
-				   Weight == obj.Weight;
-		}
+		public bool Equals(RoosterDto obj) =>
+			Brickness == obj.Brickness &&
+			Color == obj.Color &&
+			Crest == obj.Crest &&
+			Health == obj.Health &&
+			Height == obj.Height &&
+			Luck == obj.Luck &&
+			MaxHealth == obj.MaxHealth &&
+			Name == obj.Name &&
+			Stamina == obj.Stamina &&
+			Thickness == obj.Thickness &&
+			Weight == obj.Weight;
 		#endregion
-
 		#endregion
 	}
-
 }

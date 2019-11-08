@@ -47,12 +47,12 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			Login = login;
 			Roosters = roosters;
 		}
+
 		/// <summary>
 		/// Инициализует новый объект  <see cref="UserRoosters" /> класса для корректной работы сериализатора.
 		/// </summary>
 		public UserRoosters()
 		{
-
 		}
 		#endregion
 	}

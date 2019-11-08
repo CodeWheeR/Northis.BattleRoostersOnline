@@ -1,29 +1,26 @@
 ﻿using System;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
 {
-    /// <summary>
-    /// Предоставляет функционал генерирования токенов.
-    /// </summary>
-    public class BaseService
+	/// <summary>
+	/// Предоставляет функционал генерирования токенов.
+	/// </summary>
+	public class BaseService
 	{
 		#region Fields
-
 		/// <summary>
 		/// Генератор рандомных значений.
 		/// </summary>
 		private Random _rand = new Random();
+		#endregion
 
-        #endregion
-
-        #region Protected Methods
-        /// <summary>
-        /// Генерирует токен.
-        /// </summary>
-        /// <returns>Токен.</returns>
-        protected string GenerateToken(Func<string, bool> keyCheck = null)
+		#region Protected Methods
+		/// <summary>
+		/// Генерирует токен.
+		/// </summary>
+		/// <returns>Токен.</returns>
+		protected string GenerateToken(Func<string, bool> keyCheck = null)
 		{
 			_rand = new Random();
 			var tokenGeneratorSymbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -36,7 +33,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				{
 					answer += tokenGeneratorSymbols[_rand.Next(0, tokenGeneratorSymbols.Length - 1)];
 				}
-
 			}
 			while (keyCheck != null && keyCheck(answer));
 
@@ -51,6 +47,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		{
 			return Task.Run(() => GenerateToken(keyCheck));
 		}
-        #endregion
-    }
+		#endregion
+	}
 }

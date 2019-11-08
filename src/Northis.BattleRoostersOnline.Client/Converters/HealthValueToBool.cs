@@ -26,6 +26,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 			answer = (RoosterModel) value != null && (value as RoosterModel).Health == 0;
 			return answer;
 		}
+
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>

@@ -8,15 +8,14 @@ using Northis.BattleRoostersOnline.Client.Properties;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
-    /// <summary>
-    /// Обеспечивает взаимодействие механизмов редактирования с представлением EditView.
-    /// </summary>
-    /// <seealso cref="Catel.MVVM.ViewModelBase" />
-    internal class EditRoosterViewModel : ViewModelBase
+	/// <summary>
+	/// Обеспечивает взаимодействие механизмов редактирования с представлением EditView.
+	/// </summary>
+	/// <seealso cref="Catel.MVVM.ViewModelBase" />
+	internal class EditRoosterViewModel : ViewModelBase
 	{
 		#region Fields
-
-		private Logger _logger = LogManager.GetLogger("EditRoosterViewModelLogger");
+		private readonly Logger _logger = LogManager.GetLogger("EditRoosterViewModelLogger");
 
 		#region Static
 		/// <summary>
@@ -79,9 +78,9 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			CrestsArray = Enum.GetValues(typeof(CrestSize));
 			_logger.Info(Resources.StrFmtInfoEditWindowOpenForSelectedRooster, selectedRooster.Name);
 		}
-        #endregion
+		#endregion
 
-        #region Properties
+		#region Properties
 		/// <summary>
 		/// Возвращает или устанавливает типы окраски петуха.
 		/// </summary>
@@ -246,15 +245,15 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			get => GetValue<double>(WeightProperty);
 			set => SetValue(WeightProperty, value);
 		}
-        #endregion
+		#endregion
 
-        #region Protected Methods
-        #region Overrided
-        /// <summary>
-        /// Осуществляет проверку значений, поступающих для инициализации полей.
-        /// </summary>
-        /// <param name="validationResults">Результаты проверки полей.</param>
-        protected override void ValidateFields(List<IFieldValidationResult> validationResults)
+		#region Protected Methods
+		#region Overrided
+		/// <summary>
+		/// Осуществляет проверку значений, поступающих для инициализации полей.
+		/// </summary>
+		/// <param name="validationResults">Результаты проверки полей.</param>
+		protected override void ValidateFields(List<IFieldValidationResult> validationResults)
 		{
 			if (string.IsNullOrWhiteSpace(Name))
 			{
@@ -281,7 +280,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 			if (Height < 20 || Height > 50)
 			{
-				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.HeightProperty, $"Значение Роста должно быть от 20 до 50"));
+				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.HeightProperty, "Значение Роста должно быть от 20 до 50"));
 				_logger.Info(Resources.StrInfoHeightValue);
 			}
 
@@ -293,11 +292,12 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 
 			if (Thickness < 0 || Thickness > RoosterModel.MaxThickness)
 			{
-				validationResults.Add(FieldValidationResult.CreateError(RoosterModel.ThicknessProperty, $"Значение Толщины покрова должно быть от 0 до {RoosterModel.MaxThickness}"));
+				validationResults.Add(
+					FieldValidationResult.CreateError(RoosterModel.ThicknessProperty, $"Значение Толщины покрова должно быть от 0 до {RoosterModel.MaxThickness}"));
 				_logger.Info(Resources.StrFmtInfoThicknessValue, RoosterModel.MaxThickness);
 			}
 		}
-        #endregion
-        #endregion
-    }
+		#endregion
+		#endregion
+	}
 }

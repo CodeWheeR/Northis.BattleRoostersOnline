@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Northis.BattleRoostersOnline.Dto;
 using NLog;
+using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Events;
@@ -47,9 +45,9 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// </summary>
 		private readonly CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
 
-		private Logger _logger = LogManager.GetCurrentClassLogger();
-    
-		private object _desertLocker = new object();
+		private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+		private readonly object _desertLocker = new object();
 
 		private string _firstFighterLogin;
 
@@ -68,8 +66,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			/// </summary>
 			private readonly IBattleServiceCallback _callback;
 
-			private Logger _logger = LogManager.GetCurrentClassLogger();
-
+			private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 			#endregion
 
 			#region .ctor
@@ -92,7 +89,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				get;
 				set;
 			}
-
 
 			/// <summary>
 			/// Возвращает или задает петуха.
@@ -117,67 +113,68 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				get;
 				set;
 			}
-            #endregion
+			#endregion
 
-            #region Private Methods
+			#region Private Methods
+			/// <summary>
+			/// Осуществляет оповещение пользователя.
+			/// </summary>
+			/// <param name="callback">Метод оповещения пользователя.</param>
+			private void CarefulCallback(Action callback)
+			{
+				try
+				{
+					if (CallbackState == CommunicationState.Opened)
+					{
+						callback();
+					}
+				}
+				catch (Exception e)
+				{
+					_logger.Error(e);
+					if (e is CommunicationException || e is TimeoutException || e is ObjectDisposedException)
+					{
+						(_callback as ICommunicationObject)?.Close();
+					}
+				}
+			}
+			#endregion
 
-            /// <summary>
-            /// Осуществляет оповещение пользователя.
-            /// </summary>
-            /// <param name="callback">Метод оповещения пользователя.</param>
-            private void CarefulCallback(Action callback)
-            {
-                try
-                {
-                    if (CallbackState == CommunicationState.Opened)
-                    {
-                        callback();
-                    }
-                }
-                catch (Exception e)
-                {
-                    _logger.Error(e);
-                    if (e is CommunicationException || e is TimeoutException || e is ObjectDisposedException)
-                    {
-                        (_callback as ICommunicationObject)?.Close();
-                    }
-                }
-            }
-
-            #endregion
-
-            #region Public Methods			
-            /// <summary>
-            /// Вызывает принудительное закрытие канала связи.
-            /// </summary>
-            public void CloseCallbackChannel()
+			#region Public Methods			
+			/// <summary>
+			/// Вызывает принудительное закрытие канала связи.
+			/// </summary>
+			public void CloseCallbackChannel()
 			{
 				if (_callback is ICommunicationObject co)
+				{
 					co.Close();
+				}
 			}
-            /// <summary>
-            /// Осуществляет подписку на событие завершение битвы.
-            /// </summary>
-            /// <param name="handler">Обработчик события.</param>
-            public void SubscribeOnClosing(EventHandler handler)
+
+			/// <summary>
+			/// Осуществляет подписку на событие завершение битвы.
+			/// </summary>
+			/// <param name="handler">Обработчик события.</param>
+			public void SubscribeOnClosing(EventHandler handler)
 			{
 				if (_callback is ICommunicationObject co)
 				{
 					co.Closing += handler;
 				}
 			}
-            /// <summary>
-            /// Осуществляет отписку от события завершения битвы.
-            /// </summary>
-            /// <param name="handler">Обработчик события.</param>
-            public void UnsubscribeOnClosing(EventHandler handler)
+
+			/// <summary>
+			/// Осуществляет отписку от события завершения битвы.
+			/// </summary>
+			/// <param name="handler">Обработчик события.</param>
+			public void UnsubscribeOnClosing(EventHandler handler)
 			{
 				if (_callback is ICommunicationObject co)
 				{
 					co.Closing -= handler;
 				}
 			}
-            
 
 			/// <summary>
 			/// Возвращает состояние callback.
@@ -273,13 +270,14 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			get;
 			set;
 		}
-        /// <summary>
-        /// Возвращает или задает индикатор завершенности.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> если процесс завершен; иначе, <c>false</c>.
-        /// </value>
-        internal bool IsEnded
+
+		/// <summary>
+		/// Возвращает или задает индикатор завершенности.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> если процесс завершен; иначе, <c>false</c>.
+		/// </value>
+		internal bool IsEnded
 		{
 			get;
 			set;
@@ -327,7 +325,8 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		/// </summary>
 		/// <param name="token">Токен.</param>
 		/// <param name="storage">Объект хранилища данных.</param>
-		public Session(string token, IDataStorageService storage) : base(storage)
+		public Session(string token, IDataStorageService storage)
+			: base(storage)
 		{
 			Token = token;
 			_logger.Info(Resources.StrFmtInfoNewSessionInitialized, token);
@@ -348,7 +347,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				_firstFighterLogin = StorageService.LoggedUsers[token];
 				FirstUser = new UserData(callback)
 				{
-					Rooster = (RoosterModel)fighter.Clone(),
+					Rooster = (RoosterModel) fighter.Clone(),
 					Token = token,
 					IsReady = false
 				};
@@ -364,10 +363,11 @@ namespace Northis.BattleRoostersOnline.Service.Models
 					callback.FindedMatch(BattleStatus.SameLogins.ToString());
 					return;
 				}
+
 				IsReady = true;
 				SecondUser = new UserData(callback)
 				{
-					Rooster = (RoosterModel)fighter.Clone(),
+					Rooster = (RoosterModel) fighter.Clone(),
 					Token = token,
 					IsReady = false
 				};
@@ -442,45 +442,45 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		{
 			var token = _battleTokenSource.Token;
 			CatchUnhandledException(Task.Run(async () =>
-						   {
-							   while (FirstUser.Rooster.Health > 0 && SecondUser.Rooster.Health > 0 && !token.IsCancellationRequested)
-							   {
-								   MakeHitWithFeedback(FirstUser.Rooster, SecondUser.Rooster);
-								   SendRoosterStatus();
+											 {
+												 while (FirstUser.Rooster.Health > 0 && SecondUser.Rooster.Health > 0 && !token.IsCancellationRequested)
+												 {
+													 MakeHitWithFeedback(FirstUser.Rooster, SecondUser.Rooster);
+													 SendRoosterStatus();
 
-								   await Task.Delay(300, token);
+													 await Task.Delay(300, token);
 
-								   if (SecondUser.Rooster.Health == 0)
-								   {
-									   break;
-								   }
+													 if (SecondUser.Rooster.Health == 0)
+													 {
+														 break;
+													 }
 
-								   MakeHitWithFeedback(SecondUser.Rooster, FirstUser.Rooster);
-								   SendRoosterStatus();
+													 MakeHitWithFeedback(SecondUser.Rooster, FirstUser.Rooster);
+													 SendRoosterStatus();
 
-								   await Task.Delay(300, token);
-							   }
+													 await Task.Delay(300, token);
+												 }
 
-							   if (FirstUser.Rooster.Health == 0)
-							   {
-								   Task.WaitAll( SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1));
-							   }
-							   else
-							   {
-								   Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1));
-							   }
+												 if (FirstUser.Rooster.Health == 0)
+												 {
+													 Task.WaitAll(SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1));
+												 }
+												 else
+												 {
+													 Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1));
+												 }
 
-							   lock (StorageService.Sessions)
-							   {
-								   StorageService.Sessions.Remove(Token);
-							   }
+												 lock (StorageService.Sessions)
+												 {
+													 StorageService.Sessions.Remove(Token);
+												 }
 
-							   StorageService.SaveRoostersAsync();
+												 StorageService.SaveRoostersAsync();
 
-							   SendEndSign();
-						   },
-						   token));
-			}
+												 SendEndSign();
+											 },
+											 token));
+		}
 
 		/// <summary>
 		/// Асинхронно проверяет состояние сессии.
@@ -568,11 +568,12 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			SessionStarted?.Invoke(this, new MatchFindedEventArgs(Token));
 			SendRoosterStatus();
 		}
-        /// <summary>
-        /// Осуществляет проверку на дезертирство бойцов.
-        /// </summary>
-        /// <param name="token">The token.</param>
-        private async void CheckForDeserting(string token)
+
+		/// <summary>
+		/// Осуществляет проверку на дезертирство бойцов.
+		/// </summary>
+		/// <param name="token">The token.</param>
+		private async void CheckForDeserting(string token)
 		{
 			await Task.Run(() =>
 			{
@@ -621,14 +622,12 @@ namespace Northis.BattleRoostersOnline.Service.Models
 							Task.WaitAll(SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
 							SendEndSign();
 							autoWinner.UnsubscribeOnClosing((x, y) => CheckForDeserting(autoWinner.Token));
-
 						}
 						catch (CommunicationException e)
 						{
 							_logger.Error(e);
 						}
 					}
-					
 
 					lock (StorageService.Sessions)
 					{
@@ -647,7 +646,10 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		{
 			var login = await GetLoginAsync(userData.Token);
 			if (string.IsNullOrWhiteSpace(login))
+			{
 				return;
+			}
+
 			var rooster = StorageService.RoostersData[login][userData.Rooster.Token];
 			lock (StorageService.RoostersData)
 			{

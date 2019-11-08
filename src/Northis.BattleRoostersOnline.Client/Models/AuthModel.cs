@@ -31,6 +31,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 			get => GetValue<string>(PasswordProperty);
 			set => SetValue(PasswordProperty, value);
 		}
+
 		/// <summary>
 		/// Возвращает или задает логин.
 		/// </summary>

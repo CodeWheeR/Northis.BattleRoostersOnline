@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel.Configuration;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace Northis.BattleRoostersOnline.Dto
 {
@@ -15,7 +9,6 @@ namespace Northis.BattleRoostersOnline.Dto
 	public class RoosterEditDto
 	{
 		#region Properties		
-
 		/// <summary>
 		/// Возвращает или задает вес петуха.
 		/// </summary>
@@ -123,7 +116,7 @@ namespace Northis.BattleRoostersOnline.Dto
 
 		#region .ctor
 		/// <summary>
-		/// Инициализует новый объект класса <see cref="RoosterEditDto"/>.
+		/// Инициализует новый объект класса <see cref="RoosterEditDto" />.
 		/// </summary>
 		/// <param name="name">Имя.</param>
 		/// <param name="weight">Вес.</param>
@@ -147,21 +140,20 @@ namespace Northis.BattleRoostersOnline.Dto
 
 		public RoosterEditDto()
 		{
-
-		} 
+		}
 		#endregion
 
 		#region Public Methods
-
 		#region Overrided
 		/// <summary>
-		///  Определяет, равен ли заданный объект текущему объекту.
+		/// Определяет, равен ли заданный объект текущему объекту.
 		/// </summary>
 		/// <param name="obj">
-		///  Объект, который требуется сравнить с текущим объектом.
+		/// Объект, который требуется сравнить с текущим объектом.
 		/// </param>
 		/// <returns>
-		///  Значение <see langword="true" />, если указанный объект равен текущему объекту; в противном случае — значение <see langword="false" />.
+		/// Значение <see langword="true" />, если указанный объект равен текущему объекту; в противном случае — значение
+		/// <see langword="false" />.
 		/// </returns>
 		public override bool Equals(object obj)
 		{
@@ -169,6 +161,7 @@ namespace Northis.BattleRoostersOnline.Dto
 			{
 				return Equals(obj as RoosterEditDto);
 			}
+
 			return base.Equals(obj);
 		}
 
@@ -177,17 +170,15 @@ namespace Northis.BattleRoostersOnline.Dto
 		/// </summary>
 		/// <param name="obj">Объект для сравнения.</param>
 		/// <returns>true - если равен; иначе - false.</returns>
-		public bool Equals(RoosterEditDto obj)
-		{
-			return Brickness == obj.Brickness &&
-				   Color == obj.Color &&
-				   Crest == obj.Crest &&
-				   Height == obj.Height &&
-				   Luck == obj.Luck &&
-				   Name == obj.Name &&
-				   Thickness == obj.Thickness &&
-				   Weight == obj.Weight;
-		}
+		public bool Equals(RoosterEditDto obj) =>
+			Brickness == obj.Brickness &&
+			Color == obj.Color &&
+			Crest == obj.Crest &&
+			Height == obj.Height &&
+			Luck == obj.Luck &&
+			Name == obj.Name &&
+			Thickness == obj.Thickness &&
+			Weight == obj.Weight;
 		#endregion
 		#endregion
 	}

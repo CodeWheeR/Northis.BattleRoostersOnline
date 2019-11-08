@@ -20,7 +20,8 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>
 		/// <returns>Строковый путь к изображению.</returns>
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => (value as bool? == true) ? WindowState.Normal : WindowState.Minimized;
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value as bool? == true ? WindowState.Normal : WindowState.Minimized;
+
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>

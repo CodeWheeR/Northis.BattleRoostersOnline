@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
@@ -27,13 +26,10 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 		#region ctor		
 		/// <summary>
-		/// Инициализует новый объект класса <see cref="BaseServiceWithStorage"/> с заданным хранилищем.
+		/// Инициализует новый объект класса <see cref="BaseServiceWithStorage" /> с заданным хранилищем.
 		/// </summary>
 		/// <param name="storage">The storage.</param>
-		public BaseServiceWithStorage(IDataStorageService storage)
-		{
-			StorageService = storage;
-		}
+		public BaseServiceWithStorage(IDataStorageService storage) => StorageService = storage;
 		#endregion
 
 		#region Protected Methods
@@ -52,7 +48,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 				return "";
 			});
-
 		#endregion
 	}
 }

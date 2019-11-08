@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Northis.BattleRoostersOnline.Dto
 {

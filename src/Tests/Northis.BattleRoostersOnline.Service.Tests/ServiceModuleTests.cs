@@ -1,13 +1,9 @@
 ﻿using System;
-using CommonServiceLocator;
 using Moq;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Implements;
-using Northis.BattleRoostersOnline.Service.Models;
 using NUnit.Framework;
-using Unity;
-using Unity.ServiceLocation;
 
 namespace Northis.BattleRoostersOnline.Service.Tests
 {
@@ -37,17 +33,17 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		/// Callback битв.
 		/// </summary>
 		protected Mock<IBattleServiceCallback> callbackBattle = new Mock<IBattleServiceCallback>();
-        #endregion
+		#endregion
 
-        #region Properties        
-        /// <summary>
-        /// Получает хранилище игровых данных.
-        /// </summary>
-        /// <value>
-        /// Хранилище игровых данных.
-        /// </value>
-        /// <exception cref="NullReferenceException">Хранилище данных не инициализированно.</exception>
-        protected IDataStorageService Storage
+		#region Properties        
+		/// <summary>
+		/// Получает хранилище игровых данных.
+		/// </summary>
+		/// <value>
+		/// Хранилище игровых данных.
+		/// </value>
+		/// <exception cref="NullReferenceException">Хранилище данных не инициализированно.</exception>
+		protected IDataStorageService Storage
 		{
 			get;
 			set;

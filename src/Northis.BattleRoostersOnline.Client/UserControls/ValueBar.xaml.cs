@@ -51,7 +51,7 @@ namespace Northis.BattleRoostersOnline.Client.UserControls
 
 		#region .ctor		
 		/// <summary>
-		/// Инициализует новый экземпляр класса <see cref="ValueBar"/>.
+		/// Инициализует новый экземпляр класса <see cref="ValueBar" />.
 		/// </summary>
 		public ValueBar()
 		{
@@ -98,7 +98,6 @@ namespace Northis.BattleRoostersOnline.Client.UserControls
 		#endregion
 
 		#region Private Methods
-
 		#region Static
 		private static void OnTextSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{

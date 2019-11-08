@@ -8,19 +8,20 @@ namespace Northis.BattleRoostersOnline.Dto
 	[DataContract]
 	public class StatisticsDto
 	{
-        #region Properties        
-        /// <summary>
-        /// Возвращает или задает имя пользователя.
-        /// </summary>
-        /// <value>
-        /// Имя пользователя.
-        /// </value>
-        [DataMember]
-        public string UserName
+		#region Properties        
+		/// <summary>
+		/// Возвращает или задает имя пользователя.
+		/// </summary>
+		/// <value>
+		/// Имя пользователя.
+		/// </value>
+		[DataMember]
+		public string UserName
 		{
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает имя петуха.
 		/// </summary>
@@ -34,6 +35,7 @@ namespace Northis.BattleRoostersOnline.Dto
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или задает количество побед.
 		/// </summary>
@@ -50,7 +52,7 @@ namespace Northis.BattleRoostersOnline.Dto
 		#endregion
 
 		/// <summary>
-		/// Инициализует новый объект класса <see cref="StatisticsDto"/>.
+		/// Инициализует новый объект класса <see cref="StatisticsDto" />.
 		/// </summary>
 		/// <param name="userName">Имя пользователя.</param>
 		/// <param name="roosterName">Имя петуха.</param>
@@ -64,7 +66,6 @@ namespace Northis.BattleRoostersOnline.Dto
 
 		public StatisticsDto()
 		{
-
 		}
-    }
+	}
 }

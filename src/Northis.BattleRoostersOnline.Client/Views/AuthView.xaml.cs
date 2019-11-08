@@ -5,14 +5,14 @@
 	/// </summary>
 	public partial class AuthView
 	{
-        #region .ctor
-        /// <summary>
-        /// Инициализирует новый экземпляр <see cref="AuthView"/> класса.
-        /// </summary>
-        public AuthView()
+		#region .ctor
+		/// <summary>
+		/// Инициализирует новый экземпляр <see cref="AuthView" /> класса.
+		/// </summary>
+		public AuthView()
 		{
 			InitializeComponent();
 		}
-        #endregion
-    }
+		#endregion
+	}
 }

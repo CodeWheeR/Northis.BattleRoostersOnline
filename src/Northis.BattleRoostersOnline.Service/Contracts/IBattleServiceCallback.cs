@@ -3,18 +3,18 @@ using Northis.BattleRoostersOnline.Dto;
 
 namespace Northis.BattleRoostersOnline.Service.Contracts
 {
-    /// <summary>
-    /// Оповещает клиентов о состоянии боя.
-    /// </summary>
-    public interface IBattleServiceCallback
+	/// <summary>
+	/// Оповещает клиентов о состоянии боя.
+	/// </summary>
+	public interface IBattleServiceCallback
 	{
-        #region Operation Contracts
-        /// <summary>
-        /// Получает состояние петухов.
-        /// </summary>
-        /// <param name="yourRooster">Ваш петух.</param>
-        /// <param name="enemyRooster">Петух противника.</param>
-        [OperationContract(IsOneWay = true)]
+		#region Operation Contracts
+		/// <summary>
+		/// Получает состояние петухов.
+		/// </summary>
+		/// <param name="yourRooster">Ваш петух.</param>
+		/// <param name="enemyRooster">Петух противника.</param>
+		[OperationContract(IsOneWay = true)]
 		void GetRoosterStatus(RoosterDto yourRooster, RoosterDto enemyRooster);
 
 		/// <summary>
@@ -42,6 +42,6 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		/// </summary>
 		[OperationContract(IsOneWay = true)]
 		void GetEndSign();
-        #endregion
-    }
+		#endregion
+	}
 }

@@ -19,7 +19,8 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <param name="parameter">Параметр.</param>
 		/// <param name="culture">Региональные настройки и параметры.</param>
 		/// <returns>Строковый путь к изображению.</returns>
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => $"(0 - {(int)value})";
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => $"(0 - {(int) value})";
+
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>

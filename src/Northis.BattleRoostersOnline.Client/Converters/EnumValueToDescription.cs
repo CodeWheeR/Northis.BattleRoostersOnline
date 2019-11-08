@@ -21,6 +21,7 @@ namespace Northis.BattleRoostersOnline.Client.Converters
 		/// <param name="culture">Региональные настройки и параметры.</param>
 		/// <returns>Строковый путь к изображению.</returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => ((Enum) value).GetDisplayFromResource();
+
 		/// <summary>
 		/// Метод не имеет реализации.
 		/// </summary>

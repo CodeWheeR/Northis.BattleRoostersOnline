@@ -4,17 +4,15 @@ using System.Threading.Tasks;
 using Moq;
 using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Contracts;
-using Northis.BattleRoostersOnline.Service.DataStorages;
 using Northis.BattleRoostersOnline.Service.Models;
-using Northis.BattleRoostersOnline.Service.Tests;
 using NUnit.Framework;
 
 namespace Northis.BattleRoostersOnline.Service.Tests
 {
-    /// <summary>
-    /// Тестирует работу хранилища данных.
-    /// </summary>
-    [TestFixture]
+	/// <summary>
+	/// Тестирует работу хранилища данных.
+	/// </summary>
+	[TestFixture]
 	public class ServicesStorageTests : ServiceModuleTests
 	{
 		/// <summary>
@@ -36,7 +34,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 			var roosters = new Dictionary<string, RoosterModel>
 			{
 				{
-					"Rooster1", new RoosterModel()
+					"Rooster1", new RoosterModel
 					{
 						Weight = 1,
 						Height = 20,
@@ -54,7 +52,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 					}
 				},
 				{
-					"Rooster2", new RoosterModel()
+					"Rooster2", new RoosterModel
 					{
 						Weight = 2,
 						Height = 30,
@@ -81,7 +79,8 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 
 			Assert.AreEqual(Storage.RoostersData.Count, backupRoosters + 1);
 
-			Assert.IsTrue(Storage.RoostersData["SomeKey"].SequenceEqual(roosters));
+			Assert.IsTrue(Storage.RoostersData["SomeKey"]
+								 .SequenceEqual(roosters));
 		}
 
 		/// <summary>
@@ -90,7 +89,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[Test]
 		public async Task SaveAndLoadUsers()
 		{
-			var users = new Dictionary<string, string>()
+			var users = new Dictionary<string, string>
 			{
 				{
 					"user1", "password1"
