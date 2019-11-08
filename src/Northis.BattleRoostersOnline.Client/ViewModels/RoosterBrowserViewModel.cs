@@ -54,11 +54,19 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		public static readonly PropertyData StatisticsProperty = RegisterProperty(nameof(Statistics), typeof(StatisticsModel[]));
 		public static readonly PropertyData LoggenInProperty = RegisterProperty(nameof(ShowWindow), typeof(bool));
 		public static readonly PropertyData UserStatiscticsProperty = RegisterProperty(nameof(UserStatistics), typeof(UserStatistic[]));
-        #endregion
+		public static readonly PropertyData IsAddButtonEnableProperty = RegisterProperty(nameof(IsAddButtonEnable), typeof(bool));
+		
+		#endregion
         #endregion
 
         #region Properties		        
-        /// <summary>
+		public bool IsAddButtonEnable
+		{
+			get => GetValue<bool>(IsAddButtonEnableProperty);
+			set => SetValue(IsAddButtonEnableProperty, value);
+		}
+		
+		/// <summary>
         /// Возвращает или устанавливает значение [show window].
         /// </summary>
         /// <value>
@@ -178,7 +186,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			Roosters = new ObservableCollection<RoosterModel>();
 			//EditRoosterCommand = new TaskCommand(EditRoosterAsync, () => SelectedRooster != null);
 			DeleteRoosterCommand = new TaskCommand(DeleteRoosterAsync, () => SelectedRooster != null);
-			AddRoosterCommand = new TaskCommand(AddRoosterAsync, () => Roosters.Count() < 3);
+			AddRoosterCommand = new TaskCommand(AddRoosterAsync, () => IsAddButtonEnable == true);
 			FightCommand = new TaskCommand(StartRoostersFightAsync, () => SelectedRooster != null && ShowWindow);
 			
 		}
@@ -268,7 +276,11 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				((ObservableCollection<RoosterModel>) Roosters).Add(newRooster);
 			}
 
-			AddRoosterCommand.CanExecute(true);
+			if (Roosters.Count() == 3)
+			{
+				IsAddButtonEnable = false;
+			}
+
 		}
 
 		/// <summary>
@@ -281,7 +293,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			if (await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(SelectedRooster) == true)
 			{
 
-				await _editServiceClient.EditAsync(token, SelectedRooster.Token, _mapper.Map<RoosterModel, RoosterEditDto>(SelectedRooster));
+				//await _editServiceClient.EditAsync(token, SelectedRooster.Token, _mapper.Map<RoosterModel, RoosterEditDto>(SelectedRooster));
 				UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
 			}
 		}
