@@ -29,7 +29,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		{
 			string token = await AuthenticateService.RegisterAsync("Login1", "Password", CallbackAuth.Object);
 
-			await Editor.AddAsync(token, new RoosterEditDto("asdshka", 0, 0, 0, 0, 0, CrestSizeType.Small, RoosterColorType.Black));
+			await Editor.AddAsync(token, new RoosterCreateDto("asdshka", RoosterColorType.Black));
 
 			Assert.AreEqual(1, Storage.RoostersData.Count);
 		}
@@ -39,7 +39,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 		[Test]
 		public void AddTest2()
 		{
-			Assert.DoesNotThrowAsync( () => Editor.AddAsync("SomeToken", new RoosterEditDto("", 0, 0, 0, 0, 0, CrestSizeType.Small, RoosterColorType.Black)));
+			Assert.DoesNotThrowAsync( () => Editor.AddAsync("SomeToken", new RoosterCreateDto("", RoosterColorType.Black)));
 		}
 		
 		/// <summary>

@@ -71,7 +71,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						 .Callback<string>(d => token = d);
 
 			var userToken = await AuthenticateService.RegisterAsync("asdshka", "asdshka", Mock.Of<IAuthenticateServiceCallback>());
-			await Editor.AddAsync(userToken, new RoosterEditDto("", 0,0,0,0,0,CrestSizeType.Small, RoosterColorType.Black));
+			await Editor.AddAsync(userToken, new RoosterCreateDto("QQ", RoosterColorType.Black));
 
 			var roosterToken = Storage.RoostersData["asdshka"]
 									  .First()
@@ -97,7 +97,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 						 .Callback<string>(d => token = d);
 
 			var userToken = await AuthenticateService.RegisterAsync("asdshka", "asdshka", Mock.Of<IAuthenticateServiceCallback>());
-			await Editor.AddAsync(userToken, new RoosterEditDto("", 0, 0, 0, 0, 0, CrestSizeType.Small, RoosterColorType.Black)
+			await Editor.AddAsync(userToken, new RoosterCreateDto("", RoosterColorType.Black)
 			{
 
 			});
@@ -107,7 +107,7 @@ namespace Northis.BattleRoostersOnline.Service.Tests
 									  .Key;
 
 			var userToken2 = await AuthenticateService.RegisterAsync("asdshka2", "asdshka", Mock.Of<IAuthenticateServiceCallback>());
-			await Editor.AddAsync(userToken2, new RoosterEditDto("", 0, 0, 0, 0, 0, CrestSizeType.Small, RoosterColorType.Black)
+			await Editor.AddAsync(userToken2, new RoosterCreateDto("", RoosterColorType.Black)
 			{
 
 			});
