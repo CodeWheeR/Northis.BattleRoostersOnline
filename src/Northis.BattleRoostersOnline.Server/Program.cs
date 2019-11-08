@@ -64,6 +64,8 @@ namespace Northis.BattleRoostersOnline.Server
 
 			container.RegisterInstance(mapper);
 			container.RegisterType<IDataStorageService, DataStorageService>(new ContainerControlledLifetimeManager());
+			var dataStorageService = container.Resolve<IDataStorageService>();
+			StatisticsPublisher.GetInstance(dataStorageService);
 
 			container.RegisterType<IEditService, EditService>(new ContainerControlledLifetimeManager());
 			container.RegisterType<IBattleService, BattleService>(new ContainerControlledLifetimeManager());
@@ -100,9 +102,6 @@ namespace Northis.BattleRoostersOnline.Server
 				selfHost.Description.Behaviors.Add(smb);
 				selfHost.Open();
 				logger.Info(Resources.StrInfoServiceReady);
-
-				//Console.WriteLine("The service is ready.");
-				//Console.WriteLine("Press <Enter> to terminate the service.");
 
 				while (Console.ReadKey() != new ConsoleKeyInfo((char) 13, ConsoleKey.Enter, false, false, false))
 				{

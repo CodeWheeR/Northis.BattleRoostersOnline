@@ -30,7 +30,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
         /// <param name="storage">Объект хранилища. </param>
         public AuthenticateService(IDataStorageService storage) : base(storage)
 		{
-			StatisticsPublisher.GetInstance(StorageService);
+
 		}
 		#endregion
 

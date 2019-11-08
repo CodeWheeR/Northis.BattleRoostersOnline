@@ -284,21 +284,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		}
 
 		/// <summary>
-		/// Открывает окно редактирования выбранного петуха в асинхронном режиме.
-		/// </summary>
-		/// <returns>Окно редактирования.</returns>
-		private async Task EditRoosterAsync()
-		{
-			_logger.Info(Resources.StrFmtInfoEditWindowOpenForSelectedRooster, SelectedRooster.Name);
-			if (await _uiVisualizerService.ShowDialogAsync<EditRoosterViewModel>(SelectedRooster) == true)
-			{
-
-				//await _editServiceClient.EditAsync(token, SelectedRooster.Token, _mapper.Map<RoosterModel, RoosterEditDto>(SelectedRooster));
-				UpdateRoosters(await _editServiceClient.GetUserRoostersAsync(token));
-			}
-		}
-
-		/// <summary>
 		/// Удаляет выбранного петуха.
 		/// </summary>
 		private async Task DeleteRoosterAsync()
