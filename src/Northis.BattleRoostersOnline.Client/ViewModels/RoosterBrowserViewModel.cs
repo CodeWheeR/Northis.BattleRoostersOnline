@@ -282,6 +282,10 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			{
 				IsAddButtonEnable = false;
 			}
+			else
+			{
+				IsAddButtonEnable = true;
+			}
 
 		}
 

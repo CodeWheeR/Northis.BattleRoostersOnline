@@ -103,7 +103,7 @@ namespace Northis.BattleRoostersOnline.Server
 				selfHost.Open();
 				logger.Info(Resources.StrInfoServiceReady);
 
-				while (Console.ReadKey() != new ConsoleKeyInfo((char) 13, ConsoleKey.Enter, false, false, false))
+				while (Console.ReadLine() != "shutdown")
 				{
 
 				}

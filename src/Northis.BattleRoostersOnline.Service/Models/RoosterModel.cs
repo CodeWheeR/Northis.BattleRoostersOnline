@@ -236,12 +236,13 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		public RoosterModel(RoosterCreateDto rooster)
 			: this()
 		{
+			_rand = new Random();
 			Color = rooster.Color;
-			Brickness = _rand.Next(0,_maxBrickness);
-			Luck = _rand.Next(0, _maxLuck);
-			Thickness = _rand.Next(0, _maxThickness);
+			Brickness = _rand.Next(0,_maxBrickness + 1);
+			Luck = _rand.Next(0, _maxLuck + 1);
+			Thickness = _rand.Next(0, _maxThickness + 1);
 			var crestValues = Enum.GetNames(typeof(CrestSizeType));
-			if (Enum.TryParse(crestValues[_rand.Next(0, crestValues.Length - 1)], out CrestSizeType crest))
+			if (Enum.TryParse(crestValues[_rand.Next(0, crestValues.Length)], out CrestSizeType crest))
 			{
 				Crest = crest;
 			}
@@ -249,7 +250,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			{
 				Crest = CrestSizeType.Small;
 			}
-			Height = _rand.Next(20, 50);
+			Height = _rand.Next(20, 51);
 			Weight = Math.Round(_rand.NextDouble()  * (_maxWeight - 2) + 2, 2);
 			if (rooster.Name.Length > 15)
 			{
@@ -435,7 +436,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				dmg *= (double) Height / _minHeight / 10 + 1;
 				dmg *= (double) CalcEnumIndex(Crest) / 4 + 1;
 
-				return Math.Round(dmg, 2) + WinStreakFunc(WinStreak);
+				return Math.Round(dmg + WinStreakFunc(WinStreak), 2);
 			}
 		}
 
@@ -469,13 +470,6 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		#endregion
 
 		#region Public Methods		
-		/// <summary>
-		/// Конвертирует объект RoosterModel в объект RoosterDto.
-		/// </summary>
-		/// <returns>RoosterDto.</returns>
-		public RoosterDto ToRoosterDto() =>
-			new RoosterDto(Token, Name, Weight, Height, Brickness, Thickness, Luck, Health, Crest, Color, MaxHealth, Stamina, WinStreak);
-
 		/// <summary>
 		/// Принимает удар от другого петуха.
 		/// </summary>
