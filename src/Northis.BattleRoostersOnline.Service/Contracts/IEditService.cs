@@ -19,7 +19,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		/// <param name="token">Токен.</param>
 		/// <param name="sourceRoosterToken">Изменяемый петух.</param>
 		/// <param name="editRooster">Редактированный петух.</param>
-		[OperationContract]
+		//[OperationContract]
 		Task<bool> EditAsync(string token, string sourceRoosterToken, RoosterEditDto editRooster);
 
 		/// <summary>

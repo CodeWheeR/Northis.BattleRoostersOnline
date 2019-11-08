@@ -176,7 +176,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			_exceptionService = exceptionService;
 			_messageService = container.ResolveType<IMessageService>();
 			Roosters = new ObservableCollection<RoosterModel>();
-			EditRoosterCommand = new TaskCommand(EditRoosterAsync, () => SelectedRooster != null);
+			//EditRoosterCommand = new TaskCommand(EditRoosterAsync, () => SelectedRooster != null);
 			DeleteRoosterCommand = new TaskCommand(DeleteRoosterAsync, () => SelectedRooster != null);
 			AddRoosterCommand = new TaskCommand(AddRoosterAsync, () => Roosters.Count() < 3);
 			FightCommand = new TaskCommand(StartRoostersFightAsync, () => SelectedRooster != null && ShowWindow);

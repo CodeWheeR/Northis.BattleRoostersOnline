@@ -7,10 +7,9 @@
 	xmlns:res="clr-namespace:Northis.BattleRoostersOnline.Client.Properties"
 	xmlns:viewModels="clr-namespace:Northis.BattleRoostersOnline.Client.ViewModels"
 	Title="Редактор бойца"
-	Width="370"
-	Height="350"
-	MinWidth="300"
-	MinHeight="350">
+	Width="299"
+	Height="320"
+	ResizeMode="NoResize">
 
 	<catel:DataWindow.Resources>
 		<DataTemplate x:Key="EnumToDesctiptionItemTemplate">
@@ -43,47 +42,14 @@
 					</Style>
 					<Style x:Key="Description" TargetType="TextBlock">
 						<Setter Property="Width" Value="60" />
-						<Setter Property="TextAlignment" Value="Right" />
+						<Setter Property="TextAlignment" Value="Left" />
 					</Style>
 				</StackPanel.Resources>
 
 				<StackPanel>
 					<TextBlock Text="{x:Static res:Resources.RoosterName}" />
-					<TextBox Text="{Binding Name}" />
-					<TextBlock Style="{StaticResource Description}" Text="(15 симв.)" />
+					<TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
 				</StackPanel>
-
-				<StackPanel>
-					<TextBlock Text="{x:Static res:Resources.Weight}" />
-					<TextBox Text="{Binding Weight}" />
-					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxWeight, Converter={StaticResource MaxDoubleValueToTextLimiter}}" />
-
-				</StackPanel>
-
-				<StackPanel>
-					<TextBlock Text="{x:Static res:Resources.Height}" />
-					<TextBox Text="{Binding Height}" />
-					<TextBlock Style="{StaticResource Description}" Text="(20 - 50)" />
-				</StackPanel>
-
-				<StackPanel>
-					<TextBlock Text="{x:Static res:Resources.Thickness}" />
-					<TextBox Text="{Binding Thickness}" />
-					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxThickness, Converter={StaticResource MaxValueToTextLimiter}}" />
-				</StackPanel>
-
-				<StackPanel>
-					<TextBlock Text="{x:Static res:Resources.Brickness}" />
-					<TextBox Text="{Binding Brickness}" />
-					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxBrickness, Converter={StaticResource MaxValueToTextLimiter}}" />
-				</StackPanel>
-
-				<StackPanel>
-					<TextBlock Text="{x:Static res:Resources.Luck}" />
-					<TextBox Text="{Binding Luck}" />
-					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxLuck, Converter={StaticResource MaxValueToTextLimiter}}" />
-				</StackPanel>
-
 
 				<StackPanel>
 					<TextBlock Text="{x:Static res:Resources.Color}" />
@@ -93,15 +59,41 @@
 						ItemsSource="{Binding ColorsArray}"
 						SelectedItem="{Binding Color}" />
 				</StackPanel>
-				<!--<StackPanel>
-					<TextBlock Width="Auto" Text="{Binding ElementName=ColorsBox, Path=SelectedItem, Converter={StaticResource ColorToDescriptionConverter}}"></TextBlock>
-				</StackPanel>-->
+
+				<StackPanel>
+					<TextBlock Width="250" Text="Возможные значения характеристик:" />
+				</StackPanel>
+				<StackPanel>
+					<TextBlock Text="{x:Static res:Resources.Weight}" />
+					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxWeight, Converter={StaticResource MaxDoubleValueToTextLimiter}}" />
+
+				</StackPanel>
+
+				<StackPanel>
+					<TextBlock Text="{x:Static res:Resources.Height}" />
+					<TextBlock Style="{StaticResource Description}" Text="(20 - 50)" />
+				</StackPanel>
+
+				<StackPanel>
+					<TextBlock Text="{x:Static res:Resources.Thickness}" />
+					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxThickness, Converter={StaticResource MaxValueToTextLimiter}}" />
+				</StackPanel>
+
+				<StackPanel>
+					<TextBlock Text="{x:Static res:Resources.Brickness}" />
+					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxBrickness, Converter={StaticResource MaxValueToTextLimiter}}" />
+				</StackPanel>
+
+				<StackPanel>
+					<TextBlock Text="{x:Static res:Resources.Luck}" />
+					<TextBlock Style="{StaticResource Description}" Text="{Binding RoosterModel.MaxLuck, Converter={StaticResource MaxValueToTextLimiter}}" />
+				</StackPanel>
 				<StackPanel>
 					<TextBlock Text="{x:Static res:Resources.CrestSize}" />
-					<ComboBox
-						ItemTemplate="{StaticResource EnumToDesctiptionItemTemplate}"
-						ItemsSource="{Binding CrestsArray}"
-						SelectedItem="{Binding Crest}" />
+					<TextBlock
+						Width="110"
+						Style="{StaticResource Description}"
+						Text="(малый - большой)" />
 				</StackPanel>
 
 			</StackPanel>
