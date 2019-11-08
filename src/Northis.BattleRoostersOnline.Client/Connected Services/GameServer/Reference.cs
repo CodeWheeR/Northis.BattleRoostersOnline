@@ -189,197 +189,6 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RoosterEditDto", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
-    [System.SerializableAttribute()]
-    public partial class RoosterEditDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int BricknessField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Northis.BattleRoostersOnline.Client.GameServer.RoosterColorType ColorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Northis.BattleRoostersOnline.Client.GameServer.CrestSizeType CrestField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int HeightField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int LuckField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ThicknessField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double WeightField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Brickness {
-            get {
-                return this.BricknessField;
-            }
-            set {
-                if ((this.BricknessField.Equals(value) != true)) {
-                    this.BricknessField = value;
-                    this.RaisePropertyChanged("Brickness");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Northis.BattleRoostersOnline.Client.GameServer.RoosterColorType Color {
-            get {
-                return this.ColorField;
-            }
-            set {
-                if ((this.ColorField.Equals(value) != true)) {
-                    this.ColorField = value;
-                    this.RaisePropertyChanged("Color");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Northis.BattleRoostersOnline.Client.GameServer.CrestSizeType Crest {
-            get {
-                return this.CrestField;
-            }
-            set {
-                if ((this.CrestField.Equals(value) != true)) {
-                    this.CrestField = value;
-                    this.RaisePropertyChanged("Crest");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Height {
-            get {
-                return this.HeightField;
-            }
-            set {
-                if ((this.HeightField.Equals(value) != true)) {
-                    this.HeightField = value;
-                    this.RaisePropertyChanged("Height");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Luck {
-            get {
-                return this.LuckField;
-            }
-            set {
-                if ((this.LuckField.Equals(value) != true)) {
-                    this.LuckField = value;
-                    this.RaisePropertyChanged("Luck");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Thickness {
-            get {
-                return this.ThicknessField;
-            }
-            set {
-                if ((this.ThicknessField.Equals(value) != true)) {
-                    this.ThicknessField = value;
-                    this.RaisePropertyChanged("Thickness");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Weight {
-            get {
-                return this.WeightField;
-            }
-            set {
-                if ((this.WeightField.Equals(value) != true)) {
-                    this.WeightField = value;
-                    this.RaisePropertyChanged("Weight");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RoosterColorType", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
-    public enum RoosterColorType : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Black = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Brown = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Blue = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Red = 3,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        White = 4,
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CrestSizeType", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
-    public enum CrestSizeType : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Small = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Medium = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Big = 2,
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RoosterCreateDto", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
     [System.SerializableAttribute()]
     public partial class RoosterCreateDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -437,6 +246,26 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RoosterColorType", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
+    public enum RoosterColorType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Black = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Brown = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Blue = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Red = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        White = 4,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -693,6 +522,20 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CrestSizeType", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
+    public enum CrestSizeType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Small = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Medium = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Big = 2,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BattleStatus", Namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto")]
     public enum BattleStatus : int {
         
@@ -813,12 +656,6 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServer.IEditService")]
     public interface IEditService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        bool Edit(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto editRooster);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Edit", ReplyAction="http://tempuri.org/IEditService/EditResponse")]
-        System.Threading.Tasks.Task<bool> EditAsync(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto editRooster);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEditService/Add", ReplyAction="http://tempuri.org/IEditService/AddResponse")]
         bool Add(string token, Northis.BattleRoostersOnline.Client.GameServer.RoosterCreateDto rooster);
         
@@ -863,14 +700,6 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         
         public EditServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
-        }
-        
-        public bool Edit(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto editRooster) {
-            return base.Channel.Edit(token, sourceRoosterToken, editRooster);
-        }
-        
-        public System.Threading.Tasks.Task<bool> EditAsync(string token, string sourceRoosterToken, Northis.BattleRoostersOnline.Client.GameServer.RoosterEditDto editRooster) {
-            return base.Channel.EditAsync(token, sourceRoosterToken, editRooster);
         }
         
         public bool Add(string token, Northis.BattleRoostersOnline.Client.GameServer.RoosterCreateDto rooster) {
