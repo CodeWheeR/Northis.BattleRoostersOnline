@@ -37,10 +37,15 @@ namespace Northis.BattleRoostersOnline.Client
 				cfg.CreateMap<BattleStatus, Models.BattleStatus>();
 			});
 
+
 			serviceLocator.RegisterInstance(config.CreateMapper());
 
 			var uiVisualizerService = serviceLocator.ResolveType<IUIVisualizerService>();
 			uiVisualizerService.Register<RoosterBrowserViewModel, RoosterBrowserWindow>();
+
+			var res = serviceLocator.ResolveType<IMapper>()
+									.Map<BattleStatus, Models.BattleStatus>(BattleStatus.AccessDenied);
+
 			StartApp(uiVisualizerService);
 		}
 		#endregion

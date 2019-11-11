@@ -553,6 +553,9 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Ok = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AccessDenied = 4,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
