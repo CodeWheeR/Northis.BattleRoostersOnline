@@ -23,24 +23,35 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		private Logger _logger = LogManager.GetCurrentClassLogger();
 		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
 		private Dictionary<string, AuthStatus> _connectionHistory = new Dictionary<string, AuthStatus>(30);
+		#endregion
 
-		#region Inner
+		#region Inner		
+		/// <summary>
+		/// Хранит информацию о подключениях.
+		/// </summary>
 		private class AuthStatus
 		{
+			/// <summary>
+			/// Дата, после которой подключение разрешено.
+			/// </summary>
 			public DateTime Date;
+			/// <summary>
+			/// Счетчик попыток подключения в сессии из 3 попыток.
+			/// </summary>
 			public int Repeats;
+			/// <summary>
+			/// Счётчик неудачных сессий подключений из 3 попыток.
+			/// </summary>
 			public int UnsuccesfulRepeats;
 		}
 		#endregion
-		
-		#endregion
 
-        #region .ctor        
-        /// <summary>
-        /// Инициализирует новый экземпляр <see cref="AuthenticateService"/> класса.
-        /// </summary>
-        /// <param name="storage">Объект хранилища. </param>
-        public AuthenticateService(IDataStorageService storage) : base(storage)
+		#region .ctor        
+		/// <summary>
+		/// Инициализирует новый экземпляр <see cref="AuthenticateService"/> класса.
+		/// </summary>
+		/// <param name="storage">Объект хранилища. </param>
+		public AuthenticateService(IDataStorageService storage) : base(storage)
 		{
 			StatisticsPublisher.GetInstance(storage);
 		}
@@ -232,7 +243,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 			return true;
 		}
-
 		/// <summary>
 		/// Возвращает статус авторизации пользователя.
 		/// </summary>
@@ -240,26 +250,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// Статус аутентификации.
 		/// </returns>
 		public AuthenticateStatus GetLoginStatus() => AuthenticateStatus.Ok;
-
-		/// <summary>
-		/// Зашифровывает исходную строку.
-		/// </summary>
-		/// <param name="sourceString">Исходная строка.</param>
-		/// <returns>Зашифрованная строка.</returns>
-		private Task<string> EncryptAsync(string sourceString)
-		{
-			return Task.Run<string>(() =>
-			{
-				var result = "";
-				for (var i = 0; i < sourceString.Length; i++)
-				{
-					result += (char)(sourceString[i] * (i / 2 + 2));
-				}
-
-				return result;
-			});
-		}
-
 		/// <summary>
 		/// Асинхронно собирает глобальную статистику по пользователям.
 		/// </summary>
@@ -269,7 +259,13 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			return await Task.Run<IEnumerable<StatisticsDto>>(async () => (await StatisticsPublisher.GetInstanceAsync())
 																					   .GetGlobalStatistics());
 		}
+		#endregion
 
+		#region Private Methods
+		/// <summary>
+		/// Осуществляет проверку на ddos - атаки с клиентского ip - адреса.
+		/// </summary>
+		/// <returns>true, если осуществляется ddos - атака, иначе - false.</returns>
 		private bool CheckAgressiveConnection()
 		{
 			OperationContext opContext = OperationContext.Current;
@@ -301,6 +297,26 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			}
 			return false;
 		}
+
+		/// <summary>
+		/// Зашифровывает исходную строку.
+		/// </summary>
+		/// <param name="sourceString">Исходная строка.</param>
+		/// <returns>Зашифрованная строка.</returns>
+		private Task<string> EncryptAsync(string sourceString)
+		{
+			return Task.Run<string>(() =>
+			{
+				var result = "";
+				for (var i = 0; i < sourceString.Length; i++)
+				{
+					result += (char)(sourceString[i] * (i / 2 + 2));
+				}
+
+				return result;
+			});
+		}
 		#endregion
+
 	}
 }
