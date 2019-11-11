@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Threading;
 using System.Threading.Tasks;
 using Northis.BattleRoostersOnline.Dto;
@@ -21,7 +22,18 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		#region Private Fields
 		private Logger _logger = LogManager.GetCurrentClassLogger();
 		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
-        #endregion
+		private Dictionary<string, AuthStatus> _connectionHistory = new Dictionary<string, AuthStatus>(30);
+
+		#region Inner
+		private class AuthStatus
+		{
+			public DateTime Date;
+			public int Repeats;
+			public int UnsuccesfulRepeats;
+		}
+		#endregion
+		
+		#endregion
 
         #region .ctor        
         /// <summary>
@@ -44,7 +56,19 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> LogInAsync(string login, string password) => await LogInAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>(), false);
+		public async Task<string> LogInAsync(string login, string password)
+		{
+			if (CheckAgressiveConnection() == true)
+			{
+				return AuthenticateStatus.LogInDenied.ToString();
+			}
+			else
+			{
+				return await LogInAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>(), false);
+			}
+		}
+
+		
         /// <summary>
         /// Осуществляет проверку состояния подключения клиентов.
         /// </summary>
@@ -78,8 +102,9 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			string token = "";
 
 			if (!isEncrypted)
+			{
 				password = await EncryptAsync(password);
-
+			}
 
 			if (!StorageService.UserData.ContainsKey(login) || StorageService.UserData[login] != password)
 			{
@@ -112,16 +137,27 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 							   .UpdateStatistics();
 			return token;
 		}
-        /// <summary>
-        /// Регистрирует нового пользователя.
-        /// </summary>
-        /// <param name="login">Логин.</param>
-        /// <param name="password">Пароль.</param>
-        /// <returns>
-        /// Токен.
-        /// </returns>
-        public async Task<string> RegisterAsync(string login, string password) =>
-			await RegisterAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>());
+
+		/// <summary>
+		/// Регистрирует нового пользователя.
+		/// </summary>
+		/// <param name="login">Логин.</param>
+		/// <param name="password">Пароль.</param>
+		/// <returns>
+		/// Токен.
+		/// </returns>
+		public async Task<string> RegisterAsync(string login, string password)
+		{
+			if (CheckAgressiveConnection() == true)
+			{
+				return AuthenticateStatus.LogInDenied.ToString();
+			}
+			else
+			{
+				return await RegisterAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>());
+			}
+		}
+			
 
 		/// <summary>
 		/// Регистрирует нового пользователя.
@@ -232,6 +268,38 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		{
 			return await Task.Run<IEnumerable<StatisticsDto>>(async () => (await StatisticsPublisher.GetInstanceAsync())
 																					   .GetGlobalStatistics());
+		}
+
+		private bool CheckAgressiveConnection()
+		{
+			OperationContext opContext = OperationContext.Current;
+
+			MessageProperties properties = opContext.IncomingMessageProperties;
+
+			RemoteEndpointMessageProperty messageProperty = (RemoteEndpointMessageProperty)properties[RemoteEndpointMessageProperty.Name];
+
+			string ipAddress = messageProperty.Address;
+
+			if (_connectionHistory.ContainsKey(ipAddress) == false)
+			{
+				_connectionHistory.Add(ipAddress, new AuthStatus());
+			}
+			else if (_connectionHistory[ipAddress].Date > DateTime.Now)
+			{
+				return true;
+			}
+			else if (_connectionHistory[ipAddress].Repeats >= 3)
+			{
+				_connectionHistory[ipAddress].UnsuccesfulRepeats++;
+				_connectionHistory[ipAddress].Repeats = 0;
+				_connectionHistory[ipAddress].Date = DateTime.Now.AddMinutes(_connectionHistory[ipAddress].UnsuccesfulRepeats);
+				return true;
+			}
+			else
+			{
+				_connectionHistory[ipAddress].Repeats++;
+			}
+			return false;
 		}
 		#endregion
 	}

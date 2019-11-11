@@ -143,7 +143,6 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			}
 			else
 			{
-				
 				await _messageService.ShowAsync(_mapper.Map<GameServer.AuthenticateStatus, Models.AuthenticateStatus>(result).GetDisplayFromResource());
 			}
 		}

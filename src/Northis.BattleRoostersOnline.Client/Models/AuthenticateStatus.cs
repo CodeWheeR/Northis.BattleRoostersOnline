@@ -38,6 +38,8 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		/// Не соответствующий формат введенных данных.
 		/// </summary>
 		[Display(ResourceType = typeof(Resources), Name = "StrWrongDataFormat")]
-		WrongDataFormat
+		WrongDataFormat,
+		[Display(ResourceType = typeof(Resources), Name = "StrLoginDenied")]
+		LogInDenied
 	}
 }

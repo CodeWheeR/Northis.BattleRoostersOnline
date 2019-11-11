@@ -738,6 +738,15 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Слишком много попыток подключения. Повторите позже..
+        /// </summary>
+        public static string StrLoginDenied {
+            get {
+                return ResourceManager.GetString("StrLoginDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Успешная аунтефикация.
         /// </summary>
         public static string StrOK {
