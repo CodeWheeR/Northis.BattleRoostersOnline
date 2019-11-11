@@ -8,6 +8,7 @@ using Northis.BattleRoostersOnline.Dto;
 using NLog;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
+using Northis.BattleRoostersOnline.Service.Extensions;
 using Northis.BattleRoostersOnline.Service.Properties;
 
 namespace Northis.BattleRoostersOnline.Service.Implements
@@ -21,29 +22,12 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	{
 		#region Private Fields
 		private Logger _logger = LogManager.GetCurrentClassLogger();
-		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
-		private Dictionary<string, AuthStatus> _connectionHistory = new Dictionary<string, AuthStatus>(30);
-		#endregion
 
-		#region Inner		
-		/// <summary>
-		/// Хранит информацию о подключениях.
-		/// </summary>
-		private class AuthStatus
-		{
-			/// <summary>
-			/// Дата, после которой подключение разрешено.
-			/// </summary>
-			public DateTime Date;
-			/// <summary>
-			/// Счетчик попыток подключения в сессии из 3 попыток.
-			/// </summary>
-			public int Repeats;
-			/// <summary>
-			/// Счётчик неудачных сессий подключений из 3 попыток.
-			/// </summary>
-			public int UnsuccesfulRepeats;
-		}
+		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
+
+		private Dictionary<string, DdosStatusInformation> _connectionHistory = new Dictionary<string, DdosStatusInformation>(30);
+
+		private DdosDefender _ddosDefender = new DdosDefender();
 		#endregion
 
 		#region .ctor        
@@ -69,9 +53,9 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </returns>
 		public async Task<string> LogInAsync(string login, string password)
 		{
-			if (CheckAgressiveConnection() == true)
+			if (_ddosDefender.CheckAgressiveConnection(out int a) == true)
 			{
-				return AuthenticateStatus.AuthorizationDenied.ToString();
+				return AuthenticateStatus.AuthorizationDenied.ToString() + " " + a;
 			}
 			else
 			{
@@ -159,9 +143,9 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </returns>
 		public async Task<string> RegisterAsync(string login, string password)
 		{
-			if (CheckAgressiveConnection() == true)
+			if (_ddosDefender.CheckAgressiveConnection(out int a) == true)
 			{
-				return AuthenticateStatus.AuthorizationDenied.ToString();
+				return AuthenticateStatus.AuthorizationDenied + " " + a;
 			}
 			else
 			{
@@ -262,42 +246,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		#endregion
 
 		#region Private Methods
-		/// <summary>
-		/// Осуществляет проверку на ddos - атаки с клиентского ip - адреса.
-		/// </summary>
-		/// <returns>true, если осуществляется ddos - атака, иначе - false.</returns>
-		private bool CheckAgressiveConnection()
-		{
-			OperationContext opContext = OperationContext.Current;
-
-			MessageProperties properties = opContext.IncomingMessageProperties;
-
-			RemoteEndpointMessageProperty messageProperty = (RemoteEndpointMessageProperty)properties[RemoteEndpointMessageProperty.Name];
-
-			string ipAddress = messageProperty.Address;
-
-			if (_connectionHistory.ContainsKey(ipAddress) == false)
-			{
-				_connectionHistory.Add(ipAddress, new AuthStatus());
-			}
-			else if (_connectionHistory[ipAddress].Date > DateTime.Now)
-			{
-				return true;
-			}
-			else if (_connectionHistory[ipAddress].Repeats >= 3)
-			{
-				_connectionHistory[ipAddress].UnsuccesfulRepeats++;
-				_connectionHistory[ipAddress].Repeats = 0;
-				_connectionHistory[ipAddress].Date = DateTime.Now.AddMinutes(_connectionHistory[ipAddress].UnsuccesfulRepeats);
-				return true;
-			}
-			else
-			{
-				_connectionHistory[ipAddress].Repeats++;
-			}
-			return false;
-		}
-
+		
 		/// <summary>
 		/// Зашифровывает исходную строку.
 		/// </summary>

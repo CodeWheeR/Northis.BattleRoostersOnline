@@ -90,6 +90,8 @@
     <Compile Include="DataStorages\IMapperService.cs" />
     <Compile Include="DataStorages\IRoosterStorageService.cs" />
     <Compile Include="DataStorages\IUserDataStorageService.cs" />
+    <Compile Include="Extensions\DdosDefender.cs" />
+    <Compile Include="Extensions\DdosStatusInformation.cs" />
     <Compile Include="Implements\BaseService.cs" />
     <Compile Include="Implements\StatisticsPublisher.cs" />
     <Compile Include="Models\Session.cs" />
@@ -129,6 +131,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
