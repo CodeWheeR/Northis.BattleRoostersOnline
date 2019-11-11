@@ -132,15 +132,24 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				await _messageService.ShowErrorAsync(e.ToString());
 			}
 
-			if (!Enum.TryParse(token, out AuthenticateStatus result))
+			string[] splitedString = token.Split(' ');
+
+
+
+			if (!Enum.TryParse(splitedString[0], out GameServer.AuthenticateStatus result))
 			{
-				Application.Current.Resources.Add("UserToken", token);
+				Application.Current.Resources.Add("UserToken", splitedString[0]);
 				await this.SaveAndCloseViewModelAsync();
 			}
 			else
 			{
-				await _messageService.ShowAsync(_mapper.Map<AuthenticateStatus, Models.AuthenticateStatus>(result)
-													   .GetDisplayFromResource());
+				string answer = _mapper.Map<GameServer.AuthenticateStatus, Models.AuthenticateStatus>(result)
+									   .GetDisplayFromResource();
+				if (splitedString.Length > 1)
+				{
+					answer += " Оставшееся время ожидания: " + splitedString[1] + " секунд.";
+				}
+				await _messageService.ShowAsync(answer);
 			}
 		}
 		#endregion
