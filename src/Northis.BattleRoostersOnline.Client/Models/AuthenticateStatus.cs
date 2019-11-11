@@ -39,7 +39,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		/// </summary>
 		[Display(ResourceType = typeof(Resources), Name = "StrWrongDataFormat")]
 		WrongDataFormat,
-		[Display(ResourceType = typeof(Resources), Name = "StrLoginDenied")]
+		[Display(ResourceType = typeof(Resources), Name = "StrAuthDenied")]
 		LogInDenied
 	}
 }

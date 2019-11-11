@@ -33,7 +33,7 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         WrongDataFormat = 4,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        LogInDenied = 5,
+        AuthorizationDenied = 5,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

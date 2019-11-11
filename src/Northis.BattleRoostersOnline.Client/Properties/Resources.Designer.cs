@@ -369,6 +369,15 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Слишком много попыток подключения. Повторите позже..
+        /// </summary>
+        public static string StrAuthDenied {
+            get {
+                return ResourceManager.GetString("StrAuthDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Ошибка!.
         /// </summary>
         public static string StrError {
@@ -734,15 +743,6 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         public static string StrInfoTheBattleWasSurrendered {
             get {
                 return ResourceManager.GetString("StrInfoTheBattleWasSurrendered", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Слишком много попыток подключения. Повторите позже..
-        /// </summary>
-        public static string StrLoginDenied {
-            get {
-                return ResourceManager.GetString("StrLoginDenied", resourceCulture);
             }
         }
         

@@ -60,7 +60,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		{
 			if (CheckAgressiveConnection() == true)
 			{
-				return AuthenticateStatus.LogInDenied.ToString();
+				return AuthenticateStatus.AuthorizationDenied.ToString();
 			}
 			else
 			{
@@ -150,7 +150,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		{
 			if (CheckAgressiveConnection() == true)
 			{
-				return AuthenticateStatus.LogInDenied.ToString();
+				return AuthenticateStatus.AuthorizationDenied.ToString();
 			}
 			else
 			{
