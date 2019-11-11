@@ -238,7 +238,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				catch (Exception e)
 				{
 					await _messageService.ShowErrorAsync("Потеряно соединение с сервером. Пожалуйста, перезайдите в игру.");
-					Application.Current.Shutdown(0);
+					Application.Current.Shutdown();
 				}
 			});
 

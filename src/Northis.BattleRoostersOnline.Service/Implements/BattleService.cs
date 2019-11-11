@@ -47,6 +47,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 			if (_ddosDefender.CheckAgressiveConnection(out int time) == true)
 			{
 				callback.FindedMatch(BattleStatus.AccessDenied + " " + time);
+				return;
 			}
 			FindMatchAsync(token, roosterToken, callback);
 		}

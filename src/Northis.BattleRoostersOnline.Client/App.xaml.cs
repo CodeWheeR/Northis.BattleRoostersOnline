@@ -68,7 +68,7 @@ namespace Northis.BattleRoostersOnline.Client
 		private void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
 		{
 			var logger = NLog.LogManager.GetCurrentClassLogger();
-			logger.Fatal(e);
+			logger.Fatal(e.ExceptionObject);
 			var messageService = this.GetServiceLocator()
 									 .ResolveType<IMessageService>();
 			messageService.ShowAsync(Client.Properties.Resources.StrErrorFatalError, Client.Properties.Resources.StrError, MessageButton.OK, MessageImage.Error);

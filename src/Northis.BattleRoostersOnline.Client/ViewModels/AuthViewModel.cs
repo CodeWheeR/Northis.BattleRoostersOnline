@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -126,10 +127,16 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 			{
 				token = await authMethod(Login, password);
 			}
+			catch (CommunicationException)
+			{
+				_messageService.ShowErrorAsync("Не удалось установить соединение с сервером. Пожалуйста, повторите попытку позже.");
+				return;
+			}
 			catch (Exception e)
 			{
 				_logger.Error(e);
 				await _messageService.ShowErrorAsync(e.ToString());
+				return;
 			}
 
 			string[] splitedString = token.Split(' ');
@@ -147,7 +154,7 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 									   .GetDisplayFromResource();
 				if (splitedString.Length > 1)
 				{
-					answer += " Оставшееся время ожидания: " + splitedString[1] + " секунд.";
+					answer += " Оставшееся время ожидания: " + splitedString[1] + " сек.";
 				}
 				await _messageService.ShowAsync(answer);
 			}

@@ -46,6 +46,7 @@ namespace Northis.BattleRoostersOnline.Service.Extensions
 			if (_connectionsMonitor.ContainsKey(ipAddress) == false)
 			{
 				_connectionsMonitor.Add(ipAddress, new AuthState());
+				_connectionsMonitor[ipAddress].PreviousConnect = DateTime.Now;
 			}
 
 			if (DateTime.Now.Subtract(_connectionsMonitor[ipAddress]
@@ -58,7 +59,7 @@ namespace Northis.BattleRoostersOnline.Service.Extensions
 			}
 
 			else if (_connectionsMonitor[ipAddress]
-						 .Repeats >
+						 .Repeats >=
 					 3)
 			{
 				_connectionsMonitor[ipAddress]

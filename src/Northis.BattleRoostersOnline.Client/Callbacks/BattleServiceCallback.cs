@@ -89,14 +89,17 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 			if (Enum.TryParse(answer[0], out BattleStatus serverResult))
 			{
 				var result = mapper.Map<BattleStatus, Models.BattleStatus>(serverResult);
+				
 				if (result == Models.BattleStatus.AccessDenied && answer.Length > 1)
 				{
-					messageService.ShowAsync(result.GetDisplayFromResource() + ": " + answer[1], "Предупреждение");
+					messageService.ShowAsync(result.GetDisplayFromResource() + ": " + answer[1] + " сек.", "Предупреждение");
 				}
 				else
 				{
 					messageService.ShowAsync(result.GetDisplayFromResource(), "Предупреждение");
 				}
+
+				_fightVm.IsFinding = false;
 
 				_battleServiceCallbackLogger.Error(result.GetDisplayFromResource());
 				return;
