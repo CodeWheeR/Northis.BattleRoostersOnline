@@ -367,4 +367,7 @@
   <data name="StrErrorFatalError" xml:space="preserve">
     <value>Возникло необработанное исключение. Проверьте Log 'Fatal'</value>
   </data>
+  <data name="StrAuthDenied" xml:space="preserve">
+    <value>Слишком много попыток подключения. Повторите позже.</value>
+  </data>
 </root>

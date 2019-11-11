@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
@@ -18,17 +19,38 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	public class AuthenticateService : BaseServiceWithStorage, IAuthenticateService
 	{
 		#region Private Fields
-		private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-		private readonly CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
+		private Logger _logger = LogManager.GetCurrentClassLogger();
+		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
+		private Dictionary<string, AuthStatus> _connectionHistory = new Dictionary<string, AuthStatus>(30);
+		#endregion
+
+		#region Inner		
+		/// <summary>
+		/// Хранит информацию о подключениях.
+		/// </summary>
+		private class AuthStatus
+		{
+			/// <summary>
+			/// Дата, после которой подключение разрешено.
+			/// </summary>
+			public DateTime Date;
+			/// <summary>
+			/// Счетчик попыток подключения в сессии из 3 попыток.
+			/// </summary>
+			public int Repeats;
+			/// <summary>
+			/// Счётчик неудачных сессий подключений из 3 попыток.
+			/// </summary>
+			public int UnsuccesfulRepeats;
+		}
 		#endregion
 
 		#region .ctor        
 		/// <summary>
-		/// Инициализирует новый экземпляр <see cref="AuthenticateService" /> класса.
+		/// Инициализирует новый экземпляр <see cref="AuthenticateService"/> класса.
 		/// </summary>
 		/// <param name="storage">Объект хранилища. </param>
-		public AuthenticateService(IDataStorageService storage)
-			: base(storage)
+		public AuthenticateService(IDataStorageService storage) : base(storage)
 		{
 			StatisticsPublisher.GetInstance(storage);
 		}
@@ -43,13 +65,23 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> LogInAsync(string login, string password) =>
-			await LogInAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>());
+		public async Task<string> LogInAsync(string login, string password)
+		{
+			if (CheckAgressiveConnection() == true)
+			{
+				return AuthenticateStatus.AuthorizationDenied.ToString();
+			}
+			else
+			{
+				return await LogInAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>(), false);
+			}
+		}
 
-		/// <summary>
-		/// Осуществляет проверку состояния подключения клиентов.
-		/// </summary>
-		public async Task MonitorConnections()
+		
+        /// <summary>
+        /// Осуществляет проверку состояния подключения клиентов.
+        /// </summary>
+        public async Task MonitorConnections()
 		{
 			var token = _connectionMonitorTokenSource.Token;
 
@@ -125,8 +157,18 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// <returns>
 		/// Токен.
 		/// </returns>
-		public async Task<string> RegisterAsync(string login, string password) =>
-			await RegisterAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>());
+		public async Task<string> RegisterAsync(string login, string password)
+		{
+			if (CheckAgressiveConnection() == true)
+			{
+				return AuthenticateStatus.AuthorizationDenied.ToString();
+			}
+			else
+			{
+				return await RegisterAsync(login, password, OperationContext.Current.GetCallbackChannel<IAuthenticateServiceCallback>());
+			}
+		}
+			
 
 		/// <summary>
 		/// Регистрирует нового пользователя.
@@ -202,7 +244,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 			return true;
 		}
-
 		/// <summary>
 		/// Возвращает статус авторизации пользователя.
 		/// </summary>
@@ -210,6 +251,53 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// Статус аутентификации.
 		/// </returns>
 		public AuthenticateStatus GetLoginStatus() => AuthenticateStatus.Ok;
+		/// <summary>
+		/// Асинхронно собирает глобальную статистику по пользователям.
+		/// </summary>
+		/// <returns>Статистика пользователей.</returns>
+		public async Task<IEnumerable<StatisticsDto>> GetGlobalStatisticsAsync()
+		{
+			return await Task.Run<IEnumerable<StatisticsDto>>(async () => (await StatisticsPublisher.GetInstanceAsync())
+																					   .GetGlobalStatistics());
+		}
+		#endregion
+
+		#region Private Methods
+		/// <summary>
+		/// Осуществляет проверку на ddos - атаки с клиентского ip - адреса.
+		/// </summary>
+		/// <returns>true, если осуществляется ddos - атака, иначе - false.</returns>
+		private bool CheckAgressiveConnection()
+		{
+			OperationContext opContext = OperationContext.Current;
+
+			MessageProperties properties = opContext.IncomingMessageProperties;
+
+			RemoteEndpointMessageProperty messageProperty = (RemoteEndpointMessageProperty)properties[RemoteEndpointMessageProperty.Name];
+
+			string ipAddress = messageProperty.Address;
+
+			if (_connectionHistory.ContainsKey(ipAddress) == false)
+			{
+				_connectionHistory.Add(ipAddress, new AuthStatus());
+			}
+			else if (_connectionHistory[ipAddress].Date > DateTime.Now)
+			{
+				return true;
+			}
+			else if (_connectionHistory[ipAddress].Repeats >= 3)
+			{
+				_connectionHistory[ipAddress].UnsuccesfulRepeats++;
+				_connectionHistory[ipAddress].Repeats = 0;
+				_connectionHistory[ipAddress].Date = DateTime.Now.AddMinutes(_connectionHistory[ipAddress].UnsuccesfulRepeats);
+				return true;
+			}
+			else
+			{
+				_connectionHistory[ipAddress].Repeats++;
+			}
+			return false;
+		}
 
 		/// <summary>
 		/// Зашифровывает исходную строку.
@@ -229,15 +317,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 				return result;
 			});
 		}
-
-		/// <summary>
-		/// Асинхронно собирает глобальную статистику по пользователям.
-		/// </summary>
-		/// <returns>Статистика пользователей.</returns>
-		public async Task<IEnumerable<StatisticsDto>> GetGlobalStatisticsAsync()
-		{
-			return await Task.Run<IEnumerable<StatisticsDto>>(async () => (await StatisticsPublisher.GetInstanceAsync()).GetGlobalStatistics());
-		}
 		#endregion
+
 	}
 }

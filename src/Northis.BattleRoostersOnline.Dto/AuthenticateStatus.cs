@@ -17,6 +17,8 @@ namespace Northis.BattleRoostersOnline.Dto
 		[EnumMember]
 		AlreadyLoggedIn,
 		[EnumMember]
-		WrongDataFormat
+		WrongDataFormat,
+		[EnumMember]
+		AuthorizationDenied
 	}
 }

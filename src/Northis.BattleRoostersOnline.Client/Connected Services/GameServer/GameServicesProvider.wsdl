@@ -35,9 +35,9 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://10.88.99.75:8080/Northis.BattleRoostersOnline?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://10.88.99.75:8080/Northis.BattleRoostersOnline?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://10.88.99.75:8080/Northis.BattleRoostersOnline?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" />
+      <xsd:import schemaLocation="http://10.88.99.167:8080/Northis.BattleRoostersOnline?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://10.88.99.167:8080/Northis.BattleRoostersOnline?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://10.88.99.167:8080/Northis.BattleRoostersOnline?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IAuthenticateService_LogIn_InputMessage">
@@ -351,21 +351,21 @@
   </wsdl:binding>
   <wsdl:service name="GameServicesProvider">
     <wsdl:port name="WSDualHttpBinding_IAuthenticateService" binding="tns:WSDualHttpBinding_IAuthenticateService">
-      <soap12:address location="http://10.88.99.75:8080/Northis.BattleRoostersOnline/AuthenticationService" />
+      <soap12:address location="http://10.88.99.167:8080/Northis.BattleRoostersOnline/AuthenticationService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://10.88.99.75:8080/Northis.BattleRoostersOnline/AuthenticationService</wsa10:Address>
+        <wsa10:Address>http://10.88.99.167:8080/Northis.BattleRoostersOnline/AuthenticationService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="WSHttpBinding_IEditService" binding="tns:WSHttpBinding_IEditService">
-      <soap12:address location="http://10.88.99.75:8080/Northis.BattleRoostersOnline/EditService" />
+      <soap12:address location="http://10.88.99.167:8080/Northis.BattleRoostersOnline/EditService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://10.88.99.75:8080/Northis.BattleRoostersOnline/EditService</wsa10:Address>
+        <wsa10:Address>http://10.88.99.167:8080/Northis.BattleRoostersOnline/EditService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="WSDualHttpBinding_IBattleService" binding="tns:WSDualHttpBinding_IBattleService">
-      <soap12:address location="http://10.88.99.75:8080/Northis.BattleRoostersOnline/BattleService" />
+      <soap12:address location="http://10.88.99.167:8080/Northis.BattleRoostersOnline/BattleService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://10.88.99.75:8080/Northis.BattleRoostersOnline/BattleService</wsa10:Address>
+        <wsa10:Address>http://10.88.99.167:8080/Northis.BattleRoostersOnline/BattleService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

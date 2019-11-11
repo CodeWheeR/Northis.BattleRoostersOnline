@@ -1,42 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="anyType" nillable="true" type="xs:anyType" />
-  <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
-  <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
-  <xs:element name="boolean" nillable="true" type="xs:boolean" />
-  <xs:element name="byte" nillable="true" type="xs:byte" />
-  <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
-  <xs:element name="decimal" nillable="true" type="xs:decimal" />
-  <xs:element name="double" nillable="true" type="xs:double" />
-  <xs:element name="float" nillable="true" type="xs:float" />
-  <xs:element name="int" nillable="true" type="xs:int" />
-  <xs:element name="long" nillable="true" type="xs:long" />
-  <xs:element name="QName" nillable="true" type="xs:QName" />
-  <xs:element name="short" nillable="true" type="xs:short" />
-  <xs:element name="string" nillable="true" type="xs:string" />
-  <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
-  <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
-  <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
-  <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
-  <xs:element name="char" nillable="true" type="tns:char" />
-  <xs:simpleType name="char">
-    <xs:restriction base="xs:int" />
-  </xs:simpleType>
-  <xs:element name="duration" nillable="true" type="tns:duration" />
-  <xs:simpleType name="duration">
-    <xs:restriction base="xs:duration">
-      <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
-      <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
-      <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="guid" nillable="true" type="tns:guid" />
-  <xs:simpleType name="guid">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Northis.BattleRoostersOnline.Dto" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="AuthenticateStatus">
     <xs:restriction base="xs:string">
-      <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+      <xs:enumeration value="Ok" />
+      <xs:enumeration value="WrongLoginOrPassword" />
+      <xs:enumeration value="AlreadyRegistered" />
+      <xs:enumeration value="AlreadyLoggedIn" />
+      <xs:enumeration value="WrongDataFormat" />
+      <xs:enumeration value="AuthorizationDenied" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:attribute name="FactoryType" type="xs:QName" />
-  <xs:attribute name="Id" type="xs:ID" />
-  <xs:attribute name="Ref" type="xs:IDREF" />
+  <xs:element name="AuthenticateStatus" nillable="true" type="tns:AuthenticateStatus" />
+  <xs:complexType name="ArrayOfStatisticsDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StatisticsDto" nillable="true" type="tns:StatisticsDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStatisticsDto" nillable="true" type="tns:ArrayOfStatisticsDto" />
+  <xs:complexType name="StatisticsDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RoosterName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WinStreak" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StatisticsDto" nillable="true" type="tns:StatisticsDto" />
+  <xs:complexType name="ArrayOfUsersStatisticsDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UsersStatisticsDto" nillable="true" type="tns:UsersStatisticsDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUsersStatisticsDto" nillable="true" type="tns:ArrayOfUsersStatisticsDto" />
+  <xs:complexType name="UsersStatisticsDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsOnline" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserScore" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UsersStatisticsDto" nillable="true" type="tns:UsersStatisticsDto" />
+  <xs:complexType name="RoosterCreateDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Color" type="tns:RoosterColorType" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RoosterCreateDto" nillable="true" type="tns:RoosterCreateDto" />
+  <xs:simpleType name="RoosterColorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Black" />
+      <xs:enumeration value="Brown" />
+      <xs:enumeration value="Blue" />
+      <xs:enumeration value="Red" />
+      <xs:enumeration value="White" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RoosterColorType" nillable="true" type="tns:RoosterColorType" />
+  <xs:complexType name="ArrayOfRoosterDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RoosterDto" nillable="true" type="tns:RoosterDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRoosterDto" nillable="true" type="tns:ArrayOfRoosterDto" />
+  <xs:complexType name="RoosterDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Brickness" type="xs:int" />
+      <xs:element minOccurs="0" name="Color" type="tns:RoosterColorType" />
+      <xs:element minOccurs="0" name="Crest" type="tns:CrestSizeType" />
+      <xs:element minOccurs="0" name="Damage" type="xs:double" />
+      <xs:element minOccurs="0" name="Health" type="xs:double" />
+      <xs:element minOccurs="0" name="Height" type="xs:int" />
+      <xs:element minOccurs="0" name="Luck" type="xs:int" />
+      <xs:element minOccurs="0" name="MaxHealth" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Stamina" type="xs:int" />
+      <xs:element minOccurs="0" name="Thickness" type="xs:int" />
+      <xs:element minOccurs="0" name="Token" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Weight" type="xs:double" />
+      <xs:element minOccurs="0" name="WinStreak" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RoosterDto" nillable="true" type="tns:RoosterDto" />
+  <xs:simpleType name="CrestSizeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Small" />
+      <xs:enumeration value="Medium" />
+      <xs:enumeration value="Big" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CrestSizeType" nillable="true" type="tns:CrestSizeType" />
+  <xs:simpleType name="BattleStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UserWasNotFound" />
+      <xs:enumeration value="RoosterWasNotFound" />
+      <xs:enumeration value="SameLogins" />
+      <xs:enumeration value="Ok" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BattleStatus" nillable="true" type="tns:BattleStatus" />
 </xs:schema>
