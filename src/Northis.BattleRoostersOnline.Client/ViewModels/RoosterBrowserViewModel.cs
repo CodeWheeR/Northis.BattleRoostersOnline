@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,6 +19,7 @@ using Northis.BattleRoostersOnline.Client.Callbacks;
 using Northis.BattleRoostersOnline.Client.GameServer;
 using Northis.BattleRoostersOnline.Client.Models;
 using Northis.BattleRoostersOnline.Client.Properties;
+using AuthenticateStatus = Northis.BattleRoostersOnline.Client.GameServer.AuthenticateStatus;
 
 namespace Northis.BattleRoostersOnline.Client.ViewModels
 {
@@ -223,6 +225,22 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 				_logger.Error(Resources.StrErrorAuthorizationNotSuccess);
 				Application.Current.Shutdown();
 			}
+
+			Task.Run(async () =>
+			{
+				try
+				{
+					while (_authenticateServiceClient.GetLoginStatus() == AuthenticateStatus.Ok)
+					{
+						await Task.Delay(3000);
+					}
+				}
+				catch (Exception e)
+				{
+					await _messageService.ShowErrorAsync("Потеряно соединение с сервером. Пожалуйста, перезайдите в игру.");
+					Application.Current.Shutdown(0);
+				}
+			});
 
 			Argument.IsNotNull(nameof(_exceptionService), _exceptionService);
 			UpdateRoostersAsync();
