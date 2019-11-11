@@ -39,6 +39,9 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		/// </summary>
 		[Display(ResourceType = typeof(Resources), Name = "StrWrongDataFormat")]
 		WrongDataFormat,
+		/// <summary>
+		/// Слишком большое количество попыток подключений.
+		/// </summary>
 		[Display(ResourceType = typeof(Resources), Name = "StrAuthDenied")]
 		LogInDenied
 	}
