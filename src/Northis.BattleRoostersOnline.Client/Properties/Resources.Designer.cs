@@ -351,6 +351,15 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Превышено максимальное количество поиска сессий. Поиск сессии будет доступен через: .
+        /// </summary>
+        public static string StrAccessDenied {
+            get {
+                return ResourceManager.GetString("StrAccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Данный пользователь уже находится в системе.
         /// </summary>
         public static string StrAlreadyLoggedIn {

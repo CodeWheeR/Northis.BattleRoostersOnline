@@ -13,6 +13,8 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		[Display(ResourceType = typeof(Resources), Name = "StrErrorNotLoginedRoosterFind")]
 		RoosterWasNotFound,
 		[Display(ResourceType = typeof(Resources), Name = "StrErrorFightAgainstYourself")]
-		SameLogins
+		SameLogins,
+		[Display(ResourceType = typeof(Resources), Name = "StrAccessDenied")]
+		AccessDenied
 	}
 }

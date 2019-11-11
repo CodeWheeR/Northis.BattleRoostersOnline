@@ -25,8 +25,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 		private CancellationTokenSource _connectionMonitorTokenSource = new CancellationTokenSource();
 
-		private Dictionary<string, DdosStatusInformation> _connectionHistory = new Dictionary<string, DdosStatusInformation>(30);
-
 		private DdosDefender _ddosDefender = new DdosDefender();
 		#endregion
 
@@ -52,9 +50,9 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </returns>
 		public async Task<string> LogInAsync(string login, string password)
 		{
-			if (_ddosDefender.CheckAgressiveConnection(out int a) == true)
+			if (_ddosDefender.CheckAgressiveConnection(out int time) == true)
 			{
-				return AuthenticateStatus.AuthorizationDenied.ToString() + " " + a;
+				return AuthenticateStatus.AuthorizationDenied.ToString() + " " + time;
 			}
 			else
 			{
@@ -144,9 +142,9 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </returns>
 		public async Task<string> RegisterAsync(string login, string password)
 		{
-			if (_ddosDefender.CheckAgressiveConnection(out int a) == true)
+			if (_ddosDefender.CheckAgressiveConnection(out int time) == true)
 			{
-				return AuthenticateStatus.AuthorizationDenied + " " + a;
+				return AuthenticateStatus.AuthorizationDenied + " " + time;
 			}
 			else
 			{

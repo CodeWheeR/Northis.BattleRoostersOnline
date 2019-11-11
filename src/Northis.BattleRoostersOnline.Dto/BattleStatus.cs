@@ -15,6 +15,8 @@ namespace Northis.BattleRoostersOnline.Dto
 		[EnumMember]
 		SameLogins,
 		[EnumMember]
-		Ok
+		Ok,
+		[EnumMember]
+		AccessDenied
 	}
 }

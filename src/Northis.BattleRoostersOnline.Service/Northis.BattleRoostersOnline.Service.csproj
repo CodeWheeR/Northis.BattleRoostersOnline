@@ -91,7 +91,6 @@
     <Compile Include="DataStorages\IRoosterStorageService.cs" />
     <Compile Include="DataStorages\IUserDataStorageService.cs" />
     <Compile Include="Extensions\DdosDefender.cs" />
-    <Compile Include="Extensions\DdosStatusInformation.cs" />
     <Compile Include="Implements\BaseService.cs" />
     <Compile Include="Implements\StatisticsPublisher.cs" />
     <Compile Include="Models\Session.cs" />
