@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Media;
 using AutoMapper;
 using Catel.IoC;
 using Catel.Services;
@@ -102,12 +103,23 @@ namespace Northis.BattleRoostersOnline.Client.Callbacks
 		/// <summary>
 		/// Получает сигнал о завершении боя.
 		/// </summary>
-		public void GetEndSign()
+		public void GetEndSign(bool isWinner)
 		{
 			_fightVm.BattleEnded = true;
 			_fightVm.BattleLog += "Бой окончен" + Environment.NewLine;
 
 			_battleServiceCallbackLogger.Info(Resources.StrInfoFightEnded);
+
+			if (!isWinner)
+			{
+				_fightVm.LeftRoosterBorderColor = Brushes.Red;
+				_fightVm.RightRoosterBorderColor = Brushes.LimeGreen;
+			}
+			else
+			{
+				_fightVm.RightRoosterBorderColor = Brushes.Red;
+				_fightVm.LeftRoosterBorderColor = Brushes.LimeGreen;
+			}
 		}
 		#endregion
 	}

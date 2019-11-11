@@ -41,7 +41,7 @@ namespace Northis.BattleRoostersOnline.Service.Contracts
 		/// Получает сигнал об окончании матча.
 		/// </summary>
 		[OperationContract(IsOneWay = true)]
-		void GetEndSign();
+		void GetEndSign(bool isWin);
 		#endregion
 	}
 }

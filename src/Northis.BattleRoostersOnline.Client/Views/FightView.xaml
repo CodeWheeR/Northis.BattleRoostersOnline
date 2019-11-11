@@ -12,11 +12,7 @@
 	xmlns:viewModels="clr-namespace:Northis.BattleRoostersOnline.Client.ViewModels"
 	Title="{x:Static res:Resources.FightWindow}"
 	Width="500"
-	Height="600"
-	MinWidth="500"
-	MinHeight="600"
-	MaxWidth="800"
-	MaxHeight="600"
+	Height="610"
 	d:DataContext="{d:DesignInstance viewModels:FightViewModel}"
 	ResizeMode="NoResize"
 	ShowInTaskbar="False"
@@ -24,9 +20,6 @@
 	mc:Ignorable="d">
 	<catel:Window.Resources />
 	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
 		<Label
 			Height="35"
 			Margin="10,10,10,0"
@@ -82,28 +75,21 @@
 					<Border
 						HorizontalAlignment="Left"
 						VerticalAlignment="Top"
-						BorderBrush="Gray"
 						BorderThickness="1">
 						<Grid>
-							<Image
-								Width="186"
-								Height="146"
-								Margin="0"
-								Source="{Binding FirstFighter.Color, Converter={StaticResource EnumValueToStringPath}}" />
-							<Image
-								Width="120"
-								Height="100"
-								Margin="0">
-								<Image.Style>
-									<Style>
-										<Style.Triggers>
-											<DataTrigger Binding="{Binding ShowDeadFirst}" Value="true">
-												<Setter Property="Image.Source" Value="pack://application:,,,/Resources/Dead.png" />
-											</DataTrigger>
-										</Style.Triggers>
-									</Style>
-								</Image.Style>
-							</Image>
+							<Border
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								BorderBrush="{Binding LeftRoosterBorderColor}"
+								BorderThickness="3">
+								<Border BorderBrush="#FFABADB3" BorderThickness="1">
+									<Image
+										Width="178"
+										Height="146"
+										Margin="0"
+										Source="{Binding FirstFighter.Color, Converter={StaticResource EnumValueToStringPath}}" />
+								</Border>
+							</Border>
 						</Grid>
 					</Border>
 
@@ -145,33 +131,21 @@
 						<TextBlock Margin="0" Text="{x:Static res:Resources.WinStreak}" />
 						<TextBlock Margin="0" Text="{Binding SecondFighter.WinStreak}" />
 					</StackPanel>
-					<Border
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						BorderBrush="Gray"
-						BorderThickness="1">
-						<Grid>
-							<Image
-								Width="186"
-								Height="146"
-								Margin="0"
-								Source="{Binding SecondFighter.Color, Converter={StaticResource EnumValueToStringPath}}" />
-							<Image
-								Width="120"
-								Height="100"
-								Margin="0">
-								<Image.Style>
-									<Style>
-										<Style.Triggers>
-											<DataTrigger Binding="{Binding ShowDeadSecond}" Value="true">
-												<Setter Property="Image.Source" Value="pack://application:,,,/Resources/Dead.png" />
-											</DataTrigger>
-										</Style.Triggers>
-									</Style>
-								</Image.Style>
-							</Image>
-						</Grid>
-					</Border>
+					<Grid>
+						<Border
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							BorderBrush="{Binding RightRoosterBorderColor}"
+							BorderThickness="3">
+							<Border BorderBrush="#FFABADB3" BorderThickness="1">
+								<Image
+									Width="178"
+									Height="146"
+									Margin="0"
+									Source="{Binding SecondFighter.Color, Converter={StaticResource EnumValueToStringPath}}" />
+							</Border>
+						</Border>
+					</Grid>
 					<TextBlock HorizontalAlignment="Center" Text="{x:Static res:Resources.Health}" />
 					<userControls:ValueBar
 						Height="20"
@@ -189,7 +163,7 @@
 				<Button
 					Grid.ColumnSpan="3"
 					Width="90"
-					Margin="0,0,0,156"
+					Margin="0,0,0,154"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Bottom"
 					Command="{Binding StartFightCommand}"
@@ -198,9 +172,9 @@
 					Grid.ColumnSpan="3"
 					Width="450"
 					Height="137"
-					Margin="10,335,0,0"
+					Margin="10,0,0,10"
 					HorizontalAlignment="Left"
-					VerticalAlignment="Top"
+					VerticalAlignment="Bottom"
 					FontSize="14"
 					IsReadOnly="True"
 					Text="{Binding BattleLog}"

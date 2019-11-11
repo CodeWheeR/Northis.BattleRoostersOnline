@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using System.Threading.Tasks;
 using AutoMapper;
 using GameServer.Properties;
 using NLog;
@@ -96,7 +97,9 @@ namespace Northis.BattleRoostersOnline.Server
 				var smb = new ServiceMetadataBehavior();
 				smb.HttpGetEnabled = true;
 				selfHost.Description.Behaviors.Add(smb);
+
 				selfHost.Open();
+
 				logger.Info(Resources.StrInfoServiceReady);
 
 				while (Console.ReadLine() != "shutdown")

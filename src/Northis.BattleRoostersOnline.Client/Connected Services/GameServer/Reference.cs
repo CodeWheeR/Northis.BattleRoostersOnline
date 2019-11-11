@@ -778,7 +778,7 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         void FindedMatch(string token);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBattleService/GetEndSign")]
-        void GetEndSign();
+        void GetEndSign(bool isWin);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

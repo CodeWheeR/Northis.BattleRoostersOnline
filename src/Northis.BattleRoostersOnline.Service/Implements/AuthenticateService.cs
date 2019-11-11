@@ -133,6 +133,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		/// </summary>
 		/// <param name="login">Логин.</param>
 		/// <param name="password">Пароль.</param>
+		/// <param name="callback">Объект обратной связи.</param>
 		/// <returns>
 		/// Токен.
 		/// </returns>

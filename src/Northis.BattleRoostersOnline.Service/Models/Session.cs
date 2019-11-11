@@ -113,6 +113,17 @@ namespace Northis.BattleRoostersOnline.Service.Models
 				get;
 				set;
 			}
+			/// <summary>
+			/// Возвращает или задает статус победы в сессии.
+			/// </summary>
+			/// <value>
+			/// <c>true</c> если пользователь победил; иначе, <c>false</c>.
+			/// </value>
+			public bool IsWinner
+			{
+				get;
+				set;
+			}
 			#endregion
 
 			#region Private Methods
@@ -239,7 +250,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 			{
 				await Task.Run(() =>
 				{
-					CarefulCallback(() => _callback.GetEndSign());
+					CarefulCallback(() => _callback.GetEndSign(IsWinner));
 				});
 			}
 			#endregion
@@ -463,10 +474,12 @@ namespace Northis.BattleRoostersOnline.Service.Models
 
 												 if (FirstUser.Rooster.Health == 0)
 												 {
+													 SecondUser.IsWinner = true;
 													 Task.WaitAll(SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1));
 												 }
-												 else
+												 else if (SecondUser.Rooster.Health == 0)
 												 {
+													 FirstUser.IsWinner = true;
 													 Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1));
 												 }
 
@@ -619,6 +632,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 						try
 						{
 							autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
+							autoWinner.IsWinner = true;
 							Task.WaitAll(SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
 							SendEndSign();
 							autoWinner.UnsubscribeOnClosing((x, y) => CheckForDeserting(autoWinner.Token));

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Catel.Data;
 using Catel.MVVM;
 using NLog;
@@ -66,6 +67,8 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		/// Зарегистрированное свойство содержимого боевого чата.
 		/// </summary>
 		public static readonly PropertyData BattleLogProperty = RegisterProperty(nameof(BattleLog), typeof(string));
+		public static readonly PropertyData LeftRoosterBorderColorProperty = RegisterProperty(nameof(LeftRoosterBorderColor), typeof(Brush));
+		public static readonly PropertyData RightRoosterBorderColorProperty = RegisterProperty(nameof(RightRoosterBorderColor), typeof(Brush));
 		#endregion
 		#endregion
 
@@ -166,6 +169,17 @@ namespace Northis.BattleRoostersOnline.Client.ViewModels
 		{
 			get => GetValue<string>(MatchTokenProperty);
 			set => SetValue(MatchTokenProperty, value);
+		}
+
+		public Brush LeftRoosterBorderColor
+		{
+			get => GetValue<Brush>(LeftRoosterBorderColorProperty);
+			set => SetValue(LeftRoosterBorderColorProperty, value);
+		}
+		public Brush RightRoosterBorderColor
+		{
+			get => GetValue<Brush>(RightRoosterBorderColorProperty);
+			set => SetValue(RightRoosterBorderColorProperty, value);
 		}
 
 		/// <summary>
