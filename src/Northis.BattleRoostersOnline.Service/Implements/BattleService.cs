@@ -6,6 +6,7 @@ using NLog;
 using Northis.BattleRoostersOnline.Dto;
 using Northis.BattleRoostersOnline.Service.Contracts;
 using Northis.BattleRoostersOnline.Service.DataStorages;
+using Northis.BattleRoostersOnline.Service.Extensions;
 using Northis.BattleRoostersOnline.Service.Models;
 using Northis.BattleRoostersOnline.Service.Properties;
 
@@ -20,6 +21,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	{
 		#region Fields
 		private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+		private DdosDefender _ddosDefender = new DdosDefender();
 		#endregion
 
 		#region ctor
@@ -42,6 +44,10 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		public void FindMatchAsync(string token, string roosterToken)
 		{
 			var callback = OperationContext.Current.GetCallbackChannel<IBattleServiceCallback>();
+			if (_ddosDefender.CheckAgressiveConnection(out int time) == true)
+			{
+				callback.FindedMatch(BattleStatus.AccessDenied + " " + time);
+			}
 			FindMatchAsync(token, roosterToken, callback);
 		}
 
