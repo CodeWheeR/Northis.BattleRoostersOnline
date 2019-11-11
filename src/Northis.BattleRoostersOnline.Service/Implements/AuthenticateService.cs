@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading;
@@ -15,7 +16,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 	/// Предоставляет сервис аутентификации.
 	/// </summary>
 	/// <seealso cref="BaseServiceWithStorage" />
-	/// <seealso cref="Northis.BattleRoostersOnline.Service.Contracts.IAuthenticateService" />
+	/// <seealso cref="IAuthenticateService" />
 	public class AuthenticateService : BaseServiceWithStorage, IAuthenticateService
 	{
 		#region Private Fields

@@ -475,12 +475,12 @@ namespace Northis.BattleRoostersOnline.Service.Models
 												 if (FirstUser.Rooster.Health == 0)
 												 {
 													 SecondUser.IsWinner = true;
-													 Task.WaitAll(SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1));
+													 Task.WaitAll(SetWinstreak(SecondUser, SecondUser.Rooster.WinStreak + 1), SetWinstreak(FirstUser, 0));
 												 }
 												 else if (SecondUser.Rooster.Health == 0)
 												 {
 													 FirstUser.IsWinner = true;
-													 Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1));
+													 Task.WaitAll(SetWinstreak(FirstUser, FirstUser.Rooster.WinStreak + 1), SetWinstreak(SecondUser, 0));
 												 }
 
 												 lock (StorageService.Sessions)
@@ -633,7 +633,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 						{
 							autoWinner.GetBattleMessageAsync($"Петух {deserter.Rooster.Name} бежал с поля боя");
 							autoWinner.IsWinner = true;
-							Task.WaitAll(SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1));
+							Task.WaitAll(SetWinstreak(autoWinner, autoWinner.Rooster.WinStreak + 1), SetWinstreak(deserter, 0));
 							SendEndSign();
 							autoWinner.UnsubscribeOnClosing((x, y) => CheckForDeserting(autoWinner.Token));
 						}
@@ -672,6 +672,7 @@ namespace Northis.BattleRoostersOnline.Service.Models
 
 			if (value != 0)
 			{
+				rooster.WinScore++;
 				userData.GetBattleMessageAsync("Вы победили");
 			}
 			else

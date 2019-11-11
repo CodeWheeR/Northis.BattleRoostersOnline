@@ -290,12 +290,24 @@ namespace Northis.BattleRoostersOnline.Service.Models
 		}
 
 		/// <summary>
-		/// Возвращает или устанавливает количество побед петуха.
+		/// Возвращает или устанавливает количество побед подряд петуха.
+		/// </summary>
+		/// <value>
+		/// Количество побед подряд.
+		/// </value>
+		public int WinStreak
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Возвращает или устанавливает общее количество побед петуха.
 		/// </summary>
 		/// <value>
 		/// Количество побед.
 		/// </value>
-		public int WinStreak
+		public int WinScore
 		{
 			get;
 			set;

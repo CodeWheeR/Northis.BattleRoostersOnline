@@ -69,7 +69,7 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 
 					foreach (var usersRoosters in roosters)
 					{
-						var scoresSum = usersRoosters.Item2.Sum(x => x.WinStreak);
+						var scoresSum = usersRoosters.Item2.Sum(x => x.WinScore);
 						userStats.Add(new UsersStatisticsDto(loggedUsers.Contains(usersRoosters.Item1), usersRoosters.Item1, scoresSum));
 					}
 
