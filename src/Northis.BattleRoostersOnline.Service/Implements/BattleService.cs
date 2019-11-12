@@ -182,6 +182,13 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 		{
 			try
 			{
+				var login = await GetLoginAsync(token);
+				if (string.IsNullOrEmpty(login))
+				{
+					return;
+				}
+				_logger.Info(Resources.StrFmtInfoUserDeserted, login == string.Empty ? token : login);
+
 				await Task.Run(async () =>
 				{
 					var session = StorageService.Sessions[matchToken];
@@ -189,7 +196,6 @@ namespace Northis.BattleRoostersOnline.Service.Implements
 					OperationContext.Current?.Channel?.Close();
 					session.StopSession(true);
 				});
-				var login = await GetLoginAsync(token);
 				_logger.Info(Resources.StrFmtInfoUserDeserted, login == string.Empty ? token : login);
 			}
 			catch (Exception e)

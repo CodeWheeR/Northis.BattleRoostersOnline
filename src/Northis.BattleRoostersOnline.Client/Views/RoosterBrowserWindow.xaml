@@ -14,7 +14,7 @@
 	xmlns:viewModels="clr-namespace:Northis.BattleRoostersOnline.Client.ViewModels"
 	Title="{x:Static res:Resources.MainWindowTitle}"
 	Width="1100"
-	Height="450"
+	Height="460"
 	d:DataContext="{d:DesignInstance viewModels:RoosterBrowserViewModel}"
 	CanCloseUsingEscape="False"
 	ResizeMode="NoResize"
@@ -149,6 +149,10 @@
 						<TextBlock Text="{x:Static res:Resources.WinStreak}" />
 						<TextBlock Text="{Binding SelectedRooster.WinStreak}" />
 					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{x:Static res:Resources.WinScore}" />
+						<TextBlock Text="{Binding SelectedRooster.WinScore}" />
+					</StackPanel>
 				</StackPanel>
 				<StackPanel
 					Margin="15,0,0,10"
@@ -247,7 +251,7 @@
 			ItemsSource="{Binding UserStatistics}" />
 		<Label
 			Grid.Column="2"
-			Margin="14,212,0,0"
+			Margin="14,217,0,0"
 			VerticalAlignment="Top"
 			HorizontalContentAlignment="Center"
 			VerticalContentAlignment="Center"

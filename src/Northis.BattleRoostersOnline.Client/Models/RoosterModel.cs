@@ -113,6 +113,10 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		/// Зарегистрированное свойство "Максимальная удача" петуха.
 		/// </summary>
 		public static readonly PropertyData MaxLuckProperty = RegisterProperty(nameof(MaxLuck), typeof(int));
+		/// <summary>
+		/// Зарегистрированное свойство "Количество побед" петуха.
+		/// </summary>
+		public static readonly PropertyData WinScoreProperty = RegisterProperty(nameof(WinScore), typeof(int));
 		#endregion
 		#endregion
 
@@ -217,12 +221,12 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		{
 			if (rooster != null)
 			{
+				Color = ColorParse(rooster.Color);
 				Token = rooster.Token;
 				Stamina = rooster.Stamina;
 				Brickness = rooster.Brickness;
 				Luck = rooster.Luck;
 				Thickness = rooster.Thickness;
-				Color = ColorParse(rooster.Color);
 				Crest = SizeParse(rooster.Crest);
 				Height = rooster.Height;
 				Weight = rooster.Weight;
@@ -231,6 +235,7 @@ namespace Northis.BattleRoostersOnline.Client.Models
 				Health = rooster.Health;
 				MaxHealth = rooster.MaxHealth;
 				Damage = rooster.Damage;
+				WinScore = rooster.WinScore;
 			}
 		}
 		#endregion
@@ -270,6 +275,18 @@ namespace Northis.BattleRoostersOnline.Client.Models
 		{
 			get => GetValue<int>(WinStreakProperty);
 			set => SetValue(WinStreakProperty, value);
+		}
+
+		/// <summary>
+		/// Возвращает или устанавливает число побед петуха.
+		/// </summary>
+		/// <value>
+		/// Число побед.
+		/// </value>
+		public int WinScore
+		{
+			get => GetValue<int>(WinScoreProperty);
+			set => SetValue(WinScoreProperty, value);
 		}
 
 		/// <summary>

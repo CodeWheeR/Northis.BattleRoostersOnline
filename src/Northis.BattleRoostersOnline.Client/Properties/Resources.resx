@@ -373,4 +373,7 @@
   <data name="StrAccessDenied" xml:space="preserve">
     <value>Превышено максимальное количество поиска сессий. Поиск сессии будет доступен через: </value>
   </data>
+  <data name="WinScore" xml:space="preserve">
+    <value>Число побед: </value>
+  </data>
 </root>

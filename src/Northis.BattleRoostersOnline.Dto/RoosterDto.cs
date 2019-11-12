@@ -166,6 +166,19 @@ namespace Northis.BattleRoostersOnline.Dto
 		}
 
 		/// <summary>
+		/// Возвращает или задает число побед петуха.
+		/// </summary>
+		/// <value>
+		/// Серия побед.
+		/// </value>
+		[DataMember]
+		public int WinScore
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Возвращает или задает максимальное здоровье петуха.
 		/// </summary>
 		/// <value>

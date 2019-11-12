@@ -819,6 +819,15 @@ namespace Northis.BattleRoostersOnline.Client.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Число побед: .
+        /// </summary>
+        public static string WinScore {
+            get {
+                return ResourceManager.GetString("WinScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Череда побед: .
         /// </summary>
         public static string WinStreak {

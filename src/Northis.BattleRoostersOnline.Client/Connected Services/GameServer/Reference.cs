@@ -320,6 +320,9 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
         private double WeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int WinScoreField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int WinStreakField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -497,6 +500,19 @@ namespace Northis.BattleRoostersOnline.Client.GameServer {
                 if ((this.WeightField.Equals(value) != true)) {
                     this.WeightField = value;
                     this.RaisePropertyChanged("Weight");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int WinScore {
+            get {
+                return this.WinScoreField;
+            }
+            set {
+                if ((this.WinScoreField.Equals(value) != true)) {
+                    this.WinScoreField = value;
+                    this.RaisePropertyChanged("WinScore");
                 }
             }
         }

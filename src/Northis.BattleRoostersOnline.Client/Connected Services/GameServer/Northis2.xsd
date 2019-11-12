@@ -77,6 +77,7 @@
       <xs:element minOccurs="0" name="Thickness" type="xs:int" />
       <xs:element minOccurs="0" name="Token" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Weight" type="xs:double" />
+      <xs:element minOccurs="0" name="WinScore" type="xs:int" />
       <xs:element minOccurs="0" name="WinStreak" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
